@@ -1,4 +1,4 @@
-import Axios from './Axios';
+import Axios from "./Axios";
 
 export const userService = {
   login: async function Login(
@@ -15,35 +15,35 @@ export const userService = {
           },
           {
             headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Content-Type': 'application/json',
-              accept: 'application/json',
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              accept: "application/json",
             },
           }
         )
       ).data;
     } catch (error) {
-      console.log('err: ', error);
+      console.log("err: ", error);
     }
   },
   get: async function Get(): Promise<any> {
     try {
       return await (
-        await Axios.get(`/User/GetCurrentUser`, {
+        await Axios.get(`/Identities/GetCurrentUser`, {
           headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-            accept: 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            accept: "application/json",
           },
         })
       ).data;
     } catch (error) {
-      console.log('err: ', error);
+      console.log("err: ", error);
     }
   },
-  logout:  function Logout():void {
-    localStorage.removeItem("username")
-    localStorage.removeItem('role')
-    localStorage.removeItem('token')
+  logout: function Logout(): void {
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
   },
 };
