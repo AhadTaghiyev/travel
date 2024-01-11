@@ -1,0 +1,14 @@
+.logoText {
+    color: black;
+    font-size: 32px;
+    font-family: Averta;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px;
+    letter-spacing: -0.608px;
+    margin-left: 13px;
+  }
+  .logoText::after {
+    content: '.';
+    color: #51b2f5;
+  }

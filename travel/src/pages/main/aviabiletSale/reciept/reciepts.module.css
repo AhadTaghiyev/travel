@@ -1,0 +1,27 @@
+.totalsStyle{
+    background: #F8F9FA;
+    margin-bottom: 25px;
+}
+.totalWrapper{
+    border-bottom: 1px solid #EBEDF0;
+    padding: 4px 12px;
+}
+.totalElement{
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+}
+.totalProp{
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+}
+.totalVal{
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}
