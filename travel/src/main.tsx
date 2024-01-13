@@ -6,11 +6,11 @@ import router from "./routes/index";
 
 import "./styles/custom.css";
 import "./styles/index.css";
-// import { Toaster } from "sonner";
+import { Toaster } from "sonner";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <UserProvider>
     <RouterProvider router={router} />
-    {/* <Toaster richColors expand={false} /> */}
+    <Toaster richColors expand={true} />
   </UserProvider>
 );
