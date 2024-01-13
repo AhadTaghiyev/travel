@@ -66,7 +66,7 @@ export const SidebarItem: React.FC<{ item: SidebarItemType }> = ({ item }) => {
               key={childKey}
               className={styles.sidebarItem}
             >
-              <div>
+              <div className="flex items-center">
                 <child.icon
                   style={{ color: "#c4c5c6" }}
                   className={styles.sidebarItemIcon}

@@ -1,10 +1,10 @@
-import { InputLabel, FormHelperText } from '@mui/material';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
-import { textStyling } from '../../styles';
+import { InputLabel, FormHelperText } from "@mui/material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { textStyling } from "../../styles";
 
 interface ICustomDateTimePickerModel {
   label: string;
@@ -12,7 +12,6 @@ interface ICustomDateTimePickerModel {
   change: any;
   hasErrorMessages: boolean;
   errorMessages: string[];
-  name: string;
 }
 
 export default function CustomDateTimePicker({
@@ -21,7 +20,6 @@ export default function CustomDateTimePicker({
   change,
   hasErrorMessages,
   errorMessages,
-  name,
 }: ICustomDateTimePickerModel) {
   return (
     <>
@@ -33,33 +31,29 @@ export default function CustomDateTimePicker({
         {label}
       </InputLabel>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DateTimePicker']}>
+        <DemoContainer components={["DateTimePicker"]}>
           <DateTimePicker
             slotProps={{
-              textField: { size: 'small' },
+              textField: { size: "small" },
             }}
             value={dayjs(value)}
             label=""
             onChange={(newValue) => {
-              const event = {
-                target: {
-                  name: name,
-                  value: newValue,
-                },
-              };
-              change(event);
+              change(new Date(newValue.toString()));
             }}
           />
         </DemoContainer>
       </LocalizationProvider>
-      {hasErrorMessages && (
+      {hasErrorMessages ? (
         <>
           {errorMessages?.map((item, key) => {
-            <FormHelperText key={key} sx={{ color: 'red' }}>
+            <FormHelperText key={key} sx={{ color: "red", margin: 0 }}>
               {item}
             </FormHelperText>;
           })}
         </>
+      ) : (
+        <div className="h-5" />
       )}
     </>
   );

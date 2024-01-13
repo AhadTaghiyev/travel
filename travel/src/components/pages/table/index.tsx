@@ -1,52 +1,52 @@
 //@ts-nocheck
-import { useEffect, useState, useRef } from 'react';
-import Grid from '@mui/material/Grid';
-import { Paper, Button } from '@mui/material';
-import { InputBase, Divider } from '@mui/material';
-import { IconButton } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { DataGrid } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
-import { ITableObject } from './types';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { useEffect, useState, useRef } from "react";
+import Grid from "@mui/material/Grid";
+import { Paper, Button } from "@mui/material";
+import { InputBase, Divider } from "@mui/material";
+import { IconButton } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select";
+import { DataGrid } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
+import { ITableObject } from "./types";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 //icons
-import { AiOutlineSearch } from 'react-icons/ai';
-import { FiDownload } from 'react-icons/fi';
-import { BsEyeFill } from 'react-icons/bs';
-import { BsFillTrashFill, BsPencilFill } from 'react-icons/bs';
+import { AiOutlineSearch } from "react-icons/ai";
+import { FiDownload } from "react-icons/fi";
+import { BsEyeFill } from "react-icons/bs";
+import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
-import { GridPagination } from '@mui/x-data-grid';
-import MuiPagination from '@mui/material/Pagination';
-import { TablePaginationProps } from '@mui/material/TablePagination';
-import { apiService } from '../../../server/apiServer';
-import dayjs from 'dayjs';
-import axios from 'axios';
-import { DatePicker } from '@mui/x-date-pickers';
-import { useTranslation } from 'react-i18next';
-import { format } from 'date-fns';
+import { GridPagination } from "@mui/x-data-grid";
+import MuiPagination from "@mui/material/Pagination";
+import { TablePaginationProps } from "@mui/material/TablePagination";
+import { apiService } from "../../../server/apiServer";
+import dayjs from "dayjs";
+import axios from "axios";
+import { DatePicker } from "@mui/x-date-pickers";
+import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
 
 const headerStyle = {
-  borderColor: '#c4c4c4',
-  width: '100%',
-  height: '35px',
-  fontFamily: 'Font Awesome 6 Pro',
-  fontSize: '12px',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  lineHeight: '16px',
-  p: 0
+  borderColor: "#c4c4c4",
+  width: "100%",
+  height: "35px",
+  fontFamily: "Font Awesome 6 Pro",
+  fontSize: "12px",
+  fontStyle: "normal",
+  fontWeight: "400",
+  lineHeight: "16px",
+  p: 0,
 };
 
 const formatDate = (dateString) => {
   // Assuming dateString is in a format that can be parsed by new Date()
-  return format(new Date(dateString), 'dd/MM/yyyy');
+  return format(new Date(dateString), "dd/MM/yyyy");
 };
 export default function Index({
   columns,
@@ -57,8 +57,7 @@ export default function Index({
   exportLink,
   deleteBtn = true,
   detailLink,
-  current=null
-
+  current = null,
 }: ITableObject) {
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
@@ -70,10 +69,10 @@ export default function Index({
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(dayjs());
-  const [endDate, setEndDate] = useState(dayjs().add(1, 'day'));
+  const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
 
   const [open, setOpen] = useState(false);
-  const idToDelete = useRef('');
+  const idToDelete = useRef("");
 
   const handleStartDateChange = (newValue) => {
     setStartDate(newValue);
@@ -83,77 +82,82 @@ export default function Index({
     setEndDate(newValue);
   };
 
- const{t}=useTranslation();
-  async function deleteItem(id: string) : Promise<any>{
-    try{
-        const res = await apiService.delete(deleteApi!, id);
-        if(res.status === 200)
-          setRows(rows.filter((x: any)=> x.id !== id));
-      
-    }catch{console.error}
+  const { t } = useTranslation();
+  async function deleteItem(id: string): Promise<any> {
+    try {
+      const res = await apiService.delete(deleteApi!, id);
+      if (res.status === 200) setRows(rows.filter((x: any) => x.id !== id));
+    } catch {
+      console.error;
+    }
   }
   const handlePrint = () => {
     window.print();
   };
-  
+
   const handleDownload = async () => {
     try {
-      const token = localStorage.getItem("token");  // Replace "your_token_key" with the actual key you used to store the token
+      const token = localStorage.getItem("token"); // Replace "your_token_key" with the actual key you used to store the token
       if (!token) {
         console.error("Token is not found");
         return;
       }
-  
+
       const config = {
-        responseType: 'blob', // Binary data as the response
+        responseType: "blob", // Binary data as the response
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       };
-      const response = await axios.get(`http://darxaz-001-site5.itempurl.com/api/${exportLink}`, config);
-      console.log(response)
+      const response = await axios.get(
+        `http://darxaz-001-site5.itempurl.com/api/${exportLink}`,
+        config
+      );
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `${buttonText}.xlsx`);
+      link.setAttribute("download", `${buttonText}.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error('An error occurred while downloading the data: ', error);
+      console.error("An error occurred while downloading the data: ", error);
     }
   };
-  
 
   const field = {
-    field: 'procedures',
-    headerName: t('operations'),
+    field: "procedures",
+    headerName: t("operations"),
     flex: 1,
-    headerClassName: 'header-item',
+    headerClassName: "header-item",
     width: 140,
-    renderCell: (params:any) => {
+    renderCell: (params: any) => {
       return (
         <div
           className="d-flex justify-content-between align-items-center"
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         >
           <Link to={`${root}/update/${params.row.id}`}>
-            <BsPencilFill style={{ marginRight: '10px' }}/>
+            <BsPencilFill style={{ marginRight: "10px" }} />
           </Link>
-          <Link to={detailLink ? detailLink+params.row.id : `${root}/report?tickets=${params.row.id}`}>
-            <BsEyeFill style={{ marginRight: '10px' }} />
+          <Link
+            to={
+              detailLink
+                ? detailLink + params.row.id
+                : `${root}/report?tickets=${params.row.id}`
+            }
+          >
+            <BsEyeFill style={{ marginRight: "10px" }} />
           </Link>
-          {
-            deleteBtn && (
-              <BsFillTrashFill
-                onClick={() =>{
-                  setOpen(true);
-                  idToDelete.current = params.row.id
-                } }
-                style={{ marginLeft: '10px' }}
-              />
-            )
-          }
+          {deleteBtn && (
+            <BsFillTrashFill
+              onClick={() => {
+                setOpen(true);
+                idToDelete.current = params.row.id;
+              }}
+              style={{ marginLeft: "10px" }}
+            />
+          )}
         </div>
       );
     },
@@ -162,28 +166,28 @@ export default function Index({
   useEffect(() => {
     const fetchData = async () => {
       try {
-          const response = await apiService.get(
-       
-            `${api}/${paginationModel.page+1}?starDate=${startDate}&endDate=${endDate}&search=${search}&query=${current}`
+        const response = await apiService.get(
+          `${api}/${
+            paginationModel.page + 1
+          }?starDate=${startDate}&endDate=${endDate}&search=${search}&query=${current}`
+        );
+        const formattedData = response?.data?.items.map((item) => {
+          const newItem = { ...item };
 
-          );
-          const formattedData = response?.data?.items.map(item => {
-            const newItem = { ...item };
-      
-            if (newItem.date) {
-              newItem.date = formatDate(newItem.date);
-            }
-      
-            return newItem;
-          });
-      console.log(formattedData)
-          setRows(formattedData);
-          setTotalRows(response?.data?.totalItems);
-          setTotalPages(response?.data?.totalPages);
+          if (newItem.date) {
+            newItem.date = formatDate(newItem.date);
+          }
+
+          return newItem;
+        });
+        console.log(formattedData);
+        setRows(formattedData);
+        setTotalRows(response?.data?.totalItems);
+        setTotalPages(response?.data?.totalPages);
       } catch (error) {
-          console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
-  };
+    };
 
     fetchData();
   }, [paginationModel.page, startDate, endDate, search, current]);
@@ -197,128 +201,141 @@ export default function Index({
 
   return (
     <Grid container spacing={1}>
-          <Grid item md={2}>
+      <Grid item md={2}>
         <Link to={`${root}/new`}>
           <Button variant="contained" color="primary" sx={headerStyle}>
             + {t(buttonText)} {t("YARAT")}
           </Button>
         </Link>
       </Grid>
-      <Grid item md={2} style={{ justifyContent: 'center' }}>
+      <Grid item md={2} style={{ justifyContent: "center" }}>
         <Paper
           sx={{
-            p: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            boxShadow: 'none',
-            border: '1px solid #c4c4c4',
-            height:'30px'
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            boxShadow: "none",
+            border: "1px solid #c4c4c4",
+            height: "30px",
           }}
         >
           <InputBase
-            sx={{ ml: 1, flex: 1, fontSize: '12px' }}
+            sx={{ ml: 1, flex: 1, fontSize: "12px" }}
             placeholder={t("Axtar")}
-            inputProps={{ 'aria-label': 'axtar' }}
+            inputProps={{ "aria-label": "axtar" }}
             value={search}
-            onChange={(e)=> setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton type="button" sx={{ p: 0 }} aria-label="search">
-            <AiOutlineSearch style={{fontSize: '15px', padding: 0}} />
+            <AiOutlineSearch style={{ fontSize: "15px", padding: 0 }} />
           </IconButton>
         </Paper>
       </Grid>
- 
-      <Grid item >
-        <Button onClick={handleDownload} variant="outlined" sx={headerStyle} style={{fontSize:"9px"}} color="inherit">
-          <FiDownload style={{ marginRight: '6px' ,}} />
+
+      <Grid item>
+        <Button
+          onClick={handleDownload}
+          variant="outlined"
+          sx={headerStyle}
+          style={{ fontSize: "9px" }}
+          color="inherit"
+        >
+          <FiDownload style={{ marginRight: "6px" }} />
           {t("Export")}
         </Button>
       </Grid>
       <Grid item md={2}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DateTimePicker']}>
-                              <DatePicker
-                                slotProps={{ textField: { size: 'small', InputProps: {sx: {fontSize: '12px'}}}}}
-                                sx={{ width: '100%', mb: 1 }}
-                                label=""
-                                onChange={(newValue) => {
-                                  const event = {
-                                    target: {
-                                      value: newValue,
-                                    },
-                                  };
-                                  handleStartDateChange(event.target.value);
-                                }}
-                              />
-                            </DemoContainer>
-                          </LocalizationProvider>
+          <DemoContainer components={["DateTimePicker"]}>
+            <DatePicker
+              slotProps={{
+                textField: {
+                  size: "small",
+                  InputProps: { sx: { fontSize: "12px" } },
+                },
+              }}
+              sx={{ width: "100%", mb: 1 }}
+              label=""
+              onChange={(newValue) => {
+                const event = {
+                  target: {
+                    value: newValue,
+                  },
+                };
+                handleStartDateChange(event.target.value);
+              }}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
       </Grid>
 
       <Grid item md={2}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DateTimePicker']}>
-                              <DatePicker
-                                slotProps={{ textField: { size: 'small', InputProps: {sx: {fontSize: '12px'}}}}}
-                                sx={{ width: '100%', mb: 1}}
-                                label=""
-                                onChange={(newValue) => {
-                                  const event = {
-                                    target: {
-                                      value: newValue,
-                                    },
-                                  };
-                                  handleEndDateChange(event.target.value);
-                                }}
-                            
-                              />
-                            </DemoContainer>
-                          </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DateTimePicker"]}>
+            <DatePicker
+              slotProps={{
+                textField: {
+                  size: "small",
+                  InputProps: { sx: { fontSize: "12px" } },
+                },
+              }}
+              sx={{ width: "100%", mb: 1 }}
+              label=""
+              onChange={(newValue) => {
+                const event = {
+                  target: {
+                    value: newValue,
+                  },
+                };
+                handleEndDateChange(event.target.value);
+              }}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
       </Grid>
-      <Grid
-       sx={{backgroundColor:"white"}} 
-      item xs={12}>
-        <div style={{ height: '55vh', width: '100%' }}>
+      <Grid sx={{ backgroundColor: "white" }} item xs={12}>
+        <div style={{ height: "55vh", width: "100%" }}>
           <DataGrid
-          rowHeight={35}
+            rowHeight={35}
             columns={[...columns, field]}
             paginationMode="server"
             rows={rows?.map((row: any, index: number) => ({
               No: index + 1,
-             
+
               ...row,
             }))}
             pageSizeOptions={[10, 50, 100]}
             disableRowSelectionOnClick={true}
             sx={{
-              '.MuiDataGrid-columnHeaders':{
-                minHeight: "40px!important"
+              ".MuiDataGrid-columnHeaders": {
+                minHeight: "40px!important",
               },
-              '.MuiDataGrid-columnHeader': {
+              ".MuiDataGrid-columnHeader": {
                 height: "40px!important",
                 // display: 'none',
                 fontSize: "14px",
-                fontWeight:"bold!important"
+                fontWeight: "bold!important",
               },
-              '&.MuiDataGrid-root': {
+              "&.MuiDataGrid-root": {
                 // border: 'none',
-                padding:0,
+                padding: 0,
               },
-              '& .MuiDataGrid-cell': {
+              "& .MuiDataGrid-cell": {
                 border: 1,
                 borderRight: 0,
                 borderTop: 0,
-                borderColor: '#e0e0e0',
+                borderColor: "#e0e0e0",
               },
-              '& .MuiDataGrid-cellContent':{
-                fontSize:12
+              "& .MuiDataGrid-cellContent": {
+                fontSize: 12,
               },
-            
-              '& .header-item': {
+
+              "& .header-item": {
                 border: 1,
                 borderRight: 0,
                 borderTop: 0,
-                borderColor: '#e0e0e0',
+                borderColor: "#e0e0e0",
               },
             }}
             rowCount={totalRows}
@@ -339,24 +356,25 @@ export default function Index({
       </Grid>
       <Dialog
         open={open}
-        onClose={()=> setOpen(false)}
+        onClose={() => setOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Əminsiniz?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Əminsiniz?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Silindikdən sonra qeri qaytarmaq mümkün deyil
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={()=> setOpen(false)}>Xeyr</Button>
-          <Button onClick={()=> {
-            deleteItem(idToDelete.current);
-            setOpen(false)
-          }} autoFocus>
+          <Button onClick={() => setOpen(false)}>Xeyr</Button>
+          <Button
+            onClick={() => {
+              deleteItem(idToDelete.current);
+              setOpen(false);
+            }}
+            autoFocus
+          >
             Bəli
           </Button>
         </DialogActions>
@@ -372,7 +390,7 @@ function Pagination({
   count,
 }: Pick<
   TablePaginationProps,
-  'page' | 'onPageChange' | 'className' | 'count'
+  "page" | "onPageChange" | "className" | "count"
 >) {
   const res = (
     <MuiPagination

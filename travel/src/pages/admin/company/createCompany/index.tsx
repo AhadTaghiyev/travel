@@ -1,18 +1,17 @@
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import TextField from '@mui/material/TextField';
-import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Button, Container } from '@mui/material';
-import { useFormik } from 'formik';
-import { CompanySchema } from '../companySchema';
-import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import { apiService } from '../../../../server/apiServer';
-
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import TextField from "@mui/material/TextField";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Button, Container } from "@mui/material";
+import { useFormik } from "formik";
+import { CompanySchema } from "../companySchema";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { apiService } from "../../../../server/apiServer";
 
 export default function Index() {
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -21,23 +20,23 @@ export default function Index() {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      phoneNumber: '',
-      email: '',
+      name: "",
+      phoneNumber: "",
+      email: "",
     },
     validationSchema: CompanySchema,
     onSubmit: async (values, { resetForm, setErrors }) => {
       setButtonLoading(true);
       try {
-        const res = await apiService.post('/Company/CreateCompany',values);
+        const res = await apiService.post("/Company/CreateCompany", values);
         if (res?.status == 200) {
-          toast.success('Müştəri uğurla yaradıldı!');
+          toast.success("Müştəri uğurla yaradıldı!");
           resetForm();
-        }else{
-          setErrors(res.data?.errors)
+        } else {
+          setErrors(res.data?.errors);
         }
       } catch (err) {
-        toast.error('Xəta baş verdi!')
+        toast.error("Xəta baş verdi!");
       } finally {
         setButtonLoading(false);
       }
@@ -51,7 +50,7 @@ export default function Index() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {'Yeni kompaniya yarat: '}
+          {"Yeni kompaniya yarat: "}
         </DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <DialogContent>
@@ -61,7 +60,7 @@ export default function Index() {
                   id="outlined-basic"
                   label="Ad"
                   variant="outlined"
-                  size='small'
+                  size="small"
                   fullWidth
                   sx={{ mb: 3, mt: 2 }}
                   name="name"
@@ -81,7 +80,7 @@ export default function Index() {
                   variant="outlined"
                   fullWidth
                   sx={{ mb: 3 }}
-                  size='small'
+                  size="small"
                   name="phoneNumber"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -105,7 +104,7 @@ export default function Index() {
                   name="email"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  size='small'
+                  size="small"
                   value={formik.values.email}
                   error={
                     formik.touched.email && formik.errors.email ? true : false
@@ -116,7 +115,7 @@ export default function Index() {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={()=> navigate(-1)}>GO BACK</Button>
+            <Button onClick={() => navigate(-1)}>GO BACK</Button>
             <LoadingButton type="submit" autoFocus loading={buttonLoading}>
               SAVE
             </LoadingButton>

@@ -24,6 +24,7 @@ interface NavbarProp {
 export default function Navbar({ isAdmin }: NavbarProp) {
   const {
     i18n: { language },
+    t,
   } = useTranslation();
 
   const changeLanguage = (language: string) => {
@@ -58,25 +59,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
         <Toolbar disableGutters>
           {!isAdmin ? (
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-              {pages.map((page) => (
-                <Link
-                  to="/panel"
-                  key={page}
-                  style={{
-                    color: "black",
-                    display: "block",
-                    fontSize: "12px",
-                    fontWeight: "400",
-                    lineHeight: "16px",
-                    marginRight: "30px",
-                    textDecoration: "none",
-                  }}
-                >
-                  {page}
-                </Link>
-              ))}
-
-              <div className="flex gap-x-2">
+              <div className="flex gap-x-2 mr-10">
                 <button
                   className={cn(
                     "px-1",
@@ -104,6 +87,24 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                 >
                   RU
                 </button>
+              </div>
+              <div className="flex items-center gap-x-4">
+                {pages.map((page) => (
+                  <Link
+                    to="/panel"
+                    key={page}
+                    style={{
+                      color: "black",
+                      display: "block",
+                      fontSize: "12px",
+                      fontWeight: "400",
+                      lineHeight: "16px",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {t(page)}
+                  </Link>
+                ))}
               </div>
             </Box>
           ) : (
