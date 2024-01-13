@@ -97,7 +97,7 @@ const NewTicket = () => {
       const promise = apiService
         .post(`/PlaneTickets/Create`, values)
         .then((response) => {
-          if (response.isSuccess) {
+          if (response.status === 200) {
             toast.success(t("Ticket created"));
             navigate("/panel/aviabiletsale");
           } else {
