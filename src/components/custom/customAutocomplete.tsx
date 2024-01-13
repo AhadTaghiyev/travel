@@ -33,6 +33,7 @@ export default function CustomAutocomplete({
 
   const fetchData = async () => {
     const res = await apiService.get(api);
+
     setData(
       res.data.items.map((x) => ({ label: x[optionLabel], value: x.id }))
     );
@@ -52,17 +53,20 @@ export default function CustomAutocomplete({
         {label}
       </InputLabel>
       <Autocomplete
-        disablePortal
         loading
+        disablePortal
+        key={
+          initialValue ? `${data?.find((x) => x.value === initialValue)}` : ""
+        }
         id="combo-box-demo"
         loadingText={t("Loading...")}
-        defaultValue={initialValue}
+        value={initialValue && data?.find((x) => x.value === initialValue)}
         onChange={change}
-        // onOpen={fetchData}
         options={data}
         style={textStyling}
         sx={{ width: "100%" }}
         size="small"
+        isOptionEqualToValue={(option, value) => option.value === value}
         renderInput={(params) => <TextField {...params} label="" />}
       />
       {hasErrorMessages ? (

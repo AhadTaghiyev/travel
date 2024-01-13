@@ -10,11 +10,11 @@ export default function Index() {
     <Container maxWidth="xl">
       {/* <PageTitle title='Aviabilet satışı'  breadcrumbs={[homeBreadCrumb, planeTicketBreadCrumb]}/> */}
       <Table
-        exportLink="v1/PlaneTicket/Export/Export"
+        exportLink="v1/PlaneTickets/Export/Export"
         columns={columnsresult}
         api={"/PlaneTickets/GetAllFilter"}
         buttonText="Aviabilet"
-        deleteApi="/PlaneTicket/DeleteTicket"
+        deleteApi="/PlaneTickets/DeleteTicket"
         root="/panel/aviabiletsale"
       />
     </Container>

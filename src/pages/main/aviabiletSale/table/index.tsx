@@ -6,9 +6,9 @@ export default function Index() {
   return (
     <Table
       columns={columns}
-      api={"/PlaneTicket/GetAll"}
+      api={"/PlaneTickets/GetAll"}
       buttonText="Aviabilet"
-      deleteApi="/PlaneTicket/DeleteTicket"
+      deleteApi="/PlaneTickets/DeleteTicket"
       root="/panel/aviabiletsale"
     />
   );
