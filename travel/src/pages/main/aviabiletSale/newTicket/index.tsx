@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { FaMinusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
-import { toast } from "sonner";
 import { useCallback } from "react";
+import { toast } from "sonner";
 import * as Yup from "yup";
 
 import { IInvoiceDirections, IInvoiceModel, IPlaneTicketModel } from "../types";

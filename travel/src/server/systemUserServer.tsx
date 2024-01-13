@@ -1,4 +1,8 @@
+import Cookies from "universal-cookie";
+
 import Axios from "./Axios";
+
+const cookies = new Cookies();
 
 export const userService = {
   login: async function Login(
@@ -45,5 +49,18 @@ export const userService = {
     localStorage.removeItem("username");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
+  },
+  refreshToken: async function () {
+    try {
+      const resp = await Axios.post(
+        `/Auth/RefreshTokenLoginAsync?refreshToken=${cookies.get(
+          "refresh_token"
+        )}`,
+        {}
+      );
+      return resp.data;
+    } catch (e) {
+      console.log("Error", e);
+    }
   },
 };

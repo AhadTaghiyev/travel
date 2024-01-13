@@ -19,8 +19,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 //icons
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { BsEyeFill } from "react-icons/bs";
-import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
+import { BsEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
 import { GridPagination } from "@mui/x-data-grid";
 import MuiPagination from "@mui/material/Pagination";
@@ -200,7 +199,7 @@ export default function Index({
   };
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} className="items-center gap-2 pt-1">
       <Grid item md={2}>
         <Link to={`${root}/new`}>
           <Button variant="contained" color="primary" sx={headerStyle}>
@@ -216,7 +215,7 @@ export default function Index({
             alignItems: "center",
             boxShadow: "none",
             border: "1px solid #c4c4c4",
-            height: "30px",
+            height: "36px",
           }}
         >
           <InputBase
@@ -232,7 +231,6 @@ export default function Index({
           </IconButton>
         </Paper>
       </Grid>
-
       <Grid item>
         <Button
           onClick={handleDownload}
@@ -255,7 +253,7 @@ export default function Index({
                   InputProps: { sx: { fontSize: "12px" } },
                 },
               }}
-              sx={{ width: "100%", mb: 1 }}
+              sx={{ width: "100%" }}
               label=""
               onChange={(newValue) => {
                 const event = {
@@ -269,7 +267,6 @@ export default function Index({
           </DemoContainer>
         </LocalizationProvider>
       </Grid>
-
       <Grid item md={2}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateTimePicker"]}>
@@ -280,7 +277,7 @@ export default function Index({
                   InputProps: { sx: { fontSize: "12px" } },
                 },
               }}
-              sx={{ width: "100%", mb: 1 }}
+              sx={{ width: "100%" }}
               label=""
               onChange={(newValue) => {
                 const event = {
