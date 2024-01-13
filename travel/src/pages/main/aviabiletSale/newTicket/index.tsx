@@ -115,24 +115,6 @@ const NewTicket = () => {
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
         {t("Aviabilet satışı")}
       </h1>
-
-      <button
-        onClick={() => {
-          const promise = new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("test");
-            }, 1000);
-          });
-
-          toast.promise(promise, {
-            pending: t("Loading..."),
-            success: t("Uğurla yaradıldı"),
-            error: t("Xəta baş verdi"),
-          });
-        }}
-      >
-        Test
-      </button>
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}

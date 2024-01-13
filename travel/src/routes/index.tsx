@@ -4,7 +4,6 @@ import Home from "../pages/main/home";
 import AviabiletSale from "../pages/main/aviabiletSale";
 // import AviabiletSaleTable from "../pages/main/aviabiletSale/table";
 import NewAviaticket from "../pages/main/aviabiletSale/newTicket";
-import NewAviaticketTest from "../pages/main/aviabiletSale/newTicket/test";
 import Reciept from "../pages/main/aviabiletSale/reciept";
 import RecieptCoorperative from "../pages/main/corperativeTicket/reciept/index";
 import RecieptTour from "../pages/main/tourPackage/reciept/index";
@@ -249,10 +248,6 @@ const router = createBrowserRouter([
       {
         path: "/panel/aviabiletsale/new",
         element: <NewAviaticket />,
-      },
-      {
-        path: "/panel/aviabiletsale/test",
-        element: <NewAviaticketTest />,
       },
       {
         path: "/panel/aviabiletsale/new/reciept/:id",
