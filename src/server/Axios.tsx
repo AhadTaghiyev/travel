@@ -26,14 +26,17 @@ Axios.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
+
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const resp = await userService.refreshToken();
+      const access_token = await userService.refreshToken();
 
-      const access_token = resp.response.accessToken;
+      if (!access_token) {
+        userService.logout();
+        return Promise.reject(error);
+      }
 
-      localStorage.setItem("token", access_token);
       Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
       return Axios(originalRequest);
     }

@@ -49,18 +49,24 @@ export const userService = {
     localStorage.removeItem("username");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
+    cookies.remove("refresh_token");
   },
   refreshToken: async function () {
     try {
       const resp = await Axios.post(
-        `/Auth/RefreshTokenLoginAsync?refreshToken=${cookies.get(
-          "refresh_token"
+        `/Auth/RefreshTokenLoginAsync?refreshToken=${encodeURIComponent(
+          cookies.get("refresh_token")
         )}`,
         {}
       );
-      return resp.data;
+      const { accessToken, refreshToken } = resp.data;
+
+      cookies.set("refresh_token", refreshToken, { path: "/" });
+      localStorage.setItem("token", accessToken);
+      return accessToken;
     } catch (e) {
       console.log("Error", e);
+      return null;
     }
   },
 };
