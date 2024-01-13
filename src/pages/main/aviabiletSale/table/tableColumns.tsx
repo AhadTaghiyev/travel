@@ -28,7 +28,7 @@ export const columns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     valueGetter: (params) =>
-      params.row?.planeTickets.map((item, index) => item.ticketNo).join(),
+      params.row?.planeTickets.map((item) => item.ticketNo).join(),
   },
   {
     field: "passengerName",
@@ -36,7 +36,7 @@ export const columns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     valueGetter: (params) =>
-      params.row?.planeTickets.map((item, index) => item.passengerName).join(),
+      params.row?.planeTickets.map((item) => item.passengerName).join(),
   },
   {
     field: "Amount",
@@ -52,8 +52,6 @@ export const columns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     valueGetter: (params) =>
-      params.row?.planeTickets
-        .map((item, index) => item.personal.fullName)
-        .join(),
+      params.row?.planeTickets.map((item) => item.personal.fullName).join(),
   },
 ];

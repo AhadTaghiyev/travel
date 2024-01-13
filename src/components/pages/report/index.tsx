@@ -6,7 +6,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import img from "../../../assets/abc_home-1.jpg";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import SimpleTable from "../../../components/pages/simpleTable";
+import SimpleTable from "../simpleTable";
 
 import { IReportModel } from "./types";
 import { useSearchParams } from "react-router-dom";
