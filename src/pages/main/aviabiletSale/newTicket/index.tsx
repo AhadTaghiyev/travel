@@ -247,12 +247,13 @@ const NewTicket = () => {
                       <CustomTextField
                         disabled
                         label={t("Qalıq məbləğ")}
-                        value={
+                        value={Math.max(
                           values.planeTickets.reduce(
                             (acc, cur) => acc + cur.sellingPrice - cur.discount,
                             0
-                          ) - values.paidAmount
-                        }
+                          ) - values.paidAmount,
+                          0
+                        )}
                         change={() => 0}
                         type="number"
                         name={``}
@@ -271,11 +272,12 @@ const NewTicket = () => {
                   {index !== 0 && (
                     <button
                       type="button"
+                      disabled={isSubmitting}
                       onClick={() => {
                         values.planeTickets.splice(index, 1);
                         setFieldValue("planeTickets", [...values.planeTickets]);
                       }}
-                      className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition"
+                      className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
                     >
                       {t("Sil")}
                     </button>
@@ -319,6 +321,28 @@ const NewTicket = () => {
                       }
                       errorMessages={[
                         t(errors.planeTickets?.[index]?.supplierId?.toString()),
+                      ]}
+                    />
+                  </div>
+
+                  <div className="w-full">
+                    <CustomAutocomplete
+                      api="AirWays/GetAll/1"
+                      label={t("airlineName")}
+                      initialValue={null}
+                      optionLabel="name"
+                      change={(_, data) =>
+                        setFieldValue(
+                          `planeTickets.${index}.airWayId`,
+                          data?.value ?? null
+                        )
+                      }
+                      hasErrorMessages={
+                        !!errors.planeTickets?.[index]?.airWayId &&
+                        !!touched.planeTickets?.[index]?.airWayId
+                      }
+                      errorMessages={[
+                        t(errors.planeTickets?.[index]?.airWayId?.toString()),
                       ]}
                     />
                   </div>
@@ -442,27 +466,6 @@ const NewTicket = () => {
                       placeholder="Avtomatik"
                     />
                   </div>
-                  <div className="w-full">
-                    <CustomAutocomplete
-                      api="AirWays/GetAll/1"
-                      label={t("airlineName")}
-                      initialValue={null}
-                      optionLabel="name"
-                      change={(_, data) =>
-                        setFieldValue(
-                          `planeTickets.${index}.airWayId`,
-                          data?.value ?? null
-                        )
-                      }
-                      hasErrorMessages={
-                        !!errors.planeTickets?.[index]?.airWayId &&
-                        !!touched.planeTickets?.[index]?.airWayId
-                      }
-                      errorMessages={[
-                        t(errors.planeTickets?.[index]?.airWayId?.toString()),
-                      ]}
-                    />
-                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 gap-x-4 pt-2 w-full items-center bg-[rgba(0,0,0,0.03)]">
                     {values.planeTickets[index].invoiceDirections.map(
                       (_, invoiceDirectionIdx) => (
@@ -473,6 +476,7 @@ const NewTicket = () => {
                           {invoiceDirectionIdx !== 0 && (
                             <button
                               type="button"
+                              disabled={isSubmitting}
                               onClick={() => {
                                 values.planeTickets[
                                   index
@@ -484,7 +488,7 @@ const NewTicket = () => {
                                   ...values.planeTickets,
                                 ]);
                               }}
-                              className="absolute right-0 top-0 text-rose-500 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition"
+                              className="absolute right-0 top-0 text-rose-500 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
                             >
                               <FaMinusSquare />
                             </button>
@@ -554,6 +558,7 @@ const NewTicket = () => {
                     <div className="w-full">
                       <button
                         type="button"
+                        disabled={isSubmitting}
                         onClick={() => {
                           values.planeTickets[index].invoiceDirections.push(
                             cloneDeep(invoiceDirectionInitialValues)
@@ -562,7 +567,7 @@ const NewTicket = () => {
                             ...values.planeTickets,
                           ]);
                         }}
-                        className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition"
+                        className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
                       >
                         + {t("newDirection")}
                       </button>
@@ -574,13 +579,14 @@ const NewTicket = () => {
             <div className="w-full flex gap-x-6 justify-end mb-6">
               <button
                 type="button"
+                disabled={isSubmitting}
                 onClick={() => {
                   setFieldValue("planeTickets", [
                     ...values.planeTickets,
                     cloneDeep(planeTicketInitialValues),
                   ]);
                 }}
-                className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition"
+                className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
               >
                 + {t("newPassenger")}
               </button>
@@ -588,14 +594,14 @@ const NewTicket = () => {
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => navigate("/panel/aviabiletsale")}
-                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg"
+                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
               >
                 {t("goBack")}
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg"
+                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
               >
                 {t("confirm")}
               </button>

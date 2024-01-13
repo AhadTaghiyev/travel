@@ -61,6 +61,10 @@ export const userService = {
       );
       const { accessToken, refreshToken } = resp.data;
 
+      if (!accessToken || !refreshToken) {
+        return null;
+      }
+
       cookies.set("refresh_token", refreshToken, { path: "/" });
       localStorage.setItem("token", accessToken);
       return accessToken;

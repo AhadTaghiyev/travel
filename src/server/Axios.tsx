@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import { userService } from "./systemUserServer";
+import { SERVER_BASE_URL } from "@/constants";
 
 const Axios = axios.create({
-  baseURL: "http://darxaz-001-site5.itempurl.com/api/v1",
-  // baseURL: 'https://localhost:7154/api/v1',
+  baseURL: SERVER_BASE_URL,
 });
 
 Axios.interceptors.request.use(
@@ -34,6 +34,7 @@ Axios.interceptors.response.use(
 
       if (!access_token) {
         userService.logout();
+        window.location.href = "/auth";
         return Promise.reject(error);
       }
 

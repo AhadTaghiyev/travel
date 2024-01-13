@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
 import { InputBase, Divider } from "@mui/material";
 import { IconButton } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ITableObject } from "./types";
@@ -30,6 +29,7 @@ import axios from "axios";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
+import { SERVER_BASE_URL } from "@/constants";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -58,6 +58,7 @@ export default function Index({
   detailLink,
   current = null,
 }: ITableObject) {
+  const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
@@ -90,9 +91,6 @@ export default function Index({
       console.error;
     }
   }
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleDownload = async () => {
     try {
@@ -109,7 +107,7 @@ export default function Index({
         },
       };
       const response = await axios.get(
-        `http://darxaz-001-site5.itempurl.com/api/${exportLink}`,
+        `${SERVER_BASE_URL}/${exportLink}`,
         config
       );
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -130,14 +128,17 @@ export default function Index({
     flex: 1,
     headerClassName: "header-item",
     width: 140,
-    renderCell: (params: any) => {
+    renderCell: (params) => {
       return (
         <div
-          className="d-flex justify-content-between align-items-center"
+          className="flex justify-between items-center gap-x-3"
           style={{ cursor: "pointer" }}
         >
-          <Link to={`${root}/update/${params.row.id}`}>
-            <BsPencilFill style={{ marginRight: "10px" }} />
+          <Link
+            to={`${root}/update/${params.row.id}`}
+            className="hover:opacity-70 transition"
+          >
+            <BsPencilFill />
           </Link>
           <Link
             to={
@@ -145,8 +146,9 @@ export default function Index({
                 ? detailLink + params.row.id
                 : `${root}/report?tickets=${params.row.id}`
             }
+            className="hover:opacity-70 transition"
           >
-            <BsEyeFill style={{ marginRight: "10px" }} />
+            <BsEyeFill />
           </Link>
           {deleteBtn && (
             <BsFillTrashFill
@@ -154,7 +156,7 @@ export default function Index({
                 setOpen(true);
                 idToDelete.current = params.row.id;
               }}
-              style={{ marginLeft: "10px" }}
+              className="hover:opacity-70 transition"
             />
           )}
         </div>
@@ -164,6 +166,7 @@ export default function Index({
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await apiService.get(
           `${api}/${
@@ -179,24 +182,18 @@ export default function Index({
 
           return newItem;
         });
-        console.log(formattedData);
         setRows(formattedData);
         setTotalRows(response?.data?.totalItems);
         setTotalPages(response?.data?.totalPages);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, [paginationModel.page, startDate, endDate, search, current]);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setPaginationModel({
-      pageSize: +event.target.value,
-      page: 0,
-    });
-  };
 
   return (
     <Grid container spacing={1} className="items-center gap-2 pt-1">
@@ -292,30 +289,29 @@ export default function Index({
         </LocalizationProvider>
       </Grid>
       <Grid sx={{ backgroundColor: "white" }} item xs={12}>
-        <div style={{ height: "55vh", width: "100%" }}>
+        <div style={{ height: "100%", width: "100%" }}>
           <DataGrid
             rowHeight={35}
+            loading={loading}
             columns={[...columns, field]}
             paginationMode="server"
-            rows={rows?.map((row: any, index: number) => ({
+            rows={rows?.map((row, index: number) => ({
               No: index + 1,
-
               ...row,
             }))}
             pageSizeOptions={[10, 50, 100]}
             disableRowSelectionOnClick={true}
             sx={{
               ".MuiDataGrid-columnHeaders": {
+                height: "100%!important",
                 minHeight: "40px!important",
               },
               ".MuiDataGrid-columnHeader": {
                 height: "40px!important",
-                // display: 'none',
                 fontSize: "14px",
                 fontWeight: "bold!important",
               },
               "&.MuiDataGrid-root": {
-                // border: 'none',
                 padding: 0,
               },
               "& .MuiDataGrid-cell": {
@@ -327,12 +323,16 @@ export default function Index({
               "& .MuiDataGrid-cellContent": {
                 fontSize: 12,
               },
-
               "& .header-item": {
                 border: 1,
                 borderRight: 0,
                 borderTop: 0,
                 borderColor: "#e0e0e0",
+                width: "100%",
+                height: "100%",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                minHeight: "160px!important",
               },
             }}
             rowCount={totalRows}

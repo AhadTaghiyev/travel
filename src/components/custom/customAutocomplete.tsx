@@ -39,7 +39,7 @@ export default function CustomAutocomplete({
   };
 
   useEffect(() => {
-    if (initialValue !== null) fetchData();
+    fetchData();
   }, []);
 
   return (
@@ -58,7 +58,7 @@ export default function CustomAutocomplete({
         loadingText={t("Loading...")}
         defaultValue={initialValue}
         onChange={change}
-        onOpen={fetchData}
+        // onOpen={fetchData}
         options={data}
         style={textStyling}
         sx={{ width: "100%" }}
