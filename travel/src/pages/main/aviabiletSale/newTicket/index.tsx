@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FaMinusSquare } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useCallback } from "react";
 import * as Yup from "yup";
 
@@ -93,19 +93,22 @@ const NewTicket = () => {
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    async (
-      values: IInvoiceModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
-      const promise = apiService.post(`/PlaneTickets/Create`, values);
+    (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const promise = apiService
+        .post(`/PlaneTickets/Create`, values)
+        .then((response) => {
+          if (response.isSuccess) {
+            toast.success(t("Ticket created"));
+            navigate("/panel/aviabiletsale");
+          } else {
+            toast.error(response.message);
+          }
+        })
+        .finally(() => setSubmitting(false));
 
       toast.promise(promise, {
-        pending: t("Loading..."),
-        success: t("Uğurla yaradıldı"),
-        error: t("Xəta baş verdi"),
+        loading: t("Loading..."),
       });
-
-      setSubmitting(false);
     },
     []
   );
