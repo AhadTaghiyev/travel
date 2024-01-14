@@ -1,18 +1,25 @@
 // @ts-nocheck
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import { FiDownload } from "react-icons/fi";
-import { AiOutlineMail } from "react-icons/ai";
-import img from "../../../assets/abc_home-1.jpg";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import SimpleTable from "../simpleTable";
-
-import { IReportModel } from "./types";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { apiService } from "../../../server/apiServer";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { AiOutlineMail } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
+import { FiDownload } from "react-icons/fi";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { format } from "date-fns";
+import { toast } from "sonner";
+
+import { UserContext } from "@/store/UserContext";
+import { apiService } from "@/server/apiServer";
+import { IReportModel } from "./types";
+
+import Loading from "@/components/custom/loading";
+import SimpleTable from "../simpleTable";
 import ReportTable from "../reportTable";
+
+import img from "@/assets/abc_home-1.jpg";
 
 const customerProperties = [
   {
@@ -33,80 +40,54 @@ const customerProperties = [
   },
 ];
 
-export default function Index({ headers, api, service }: IReportModel) {
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function Index({ headers, api }: IReportModel) {
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
+  const { t } = useTranslation();
 
-  const [tickets, setTickets] = useState<Array<any>>([]);
-  const [customer, setCustomer] = useState<any>({});
-
-  const [currentUser, setCurrentUser] = useState<any>({});
-
-  const [totals, setTotals] = useState({
-    totalAmount: 0,
-    totalDebt: 0,
-    totalPaidAmount: 0,
-  });
+  const { user: currentUser } = useContext(UserContext);
 
   useEffect(() => {
-    async function fetchCurrentUser() {
-      try {
-        const res = await apiService.get("Identities/GetCurrentUser");
-        if (res && res.data) {
-          setCurrentUser(res.data);
-        }
-      } catch (error) {
-        console.error("Error fetching current user:", error);
-      }
-    }
-    fetchCurrentUser();
+    getData();
   }, []);
 
-  useEffect(() => {
-    const tickets = searchParams.get("tickets");
+  async function getData() {
+    setLoading(true);
+    const id = searchParams.get("tickets");
+    const res = await apiService.get(`${api}/${id}`);
 
-    setFetchedTickets();
+    if (res.status === 200) {
+      const { data } = res;
 
-    async function fetchTicket(id: string) {
-      const res = await apiService.get(`${api}/${id}`);
-      return res.data;
+      setData({
+        simpleTable: {
+          ...data.customer,
+          date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
+        },
+        totals: {
+          totalSellingPrice: data.totalSellingPrice,
+          totalPrice: data.totalPrice,
+          totalDiscountPrice: data.totalDiscountPrice,
+        },
+        tickets: data.planeTickets.map((ticket) => ({
+          ...ticket,
+        })),
+      });
+    } else {
+      toast.error(t("Xəta baş verdi"));
     }
 
-    async function setFetchedTickets() {
-      if (tickets) {
-        const ticketsIdsArray: string[] = tickets?.split(",");
-
-        const ticketsResult = [];
-        const ticketsTotals = {
-          totalAmount: 0,
-          totalDebt: 0,
-          totalPaidAmount: 0,
-        };
-
-        for (const item of ticketsIdsArray) {
-          const result = await fetchTicket(item);
-
-          ticketsResult.push(result);
-          if (service === "coorperative") {
-            ticketsTotals.totalAmount += result.sellingPrice;
-            ticketsTotals.totalPaidAmount += result.commission;
-            ticketsTotals.totalDebt += result.statutoryPrice;
-          } else {
-            ticketsTotals.totalAmount += result.sellingPrice;
-            ticketsTotals.totalPaidAmount += result.discount;
-            ticketsTotals.totalDebt += result.commonPrice;
-          }
-        }
-
-        setTickets(ticketsResult);
-        setTotals(ticketsTotals);
-        setCustomer(ticketsResult[0].customer);
-      }
-    }
-  }, [searchParams]);
+    setLoading(false);
+  }
 
   const handlePrint = () => {
     window.print();
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container maxWidth="xl" sx={{ mb: 5, backgroundColor: "white" }}>
@@ -115,14 +96,18 @@ export default function Index({ headers, api, service }: IReportModel) {
         spacing={3}
         sx={{ mb: 2, width: "100%", borderTop: "1px solid #d8d3d3", mt: 1 }}
       >
-        <Grid item xs={12} sx={{ display: "flex", justifyContent: "end" }}>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "end" }}
+          className="removeFromPrint"
+        >
           {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
           <Button
             variant="text"
             color="inherit"
             sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
           >
-            {" "}
             <AiOutlineMail style={{ marginRight: "8px" }} /> Send mail
           </Button>
           <Button
@@ -147,11 +132,11 @@ export default function Index({ headers, api, service }: IReportModel) {
           </Grid>
           <Grid item xs={5}>
             <Typography variant="h4" gutterBottom align="right">
-              {currentUser.companyName}
+              {currentUser?.companyName}
             </Typography>
             <Typography gutterBottom align="right">
-              Email: {currentUser.companyEmail} | Tel:{" "}
-              {currentUser.companyPhone}
+              Email: {currentUser?.companyEmail} | Tel:{" "}
+              {currentUser?.companyPhone}
             </Typography>
           </Grid>
         </Grid>
@@ -161,17 +146,18 @@ export default function Index({ headers, api, service }: IReportModel) {
               <SimpleTable
                 header="Müştəri məlumatları"
                 properties={customerProperties}
-                values={{
-                  ...customer,
-                  date: new Date(tickets[0]?.date).toLocaleDateString(),
-                }}
+                values={data?.simpleTable}
               />
             </Grid>
           </Grid>
         </Container>
         <Container maxWidth="xl">
           <Grid sx={{ backgroundColor: "white" }} container>
-            <ReportTable headers={headers} tickets={tickets} totals={totals} />
+            <ReportTable
+              headers={headers}
+              tickets={data?.tickets}
+              totals={data.totals}
+            />
           </Grid>
         </Container>
       </Grid>

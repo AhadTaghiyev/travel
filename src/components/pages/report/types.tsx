@@ -1,11 +1,9 @@
-export interface IReportModel{
-    headers : IReportTableHeader[];
-    api: string;
-    service : string;
+export interface IReportModel {
+  headers: IReportTableHeader[];
+  api: string;
 }
 
 export interface IReportTableHeader {
-    fieldName: string,
-    propertyName : string,
- 
+  fieldName: string;
+  propertyName: string;
 }

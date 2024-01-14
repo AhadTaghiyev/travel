@@ -2,12 +2,12 @@ import styles from "./sidebar.module.css";
 import bubble from "@/assets/bubble.png";
 import { SidebarItem as SidebarItemType } from "./types";
 import { SidebarItem } from "./sidebarItem";
+import { cn } from "@/helpers/utils";
 
 export default function Sidebar({ items }: SidebarItemType) {
   return (
     <div
-      id="sidebar"
-      className={styles.sidebar}
+      className={cn(styles.sidebar, "removeFromPrint")}
       style={{ backgroundColor: "black" }}
     >
       <div className={styles.sidebarHeading}>

@@ -5,23 +5,21 @@ import Navbar from "../../components/layout/main/components/navbar";
 import { sidebarItems } from "./sidebarItems";
 
 export default function Index() {
-
   const navigate = useNavigate();
 
-  useEffect(()=> {
-    (localStorage.getItem("role") !== "Admin") && navigate("/auth")
-  }, [])
+  useEffect(() => {
+    localStorage.getItem("role") !== "Admin" && navigate("/auth");
+  }, []);
 
   return (
     <>
-            <Sidebar items={sidebarItems} color='rgb(42 98 137)'/>
-            <div style={{paddingLeft : '228px'}}>
-              <Navbar isAdmin={true}/>
-              <div style={{paddingTop: '80px'}}>
-                <Outlet/>
-              </div>
-            </div>
-          
+      <Sidebar items={sidebarItems} color="rgb(42 98 137)" />
+      <div style={{ paddingLeft: "228px" }}>
+        <Navbar isAdmin />
+        <div style={{ paddingTop: "80px" }}>
+          <Outlet />
+        </div>
+      </div>
     </>
-  )
+  );
 }

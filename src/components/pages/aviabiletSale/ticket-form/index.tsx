@@ -28,7 +28,6 @@ const PlaneTicketSchema = Yup.object().shape({
   supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
   personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
   airWayId: Yup.string().required("Aviaşirkət seçilməlidir"),
-  // referanceNo: Yup.string().required("Referans nömrəsi daxil edilməlidir"),
   invoiceDirections: Yup.array().of(
     Yup.object().shape({
       flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
@@ -37,25 +36,26 @@ const PlaneTicketSchema = Yup.object().shape({
   ),
 });
 
-const CreateTicketSchema = Yup.object().shape({
-  customerId: Yup.string().required("Müştəri seçilməlidir"),
-  date: Yup.date().required(),
-  deadLine: Yup.date().required(),
-  explanation: Yup.string().nullable(),
-  isSupplierPaid: Yup.boolean(),
-  isCustomerPaid: Yup.boolean(),
-  paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-    return isCustomerPaid
-      ? sch.required("Ödəniş növü seçilməlidir")
-      : sch.notRequired();
-  }),
-  paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-    return isCustomerPaid
-      ? sch.required("Məbləğ daxil edilməlidir")
-      : sch.notRequired();
-  }),
-  planeTickets: Yup.array().of(PlaneTicketSchema),
-});
+const getTicketSchema = (isEdit: boolean) =>
+  Yup.object().shape({
+    customerId: Yup.string().required("Müştəri seçilməlidir"),
+    date: Yup.date().required(),
+    deadLine: Yup.date().required(),
+    explanation: Yup.string().nullable(),
+    isSupplierPaid: Yup.boolean(),
+    isCustomerPaid: Yup.boolean(),
+    paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Ödəniş növü seçilməlidir")
+        : sch.notRequired();
+    }),
+    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Məbləğ daxil edilməlidir")
+        : sch.notRequired();
+    }),
+    planeTickets: Yup.array().of(PlaneTicketSchema),
+  });
 
 interface IAviabiletTicketFormProps {
   isEdit?: boolean;
@@ -78,7 +78,7 @@ const AviabiletTicketForm = ({
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={CreateTicketSchema}
+      validationSchema={getTicketSchema(isEdit)}
     >
       {({
         values,
@@ -90,7 +90,6 @@ const AviabiletTicketForm = ({
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
-          {JSON.stringify(errors)}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
             <div className="w-full">
               <CustomAutocomplete

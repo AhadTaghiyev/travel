@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
-import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
 import { IInvoiceModel } from "../types";
 
 import AviabiletTicketForm from "@/components/pages/aviabiletSale/ticket-form";
+import Loading from "@/components/custom/loading";
 
 const UpdateTicket = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,16 +61,7 @@ const UpdateTicket = () => {
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
         {t("Aviabilet güncəlləməsi")}
       </h1>
-      {loading && (
-        <div className="sweet-loading flex flex-col items-center justify-center mt-40  animate-pulse">
-          <ClipLoader
-            size={50}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-          <span className="mt-2 tracking-widest">Loading...</span>
-        </div>
-      )}
+      {loading && <Loading />}
       {!loading && ticket && (
         <AviabiletTicketForm
           isEdit

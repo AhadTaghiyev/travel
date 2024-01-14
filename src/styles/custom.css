@@ -290,3 +290,20 @@ button {
   font-weight: 500;
   line-height: 1.75;
 }
+
+.main {
+  width: 80%;
+  position: absolute;
+  right: 0;
+}
+
+@media print {
+  .removeFromPrint {
+    display: none !important;
+  }
+  .main {
+    width: 100%;
+    position: relative;
+    left: 0;
+  }
+}

@@ -32,7 +32,7 @@ export const userService = {
   },
   get: async function Get(): Promise<any> {
     try {
-      return await (
+      return (
         await Axios.get(`/Identities/GetCurrentUser`, {
           headers: {
             "Access-Control-Allow-Origin": "*",

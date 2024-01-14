@@ -24,9 +24,6 @@ export default function index({
   values,
   details,
 }: ISimpleTable) {
-  console.log(properties);
-  console.log(values);
-
   return (
     <div style={tableWrapper}>
       <h3 style={headerStyle}>{header}</h3>
@@ -59,7 +56,6 @@ export default function index({
           )}
         </Grid>
       ))}
-      <footer></footer>
     </div>
   );
 }

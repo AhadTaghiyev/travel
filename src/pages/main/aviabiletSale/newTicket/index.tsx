@@ -26,14 +26,13 @@ export const planeTicketInitialValues: IPlaneTicketModel = {
   supplierId: null,
   personalId: null,
   airWayId: null,
-  referanceNo: 0,
   invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
 };
 
 const initialValues: IInvoiceModel = {
   customerId: null,
   date: new Date(),
-  deadline: new Date(),
+  deadLine: new Date(),
   explanation: "",
   isSupplierPaid: false,
   isCustomerPaid: false,

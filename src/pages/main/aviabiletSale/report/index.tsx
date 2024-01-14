@@ -1,22 +1,23 @@
-// @ts-nocheck
-import Report from "../../../../components/pages/report";
+import Report from "@/components/pages/report";
 
 export default function index() {
   return (
-    <Report
-      headers={[
-        { fieldName: "Invoice", propertyName: "referanceNo" },
-        { fieldName: "Hava yolu", propertyName: "airWay.name" },
-        { fieldName: "Sərnişin adı", propertyName: "passengerName" },
-        { fieldName: "Bilet nömrəsi", propertyName: "ticketNo" },
-        {
-          fieldName: "Uçuş istiqaməti və tarix",
-          propertyName: "invoiceDirections",
-        },
-        { fieldName: "Satış qiyməti", propertyName: "sellingPrice" },
-        // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
-      ]}
-      api="/PlaneTickets/Get"
-    />
+    <div className="report-table">
+      <Report
+        headers={[
+          { fieldName: "Invoice", propertyName: "invoiceNo" },
+          { fieldName: "Hava yolu", propertyName: "airway" },
+          { fieldName: "Sərnişin adı", propertyName: "passanger" },
+          { fieldName: "Bilet nömrəsi", propertyName: "ticketNo" },
+          {
+            fieldName: "Uçuş istiqaməti və tarix",
+            propertyName: "invoiceDirection",
+          },
+          { fieldName: "Satış qiyməti", propertyName: "sellingPrice" },
+          // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
+        ]}
+        api="/PlaneTickets/GetDetailAsync"
+      />
+    </div>
   );
 }
