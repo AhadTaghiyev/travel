@@ -16,42 +16,33 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
-    field: "customer",
+    field: "cutomerName",
     headerName: t("customer"),
     flex: 1,
     headerClassName: "header-item",
-    valueGetter: (params) => params.row?.customer?.fullName,
   },
   {
     field: "ticketNo",
     headerName: t("ticketNo"),
     flex: 1,
     headerClassName: "header-item",
-    valueGetter: (params) =>
-      params.row?.planeTickets.map((item) => item.ticketNo).join(),
   },
   {
-    field: "passengerName",
+    field: "passangerNames",
     headerName: t("passengerName"),
     flex: 1,
     headerClassName: "header-item",
-    valueGetter: (params) =>
-      params.row?.planeTickets.map((item) => item.passengerName).join(),
   },
   {
-    field: "Amount",
+    field: "totalAmount",
     headerName: t("commonPrice"),
     flex: 1,
     headerClassName: "header-item",
-    valueGetter: (params) =>
-      params.row?.planeTickets.reduce((acc, item) => acc + item.commonPrice, 0),
   },
   {
     field: "personal",
     headerName: t("personal"),
     flex: 1,
     headerClassName: "header-item",
-    valueGetter: (params) =>
-      params.row?.planeTickets.map((item) => item.personal.fullName).join(),
   },
 ];
