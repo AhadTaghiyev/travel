@@ -21,21 +21,21 @@ import ReportTable from "../reportTable";
 
 import img from "@/assets/abc_home-1.jpg";
 
-const customerProperties = [
+const getCustomerProperties = (t) => [
   {
-    fieldName: "Invoice Tarixi",
+    fieldName: t("Invoice Tarixi"),
     propertyName: "date",
   },
   {
-    fieldName: "Ad",
+    fieldName: t("Ad"),
     propertyName: "fullName",
   },
   {
-    fieldName: "Telefon",
+    fieldName: t("Telefon"),
     propertyName: "phoneNumber",
   },
   {
-    fieldName: "Email",
+    fieldName: t("Email"),
     propertyName: "email",
   },
 ];
@@ -108,7 +108,7 @@ export default function Index({ headers, api }: IReportModel) {
             color="inherit"
             sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
           >
-            <AiOutlineMail style={{ marginRight: "8px" }} /> Send mail
+            <AiOutlineMail style={{ marginRight: "8px" }} /> {t("Send mail")}
           </Button>
           <Button
             onClick={handlePrint}
@@ -116,7 +116,7 @@ export default function Index({ headers, api }: IReportModel) {
             color="inherit"
             sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
           >
-            <FiDownload style={{ marginRight: "8px" }} /> Print
+            <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
           </Button>
         </Grid>
         <Grid
@@ -144,8 +144,8 @@ export default function Index({ headers, api }: IReportModel) {
           <Grid container spacing={3}>
             <Grid sx={{ backgroundColor: "white" }} item xs={6}>
               <SimpleTable
-                header="Müştəri məlumatları"
-                properties={customerProperties}
+                header={t("Müştəri məlumatları")}
+                properties={getCustomerProperties(t)}
                 values={data?.simpleTable}
               />
             </Grid>

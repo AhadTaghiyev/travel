@@ -1,19 +1,21 @@
 import Report from "@/components/pages/report";
+import { useTranslation } from "react-i18next";
 
 export default function index() {
+  const { t } = useTranslation();
   return (
     <div className="report-table">
       <Report
         headers={[
-          { fieldName: "Invoice", propertyName: "invoiceNo" },
-          { fieldName: "Hava yolu", propertyName: "airway" },
-          { fieldName: "Sərnişin adı", propertyName: "passanger" },
-          { fieldName: "Bilet nömrəsi", propertyName: "ticketNo" },
+          { fieldName: t("Invoice"), propertyName: "invoiceNo" },
+          { fieldName: t("Hava yolu"), propertyName: "airway" },
+          { fieldName: t("Sərnişin adı"), propertyName: "passanger" },
+          { fieldName: t("Bilet nömrəsi"), propertyName: "ticketNo" },
           {
-            fieldName: "Uçuş istiqaməti və tarix",
+            fieldName: t("Uçuş istiqaməti və tarix"),
             propertyName: "invoiceDirection",
           },
-          { fieldName: "Satış qiyməti", propertyName: "sellingPrice" },
+          { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
           // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
         ]}
         api="/PlaneTickets/GetDetailAsync"

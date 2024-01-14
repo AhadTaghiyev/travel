@@ -80,5 +80,19 @@
     "Haqqımızda": "About us",
     "Bizimlə əlaqə": "Contact us",
     "Something went wrong": "Something went wrong",
-    "Aviabilet güncəlləməsi": "Air ticket update"
+    "Aviabilet güncəlləməsi": "Air ticket update",
+    "Hava yolu": "Airline",
+    "Sərnişin adı": "Passenger name",
+    "Bilet nömrəsi": "Ticket number",
+    "Uçuş istiqaməti və tarix": "Flight direction and date",
+    "Satış qiyməti": "Sale price",
+    "Invoice Tarixi": "Invoice Date",
+    "Ad": "Name",
+    "Telefon": "Phone",
+    "Email": "Email",
+    "Send mail": "Send mail",
+    "Print": "Print",
+    "Müştəri məlumatları": "Customer information",
+    "Endirim": "Discount",
+    "Net qiymət": "Net price"
 }

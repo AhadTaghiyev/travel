@@ -29,6 +29,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
+    localStorage.setItem("language", language);
   };
   const role = localStorage.getItem("role");
   const userName = localStorage.getItem("username");

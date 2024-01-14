@@ -80,5 +80,19 @@
     "Haqqımızda": "O нас",
     "Bizimlə əlaqə": "Связаться c нами",
     "Something went wrong": "Что-то пошло не так",
-    "Aviabilet güncəlləməsi": "Обновление авиабилета"
+    "Aviabilet güncəlləməsi": "Обновление авиабилета",
+    "Hava yolu": "Авиакомпания",
+    "Sərnişin adı": "Имя пассажира",
+    "Bilet nömrəsi": "Номер билета",
+    "Uçuş istiqaməti və tarix": "Направление и дата полета",
+    "Satış qiyməti": "Цена продажи",
+    "Invoice Tarixi": "Дата счета",
+    "Ad": "Имя",
+    "Telefon": "Телефон",
+    "Email": "Email",
+    "Send mail": "Отправить письмо",
+    "Print": "Печать",
+    "Müştəri məlumatları": "Информация o клиенте",
+    "Endirim": "Скидка",
+    "Net qiymət": "Чистая цена"
 }

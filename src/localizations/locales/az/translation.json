@@ -80,5 +80,20 @@
     "Haqqımızda": "Haqqımızda",
     "Bizimlə əlaqə": "Bizimlə əlaqə",
     "Something went wrong": "Xəta baş verdi",
-    "Aviabilet güncəlləməsi": "Aviabilet güncəlləməsi"
+    "Aviabilet güncəlləməsi": "Aviabilet güncəlləməsi",
+
+    "Hava yolu": "Hava yolu",
+    "Sərnişin adı": "Sərnişin adı",
+    "Bilet nömrəsi": "Bilet nömrəsi",
+    "Uçuş istiqaməti və tarix": "Uçuş istiqaməti və tarix",
+    "Satış qiyməti": "Satış qiyməti",
+    "Invoice Tarixi": "Faktura Tarixi",
+    "Ad": "Ad",
+    "Telefon": "Telefon",
+    "Email": "Email",
+    "Send mail": "Mail göndər",
+    "Print": "Çap et",
+    "Müştəri məlumatları": "Müştəri məlumatları",
+    "Endirim": "Endirim",
+    "Net qiymət": "Net qiymət"
 }

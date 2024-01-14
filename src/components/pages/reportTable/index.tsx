@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function getNestedProperty(obj: any, path: string): any {
   const keys = path.split(".");
@@ -33,6 +34,7 @@ function formatDate(dateString: string): string {
 
 export default function Index({ headers, tickets, totals }: any) {
   const [emptyCells, setEmptyCells] = useState<any>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const emptCells = [];
@@ -113,7 +115,7 @@ export default function Index({ headers, tickets, totals }: any) {
                   sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
                   align="left"
                 >
-                  Satış qiyməti:{" "}
+                  {t("Satış qiyməti")}:
                 </TableCell>
                 <TableCell
                   size="medium"
@@ -141,7 +143,7 @@ export default function Index({ headers, tickets, totals }: any) {
                   sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
                   align="left"
                 >
-                  Endirim:{" "}
+                  {t("Endirim")}:
                 </TableCell>
                 <TableCell
                   size="medium"
@@ -169,7 +171,7 @@ export default function Index({ headers, tickets, totals }: any) {
                   sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
                   align="left"
                 >
-                  Net qiymət:{" "}
+                  {t("Net qiymət")}:
                 </TableCell>
                 <TableCell
                   size="medium"
