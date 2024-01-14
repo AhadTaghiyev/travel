@@ -40,8 +40,8 @@ const PlaneTicketSchema = Yup.object().shape({
 const CreateTicketSchema = Yup.object().shape({
   customerId: Yup.string().required("Müştəri seçilməlidir"),
   date: Yup.date().required(),
-  deadline: Yup.date().required(),
-  explanation: Yup.string(),
+  deadLine: Yup.date().required(),
+  explanation: Yup.string().nullable(),
   isSupplierPaid: Yup.boolean(),
   isCustomerPaid: Yup.boolean(),
   paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
@@ -58,6 +58,7 @@ const CreateTicketSchema = Yup.object().shape({
 });
 
 interface IAviabiletTicketFormProps {
+  isEdit?: boolean;
   initialValues: IInvoiceModel;
   onSubmit: (
     values: IInvoiceModel,
@@ -68,6 +69,7 @@ interface IAviabiletTicketFormProps {
 const AviabiletTicketForm = ({
   initialValues,
   onSubmit,
+  isEdit = false,
 }: IAviabiletTicketFormProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -88,6 +90,7 @@ const AviabiletTicketForm = ({
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
+          {JSON.stringify(errors)}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
             <div className="w-full">
               <CustomAutocomplete
@@ -116,12 +119,12 @@ const AviabiletTicketForm = ({
             <div className="w-full h-full">
               <CustomDateTimePicker
                 label={t("deadline")}
-                value={values.deadline}
+                value={values.deadLine}
                 change={(data) => {
-                  setFieldValue("deadline", data ?? new Date());
+                  setFieldValue("deadLine", data ?? new Date());
                 }}
-                hasErrorMessages={!!errors.deadline && !!touched.deadline}
-                errorMessages={[t(errors.deadline?.toString())]}
+                hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
+                errorMessages={[t(errors.deadLine?.toString())]}
               />
             </div>
             <div className="w-full">
@@ -143,6 +146,7 @@ const AviabiletTicketForm = ({
                     name="isSupplierPaid"
                     checked={values.isSupplierPaid}
                     onChange={handleChange}
+                    disabled={isEdit}
                   />
                 }
                 label={t("supplierPayment")}
@@ -152,6 +156,7 @@ const AviabiletTicketForm = ({
               className={cn(
                 "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
                 values.isCustomerPaid &&
+                  !isEdit &&
                   "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
               )}
             >
@@ -162,11 +167,14 @@ const AviabiletTicketForm = ({
                     name="isCustomerPaid"
                     checked={values.isCustomerPaid}
                     onChange={handleChange}
+                    disabled={isEdit}
                   />
                 }
-                label={values.isCustomerPaid ? "" : t("customerPayment")}
+                label={
+                  values.isCustomerPaid && !isEdit ? "" : t("customerPayment")
+                }
               />
-              {values.isCustomerPaid && (
+              {values.isCustomerPaid && !isEdit && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
                     <CustomAutocomplete
@@ -277,7 +285,6 @@ const AviabiletTicketForm = ({
                     ]}
                   />
                 </div>
-
                 <div className="w-full">
                   <CustomAutocomplete
                     api="AirWays/GetAll/1"

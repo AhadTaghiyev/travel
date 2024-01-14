@@ -12,19 +12,7 @@ import { IReportModel } from "./types";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiService } from "../../../server/apiServer";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import ReportTable from "../reportTable";
-import { log } from "console";
-
-const footerStyle = {
-  background: "#F8F9FA",
-  padding: "10px 4px",
-  display: "flex",
-  justifyContent: "center",
-};
 
 const customerProperties = [
   {
@@ -80,7 +68,7 @@ export default function Index({ headers, api, service }: IReportModel) {
 
     async function fetchTicket(id: string) {
       const res = await apiService.get(`${api}/${id}`);
-      return res.data.data;
+      return res.data;
     }
 
     async function setFetchedTickets() {
@@ -96,6 +84,7 @@ export default function Index({ headers, api, service }: IReportModel) {
 
         for (const item of ticketsIdsArray) {
           const result = await fetchTicket(item);
+
           ticketsResult.push(result);
           if (service === "coorperative") {
             ticketsTotals.totalAmount += result.sellingPrice;
@@ -172,7 +161,10 @@ export default function Index({ headers, api, service }: IReportModel) {
               <SimpleTable
                 header="Müştəri məlumatları"
                 properties={customerProperties}
-                values={customer}
+                values={{
+                  ...customer,
+                  date: new Date(tickets[0]?.date).toLocaleDateString(),
+                }}
               />
             </Grid>
           </Grid>

@@ -1,7 +1,9 @@
 import Container from "@mui/material/Container";
+import { useTranslation } from "react-i18next";
+
 import Table from "../../../components/pages/table";
 import { columns } from "./table/tableColumns";
-import { useTranslation } from "react-i18next";
+
 export default function Index() {
   const { t } = useTranslation();
 

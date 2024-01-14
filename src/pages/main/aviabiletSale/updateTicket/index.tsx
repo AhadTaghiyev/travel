@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormikHelpers, FormikValues } from "formik";
+import { useTranslation } from "react-i18next";
+import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
-import { t } from "i18next";
 
 import { apiService } from "@/server/apiServer";
 import { IInvoiceModel } from "../types";
 
 import AviabiletTicketForm from "@/components/pages/aviabiletSale/ticket-form";
-import { ClipLoader } from "react-spinners";
 
 const UpdateTicket = () => {
   const { id } = useParams<{ id: string }>();
   const [ticket, setTicket] = useState<IInvoiceModel>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getTicketInfo(id);
@@ -37,22 +38,22 @@ const UpdateTicket = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      // const promise = apiService
-      //   .post(`/PlaneTickets/Create`, values)
-      //   .then((response) => {
-      //     if (response.status === 200) {
-      //       toast.success(t("Ticket created"));
-      //       navigate("/panel/aviabiletsale");
-      //     } else {
-      //       toast.error(response.message);
-      //     }
-      //   })
-      //   .finally(() => setSubmitting(false));
-      // toast.promise(promise, {
-      //   loading: t("Loading..."),
-      // });
+      const promise = apiService
+        .put(`/PlaneTickets/Update/${id}`, values)
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(t("Ticket updated"));
+            navigate("/panel/aviabiletsale");
+          } else {
+            toast.error(response.message);
+          }
+        })
+        .finally(() => setSubmitting(false));
+      toast.promise(promise, {
+        loading: t("Loading..."),
+      });
     },
-    []
+    [id]
   );
 
   return (
@@ -71,7 +72,11 @@ const UpdateTicket = () => {
         </div>
       )}
       {!loading && ticket && (
-        <AviabiletTicketForm initialValues={ticket} onSubmit={onSubmit} />
+        <AviabiletTicketForm
+          isEdit
+          initialValues={ticket}
+          onSubmit={onSubmit}
+        />
       )}
     </div>
   );

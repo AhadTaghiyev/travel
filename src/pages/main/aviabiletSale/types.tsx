@@ -1,10 +1,10 @@
 export interface IInvoiceModel {
   date: Date;
-  deadline: Date;
+  deadLine: Date;
   paymentId: number;
   customerId: number;
   paidAmount: number;
-  explanation: string;
+  explanation?: string;
   isCustomerPaid: boolean;
   isSupplierPaid: boolean;
   planeTickets: IPlaneTicketModel[];
@@ -17,11 +17,9 @@ export interface IPlaneTicketModel {
   sellingPrice: number;
   discount: number;
   commonPrice: number;
-  // explanation: string;
   supplierId: number;
   personalId: number;
   airWayId: number;
-  referanceNo: number;
   invoiceDirections: IInvoiceDirections[];
 }
 
