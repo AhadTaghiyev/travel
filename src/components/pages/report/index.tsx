@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AiOutlineMail } from "react-icons/ai";
@@ -45,6 +45,7 @@ export default function Index({ headers, api }: IReportModel) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { user: currentUser } = useContext(UserContext);
 
@@ -57,27 +58,29 @@ export default function Index({ headers, api }: IReportModel) {
     const id = searchParams.get("tickets");
     const res = await apiService.get(`${api}/${id}`);
 
-    if (res.status === 200) {
-      const { data } = res;
-
-      setData({
-        simpleTable: {
-          ...data.customer,
-          date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
-        },
-        totals: {
-          totalSellingPrice: data.totalSellingPrice,
-          totalPrice: data.totalPrice,
-          totalDiscountPrice: data.totalDiscountPrice,
-        },
-        tickets: data.planeTickets.map((ticket) => ({
-          ...ticket,
-        })),
-      });
-    } else {
-      toast.error(t("Xəta baş verdi"));
+    if (res.status !== 200) {
+      toast.error(t("Something went wrong"));
+      setTimeout(() => {
+        navigate("/panel/aviabiletSale");
+      }, 1000);
+      return;
     }
+    const { data } = res;
 
+    setData({
+      simpleTable: {
+        ...data.customer,
+        date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
+      },
+      totals: {
+        totalSellingPrice: data.totalSellingPrice,
+        totalPrice: data.totalPrice,
+        totalDiscountPrice: data.totalDiscountPrice,
+      },
+      tickets: data.planeTickets.map((ticket) => ({
+        ...ticket,
+      })),
+    });
     setLoading(false);
   }
 

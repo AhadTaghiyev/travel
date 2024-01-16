@@ -52,7 +52,7 @@ const NewTicket = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Ticket created"));
-            navigate("/panel/aviabiletsale");
+            navigate(`/panel/aviabiletsale/report?tickets=${response.data}`);
           } else {
             toast.error(response.message);
           }

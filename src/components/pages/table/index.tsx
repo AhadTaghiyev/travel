@@ -250,6 +250,7 @@ export default function Index({
                   InputProps: { sx: { fontSize: "12px" } },
                 },
               }}
+              value={startDate}
               sx={{ width: "100%" }}
               label=""
               onChange={(newValue) => {
@@ -274,6 +275,7 @@ export default function Index({
                   InputProps: { sx: { fontSize: "12px" } },
                 },
               }}
+              value={endDate}
               sx={{ width: "100%" }}
               label=""
               onChange={(newValue) => {

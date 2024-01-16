@@ -35,7 +35,7 @@ export default function Index() {
         columns={columns}
         api={"/PlaneTickets/GetAll"}
         buttonText="Hesabat"
-        deleteApi="/PlaneTickets/DeleteTicket"
+        deleteApi="/PlaneTickets/Delete"
         root="/panel/aviabiletsale"
       />
     </Container>

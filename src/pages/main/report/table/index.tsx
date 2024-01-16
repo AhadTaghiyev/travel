@@ -7,7 +7,7 @@ export default function Index() {
       columns={columns}
       api={"/PlaneTickets/GetAll"}
       buttonText="Aviabilet"
-      deleteApi="/PlaneTickets/DeleteTicket"
+      deleteApi="/PlaneTickets/Delete"
       root="/panel/aviabiletsale"
     />
   );

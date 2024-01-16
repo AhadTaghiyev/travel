@@ -1,33 +1,29 @@
-export interface ICorperativeTicket {
-    ticketNo: string,
-    purchasePrice: number,
-    sellingPrice: number,
-    commission: number,
-    statutoryPrice: number,
-    fee: number,
-    paidAmount: number,
-    note: string,
-    deadline: Date | null,
-    isSupplierPaid: boolean,
-    isCustomerPaid: boolean,
-    airWayId: string,
-    customerId: string,
-    supplierId: string,
-    paymentId: string,
-    invoiceNo?:number|null,
-    supplierName?:string,
-    customerPhone?:string
-    customerEmail?:string,
-    referanceNo?:number,
-    passengerName?:string,
-    customerName?:string,
-    date:Date | null,
-    direction: string,
-    invoiceDirections: InvoiceDirection[] | null,
-    debt?:number
+export interface IInvoiceModel {
+  date: Date;
+  deadLine: Date;
+  paymentId: number;
+  customerId: number;
+  paidAmount: number;
+  explanation?: string;
+  isCustomerPaid: boolean;
+  isSupplierPaid: boolean;
+  planeTickets: ICorporateTicketModel[];
 }
 
-export interface InvoiceDirection {
-    flightDate:Date | null,
-    direction:string | null
-  }
+export interface ICorporateTicketModel {
+  ticketNo: string;
+  passengerName: string;
+  purchasePrice: number;
+  sellingPrice: number;
+  discount: number;
+  commonPrice: number;
+  supplierId: number;
+  personalId: number;
+  airWayId: number;
+  invoiceDirections: IInvoiceDirections[];
+}
+
+export interface IInvoiceDirections {
+  flightDate: Date;
+  direction: string;
+}

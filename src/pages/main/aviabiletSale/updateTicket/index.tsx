@@ -24,8 +24,6 @@ const UpdateTicket = () => {
   async function getTicketInfo(id: string) {
     const response = await apiService.get(`/PlaneTickets/Get/${id}`);
     if (response.status === 200) {
-      console.log(ticket);
-
       setTicket(response.data);
       setLoading(false);
     } else {
@@ -38,6 +36,8 @@ const UpdateTicket = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      values.isCustomerPaid = undefined;
+      values.isSupplierPaid = undefined;
       const promise = apiService
         .put(`/PlaneTickets/Update/${id}`, values)
         .then((response) => {

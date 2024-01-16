@@ -1,8 +1,9 @@
 import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
 
-import Table from "../../../components/pages/table";
-import { columns } from "./table/tableColumns";
+import { columns } from "./columns";
+
+import Table from "@/components/pages/table";
 
 export default function Index() {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function Index() {
         columns={columnsresult}
         api={"/PlaneTickets/GetAllFilter"}
         buttonText="Aviabilet"
-        deleteApi="/PlaneTickets/DeleteTicket"
+        deleteApi="/PlaneTickets/Delete"
         root="/panel/aviabiletsale"
       />
     </Container>

@@ -1,24 +1,24 @@
 import Container from "@mui/material/Container";
-import Table from "../../../components/pages/table";
-import { columns } from "./tableColumns";
-import PageTitle from "../../../components/pages/pageTitle";
-import {
-    CoorperativeTicketBreadCrumb,
-    homeBreadCrumb,
-} from "../../../routes/breadcrumbs";
+import { useTranslation } from "react-i18next";
+
+import Table from "@/components/pages/table";
+import { columns } from "./columns";
 
 export default function Index() {
-    return (
-        <Container maxWidth="xl">
-         
-            <Table
-                exportLink='v1/CooperativeTicket/Export/Export'
-                columns={columns}
-                api={"/CooperativeTicket/GetAllFilter"}
-                root={"/panel/corperativeTicket"}
-                deleteApi="/CooperativeTicket/DeleteCooperativeTicket"
-                buttonText="Korperativ bilet"
-            />
-        </Container>
-    );
+  const { t } = useTranslation();
+
+  const columnsresult = columns(t);
+  return (
+    <Container maxWidth="xl">
+      {/* <PageTitle title='Aviabilet satışı'  breadcrumbs={[homeBreadCrumb, planeTicketBreadCrumb]}/> */}
+      <Table
+        exportLink="v1/CorporateTickets/Export/Export"
+        columns={columnsresult}
+        api={"/CorporateTickets/GetAllFilter"}
+        buttonText="Corporative Ticket"
+        deleteApi="/CorporateTickets/Delete"
+        root="/panel/corperativeTicket"
+      />
+    </Container>
+  );
 }
