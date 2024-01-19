@@ -28,8 +28,8 @@ export default function Update() {
   useEffect(()=> {
     try{
         const fetchdata = async () => {
-            const res = await apiService.get(`/Tour/GetById/${id!}`);
-            setData(res?.data?.data);
+            const res = await apiService.get(`/Tours/get/${id!}`);
+            setData(res?.data);
           };
           fetchdata().catch(console.error);
     }catch{console.error}
@@ -46,10 +46,10 @@ export default function Update() {
     onSubmit: async (values, { resetForm, setFieldError }) => {
       setButtonLoading(true);
       try {
-        const res = await apiService.put(`/Tour/UpdateTour/${id!}`,values);
+        const res = await apiService.put(`/Tours/update/${id!}`,values);
         if (res?.status == 200) {
           toast.success('Tur uğurla Yeniləndi!');
-          resetForm();
+          navigate('/panel/tours')
         }else{
           setFieldError("name", res.data?.message)
 

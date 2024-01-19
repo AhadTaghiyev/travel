@@ -29,7 +29,7 @@ export default function Index() {
           {breadcrumbs}
         </Breadcrumbs>
         <Divider sx={{ mb: 3 }} />
-        <Table columns={columns} api={'/Transfer/GetAllFilter'} root={'/panel/transfers'} deleteApi='/Transfer/DeleteTransfer' buttonText='Transfer' />
+        <Table columns={columns} api={'/Transfers/GetAll'} root={'/panel/transfers'} deleteApi='/Transfers/Delete' buttonText='Transfer' />
       </>
     </Container>
   );

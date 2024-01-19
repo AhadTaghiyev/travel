@@ -11,12 +11,12 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiService } from '../../../../../server/apiServer';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function CreatePopup() {
   const [buttonLoading, setButtonLoading] = useState(false);
 
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -25,10 +25,9 @@ export default function CreatePopup() {
     onSubmit: async (values, { resetForm, setFieldError }) => {
       setButtonLoading(true);
       try {
-        const res = await apiService.post('/Tour/CreateTour',values);
+        const res = await apiService.post('/Tours/create',values);
         if (res?.status == 200) {
-          toast.success('Transfer uğurla yaradıldı!');
-          resetForm();
+          navigate('/panel/tours')
         }else{
           setFieldError("name", res.data?.message)
         }

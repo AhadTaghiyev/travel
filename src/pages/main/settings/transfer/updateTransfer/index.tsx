@@ -22,13 +22,13 @@ export default function Update() {
 
   const { id } = useParams();
 
-  const [data, setData] = useState({type: '', id: id})
+  const [data, setData] = useState({name: '', id: id})
 
   useEffect(()=> {
     try{
         const fetchdata = async () => {
-            const res = await apiService.get(`/Transfer/GetById/${id!}`);
-            setData(res?.data?.data);
+            const res = await apiService.get(`/Transfers/Get/${id!}`);
+            setData(res?.data);
           };
           fetchdata().catch(console.error);
     }catch{console.error}
@@ -38,17 +38,16 @@ export default function Update() {
   const formik = useFormik({
     initialValues: {
         id: data.id,
-        type: data.type,
+        name: data.name,
     },
     enableReinitialize: true,
     validationSchema: TranfserSchema,
     onSubmit: async (values, { resetForm, setErrors }) => {
       setButtonLoading(true);
       try {
-        const res = await apiService.put(`/Transfer/UpdateTransfer/${id!}`,values);
+        const res = await apiService.put(`/Transfers/Update/${id!}`,values);
         if (res?.status == 200) {
-          toast.success('Transfer uğurla Yeniləndi!');
-          resetForm();
+          navigate('/panel/transfers')
         }else{
            setErrors(res.data?.errors)
         }
@@ -77,15 +76,15 @@ export default function Update() {
                   variant="outlined"
                   fullWidth
                   sx={{ mb: 3, mt: 2 }}
-                  name="type"
+                  name="name"
                   size='small'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.type}
+                  value={formik.values.name}
                   error={
-                    formik.touched.type && formik.errors.type ? true : false
+                    formik.touched.name && formik.errors.name ? true : false
                   }
-                  helperText={formik.touched.type && formik.errors.type}
+                  helperText={formik.touched.name && formik.errors.name}
                 />
               </Grid>
             </Grid>

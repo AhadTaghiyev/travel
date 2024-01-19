@@ -11,24 +11,23 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiService } from '../../../../../server/apiServer';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function CreatePopup() {
   const [buttonLoading, setButtonLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      type: '',
+      name: '',
     },
     validationSchema: TranfserSchema,
     onSubmit: async (values, { resetForm, setErrors }) => {
       setButtonLoading(true);
       try {
-        const res = await apiService.post('/Transfer/CreateTransfer',values);
+        const res = await apiService.post('/Transfers/Create',values);
         if (res?.status == 200) {
-          toast.success('Transfer uğurla yaradıldı!');
-          resetForm();
+          navigate('/panel/transfers')
         }else{
           setErrors(res.data?.errors)
         }
@@ -56,15 +55,15 @@ export default function CreatePopup() {
                   variant="outlined"
                   fullWidth
                   sx={{ mb: 3, mt: 2 }}
-                  name="type"
+                  name="name"
                   size='small'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.type}
+                  value={formik.values.name}
                   error={
-                    formik.touched.type && formik.errors.type ? true : false
+                    formik.touched.name && formik.errors.name ? true : false
                   }
-                  helperText={formik.touched.type && formik.errors.type}
+                  helperText={formik.touched.name && formik.errors.name}
                 />
               </Grid>
             </Grid>
