@@ -7,8 +7,8 @@ import { toast } from "sonner";
 import { apiService } from "@/server/apiServer";
 import { IInvoiceModel } from "../types";
 
-import AviabiletTicketForm from "@/components/pages/aviabiletSale/ticket-form";
 import Loading from "@/components/custom/loading";
+import AviabiletTicketForm from "../form";
 
 const UpdateTicket = () => {
   const { id } = useParams<{ id: string }>();

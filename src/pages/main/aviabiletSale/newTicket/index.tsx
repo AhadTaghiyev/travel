@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { IInvoiceDirections, IInvoiceModel, IPlaneTicketModel } from "../types";
 import { apiService } from "@/server/apiServer";
 
-import AviabiletTicketForm from "@/components/pages/aviabiletSale/ticket-form";
+import AviabiletTicketForm from "../form";
 
 export const invoiceDirectionInitialValues: IInvoiceDirections = {
   flightDate: new Date(),

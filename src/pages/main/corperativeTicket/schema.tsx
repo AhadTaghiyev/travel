@@ -1,53 +1,40 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
-export const PlaneTicketsCreateSchema = Yup.object().shape({
-    tickets: Yup.array().of(
-        Yup.object().shape({
-            ticketNo: Yup.string()
-            .min(2, 'Ən azı 2 hərf olmalıdı!')
-            .max(20, 'Maksimum 20 hərf ola bilər!')
-            .required('Mütləqdir!'),
-            passengerName: Yup.string()
-            .min(2, 'Ən azı 2 hərf olmalıdı!')
-            .max(20, 'Maksimum 20 hərf ola bilər!')
-            .required('Mütləqdir!'),
-            segmentCount: Yup.string().required('Mütləqdir!'),
-            purchasePrice: Yup.string().required('Mütləqdir!'),
-            sellingPrice: Yup.string().required('Mütləqdir!'),
-            flightDate: Yup.string().required('Mütləqdir!'),
-            deadline: Yup.string().required('Mütləqdir!'),
-            direction: Yup.string().required('Mütləqdir!'),
-            discount: Yup.string().required('Mütləqdir!'),
-            commonPrice: Yup.string().required('Mütləqdir!'),
-            // paidAmount: Yup.string().required('Mütləqdir!'),
-            customerId: Yup.string().required('Mütləqdir!'),
-            supplierId: Yup.string().required('Mütləqdir!'),
-            personalId: Yup.string().required('Mütləqdir!'),
-            airWayId: Yup.string().required('Mütləqdir!'),
-        })
-    )
+const CorperativeTicketSchema = Yup.object().shape({
+  ticketNo: Yup.string().required("Bilet nömrəsi daxil edilməlidir"),
+  passengerName: Yup.string().required("Sərnişin adı daxil edilməlidir"),
+  purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
+  sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
+  discount: Yup.number().required("Endirim daxil edilməlidir"),
+  commonPrice: Yup.number().required("Ümumi qiymət daxil edilməlidir"),
+  supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
+  personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
+  airWayId: Yup.string().required("Aviaşirkət seçilməlidir"),
+  invoiceDirections: Yup.array().of(
+    Yup.object().shape({
+      flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
+      direction: Yup.string().required("İstiqamət daxil edilməlidir"),
+    })
+  ),
 });
 
-export const PlaneTicketUpdateSchema =  Yup.object().shape({
-    ticketNo: Yup.string()
-    .min(2, 'Ən azı 2 hərf olmalıdı!')
-    .max(20, 'Maksimum 20 hərf ola bilər!')
-    .required('Mütləqdir!'),
-    passengerName: Yup.string()
-    .min(2, 'Ən azı 2 hərf olmalıdı!')
-    .max(20, 'Maksimum 20 hərf ola bilər!')
-    .required('Mütləqdir!'),
-    segmentCount: Yup.string().required('Mütləqdir!'),
-    purchasePrice: Yup.string().required('Mütləqdir!'),
-    sellingPrice: Yup.string().required('Mütləqdir!'),
-    flightDate: Yup.string().required('Mütləqdir!'),
-    deadline: Yup.string().required('Mütləqdir!'),
-    direction: Yup.string().required('Mütləqdir!'),
-    discount: Yup.string().required('Mütləqdir!'),
-    commonPrice: Yup.string().required('Mütləqdir!'),
-    // paidAmount: Yup.string().required('Mütləqdir!'),
-    customerId: Yup.string().required('Mütləqdir!'),
-    supplierId: Yup.string().required('Mütləqdir!'),
-    personalId: Yup.string().required('Mütləqdir!'),
-    airWayId: Yup.string().required('Mütləqdir!'),
-})
+export const getTicketSchema = (isEdit: boolean) =>
+  Yup.object().shape({
+    customerId: Yup.string().required("Müştəri seçilməlidir"),
+    date: Yup.date().required(),
+    deadLine: Yup.date().required(),
+    explanation: Yup.string().nullable(),
+    isSupplierPaid: Yup.boolean(),
+    isCustomerPaid: Yup.boolean(),
+    paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Ödəniş növü seçilməlidir")
+        : sch.notRequired();
+    }),
+    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Məbləğ daxil edilməlidir")
+        : sch.notRequired();
+    }),
+    planeTickets: Yup.array().of(CorperativeTicketSchema),
+  });

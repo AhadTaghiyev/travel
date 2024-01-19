@@ -4,57 +4,18 @@ import { FaMinusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
-import * as Yup from "yup";
 
+import { getTicketSchema } from "./schema";
 import { cn } from "@/helpers/utils";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
 import CustomAutocomplete from "@/components/custom/customAutocomplete";
 import CustomTextField from "@/components/custom/customTextField";
-import { IInvoiceModel } from "@/pages/main/corperativeTicket/types";
+import { IInvoiceModel } from "@/pages/main/aviabiletSale/types";
 import {
   invoiceDirectionInitialValues,
   planeTicketInitialValues,
 } from "@/pages/main/aviabiletSale/newTicket";
-
-const PlaneTicketSchema = Yup.object().shape({
-  ticketNo: Yup.string().required("Bilet nömrəsi daxil edilməlidir"),
-  passengerName: Yup.string().required("Sərnişin adı daxil edilməlidir"),
-  purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
-  sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
-  discount: Yup.number().required("Endirim daxil edilməlidir"),
-  commonPrice: Yup.number().required("Ümumi qiymət daxil edilməlidir"),
-  supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
-  personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
-  airWayId: Yup.string().required("Aviaşirkət seçilməlidir"),
-  invoiceDirections: Yup.array().of(
-    Yup.object().shape({
-      flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
-      direction: Yup.string().required("İstiqamət daxil edilməlidir"),
-    })
-  ),
-});
-
-const getTicketSchema = (isEdit: boolean) =>
-  Yup.object().shape({
-    customerId: Yup.string().required("Müştəri seçilməlidir"),
-    date: Yup.date().required(),
-    deadLine: Yup.date().required(),
-    explanation: Yup.string().nullable(),
-    isSupplierPaid: Yup.boolean(),
-    isCustomerPaid: Yup.boolean(),
-    paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-      return isCustomerPaid && !isEdit
-        ? sch.required("Ödəniş növü seçilməlidir")
-        : sch.notRequired();
-    }),
-    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-      return isCustomerPaid && !isEdit
-        ? sch.required("Məbləğ daxil edilməlidir")
-        : sch.notRequired();
-    }),
-    planeTickets: Yup.array().of(PlaneTicketSchema),
-  });
 
 interface IAviabiletTicketFormProps {
   isEdit?: boolean;
@@ -333,6 +294,22 @@ const AviabiletTicketForm = ({
                       t(
                         errors.planeTickets?.[index]?.passengerName?.toString()
                       ),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("segmentCount")}
+                    value={values.planeTickets[index].segmentCount}
+                    change={handleChange}
+                    type="number"
+                    name={`planeTickets.${index}.segmentCount`}
+                    hasErrorMessages={
+                      !!errors.planeTickets?.[index]?.segmentCount &&
+                      !!touched.planeTickets?.[index]?.segmentCount
+                    }
+                    errorMessages={[
+                      t(errors.planeTickets?.[index]?.segmentCount?.toString()),
                     ]}
                   />
                 </div>

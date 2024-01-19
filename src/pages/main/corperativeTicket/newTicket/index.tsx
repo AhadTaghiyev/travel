@@ -12,7 +12,7 @@ import {
 } from "../types";
 import { apiService } from "@/server/apiServer";
 
-import CorporateTicketForm from "@/components/pages/corporateTicket/ticket-form";
+import CorperativeTicketForm from "../form";
 
 export const invoiceDirectionInitialValues: IInvoiceDirections = {
   flightDate: new Date(),
@@ -74,7 +74,10 @@ const NewTicket = () => {
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
         {t("Aviabilet satışı")}
       </h1>
-      <CorporateTicketForm onSubmit={onSubmit} initialValues={initialValues} />
+      <CorperativeTicketForm
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+      />
     </div>
   );
 };
