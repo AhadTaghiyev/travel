@@ -1,13 +1,12 @@
-import Container from '@mui/material/Container';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { Link } from 'react-router-dom';
-import { AiOutlineRight } from 'react-icons/ai';
-import Divider from '@mui/material/Divider';
-import Table from '../../../../components/pages/table';
-import { columns } from './tableColumns';
+import Container from "@mui/material/Container";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Link } from "react-router-dom";
+import { AiOutlineRight } from "react-icons/ai";
+import Divider from "@mui/material/Divider";
+import Table from "../../../../components/pages/table";
+import { columns } from "./tableColumns";
 
 export default function Index() {
-
   const breadcrumbs = [
     <Link key="1" to="/panel" className="pageLink link">
       Ana səhifə
@@ -29,7 +28,13 @@ export default function Index() {
           {breadcrumbs}
         </Breadcrumbs>
         <Divider sx={{ mb: 3 }} />
-        <Table columns={columns} api={'/ServiceManager/GetAllFilter'} root={'/panel/serviceManagers'} deleteApi='/ServiceManager/DeleteServiceManager' buttonText='Xidmət' />
+        <Table
+          columns={columns}
+          api={"/Services/GetAll"}
+          root={"/panel/serviceManagers"}
+          deleteApi="/Services/Delete"
+          buttonText="Xidmət"
+        />
       </>
     </Container>
   );
