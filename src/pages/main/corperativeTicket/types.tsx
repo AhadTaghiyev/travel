@@ -7,12 +7,11 @@ export interface IInvoiceModel {
   explanation?: string;
   isCustomerPaid: boolean;
   isSupplierPaid: boolean;
-  planeTickets: ICorporateTicketModel[];
+  corporativeTickets: ICorporateTicketModel[];
 }
 
 export interface ICorporateTicketModel {
   ticketNo: string;
-  passengerName: string;
   purchasePrice: number;
   sellingPrice: number;
   discount: number;

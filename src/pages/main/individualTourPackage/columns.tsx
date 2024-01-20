@@ -1,7 +1,8 @@
+import { formatDate } from "@/helpers/utils";
 import { GridColDef } from "@mui/x-data-grid";
 import { TFunction } from "i18next";
 
-export const columns = (t: TFunction): GridColDef[] => [
+export const getColumns = (t: TFunction): GridColDef[] => [
   { field: "No", headerName: t("no"), flex: 1, headerClassName: "header-item" },
   {
     field: "date",
@@ -16,16 +17,22 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
-    field: "cutomerName",
-    headerName: t("customer"),
+    field: "dateOfDeparture",
+    headerName: t("Gediş tarixi"),
     flex: 1,
     headerClassName: "header-item",
+    renderCell: ({ value }) => {
+      return value.map((item) => formatDate(item)).join(", ");
+    },
   },
   {
-    field: "ticketNo",
-    headerName: t("ticketNo"),
+    field: "returnDate",
+    headerName: t("Dönüş tarixi"),
     flex: 1,
     headerClassName: "header-item",
+    renderCell: ({ value }) => {
+      return value.map((item) => formatDate(item)).join(", ");
+    },
   },
   {
     field: "totalAmount",

@@ -1,71 +1,102 @@
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { isNil } from "lodash";
 import {
   Autocomplete,
   InputLabel,
   FormHelperText,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+
+import { apiService } from "@/server/apiServer";
+import { useModal } from "@/hooks/useModal";
+
 import { textStyling } from "../../styles";
-import { apiService } from "../../server/apiServer";
-import { useTranslation } from "react-i18next";
 
 interface ICustomAutocompleteModel {
+  change: any;
+  api?: string;
   label: string;
   initialValue: any;
-  change: any;
-  api: string;
-  hasErrorMessages: boolean;
-  errorMessages: string[];
+  refetech?: boolean;
   optionLabel: string;
+  staticOptions?: any[];
+  errorMessages: string[];
+  hasErrorMessages: boolean;
 }
 
 export default function CustomAutocomplete({
-  label,
-  initialValue = null,
-  change,
   api,
-  hasErrorMessages,
-  errorMessages,
+  label,
+  change,
+  refetech,
   optionLabel,
+  errorMessages,
+  staticOptions,
+  hasErrorMessages,
+  initialValue = null,
 }: ICustomAutocompleteModel) {
+  const [options, setOptions] = useState(staticOptions ?? []);
+  const { onClose } = useModal();
   const { t } = useTranslation();
-  const [data, setData] = useState([]);
 
   const fetchData = async () => {
     const res = await apiService.get(api);
 
-    setData(
-      res.data.items.map((x) => ({ label: x[optionLabel], value: x.id }))
+    const data = res.data.items.map((x) => ({
+      label: x[optionLabel],
+      value: x.id,
+    }));
+
+    setOptions(
+      data.length === 0
+        ? [
+            {
+              label: t("No item found"),
+              disabled: true,
+            },
+          ]
+        : data
     );
   };
 
   useEffect(() => {
-    fetchData();
+    if (!staticOptions) fetchData();
   }, []);
+
+  useEffect(() => {
+    if (refetech) {
+      setOptions([]);
+      fetchData();
+      onClose();
+    }
+  }, [refetech]);
 
   return (
     <>
-      <InputLabel
-        id="demo-simple-select-label"
-        sx={{ mb: 1 }}
-        style={textStyling}
-      >
+      <InputLabel sx={{ mb: 1 }} style={textStyling}>
         {label}
       </InputLabel>
       <Autocomplete
         loading
         disablePortal
         key={
-          initialValue ? `${data?.find((x) => x.value === initialValue)}` : ""
+          initialValue
+            ? `${options?.find((x) => x.value === initialValue)}`
+            : ""
         }
-        id="combo-box-demo"
         loadingText={t("Loading...")}
-        value={initialValue && data?.find((x) => x.value === initialValue)}
+        value={
+          isNil(initialValue)
+            ? null
+            : options?.find((x) => x.value === initialValue)
+        }
         onChange={change}
-        options={data}
+        options={options}
         style={textStyling}
         sx={{ width: "100%" }}
         size="small"
+        getOptionDisabled={(option) => option.disabled}
         isOptionEqualToValue={(option, value) => option.value === value}
         renderInput={(params) => <TextField {...params} label="" />}
       />

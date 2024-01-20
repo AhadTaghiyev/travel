@@ -7,7 +7,7 @@ export interface IInvoiceModel {
   explanation?: string;
   isCustomerPaid: boolean;
   isSupplierPaid: boolean;
-  tourPackages: ITourPackageModel[];
+  individualTourPackages: ITourPackageModel[];
 }
 export interface ITourPackageModel {
   otelName: string;

@@ -1,32 +1,45 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
-
-export const TourPackageSchema = Yup.object().shape({
-    t: Yup.array().of(
-        Yup.object().shape({
-          
-            customerId: Yup.string().required('Mütləqdir!'),
-            tourId: Yup.string().required('Mütləqdir!'),
-            transferId: Yup.string().required('Mütləqdir!'),
-            diningId: Yup.string().required('Mütləqdir!'),
-            supplierId: Yup.string().required('Mütləqdir!'),
-            personalId: Yup.string().required('Mütləqdir!'),
-            paymentId: Yup.string().required('Mütləqdir!'),
-            youngerCount: Yup.number().min(1, 'Minimum 1 nəfər seçilməlidir').required('Mütləqdir!'),
-            childrenCount: Yup.number().required('Mütləqdir!'),
-            departureDateTime: Yup.string().required('Mütləqdir!'),
-            arrivalDateTime: Yup.string().required('Mütləqdir!'),
-            hotelName: Yup.string().required('Mütləqdir!'),
-            roomName: Yup.string().required('Mütləqdir!'),
-            reservationNumber: Yup.string().required('Mütləqdir!'),
-            purchasePrice: Yup.string().required('Mütləqdir!'),
-            sellingPrice: Yup.string().required('Mütləqdir!'),
-            discount: Yup.string().required('Mütləqdir!'),
-            deadline: Yup.string().required('Mütləqdir!'),
-            paidAmount: Yup.string().required('Mütləqdir!'),
-            note: Yup.string().required('Mütləqdir!'),
-            explanation: Yup.string().required('Mütləqdir!'),
-
-        })
-    )
+const TourPackageSchema = Yup.object().shape({
+  otelName: Yup.string().required("Otel adı daxil edilməlidir"),
+  roomName: Yup.string().required("Otaq adı daxil edilməlidir"),
+  rezervationNumber: Yup.string().required(
+    "Rezervasiya nömrəsi daxil edilməlidir"
+  ),
+  childrenCount: Yup.number().required("Uşaq sayı daxil edilməlidir"),
+  adultCount: Yup.number().required("Böyük sayı daxil edilməlidir"),
+  dateOfDeparture: Yup.date().required(),
+  returnDate: Yup.date().required(),
+  insurance: Yup.boolean().required("Sığorta seçilməlidir"),
+  supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
+  personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
+  tourId: Yup.number().required("Tur seçilməlidir"),
+  transferId: Yup.number().required("Transfer seçilməlidir"),
+  diningId: Yup.number().required("Yemək seçilməlidir"),
+  referenceNo: Yup.number().required("Referans nömrəsi daxil edilməlidir"),
+  purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
+  sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
+  discount: Yup.number().required("Endirim daxil edilməlidir"),
+  commonPrice: Yup.number().required("Ümumi qiymət daxil edilməlidir"),
 });
+
+export const getTicketSchema = (isEdit: boolean) =>
+  Yup.object().shape({
+    customerId: Yup.string().required("Müştəri seçilməlidir"),
+    date: Yup.date().required(),
+    deadLine: Yup.date().required(),
+    explanation: Yup.string().nullable(),
+    isSupplierPaid: Yup.boolean(),
+    isCustomerPaid: Yup.boolean(),
+    paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Ödəniş növü seçilməlidir")
+        : sch.notRequired();
+    }),
+    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Məbləğ daxil edilməlidir")
+        : sch.notRequired();
+    }),
+    tourPackages: Yup.array().of(TourPackageSchema),
+  });

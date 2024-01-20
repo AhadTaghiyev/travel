@@ -77,9 +77,7 @@ export default function Index({ headers, api }: IReportModel) {
         totalPrice: data.totalPrice,
         totalDiscountPrice: data.totalDiscountPrice,
       },
-      tickets: data.planeTickets.map((ticket) => ({
-        ...ticket,
-      })),
+      tickets: data.items,
     });
     setLoading(false);
   }

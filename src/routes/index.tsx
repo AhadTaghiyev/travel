@@ -111,10 +111,10 @@ import NewDeposit from "../pages/main/deposit/newDeposit";
 import UpdateDeposit from "../pages/main/deposit/updateDeposit";
 import DetailDeposit from "../pages/main/deposit/detail";
 //Individual Tur Paketleri
-import IndividualTourPackage from "../pages/main/individualTour";
-import NewIndividualTourPackage from "../pages/main/individualTour/newIndividualTour";
-import UpdateIndividualTourPackage from "../pages/main/individualTour/updateIndividualTour";
-import ReportIndividualTourPackage from "../pages/main/individualTour/report";
+import IndividualTourPackage from "../pages/main/individualTourPackage";
+import NewIndividualTourPackage from "../pages/main/individualTourPackage/newTourPackage";
+import UpdateIndividualTourPackage from "../pages/main/individualTourPackage/updateTourPackage";
+import ReportIndividualTourPackage from "../pages/main/individualTourPackage/report";
 
 //other services
 import OtherServices from "../pages/main/otherServices";
@@ -308,19 +308,19 @@ const router = createBrowserRouter([
         element: <UpdateTourPackage />,
       },
       {
-        path: "/panel/individualTourPackage",
+        path: "/panel/individualTourPackages",
         element: <IndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackage/new",
+        path: "/panel/individualTourPackages/new",
         element: <NewIndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackage/update/:id",
+        path: "/panel/individualTourPackages/update/:id",
         element: <UpdateIndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackage/report",
+        path: "/panel/individualTourPackages/report",
 
         element: <ReportIndividualTourPackage />,
       },
@@ -333,12 +333,10 @@ const router = createBrowserRouter([
         path: "/panel/tourPackages/new/reciept/:id",
         element: <RecieptTour />,
       },
-
       {
         path: "/panel/tourPackage/update/:id",
         element: <UpdateAviaticket />,
       },
-
       {
         path: "/panel/tourPackages/report",
         element: <TourReport />,

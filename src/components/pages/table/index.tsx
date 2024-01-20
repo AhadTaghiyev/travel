@@ -28,8 +28,8 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useTranslation } from "react-i18next";
-import { format } from "date-fns";
 import { SERVER_BASE_URL } from "@/constants";
+import { formatDate } from "@/helpers/utils";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -43,10 +43,6 @@ const headerStyle = {
   p: 0,
 };
 
-const formatDate = (dateString) => {
-  // Assuming dateString is in a format that can be parsed by new Date()
-  return format(new Date(dateString), "dd/MM/yyyy");
-};
 export default function Index({
   columns,
   api,
@@ -196,7 +192,7 @@ export default function Index({
   }, [paginationModel.page, startDate, endDate, search, current]);
 
   return (
-    <Grid container spacing={1} className="items-center gap-2 pt-1">
+    <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
       <Grid item md={2}>
         <Link to={`${root}/new`}>
           <Button variant="contained" color="primary" sx={headerStyle}>
@@ -240,7 +236,7 @@ export default function Index({
           {t("Export")}
         </Button>
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} className="min-w-[150px]">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateTimePicker"]}>
             <DatePicker
@@ -265,7 +261,7 @@ export default function Index({
           </DemoContainer>
         </LocalizationProvider>
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} className="min-w-[150px]">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateTimePicker"]}>
             <DatePicker

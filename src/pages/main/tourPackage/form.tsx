@@ -1,24 +1,21 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useModal } from "@/hooks/useModal";
 import cloneDeep from "lodash/cloneDeep";
 
+import { tourPackageInitialValues } from "./newTourPackage";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
 import { cn } from "@/helpers/utils";
-import {
-  invoiceDirectionInitialValues,
-  planeTicketInitialValues,
-} from "./newTicket";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
 import CustomAutocomplete from "@/components/custom/customAutocomplete";
 import CustomTextField from "@/components/custom/customTextField";
+import { useModal } from "@/hooks/useModal";
 
-interface IAviabiletTicketFormProps {
+interface ITourPackageFormProps {
   isEdit?: boolean;
   initialValues: IInvoiceModel;
   onSubmit: (
@@ -27,14 +24,14 @@ interface IAviabiletTicketFormProps {
   ) => void;
 }
 
-const AviabiletTicketForm = ({
+const TourPackageForm = ({
   initialValues,
   onSubmit,
   isEdit = false,
-}: IAviabiletTicketFormProps) => {
-  const { onOpen, isModalSuccess, type } = useModal();
+}: ITourPackageFormProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { onOpen, type, isModalSuccess } = useModal();
 
   return (
     <Formik
@@ -181,7 +178,7 @@ const AviabiletTicketForm = ({
                       disabled
                       label={t("Qalıq məbləğ")}
                       value={Math.max(
-                        values.planeTickets.reduce(
+                        values.tourPackages.reduce(
                           (acc, cur) => acc + cur.sellingPrice - cur.discount,
                           0
                         ) - values.paidAmount,
@@ -197,18 +194,18 @@ const AviabiletTicketForm = ({
             </div>
           </div>
           <div className="mt-4">
-            {values.planeTickets.map((planeTicket, index) => (
+            {values.tourPackages.map((planeTicket, index) => (
               <div
                 key={index}
-                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 pt-6 mb-10 border-solid border-t-2 border-black/30"
+                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
               >
                 {index !== 0 && (
                   <button
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      values.planeTickets.splice(index, 1);
-                      setFieldValue("planeTickets", [...values.planeTickets]);
+                      values.tourPackages.splice(index, 1);
+                      setFieldValue("tourPackages", [...values.tourPackages]);
                     }}
                     className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
                   >
@@ -223,17 +220,17 @@ const AviabiletTicketForm = ({
                     initialValue={planeTicket.personalId ?? null}
                     change={(_, data) =>
                       setFieldValue(
-                        `planeTickets.${index}.personalId`,
+                        `tourPackages.${index}.personalId`,
                         data?.value ?? null
                       )
                     }
-                    hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.personalId &&
-                      !!touched.planeTickets?.[index]?.personalId
-                    }
                     refetech={!!(isModalSuccess && type === "createPersonal")}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.personalId &&
+                      !!touched.tourPackages?.[index]?.personalId
+                    }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.personalId?.toString()),
+                      t(errors.tourPackages?.[index]?.personalId?.toString()),
                     ]}
                   />
                   <button
@@ -247,6 +244,7 @@ const AviabiletTicketForm = ({
                     <FaPlusSquare />
                   </button>
                 </div>
+
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
@@ -255,17 +253,17 @@ const AviabiletTicketForm = ({
                     optionLabel="name"
                     change={(_, data) => {
                       setFieldValue(
-                        `planeTickets.${index}.supplierId`,
+                        `tourPackages.${index}.supplierId`,
                         data?.value ?? null
                       );
                     }}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.supplierId &&
-                      !!touched.planeTickets?.[index]?.supplierId
+                      !!errors.tourPackages?.[index]?.supplierId &&
+                      !!touched.tourPackages?.[index]?.supplierId
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.supplierId?.toString()),
+                      t(errors.tourPackages?.[index]?.supplierId?.toString()),
                     ]}
                   />
                   <button
@@ -281,30 +279,94 @@ const AviabiletTicketForm = ({
                 </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
-                    api="AirWays/GetAll/1"
-                    label={t("airlineName")}
+                    api="Tours/GetAll/1"
+                    label={t("Tur adı")}
                     optionLabel="name"
-                    initialValue={planeTicket.airWayId ?? null}
+                    initialValue={planeTicket.tourId ?? null}
                     change={(_, data) =>
                       setFieldValue(
-                        `planeTickets.${index}.airWayId`,
+                        `tourPackages.${index}.tourId`,
                         data?.value ?? null
                       )
                     }
-                    refetech={!!(isModalSuccess && type === "createAirway")}
+                    refetech={!!(isModalSuccess && type === "createTour")}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.airWayId &&
-                      !!touched.planeTickets?.[index]?.airWayId
+                      !!errors.tourPackages?.[index]?.tourId &&
+                      !!touched.tourPackages?.[index]?.tourId
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.airWayId?.toString()),
+                      t(errors.tourPackages?.[index]?.tourId?.toString()),
                     ]}
                   />
                   <button
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      onOpen("createAirway");
+                      onOpen("createTour");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocomplete
+                    api="Transfers/GetAll/1"
+                    label={t("Transfer")}
+                    optionLabel="name"
+                    initialValue={planeTicket.transferId ?? null}
+                    change={(_, data) =>
+                      setFieldValue(
+                        `tourPackages.${index}.transferId`,
+                        data?.value ?? null
+                      )
+                    }
+                    refetech={!!(isModalSuccess && type === "createTransfer")}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.transferId &&
+                      !!touched.tourPackages?.[index]?.transferId
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.transferId?.toString()),
+                    ]}
+                  />
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createTransfer");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocomplete
+                    api="Dinings/GetAll/1"
+                    label={t("Yemək")}
+                    optionLabel="name"
+                    initialValue={planeTicket.diningId ?? null}
+                    change={(_, data) =>
+                      setFieldValue(
+                        `tourPackages.${index}.diningId`,
+                        data?.value ?? null
+                      )
+                    }
+                    refetech={!!(isModalSuccess && type === "createDining")}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.diningId &&
+                      !!touched.tourPackages?.[index]?.diningId
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.diningId?.toString()),
+                    ]}
+                  />
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createDining");
                     }}
                     className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
                   >
@@ -312,67 +374,168 @@ const AviabiletTicketForm = ({
                   </button>
                 </div>
                 <div className="w-full">
-                  <CustomTextField
-                    label={t("ticketNumber")}
-                    value={values.planeTickets[index].ticketNo}
-                    change={handleChange}
-                    name={`planeTickets.${index}.ticketNo`}
-                    hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.ticketNo &&
-                      !!touched.planeTickets?.[index]?.ticketNo
+                  <CustomAutocomplete
+                    label={t("Sığorta")}
+                    optionLabel="name"
+                    initialValue={planeTicket.insurance ?? null}
+                    change={(_, data) =>
+                      setFieldValue(
+                        `tourPackages.${index}.insurance`,
+                        data?.value ?? null
+                      )
                     }
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.insurance &&
+                      !!touched.tourPackages?.[index]?.insurance
+                    }
+                    staticOptions={[
+                      { label: t("Bəli"), value: true },
+                      { label: t("Xeyr"), value: false },
+                    ]}
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.ticketNo?.toString()),
+                      t(errors.tourPackages?.[index]?.insurance?.toString()),
                     ]}
                   />
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("passengerName")}
-                    value={values.planeTickets[index].passengerName}
+                    label={t("Otel adı")}
+                    value={values.tourPackages[index].otelName}
                     change={handleChange}
-                    name={`planeTickets.${index}.passengerName`}
+                    name={`tourPackages.${index}.otelName`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.passengerName &&
-                      !!touched.planeTickets?.[index]?.passengerName
+                      !!errors.tourPackages?.[index]?.otelName &&
+                      !!touched.tourPackages?.[index]?.otelName
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.otelName?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("Otaq adı")}
+                    value={values.tourPackages[index].roomName}
+                    change={handleChange}
+                    name={`tourPackages.${index}.roomName`}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.roomName &&
+                      !!touched.tourPackages?.[index]?.roomName
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.roomName?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("Rezervasiya nömrəsi")}
+                    value={values.tourPackages[index].rezervationNumber}
+                    change={handleChange}
+                    name={`tourPackages.${index}.rezervationNumber`}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.rezervationNumber &&
+                      !!touched.tourPackages?.[index]?.rezervationNumber
                     }
                     errorMessages={[
                       t(
-                        errors.planeTickets?.[index]?.passengerName?.toString()
+                        errors.tourPackages?.[
+                          index
+                        ]?.rezervationNumber?.toString()
                       ),
                     ]}
                   />
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("segmentCount")}
-                    value={values.planeTickets[index].segmentCount}
+                    label={t("Uşaqların sayı")}
+                    value={values.tourPackages[index].childrenCount}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.segmentCount`}
+                    name={`tourPackages.${index}.childrenCount`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.segmentCount &&
-                      !!touched.planeTickets?.[index]?.segmentCount
+                      !!errors.tourPackages?.[index]?.childrenCount &&
+                      !!touched.tourPackages?.[index]?.childrenCount
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.segmentCount?.toString()),
+                      t(
+                        errors.tourPackages?.[index]?.childrenCount?.toString()
+                      ),
                     ]}
                   />
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("purchasePrice")}
-                    value={values.planeTickets[index].purchasePrice}
+                    label={t("Böyüklərin sayı")}
+                    value={values.tourPackages[index].adultCount}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.purchasePrice`}
+                    name={`tourPackages.${index}.adultCount`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.purchasePrice &&
-                      !!touched.planeTickets?.[index]?.purchasePrice
+                      !!errors.tourPackages?.[index]?.adultCount &&
+                      !!touched.tourPackages?.[index]?.adultCount
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.adultCount?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("Referans nömrəsi")}
+                    value={values.tourPackages[index].referenceNo}
+                    change={handleChange}
+                    type="number"
+                    name={`tourPackages.${index}.referenceNo`}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.referenceNo &&
+                      !!touched.tourPackages?.[index]?.referenceNo
+                    }
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.referenceNo?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full h-full">
+                  <CustomDateTimePicker
+                    label={t("Gediş tarixi")}
+                    value={values.dateOfDeparture}
+                    change={(data) => {
+                      setFieldValue("dateOfDeparture", data ?? new Date());
+                    }}
+                    hasErrorMessages={
+                      !!errors.dateOfDeparture && !!touched.dateOfDeparture
+                    }
+                    errorMessages={[t(errors.dateOfDeparture?.toString())]}
+                  />
+                </div>
+                <div className="w-full h-full">
+                  <CustomDateTimePicker
+                    label={t("Dönüş tarixi")}
+                    value={values.returnDate}
+                    change={(data) => {
+                      setFieldValue("returnDate", data ?? new Date());
+                    }}
+                    hasErrorMessages={
+                      !!errors.returnDate && !!touched.returnDate
+                    }
+                    errorMessages={[t(errors.returnDate?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("purchasePrice")}
+                    value={values.tourPackages[index].purchasePrice}
+                    change={handleChange}
+                    type="number"
+                    name={`tourPackages.${index}.purchasePrice`}
+                    hasErrorMessages={
+                      !!errors.tourPackages?.[index]?.purchasePrice &&
+                      !!touched.tourPackages?.[index]?.purchasePrice
                     }
                     errorMessages={[
                       t(
-                        errors.planeTickets?.[index]?.purchasePrice?.toString()
+                        errors.tourPackages?.[index]?.purchasePrice?.toString()
                       ),
                     ]}
                   />
@@ -380,32 +543,32 @@ const AviabiletTicketForm = ({
                 <div className="w-full">
                   <CustomTextField
                     label={t("salePrice")}
-                    value={values.planeTickets[index].sellingPrice}
+                    value={values.tourPackages[index].sellingPrice}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.sellingPrice`}
+                    name={`tourPackages.${index}.sellingPrice`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.sellingPrice &&
-                      !!touched.planeTickets?.[index]?.sellingPrice
+                      !!errors.tourPackages?.[index]?.sellingPrice &&
+                      !!touched.tourPackages?.[index]?.sellingPrice
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.sellingPrice?.toString()),
+                      t(errors.tourPackages?.[index]?.sellingPrice?.toString()),
                     ]}
                   />
                 </div>
                 <div className="w-full">
                   <CustomTextField
                     label={t("discount")}
-                    value={values.planeTickets[index].discount}
+                    value={values.tourPackages[index].discount}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.discount`}
+                    name={`tourPackages.${index}.discount`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.discount &&
-                      !!touched.planeTickets?.[index]?.discount
+                      !!errors.tourPackages?.[index]?.discount &&
+                      !!touched.tourPackages?.[index]?.discount
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.discount?.toString()),
+                      t(errors.tourPackages?.[index]?.discount?.toString()),
                     ]}
                   />
                 </div>
@@ -414,115 +577,14 @@ const AviabiletTicketForm = ({
                     disabled
                     label={t("totalSalePrice")}
                     value={
-                      values.planeTickets[index].sellingPrice -
-                      values.planeTickets[index].discount
+                      values.tourPackages[index].sellingPrice -
+                      values.tourPackages[index].discount
                     }
                     change={handleChange}
                     type="number"
-                    name={`planeTickets[${index}].discount`}
+                    name={`tourPackages[${index}].discount`}
                     placeholder="Avtomatik"
                   />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 gap-x-4 pt-2 w-full items-center bg-[rgba(0,0,0,0.03)]">
-                  {values.planeTickets[index].invoiceDirections.map(
-                    (_, invoiceDirectionIdx) => (
-                      <div
-                        key={invoiceDirectionIdx}
-                        className="flex flex-col w-full relative"
-                      >
-                        {invoiceDirectionIdx !== 0 && (
-                          <button
-                            type="button"
-                            disabled={isSubmitting}
-                            onClick={() => {
-                              values.planeTickets[
-                                index
-                              ].invoiceDirections.splice(
-                                invoiceDirectionIdx,
-                                1
-                              );
-                              setFieldValue("planeTickets", [
-                                ...values.planeTickets,
-                              ]);
-                            }}
-                            className="absolute right-0 top-0 text-rose-500 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                          >
-                            <FaMinusSquare />
-                          </button>
-                        )}
-                        <CustomDateTimePicker
-                          label={t("flightDate")}
-                          value={
-                            values.planeTickets[index].invoiceDirections[
-                              invoiceDirectionIdx
-                            ].flightDate
-                          }
-                          change={(newValue) => {
-                            setFieldValue(
-                              `planeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.flightDate`,
-                              newValue ?? new Date()
-                            );
-                          }}
-                          hasErrorMessages={
-                            !!errors.planeTickets?.[index]?.invoiceDirections?.[
-                              invoiceDirectionIdx
-                            ]?.flightDate &&
-                            !!touched.planeTickets?.[index]
-                              ?.invoiceDirections?.[invoiceDirectionIdx]
-                              ?.flightDate
-                          }
-                          errorMessages={[
-                            t(
-                              errors.planeTickets?.[index]?.invoiceDirections?.[
-                                invoiceDirectionIdx
-                              ]?.flightDate?.toString()
-                            ),
-                          ]}
-                        />
-                        <CustomTextField
-                          label={t("direction")}
-                          value={
-                            values.planeTickets[index].invoiceDirections[
-                              invoiceDirectionIdx
-                            ].direction
-                          }
-                          change={handleChange}
-                          type="text"
-                          name={`planeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.direction`}
-                          hasErrorMessages={
-                            !!errors.planeTickets?.[index]?.invoiceDirections?.[
-                              invoiceDirectionIdx
-                            ]?.direction &&
-                            !!touched.planeTickets?.[index]
-                              ?.invoiceDirections?.[invoiceDirectionIdx]
-                              ?.direction
-                          }
-                          errorMessages={[
-                            t(
-                              errors.planeTickets?.[index]?.invoiceDirections?.[
-                                invoiceDirectionIdx
-                              ]?.direction?.toString()
-                            ),
-                          ]}
-                        />
-                      </div>
-                    )
-                  )}
-                  <div className="w-full">
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        values.planeTickets[index].invoiceDirections.push(
-                          cloneDeep(invoiceDirectionInitialValues)
-                        );
-                        setFieldValue("planeTickets", [...values.planeTickets]);
-                      }}
-                      className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      + {t("newDirection")}
-                    </button>
-                  </div>
                 </div>
               </div>
             ))}
@@ -532,9 +594,9 @@ const AviabiletTicketForm = ({
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                setFieldValue("planeTickets", [
-                  ...values.planeTickets,
-                  cloneDeep(planeTicketInitialValues),
+                setFieldValue("tourPackages", [
+                  ...values.tourPackages,
+                  cloneDeep(tourPackageInitialValues),
                 ]);
               }}
               className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
@@ -563,4 +625,4 @@ const AviabiletTicketForm = ({
   );
 };
 
-export default AviabiletTicketForm;
+export default TourPackageForm;

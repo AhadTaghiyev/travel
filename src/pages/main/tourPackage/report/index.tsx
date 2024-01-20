@@ -1,17 +1,19 @@
-// @ts-nocheck
-import Report from '../../../../components/pages/report';
+import Report from "@/components/pages/report";
+import { useTranslation } from "react-i18next";
 
 export default function index() {
+  const { t } = useTranslation();
   return (
-    <Report headers={[
-      {fieldName: "Invoice", propertyName: "referanceNumber"}, 
-      {fieldName: "Tour adı", propertyName: "tour.name"}, 
-      {fieldName: "Otel adı", propertyName: "hotelName"}, 
-      {fieldName: "Rezerv nömrəsi", propertyName: "reservationNumber"}, 
-      {fieldName: "Uçuş tarix", propertyName: "departureDateTime"}, 
-      {fieldName: "Satış qiyməti", propertyName: "sellingPrice"}, 
-      // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"}, 
-      ]}
-        api='/TourPackage/GetById'/>
-  )
+    <div className="report-table">
+      <Report
+        headers={[
+          { fieldName: t("Invoice"), propertyName: "invoiceNo" },
+          { fieldName: t("Gediş tarixi"), propertyName: "dateOfDeparture" },
+          { fieldName: t("Dönüş tarixi"), propertyName: "returnDate" },
+          { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
+        ]}
+        api="/TourPackages/GetDetailAsync"
+      />
+    </div>
+  );
 }

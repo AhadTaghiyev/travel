@@ -1,21 +1,22 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { FaMinusSquare } from "react-icons/fa";
+import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "@/hooks/useModal";
 import cloneDeep from "lodash/cloneDeep";
 
 import { getTicketSchema } from "./schema";
+import { IInvoiceModel } from "./types";
 import { cn } from "@/helpers/utils";
+import {
+  invoiceDirectionInitialValues,
+  planeTicketInitialValues,
+} from "./newTicket";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
 import CustomAutocomplete from "@/components/custom/customAutocomplete";
 import CustomTextField from "@/components/custom/customTextField";
-import { IInvoiceModel } from "@/pages/main/corperativeTicket/types";
-import {
-  invoiceDirectionInitialValues,
-  planeTicketInitialValues,
-} from "@/pages/main/aviabiletSale/newTicket";
 
 interface ICorperativeTicketFormProps {
   isEdit?: boolean;
@@ -31,6 +32,7 @@ const CorperativeTicketForm = ({
   onSubmit,
   isEdit = false,
 }: ICorperativeTicketFormProps) => {
+  const { type, isModalSuccess, onOpen } = useModal();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -51,7 +53,7 @@ const CorperativeTicketForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
-            <div className="w-full">
+            <div className="w-full relative">
               <CustomAutocomplete
                 api="Customers/GetAll/1"
                 label={t("customer")}
@@ -60,9 +62,20 @@ const CorperativeTicketForm = ({
                 change={(_, data) => {
                   setFieldValue("customerId", data?.value ?? null);
                 }}
+                refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
                 errorMessages={[t(errors.customerId?.toString())]}
               />
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={() => {
+                  onOpen("createCustomer");
+                }}
+                className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+              >
+                <FaPlusSquare />
+              </button>
             </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
@@ -168,7 +181,7 @@ const CorperativeTicketForm = ({
                       disabled
                       label={t("Qalıq məbləğ")}
                       value={Math.max(
-                        values.planeTickets.reduce(
+                        values.corporativeTickets.reduce(
                           (acc, cur) => acc + cur.sellingPrice - cur.discount,
                           0
                         ) - values.paidAmount,
@@ -184,7 +197,7 @@ const CorperativeTicketForm = ({
             </div>
           </div>
           <div className="mt-4">
-            {values.planeTickets.map((planeTicket, index) => (
+            {values.corporativeTickets.map((planeTicket, index) => (
               <div
                 key={index}
                 className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 pt-6 mb-10 border-solid border-t-2 border-black/30"
@@ -194,15 +207,17 @@ const CorperativeTicketForm = ({
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      values.planeTickets.splice(index, 1);
-                      setFieldValue("planeTickets", [...values.planeTickets]);
+                      values.corporativeTickets.splice(index, 1);
+                      setFieldValue("corporativeTickets", [
+                        ...values.corporativeTickets,
+                      ]);
                     }}
                     className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
                   >
                     {t("Sil")}
                   </button>
                 )}
-                <div className="w-full">
+                <div className="w-full relative">
                   <CustomAutocomplete
                     api="Personals/GetAll/1"
                     label={t("personal")}
@@ -210,20 +225,35 @@ const CorperativeTicketForm = ({
                     initialValue={planeTicket.personalId ?? null}
                     change={(_, data) =>
                       setFieldValue(
-                        `planeTickets.${index}.personalId`,
+                        `corporativeTickets.${index}.personalId`,
                         data?.value ?? null
                       )
                     }
+                    refetech={!!(isModalSuccess && type === "createPersonal")}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.personalId &&
-                      !!touched.planeTickets?.[index]?.personalId
+                      !!errors.corporativeTickets?.[index]?.personalId &&
+                      !!touched.corporativeTickets?.[index]?.personalId
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.personalId?.toString()),
+                      t(
+                        errors.corporativeTickets?.[
+                          index
+                        ]?.personalId?.toString()
+                      ),
                     ]}
                   />
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createPersonal");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
                 </div>
-                <div className="w-full">
+                <div className="w-full relative">
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
@@ -231,20 +261,35 @@ const CorperativeTicketForm = ({
                     optionLabel="name"
                     change={(_, data) => {
                       setFieldValue(
-                        `planeTickets.${index}.supplierId`,
+                        `corporativeTickets.${index}.supplierId`,
                         data?.value ?? null
                       );
                     }}
+                    refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.supplierId &&
-                      !!touched.planeTickets?.[index]?.supplierId
+                      !!errors.corporativeTickets?.[index]?.supplierId &&
+                      !!touched.corporativeTickets?.[index]?.supplierId
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.supplierId?.toString()),
+                      t(
+                        errors.corporativeTickets?.[
+                          index
+                        ]?.supplierId?.toString()
+                      ),
                     ]}
                   />
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createSupplier");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
                 </div>
-                <div className="w-full">
+                <div className="w-full relative">
                   <CustomAutocomplete
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}
@@ -252,47 +297,45 @@ const CorperativeTicketForm = ({
                     initialValue={planeTicket.airWayId ?? null}
                     change={(_, data) =>
                       setFieldValue(
-                        `planeTickets.${index}.airWayId`,
+                        `corporativeTickets.${index}.airWayId`,
                         data?.value ?? null
                       )
                     }
+                    refetech={!!(isModalSuccess && type === "createAirway")}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.airWayId &&
-                      !!touched.planeTickets?.[index]?.airWayId
+                      !!errors.corporativeTickets?.[index]?.airWayId &&
+                      !!touched.corporativeTickets?.[index]?.airWayId
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.airWayId?.toString()),
+                      t(
+                        errors.corporativeTickets?.[index]?.airWayId?.toString()
+                      ),
                     ]}
                   />
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createAirway");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
                 </div>
                 <div className="w-full">
                   <CustomTextField
                     label={t("ticketNumber")}
-                    value={values.planeTickets[index].ticketNo}
+                    value={values.corporativeTickets[index].ticketNo}
                     change={handleChange}
-                    name={`planeTickets.${index}.ticketNo`}
+                    name={`corporativeTickets.${index}.ticketNo`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.ticketNo &&
-                      !!touched.planeTickets?.[index]?.ticketNo
-                    }
-                    errorMessages={[
-                      t(errors.planeTickets?.[index]?.ticketNo?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    label={t("passengerName")}
-                    value={values.planeTickets[index].passengerName}
-                    change={handleChange}
-                    name={`planeTickets.${index}.passengerName`}
-                    hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.passengerName &&
-                      !!touched.planeTickets?.[index]?.passengerName
+                      !!errors.corporativeTickets?.[index]?.ticketNo &&
+                      !!touched.corporativeTickets?.[index]?.ticketNo
                     }
                     errorMessages={[
                       t(
-                        errors.planeTickets?.[index]?.passengerName?.toString()
+                        errors.corporativeTickets?.[index]?.ticketNo?.toString()
                       ),
                     ]}
                   />
@@ -300,17 +343,19 @@ const CorperativeTicketForm = ({
                 <div className="w-full">
                   <CustomTextField
                     label={t("purchasePrice")}
-                    value={values.planeTickets[index].purchasePrice}
+                    value={values.corporativeTickets[index].purchasePrice}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.purchasePrice`}
+                    name={`corporativeTickets.${index}.purchasePrice`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.purchasePrice &&
-                      !!touched.planeTickets?.[index]?.purchasePrice
+                      !!errors.corporativeTickets?.[index]?.purchasePrice &&
+                      !!touched.corporativeTickets?.[index]?.purchasePrice
                     }
                     errorMessages={[
                       t(
-                        errors.planeTickets?.[index]?.purchasePrice?.toString()
+                        errors.corporativeTickets?.[
+                          index
+                        ]?.purchasePrice?.toString()
                       ),
                     ]}
                   />
@@ -318,32 +363,38 @@ const CorperativeTicketForm = ({
                 <div className="w-full">
                   <CustomTextField
                     label={t("salePrice")}
-                    value={values.planeTickets[index].sellingPrice}
+                    value={values.corporativeTickets[index].sellingPrice}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.sellingPrice`}
+                    name={`corporativeTickets.${index}.sellingPrice`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.sellingPrice &&
-                      !!touched.planeTickets?.[index]?.sellingPrice
+                      !!errors.corporativeTickets?.[index]?.sellingPrice &&
+                      !!touched.corporativeTickets?.[index]?.sellingPrice
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.sellingPrice?.toString()),
+                      t(
+                        errors.corporativeTickets?.[
+                          index
+                        ]?.sellingPrice?.toString()
+                      ),
                     ]}
                   />
                 </div>
                 <div className="w-full">
                   <CustomTextField
                     label={t("discount")}
-                    value={values.planeTickets[index].discount}
+                    value={values.corporativeTickets[index].discount}
                     change={handleChange}
                     type="number"
-                    name={`planeTickets.${index}.discount`}
+                    name={`corporativeTickets.${index}.discount`}
                     hasErrorMessages={
-                      !!errors.planeTickets?.[index]?.discount &&
-                      !!touched.planeTickets?.[index]?.discount
+                      !!errors.corporativeTickets?.[index]?.discount &&
+                      !!touched.corporativeTickets?.[index]?.discount
                     }
                     errorMessages={[
-                      t(errors.planeTickets?.[index]?.discount?.toString()),
+                      t(
+                        errors.corporativeTickets?.[index]?.discount?.toString()
+                      ),
                     ]}
                   />
                 </div>
@@ -352,17 +403,17 @@ const CorperativeTicketForm = ({
                     disabled
                     label={t("totalSalePrice")}
                     value={
-                      values.planeTickets[index].sellingPrice -
-                      values.planeTickets[index].discount
+                      values.corporativeTickets[index].sellingPrice -
+                      values.corporativeTickets[index].discount
                     }
                     change={handleChange}
                     type="number"
-                    name={`planeTickets[${index}].discount`}
+                    name={`corporativeTickets[${index}].discount`}
                     placeholder="Avtomatik"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 gap-x-4 pt-2 w-full items-center bg-[rgba(0,0,0,0.03)]">
-                  {values.planeTickets[index].invoiceDirections.map(
+                  {values.corporativeTickets[index].invoiceDirections.map(
                     (_, invoiceDirectionIdx) => (
                       <div
                         key={invoiceDirectionIdx}
@@ -373,14 +424,14 @@ const CorperativeTicketForm = ({
                             type="button"
                             disabled={isSubmitting}
                             onClick={() => {
-                              values.planeTickets[
+                              values.corporativeTickets[
                                 index
                               ].invoiceDirections.splice(
                                 invoiceDirectionIdx,
                                 1
                               );
-                              setFieldValue("planeTickets", [
-                                ...values.planeTickets,
+                              setFieldValue("corporativeTickets", [
+                                ...values.corporativeTickets,
                               ]);
                             }}
                             className="absolute right-0 top-0 text-rose-500 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
@@ -391,27 +442,29 @@ const CorperativeTicketForm = ({
                         <CustomDateTimePicker
                           label={t("flightDate")}
                           value={
-                            values.planeTickets[index].invoiceDirections[
+                            values.corporativeTickets[index].invoiceDirections[
                               invoiceDirectionIdx
                             ].flightDate
                           }
                           change={(newValue) => {
                             setFieldValue(
-                              `planeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.flightDate`,
+                              `corporativeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.flightDate`,
                               newValue ?? new Date()
                             );
                           }}
                           hasErrorMessages={
-                            !!errors.planeTickets?.[index]?.invoiceDirections?.[
-                              invoiceDirectionIdx
-                            ]?.flightDate &&
-                            !!touched.planeTickets?.[index]
+                            !!errors.corporativeTickets?.[index]
+                              ?.invoiceDirections?.[invoiceDirectionIdx]
+                              ?.flightDate &&
+                            !!touched.corporativeTickets?.[index]
                               ?.invoiceDirections?.[invoiceDirectionIdx]
                               ?.flightDate
                           }
                           errorMessages={[
                             t(
-                              errors.planeTickets?.[index]?.invoiceDirections?.[
+                              errors.corporativeTickets?.[
+                                index
+                              ]?.invoiceDirections?.[
                                 invoiceDirectionIdx
                               ]?.flightDate?.toString()
                             ),
@@ -420,24 +473,26 @@ const CorperativeTicketForm = ({
                         <CustomTextField
                           label={t("direction")}
                           value={
-                            values.planeTickets[index].invoiceDirections[
+                            values.corporativeTickets[index].invoiceDirections[
                               invoiceDirectionIdx
                             ].direction
                           }
                           change={handleChange}
                           type="text"
-                          name={`planeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.direction`}
+                          name={`corporativeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.direction`}
                           hasErrorMessages={
-                            !!errors.planeTickets?.[index]?.invoiceDirections?.[
-                              invoiceDirectionIdx
-                            ]?.direction &&
-                            !!touched.planeTickets?.[index]
+                            !!errors.corporativeTickets?.[index]
+                              ?.invoiceDirections?.[invoiceDirectionIdx]
+                              ?.direction &&
+                            !!touched.corporativeTickets?.[index]
                               ?.invoiceDirections?.[invoiceDirectionIdx]
                               ?.direction
                           }
                           errorMessages={[
                             t(
-                              errors.planeTickets?.[index]?.invoiceDirections?.[
+                              errors.corporativeTickets?.[
+                                index
+                              ]?.invoiceDirections?.[
                                 invoiceDirectionIdx
                               ]?.direction?.toString()
                             ),
@@ -451,10 +506,12 @@ const CorperativeTicketForm = ({
                       type="button"
                       disabled={isSubmitting}
                       onClick={() => {
-                        values.planeTickets[index].invoiceDirections.push(
+                        values.corporativeTickets[index].invoiceDirections.push(
                           cloneDeep(invoiceDirectionInitialValues)
                         );
-                        setFieldValue("planeTickets", [...values.planeTickets]);
+                        setFieldValue("corporativeTickets", [
+                          ...values.corporativeTickets,
+                        ]);
                       }}
                       className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
                     >
@@ -470,8 +527,8 @@ const CorperativeTicketForm = ({
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                setFieldValue("planeTickets", [
-                  ...values.planeTickets,
+                setFieldValue("corporativeTickets", [
+                  ...values.corporativeTickets,
                   cloneDeep(planeTicketInitialValues),
                 ]);
               }}

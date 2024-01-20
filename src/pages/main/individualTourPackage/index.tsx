@@ -12,12 +12,12 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        exportLink="v1/TourPackages/Export/Export"
         columns={columns}
-        api={"/TourPackages/GetAllFilter"}
-        deleteApi="/TourPackages/Delete"
-        root="/panel/tourPackages"
-        buttonText="Tur paket"
+        exportLink="v1/individualTourPackages/Export/Export"
+        api={"/IndividualTourPackages/GetAllFilter"}
+        deleteApi="/IndividualTourPackages/Delete"
+        root="/panel/individualTourPackages"
+        buttonText="Individual Tur paket"
       />
     </Container>
   );

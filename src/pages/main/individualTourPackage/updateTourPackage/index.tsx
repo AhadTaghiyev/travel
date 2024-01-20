@@ -22,14 +22,14 @@ const UpdateTicket = () => {
   }, []);
 
   async function getTicketInfo(id: string) {
-    const response = await apiService.get(`/TourPackages/Get/${id}`);
+    const response = await apiService.get(`/IndividualTourPackages/Get/${id}`);
     if (response.status === 200) {
       setTicket(response.data);
       setLoading(false);
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/tourPackages");
+        navigate("/panel/individualTourPackages");
       }, 1000);
     }
   }
@@ -39,11 +39,11 @@ const UpdateTicket = () => {
       values.isCustomerPaid = undefined;
       values.isSupplierPaid = undefined;
       const promise = apiService
-        .put(`/TourPackages/Update/${id}`, values)
+        .put(`/IndividualTourPackages/Update/${id}`, values)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Ticket updated"));
-            navigate("/panel/tourPackages");
+            navigate("/panel/individualTourPackages");
           } else {
             toast.error(response.message);
           }
@@ -59,7 +59,7 @@ const UpdateTicket = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("TourPackage güncəlləməsi")}
+        {t("Individual TourPackage güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && ticket && (

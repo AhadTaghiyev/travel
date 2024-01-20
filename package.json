@@ -49,7 +49,8 @@
     "universal-cookie": "^7.0.1",
     "use-react-router-breadcrumbs": "^4.0.1",
     "uuid": "^9.0.1",
-    "yup": "1.2.0"
+    "yup": "1.2.0",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/lodash": "4.14.197",

@@ -89,7 +89,7 @@ export default function Index({ headers, tickets, totals }: any) {
                     ))
                   ) : (
                     <span>
-                      {hElem.propertyName === "date"
+                      {hElem.propertyName.toLowerCase().includes("date")
                         ? formatDate(
                             getNestedProperty(elem, hElem.propertyName)
                           )

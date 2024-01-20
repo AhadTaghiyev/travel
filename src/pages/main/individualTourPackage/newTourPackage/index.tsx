@@ -5,30 +5,30 @@ import cloneDeep from "lodash/cloneDeep";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-import {
-  IInvoiceDirections,
-  IInvoiceModel,
-  ICorporateTicketModel,
-} from "../types";
+import { IInvoiceModel, ITourPackageModel } from "../types";
 import { apiService } from "@/server/apiServer";
 
-import CorperativeTicketForm from "../form";
+import TourPackageForm from "../form";
 
-export const invoiceDirectionInitialValues: IInvoiceDirections = {
-  flightDate: new Date(),
-  direction: "",
-};
-
-export const planeTicketInitialValues: ICorporateTicketModel = {
-  ticketNo: "",
+export const tourPackageInitialValues: ITourPackageModel = {
+  otelName: "",
+  roomName: "",
+  rezervationNumber: "",
+  childrenCount: 0,
+  adultCount: 0,
+  dateOfDeparture: new Date(),
+  returnDate: new Date(),
+  insurance: null,
+  supplierId: null,
+  personalId: null,
+  tourId: null,
+  transferId: null,
+  diningId: null,
+  referenceNo: 0,
   purchasePrice: 0,
   sellingPrice: 0,
   discount: 0,
   commonPrice: 0,
-  supplierId: null,
-  personalId: null,
-  airWayId: null,
-  invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
 };
 
 const initialValues: IInvoiceModel = {
@@ -40,7 +40,7 @@ const initialValues: IInvoiceModel = {
   isCustomerPaid: false,
   paymentId: null,
   paidAmount: 0,
-  corporativeTickets: [cloneDeep(planeTicketInitialValues)],
+  individualTourPackages: [cloneDeep(tourPackageInitialValues)],
 };
 
 const NewTicket = () => {
@@ -50,12 +50,12 @@ const NewTicket = () => {
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const promise = apiService
-        .post(`/CorporateTickets/Create`, values)
+        .post(`/IndividualTourPackages/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Ticket created"));
+            toast.success(t("TourPackage created"));
             navigate(
-              `/panel/corperativeTicket/report?tickets=${response.data}`
+              `/panel/IndividualTourPackages/report?tickets=${response.data}`
             );
           } else {
             toast.error(response.message);
@@ -73,12 +73,9 @@ const NewTicket = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Aviabilet satışı")}
+        {t("Individual Tur Paket satışı")}
       </h1>
-      <CorperativeTicketForm
-        onSubmit={onSubmit}
-        initialValues={initialValues}
-      />
+      <TourPackageForm onSubmit={onSubmit} initialValues={initialValues} />
     </div>
   );
 };

@@ -8,16 +8,11 @@ export default function index() {
       <Report
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
-          { fieldName: t("Hava yolu"), propertyName: "airway" },
-          { fieldName: t("Bilet nömrəsi"), propertyName: "ticketNo" },
-          {
-            fieldName: t("Uçuş istiqaməti və tarix"),
-            propertyName: "invoiceDirection",
-          },
+          { fieldName: t("Gediş tarixi"), propertyName: "dateOfDeparture" },
+          { fieldName: t("Dönüş tarixi"), propertyName: "returnDate" },
           { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
-          // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
         ]}
-        api="/CorporateTickets/GetDetailAsync"
+        api="/IndividualTourPackages/GetDetailAsync"
       />
     </div>
   );

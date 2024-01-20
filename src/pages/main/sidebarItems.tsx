@@ -61,7 +61,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: BsTicket,
         text: "İndividual tur satışı",
-        link: "/panel/individualTourPackage",
+        link: "/panel/individualTourPackages",
       },
       {
         icon: HiOutlineDotsCircleHorizontal,
@@ -207,7 +207,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: BsCalculator,
         text: "Individual tur paket hesabat",
-        link: "/panel/reports/individualTourPackage",
+        link: "/panel/reports/individualTourPackages",
       },
       {
         icon: BsCalculator,

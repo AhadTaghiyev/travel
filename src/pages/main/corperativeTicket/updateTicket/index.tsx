@@ -22,14 +22,14 @@ const UpdateTicket = () => {
   }, []);
 
   async function getTicketInfo(id: string) {
-    const response = await apiService.get(`/PlaneTickets/Get/${id}`);
+    const response = await apiService.get(`/CorporateTickets/Get/${id}`);
     if (response.status === 200) {
       setTicket(response.data);
       setLoading(false);
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/aviabiletsale");
+        navigate("/panel/corperativeTicket");
       }, 1000);
     }
   }
@@ -39,11 +39,11 @@ const UpdateTicket = () => {
       values.isCustomerPaid = undefined;
       values.isSupplierPaid = undefined;
       const promise = apiService
-        .put(`/PlaneTickets/Update/${id}`, values)
+        .put(`/CorporateTickets/Update/${id}`, values)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Ticket updated"));
-            navigate("/panel/aviabiletsale");
+            navigate("/panel/corperativeTicket");
           } else {
             toast.error(response.message);
           }
