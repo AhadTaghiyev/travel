@@ -23,7 +23,7 @@ export default function CreatePopup() {
       amount:0
     },
     validationSchema: PaymentSchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, {  setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.post('Payments/Create', values);

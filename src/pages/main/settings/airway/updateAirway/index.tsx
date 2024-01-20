@@ -41,7 +41,7 @@ export default function CreatePopup() {
     },
     validationSchema: AirwaySchema,
     enableReinitialize: true,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, { setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.put(`/AirWays/update/${id!}`,values);

@@ -22,7 +22,7 @@ export default function CreatePopup() {
       name: '',
     },
     validationSchema: AirwaySchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, {  setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.post('/AirWays/create', values);

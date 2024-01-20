@@ -23,7 +23,7 @@ export default function CreatePopup() {
       name: '',
     },
     validationSchema: SupplierSchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, { setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.post('/Suppliers/Create',values);

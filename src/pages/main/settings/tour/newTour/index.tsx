@@ -22,7 +22,7 @@ export default function CreatePopup() {
       name: '',
     },
     validationSchema: TourSchema,
-    onSubmit: async (values, { resetForm, setFieldError }) => {
+    onSubmit: async (values, {  setFieldError }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.post('/Tours/create',values);

@@ -43,7 +43,7 @@ export default function Update() {
     },
     enableReinitialize: true,
     validationSchema: PaymentSchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, {  setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.put(`Payments/Update/${id!}`, values);

@@ -43,7 +43,7 @@ export default function Update() {
     },
     enableReinitialize: true,
     validationSchema: PersonalSchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, { setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.put(`/Personals/Update/${id!}`,values);

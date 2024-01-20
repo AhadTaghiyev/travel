@@ -21,7 +21,7 @@ export default function CreatePopup() {
       fullName: '',
     },
     validationSchema: PersonalSchema,
-    onSubmit: async (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, {  setErrors }) => {
       setButtonLoading(true);
       try {
         const res = await apiService.post('/Personals/Create',values);
