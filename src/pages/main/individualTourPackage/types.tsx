@@ -28,4 +28,6 @@ export interface ITourPackageModel {
   sellingPrice: number;
   discount: number;
   commonPrice: number;
+  key?: string;
+  id?: string | number;
 }

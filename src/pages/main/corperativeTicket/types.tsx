@@ -20,6 +20,8 @@ export interface ICorporateTicketModel {
   personalId: number;
   airWayId: number;
   invoiceDirections: IInvoiceDirections[];
+  key?: string;
+  id?: string | number;
 }
 
 export interface IInvoiceDirections {

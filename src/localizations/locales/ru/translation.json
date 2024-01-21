@@ -28,7 +28,7 @@
     "date": "Дата",
     "ticketNo": "Номер Билета",
     "airWayId": "Рейс и Авиакомпания",
-    "segmentCount": "Количество Пассажиров",
+    "segmentCount": "Количество Сегментов",
     "commonPrice": "Сумма",
     "operations": "Операции",
     "personal": "Персонал",

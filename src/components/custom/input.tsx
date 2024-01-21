@@ -4,8 +4,8 @@ import { Input } from "../ui/input";
 
 interface ICustomTextFieldModel {
   label: string;
-  value: any;
-  change: any;
+  value: string | number;
+  change: (value: any) => void;
   hasErrorMessages?: boolean;
   errorMessages?: string[];
   name: string;

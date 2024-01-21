@@ -29,6 +29,7 @@ export const tourPackageInitialValues: ITourPackageModel = {
   sellingPrice: 0,
   discount: 0,
   commonPrice: 0,
+  key: "AluUqcIjj",
 };
 
 const initialValues: IInvoiceModel = {

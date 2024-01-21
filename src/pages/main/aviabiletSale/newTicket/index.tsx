@@ -27,6 +27,7 @@ export const planeTicketInitialValues: IPlaneTicketModel = {
   personalId: null,
   airWayId: null,
   invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
+  key: "AluUqcIjj",
 };
 
 const initialValues: IInvoiceModel = {

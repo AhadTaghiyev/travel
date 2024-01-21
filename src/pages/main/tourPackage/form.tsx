@@ -4,6 +4,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
+import shortid from "shortid";
 
 import { tourPackageInitialValues } from "./newTourPackage";
 import { useModal } from "@/hooks/useModal";
@@ -59,20 +60,9 @@ const TourPackageForm = ({
                 change={(value) => {
                   setFieldValue("customerId", value ?? null);
                 }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
                 errorMessages={[t(errors.customerId?.toString())]}
               />
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => {
-                  onOpen("createCustomer");
-                }}
-                className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-              >
-                <FaPlusSquare />
-              </button>
             </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
@@ -194,30 +184,47 @@ const TourPackageForm = ({
             </div>
           </div>
           <div className="mt-4">
-            {values.tourPackages.map((planeTicket, index) => (
+            {values.tourPackages.map((tourPackage, index) => (
               <div
-                key={index}
+                key={`key-${tourPackage.id ?? tourPackage.key}`}
                 className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
               >
-                {index !== 0 && (
+                <div className="absolute right-0 top-2 flex gap-x-2">
                   <button
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      values.tourPackages.splice(index, 1);
-                      setFieldValue("tourPackages", [...values.tourPackages]);
+                      const packages = cloneDeep(values.tourPackages);
+                      const clonedTourPackage = cloneDeep(tourPackage);
+                      clonedTourPackage.key = shortid.generate();
+                      packages.splice(index + 1, 0, clonedTourPackage);
+                      setFieldValue("tourPackages", packages);
                     }}
-                    className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                   >
-                    {t("Sil")}
+                    {t("Copy")}
                   </button>
-                )}
+                  {index !== 0 && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        const tours = cloneDeep(values.tourPackages);
+                        tours.splice(index, 1);
+                        setFieldValue("tourPackages", tours);
+                      }}
+                      className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    >
+                      {t("Sil")}
+                    </button>
+                  )}
+                </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
-                    value={planeTicket.personalId ?? null}
+                    value={tourPackage.personalId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `tourPackages.${index}.personalId`,
@@ -249,7 +256,7 @@ const TourPackageForm = ({
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
-                    value={planeTicket.supplierId ?? null}
+                    value={tourPackage.supplierId ?? null}
                     optionLabel="name"
                     change={(value) => {
                       setFieldValue(
@@ -257,7 +264,6 @@ const TourPackageForm = ({
                         value ?? null
                       );
                     }}
-                    refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
                       !!errors.tourPackages?.[index]?.supplierId &&
                       !!touched.tourPackages?.[index]?.supplierId
@@ -266,23 +272,13 @@ const TourPackageForm = ({
                       t(errors.tourPackages?.[index]?.supplierId?.toString()),
                     ]}
                   />
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      onOpen("createSupplier");
-                    }}
-                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                  >
-                    <FaPlusSquare />
-                  </button>
                 </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Tours/GetAll/1"
                     label={t("Tur adı")}
                     optionLabel="name"
-                    value={planeTicket.tourId ?? null}
+                    value={tourPackage.tourId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `tourPackages.${index}.tourId`,
@@ -314,7 +310,7 @@ const TourPackageForm = ({
                     api="Transfers/GetAll/1"
                     label={t("Transfer")}
                     optionLabel="name"
-                    value={planeTicket.transferId ?? null}
+                    value={tourPackage.transferId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `tourPackages.${index}.transferId`,
@@ -346,7 +342,7 @@ const TourPackageForm = ({
                     api="Dinings/GetAll/1"
                     label={t("Yemək")}
                     optionLabel="name"
-                    value={planeTicket.diningId ?? null}
+                    value={tourPackage.diningId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `tourPackages.${index}.diningId`,
@@ -377,7 +373,7 @@ const TourPackageForm = ({
                   <CustomAutocomplete
                     label={t("Sığorta")}
                     optionLabel="name"
-                    value={planeTicket.insurance ?? null}
+                    value={tourPackage.insurance ?? null}
                     change={(value) =>
                       setFieldValue(
                         `tourPackages.${index}.insurance`,
@@ -594,10 +590,11 @@ const TourPackageForm = ({
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                setFieldValue("tourPackages", [
-                  ...values.tourPackages,
-                  cloneDeep(tourPackageInitialValues),
-                ]);
+                const tourPackages = cloneDeep(values.tourPackages);
+                const clonedTourPackage = cloneDeep(tourPackageInitialValues);
+                clonedTourPackage.key = shortid.generate();
+                tourPackages.push(clonedTourPackage);
+                setFieldValue("tourPackages", tourPackages);
               }}
               className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
             >

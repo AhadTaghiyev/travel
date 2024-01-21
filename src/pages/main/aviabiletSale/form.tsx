@@ -4,6 +4,7 @@ import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
+import shortid from "shortid";
 
 import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
@@ -63,20 +64,9 @@ const AviabiletTicketForm = ({
                   console.log("valee", value);
                   setFieldValue("customerId", value ?? null);
                 }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
                 errorMessages={[t(errors.customerId?.toString())]}
               />
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => {
-                  onOpen("createCustomer");
-                }}
-                className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-              >
-                <FaPlusSquare />
-              </button>
             </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
@@ -198,22 +188,39 @@ const AviabiletTicketForm = ({
           <div className="mt-4">
             {values.planeTickets.map((planeTicket, index) => (
               <div
-                key={index}
-                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 pt-6 mb-10 border-solid border-t-2 border-black/30"
+                key={`key-${planeTicket.id ?? planeTicket.key}`}
+                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
               >
-                {index !== 0 && (
+                <div className="absolute right-0 top-2 flex gap-x-2">
                   <button
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      values.planeTickets.splice(index, 1);
-                      setFieldValue("planeTickets", [...values.planeTickets]);
+                      const tickets = cloneDeep(values.planeTickets);
+                      const clonedTicketPackage = cloneDeep(planeTicket);
+                      clonedTicketPackage.key = shortid.generate();
+                      tickets.splice(index + 1, 0, clonedTicketPackage);
+                      setFieldValue("planeTickets", tickets);
                     }}
-                    className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                   >
-                    {t("Sil")}
+                    {t("Copy")}
                   </button>
-                )}
+                  {index !== 0 && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        const tickets = cloneDeep(values.planeTickets);
+                        tickets.splice(index, 1);
+                        setFieldValue("planeTickets", tickets);
+                      }}
+                      className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    >
+                      {t("Sil")}
+                    </button>
+                  )}
+                </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Personals/GetAll/1"
@@ -252,7 +259,6 @@ const AviabiletTicketForm = ({
                     change={(value) => {
                       setFieldValue(`planeTickets.${index}.supplierId`, value);
                     }}
-                    refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.supplierId &&
                       !!touched.planeTickets?.[index]?.supplierId
@@ -261,16 +267,6 @@ const AviabiletTicketForm = ({
                       t(errors.planeTickets?.[index]?.supplierId?.toString()),
                     ]}
                   />
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      onOpen("createSupplier");
-                    }}
-                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                  >
-                    <FaPlusSquare />
-                  </button>
                 </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
@@ -522,10 +518,11 @@ const AviabiletTicketForm = ({
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                setFieldValue("planeTickets", [
-                  ...values.planeTickets,
-                  cloneDeep(planeTicketInitialValues),
-                ]);
+                const tickets = cloneDeep(values.planeTickets);
+                const clonedTicket = cloneDeep(planeTicketInitialValues);
+                clonedTicket.key = shortid.generate();
+                tickets.push(clonedTicket);
+                setFieldValue("planeTickets", tickets);
               }}
               className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
             >

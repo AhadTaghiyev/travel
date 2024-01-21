@@ -10,6 +10,8 @@ export interface IInvoiceModel {
   planeTickets: IPlaneTicketModel[];
 }
 export interface IPlaneTicketModel {
+  key?: string;
+  id?: string | number;
   ticketNo: string;
   passengerName: string;
   segmentCount: number;

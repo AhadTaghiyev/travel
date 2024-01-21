@@ -10,6 +10,8 @@ export interface IInvoiceModel {
   tourPackages: ITourPackageModel[];
 }
 export interface ITourPackageModel {
+  key?: string;
+  id?: string | number;
   otelName: string;
   roomName: string;
   rezervationNumber: string;

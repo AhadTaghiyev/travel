@@ -4,6 +4,7 @@ import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
+import shortid from "shortid";
 
 import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
@@ -11,7 +12,7 @@ import { IInvoiceModel } from "./types";
 import { cn } from "@/lib/utils";
 import {
   invoiceDirectionInitialValues,
-  planeTicketInitialValues,
+  corperativeTicketInitialValues,
 } from "./newTicket";
 
 import CustomDateTimePicker from "@/components/custom/datePicker";
@@ -62,20 +63,9 @@ const CorperativeTicketForm = ({
                 change={(value) => {
                   setFieldValue("customerId", value ?? null);
                 }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
                 errorMessages={[t(errors.customerId?.toString())]}
               />
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => {
-                  onOpen("createCustomer");
-                }}
-                className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-              >
-                <FaPlusSquare />
-              </button>
             </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
@@ -197,32 +187,47 @@ const CorperativeTicketForm = ({
             </div>
           </div>
           <div className="mt-4">
-            {values.corporativeTickets.map((planeTicket, index) => (
+            {values.corporativeTickets.map((corporativeTicket, index) => (
               <div
-                key={index}
-                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 pt-6 mb-10 border-solid border-t-2 border-black/30"
+                key={`key-${corporativeTicket.id ?? corporativeTicket.key}`}
+                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
               >
-                {index !== 0 && (
+                <div className="absolute right-0 top-2 flex gap-x-2">
                   <button
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => {
-                      values.corporativeTickets.splice(index, 1);
-                      setFieldValue("corporativeTickets", [
-                        ...values.corporativeTickets,
-                      ]);
+                      const tickets = cloneDeep(values.corporativeTickets);
+                      const clonedTicket = cloneDeep(corporativeTicket);
+                      clonedTicket.key = shortid.generate();
+                      tickets.splice(index + 1, 0, clonedTicket);
+                      setFieldValue("corporativeTickets", tickets);
                     }}
-                    className="absolute right-0 top-2 p-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                   >
-                    {t("Sil")}
+                    {t("Copy")}
                   </button>
-                )}
+                  {index !== 0 && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        const tickets = cloneDeep(values.corporativeTickets);
+                        tickets.splice(index, 1);
+                        setFieldValue("corporativeTickets", tickets);
+                      }}
+                      className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                    >
+                      {t("Sil")}
+                    </button>
+                  )}
+                </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
-                    value={planeTicket.personalId ?? null}
+                    value={corporativeTicket.personalId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `corporativeTickets.${index}.personalId`,
@@ -257,7 +262,7 @@ const CorperativeTicketForm = ({
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
-                    value={planeTicket.supplierId ?? null}
+                    value={corporativeTicket.supplierId ?? null}
                     optionLabel="name"
                     change={(value) => {
                       setFieldValue(
@@ -265,7 +270,6 @@ const CorperativeTicketForm = ({
                         value ?? null
                       );
                     }}
-                    refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
                       !!errors.corporativeTickets?.[index]?.supplierId &&
                       !!touched.corporativeTickets?.[index]?.supplierId
@@ -278,23 +282,13 @@ const CorperativeTicketForm = ({
                       ),
                     ]}
                   />
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      onOpen("createSupplier");
-                    }}
-                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                  >
-                    <FaPlusSquare />
-                  </button>
                 </div>
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}
                     optionLabel="name"
-                    value={planeTicket.airWayId ?? null}
+                    value={corporativeTicket.airWayId ?? null}
                     change={(value) =>
                       setFieldValue(
                         `corporativeTickets.${index}.airWayId`,
@@ -527,10 +521,11 @@ const CorperativeTicketForm = ({
               type="button"
               disabled={isSubmitting}
               onClick={() => {
-                setFieldValue("corporativeTickets", [
-                  ...values.corporativeTickets,
-                  cloneDeep(planeTicketInitialValues),
-                ]);
+                const tickets = cloneDeep(values.corporativeTickets);
+                const clonedTicket = cloneDeep(corperativeTicketInitialValues);
+                clonedTicket.key = shortid.generate();
+                tickets.push(clonedTicket);
+                setFieldValue("corporativeTickets", tickets);
               }}
               className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
             >

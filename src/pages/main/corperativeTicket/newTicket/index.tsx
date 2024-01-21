@@ -19,7 +19,7 @@ export const invoiceDirectionInitialValues: IInvoiceDirections = {
   direction: "",
 };
 
-export const planeTicketInitialValues: ICorporateTicketModel = {
+export const corperativeTicketInitialValues: ICorporateTicketModel = {
   ticketNo: "",
   purchasePrice: 0,
   sellingPrice: 0,
@@ -29,6 +29,7 @@ export const planeTicketInitialValues: ICorporateTicketModel = {
   personalId: null,
   airWayId: null,
   invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
+  key: "AluUqcIjj",
 };
 
 const initialValues: IInvoiceModel = {
@@ -40,7 +41,7 @@ const initialValues: IInvoiceModel = {
   isCustomerPaid: false,
   paymentId: null,
   paidAmount: 0,
-  corporativeTickets: [cloneDeep(planeTicketInitialValues)],
+  corporativeTickets: [cloneDeep(corperativeTicketInitialValues)],
 };
 
 const NewTicket = () => {
