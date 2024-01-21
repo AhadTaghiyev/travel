@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
 
 import { tourPackageInitialValues } from "./newTourPackage";
+import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
 import { cn } from "@/lib/utils";
 
-import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
+import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomAutocomplete from "@/components/custom/select";
-import CustomTextField from "@/components/custom/customTextField";
-import { useModal } from "@/hooks/useModal";
+import CustomTextField from "@/components/custom/input";
 
 interface ITourPackageFormProps {
   isEdit?: boolean;

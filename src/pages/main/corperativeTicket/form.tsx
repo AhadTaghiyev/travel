@@ -3,9 +3,9 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useModal } from "@/hooks/useModal";
 import cloneDeep from "lodash/cloneDeep";
 
+import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,9 @@ import {
   planeTicketInitialValues,
 } from "./newTicket";
 
-import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
+import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomAutocomplete from "@/components/custom/select";
-import CustomTextField from "@/components/custom/customTextField";
+import CustomTextField from "@/components/custom/input";
 
 interface ICorperativeTicketFormProps {
   isEdit?: boolean;
