@@ -2,10 +2,25 @@ import * as Yup from "yup";
 
 const CorperativeTicketSchema = Yup.object().shape({
   ticketNo: Yup.string().required("Bilet nömrəsi daxil edilməlidir"),
-  purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
-  sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
-  discount: Yup.number().required("Endirim daxil edilməlidir"),
-  commonPrice: Yup.number().required("Ümumi qiymət daxil edilməlidir"),
+  purchasePrice: Yup.number()
+    .required("Alış qiyməti daxil edilməlidir")
+    .min(0, "Alış qiyməti mənfi ola bilməz"),
+  sellingPrice: Yup.number()
+    .required("Satış qiyməti daxil edilməlidir")
+    .min(0, "Satış qiyməti mənfi ola bilməz"),
+  fare: Yup.number()
+    .required("Tarif daxil edilməlidir")
+    .min(0, "Tarif mənfi ola bilməz"),
+  taxes: Yup.number()
+    .required("Vergilər daxile edilməlidir")
+    .min(0, "Vergilər mənfi ola bilməz"),
+  discount: Yup.number()
+    .required("Komissiya daxil edilməlidir")
+    .min(0, "Komissiya mənfi ola bilməz")
+    .max(100, "Komissiya 100'dən çox ola bilməz"),
+  commonPrice: Yup.number()
+    .required("Ümumi qiymət daxil edilməlidir")
+    .min(0, "Ümumi qiymət mənfi ola bilməz"),
   supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
   personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
   airWayId: Yup.string().required("Aviaşirkət seçilməlidir"),
@@ -30,10 +45,12 @@ export const getTicketSchema = (isEdit: boolean) =>
         ? sch.required("Ödəniş növü seçilməlidir")
         : sch.notRequired();
     }),
-    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-      return isCustomerPaid && !isEdit
-        ? sch.required("Məbləğ daxil edilməlidir")
-        : sch.notRequired();
-    }),
+    paidAmount: Yup.number()
+      .when("isCustomerPaid", ([isCustomerPaid], sch) => {
+        return isCustomerPaid && !isEdit
+          ? sch.required("Məbləğ daxil edilməlidir")
+          : sch.notRequired();
+      })
+      .min(0, "Məbləğ mənfi ola bilməz"),
     corporativeTickets: Yup.array().of(CorperativeTicketSchema),
   });

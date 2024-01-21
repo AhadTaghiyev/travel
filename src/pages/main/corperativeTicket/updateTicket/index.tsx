@@ -59,7 +59,7 @@ const UpdateTicket = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Aviabilet güncəlləməsi")}
+        {t("Korperativ güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && ticket && (

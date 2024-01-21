@@ -6,8 +6,12 @@ const TourPackageSchema = Yup.object().shape({
   rezervationNumber: Yup.string().required(
     "Rezervasiya nömrəsi daxil edilməlidir"
   ),
-  childrenCount: Yup.number().required("Uşaq sayı daxil edilməlidir"),
-  adultCount: Yup.number().required("Böyük sayı daxil edilməlidir"),
+  childrenCount: Yup.number()
+    .required("Uşaq sayı daxil edilməlidir")
+    .min(0, "Uşaq sayı mənfi ola bilməz"),
+  adultCount: Yup.number()
+    .required("Böyük sayı daxil edilməlidir")
+    .min(0, "Böyük sayı mənfi ola bilməz"),
   dateOfDeparture: Yup.date().required(),
   returnDate: Yup.date().required(),
   insurance: Yup.boolean().required("Sığorta seçilməlidir"),
@@ -17,10 +21,18 @@ const TourPackageSchema = Yup.object().shape({
   transferId: Yup.number().required("Transfer seçilməlidir"),
   diningId: Yup.number().required("Yemək seçilməlidir"),
   referenceNo: Yup.number().required("Referans nömrəsi daxil edilməlidir"),
-  purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
-  sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
-  discount: Yup.number().required("Endirim daxil edilməlidir"),
-  commonPrice: Yup.number().required("Ümumi qiymət daxil edilməlidir"),
+  purchasePrice: Yup.number()
+    .required("Alış qiyməti daxil edilməlidir")
+    .min(0, "Alış qiyməti mənfi ola bilməz"),
+  sellingPrice: Yup.number()
+    .required("Satış qiyməti daxil edilməlidir")
+    .min(0, "Satış qiyməti mənfi ola bilməz"),
+  discount: Yup.number()
+    .required("Endirim daxil edilməlidir")
+    .min(0, "Endirim mənfi ola bilməz"),
+  commonPrice: Yup.number()
+    .required("Ümumi qiymət daxil edilməlidir")
+    .min(0, "Ümumi qiymət mənfi ola bilməz"),
 });
 
 export const getTicketSchema = (isEdit: boolean) =>
@@ -36,10 +48,12 @@ export const getTicketSchema = (isEdit: boolean) =>
         ? sch.required("Ödəniş növü seçilməlidir")
         : sch.notRequired();
     }),
-    paidAmount: Yup.number().when("isCustomerPaid", ([isCustomerPaid], sch) => {
-      return isCustomerPaid && !isEdit
-        ? sch.required("Məbləğ daxil edilməlidir")
-        : sch.notRequired();
-    }),
+    paidAmount: Yup.number()
+      .when("isCustomerPaid", ([isCustomerPaid], sch) => {
+        return isCustomerPaid && !isEdit
+          ? sch.required("Məbləğ daxil edilməlidir")
+          : sch.notRequired();
+      })
+      .min(0, "Məbləğ mənfi ola bilməz"),
     tourPackages: Yup.array().of(TourPackageSchema),
   });

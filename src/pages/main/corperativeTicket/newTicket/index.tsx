@@ -28,6 +28,8 @@ export const corperativeTicketInitialValues: ICorporateTicketModel = {
   supplierId: null,
   personalId: null,
   airWayId: null,
+  fare: 0,
+  taxes: 0,
   invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
   key: "AluUqcIjj",
 };
@@ -74,7 +76,7 @@ const NewTicket = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Aviabilet satışı")}
+        {t("Korperativ satış")}
       </h1>
       <CorperativeTicketForm
         onSubmit={onSubmit}

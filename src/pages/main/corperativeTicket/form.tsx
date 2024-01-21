@@ -336,8 +336,44 @@ const CorperativeTicketForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
+                    label={t("fare")}
+                    value={values.corporativeTickets[index].fare}
+                    change={handleChange}
+                    type="number"
+                    name={`corporativeTickets.${index}.fare`}
+                    hasErrorMessages={
+                      !!errors.corporativeTickets?.[index]?.fare &&
+                      !!touched.corporativeTickets?.[index]?.fare
+                    }
+                    errorMessages={[
+                      t(errors.corporativeTickets?.[index]?.fare?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("taxes")}
+                    value={values.corporativeTickets[index].taxes}
+                    change={handleChange}
+                    type="number"
+                    name={`corporativeTickets.${index}.taxes`}
+                    hasErrorMessages={
+                      !!errors.corporativeTickets?.[index]?.taxes &&
+                      !!touched.corporativeTickets?.[index]?.taxes
+                    }
+                    errorMessages={[
+                      t(errors.corporativeTickets?.[index]?.taxes?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
                     label={t("purchasePrice")}
-                    value={values.corporativeTickets[index].purchasePrice}
+                    value={
+                      values.corporativeTickets[index].fare +
+                      values.corporativeTickets[index].taxes
+                    }
                     change={handleChange}
                     type="number"
                     name={`corporativeTickets.${index}.purchasePrice`}
@@ -376,7 +412,7 @@ const CorperativeTicketForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("discount")}
+                    label={t("commission") + " %"}
                     value={values.corporativeTickets[index].discount}
                     change={handleChange}
                     type="number"
@@ -398,7 +434,9 @@ const CorperativeTicketForm = ({
                     label={t("totalSalePrice")}
                     value={
                       values.corporativeTickets[index].sellingPrice -
-                      values.corporativeTickets[index].discount
+                      (values.corporativeTickets[index].sellingPrice *
+                        values.corporativeTickets[index].discount) /
+                        100
                     }
                     change={handleChange}
                     type="number"

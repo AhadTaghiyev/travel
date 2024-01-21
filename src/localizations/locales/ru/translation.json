@@ -143,5 +143,23 @@
     "Airway Created": "Авиакомпания создана",
     "Yeni Havayolu Yarat": "Создать новую авиакомпанию",
     "Havayolu Adı": "Название авиакомпании",
-    "Select option": "Выбрать опцию"
+    "Select option": "Выбрать опцию",
+    "commission": "Комиссия",
+    "Korperativ güncəlləməsi": "Обновление корпоративного билета",
+
+    "fare": "Тариф",
+    "taxes": "Налоги",
+    "Alış qiyməti mənfi ola bilməz": "Цена покупки не может быть отрицательной",
+    "Tarif daxil edilməlidir": "Тариф должен быть введен",
+    "Tarif mənfi ola bilməz": "Тариф не может быть отрицательным",
+    "Vergilər daxile edilməlidir": "Налоги должны быть введены",
+    "Vergilər mənfi ola bilməz": "Налоги не могут быть отрицательными",
+    "Komissiya mənfi ola bilməz": "Комиссия не может быть отрицательной",
+    "Komissiya daxil edilməlidir": "Комиссия должна быть введена",
+    "Komissiya 100'dən çox ola bilməz": "Комиссия не может быть больше 100",
+    "Ümumi qiymət mənfi ola bilməz": "Общая цена не может быть отрицательной",
+    "Məbləğ mənfi ola bilməz": "Сумма не может быть отрицательной",
+    "Endirim mənfi ola bilməz": "Скидка не может быть отрицательной",
+    "Uşaq sayı mənfi ola bilməz": "Количество детей не может быть отрицательным",
+    "Böyük sayı mənfi ola bilməz": "Количество взрослых не может быть отрицательным"
 }
