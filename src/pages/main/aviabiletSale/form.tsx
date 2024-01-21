@@ -8,14 +8,14 @@ import cloneDeep from "lodash/cloneDeep";
 
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import {
   invoiceDirectionInitialValues,
   planeTicketInitialValues,
 } from "./newTicket";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
-import CustomAutocomplete from "@/components/custom/customAutocomplete";
+import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/customTextField";
 
 interface IAviabiletTicketFormProps {
@@ -57,10 +57,11 @@ const AviabiletTicketForm = ({
               <CustomAutocomplete
                 api="Customers/GetAll/1"
                 label={t("customer")}
-                initialValue={values.customerId ?? null}
+                value={values.customerId ?? null}
                 optionLabel="fullName"
-                change={(_, data) => {
-                  setFieldValue("customerId", data?.value ?? null);
+                change={(value) => {
+                  console.log("valee", value);
+                  setFieldValue("customerId", value ?? null);
                 }}
                 refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
@@ -152,11 +153,9 @@ const AviabiletTicketForm = ({
                     <CustomAutocomplete
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
-                      initialValue={values.paymentId ?? null}
+                      value={values.paymentId ?? null}
                       optionLabel="type"
-                      change={(_, data) =>
-                        setFieldValue("paymentId", data?.value ?? null)
-                      }
+                      change={(value) => setFieldValue("paymentId", value)}
                       hasErrorMessages={
                         !!errors.paymentId && !!touched.paymentId
                       }
@@ -220,12 +219,9 @@ const AviabiletTicketForm = ({
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
-                    initialValue={planeTicket.personalId ?? null}
-                    change={(_, data) =>
-                      setFieldValue(
-                        `planeTickets.${index}.personalId`,
-                        data?.value ?? null
-                      )
+                    value={planeTicket.personalId ?? null}
+                    change={(value) =>
+                      setFieldValue(`planeTickets.${index}.personalId`, value)
                     }
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.personalId &&
@@ -251,13 +247,10 @@ const AviabiletTicketForm = ({
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
-                    initialValue={planeTicket.supplierId ?? null}
+                    value={planeTicket.supplierId ?? null}
                     optionLabel="name"
-                    change={(_, data) => {
-                      setFieldValue(
-                        `planeTickets.${index}.supplierId`,
-                        data?.value ?? null
-                      );
+                    change={(value) => {
+                      setFieldValue(`planeTickets.${index}.supplierId`, value);
                     }}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
                     hasErrorMessages={
@@ -284,12 +277,9 @@ const AviabiletTicketForm = ({
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}
                     optionLabel="name"
-                    initialValue={planeTicket.airWayId ?? null}
-                    change={(_, data) =>
-                      setFieldValue(
-                        `planeTickets.${index}.airWayId`,
-                        data?.value ?? null
-                      )
+                    value={planeTicket.airWayId ?? null}
+                    change={(value) =>
+                      setFieldValue(`planeTickets.${index}.airWayId`, value)
                     }
                     refetech={!!(isModalSuccess && type === "createAirway")}
                     hasErrorMessages={

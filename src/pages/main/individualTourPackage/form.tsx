@@ -8,10 +8,10 @@ import cloneDeep from "lodash/cloneDeep";
 import { tourPackageInitialValues } from "./newTourPackage";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
-import CustomAutocomplete from "@/components/custom/customAutocomplete";
+import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/customTextField";
 import { useModal } from "@/hooks/useModal";
 
@@ -54,10 +54,10 @@ const TourPackageForm = ({
               <CustomAutocomplete
                 api="Customers/GetAll/1"
                 label={t("customer")}
-                initialValue={values.customerId ?? null}
+                value={values.customerId ?? null}
                 optionLabel="fullName"
-                change={(_, data) => {
-                  setFieldValue("customerId", data?.value ?? null);
+                change={(value) => {
+                  setFieldValue("customerId", value ?? null);
                 }}
                 refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
@@ -149,10 +149,10 @@ const TourPackageForm = ({
                     <CustomAutocomplete
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
-                      initialValue={values.paymentId ?? null}
+                      value={values.paymentId ?? null}
                       optionLabel="type"
-                      change={(_, data) =>
-                        setFieldValue("paymentId", data?.value ?? null)
+                      change={(value) =>
+                        setFieldValue("paymentId", value ?? null)
                       }
                       hasErrorMessages={
                         !!errors.paymentId && !!touched.paymentId
@@ -219,11 +219,11 @@ const TourPackageForm = ({
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
-                    initialValue={planeTicket.personalId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.personalId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `individualTourPackages.${index}.personalId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createPersonal")}
@@ -255,12 +255,12 @@ const TourPackageForm = ({
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
-                    initialValue={planeTicket.supplierId ?? null}
+                    value={planeTicket.supplierId ?? null}
                     optionLabel="name"
-                    change={(_, data) => {
+                    change={(value) => {
                       setFieldValue(
                         `individualTourPackages.${index}.supplierId`,
-                        data?.value ?? null
+                        value ?? null
                       );
                     }}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
@@ -292,11 +292,11 @@ const TourPackageForm = ({
                     api="Tours/GetAll/1"
                     label={t("Tur adı")}
                     optionLabel="name"
-                    initialValue={planeTicket.tourId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.tourId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `individualTourPackages.${index}.tourId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createTour")}
@@ -328,11 +328,11 @@ const TourPackageForm = ({
                     api="Transfers/GetAll/1"
                     label={t("Transfer")}
                     optionLabel="name"
-                    initialValue={planeTicket.transferId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.transferId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `individualTourPackages.${index}.transferId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createTransfer")}
@@ -364,11 +364,11 @@ const TourPackageForm = ({
                     api="Dinings/GetAll/1"
                     label={t("Yemək")}
                     optionLabel="name"
-                    initialValue={planeTicket.diningId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.diningId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `individualTourPackages.${index}.diningId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createDining")}
@@ -399,11 +399,11 @@ const TourPackageForm = ({
                   <CustomAutocomplete
                     label={t("Sığorta")}
                     optionLabel="name"
-                    initialValue={planeTicket.insurance ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.insurance ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `individualTourPackages.${index}.insurance`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     hasErrorMessages={

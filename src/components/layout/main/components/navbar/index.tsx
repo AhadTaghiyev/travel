@@ -13,7 +13,7 @@ import { userService } from "../../../../../server/systemUserServer";
 import { BiLogOut } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 
 const pages = ["FAQ", "Haqqımızda", "Bizimlə əlaqə"];
 

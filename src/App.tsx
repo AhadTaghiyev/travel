@@ -1,6 +1,6 @@
+import { initReactI18next } from "react-i18next";
 import { Link } from "react-router-dom";
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
 
 import translationAZ from "./localizations/locales/az/translation.json";
 import translationEN from "./localizations/locales/en/translation.json";

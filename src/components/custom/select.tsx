@@ -1,26 +1,28 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { isNil } from "lodash";
-import {
-  Autocomplete,
-  InputLabel,
-  FormHelperText,
-  TextField,
-} from "@mui/material";
+import { InputLabel, FormHelperText } from "@mui/material";
 
 import { apiService } from "@/server/apiServer";
 import { useModal } from "@/hooks/useModal";
 
 import { textStyling } from "../../styles";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ICustomAutocompleteModel {
-  change: any;
+  value: string | number | boolean;
+  change: (value: string) => void;
   api?: string;
   label: string;
-  initialValue: any;
   refetech?: boolean;
   optionLabel: string;
-  staticOptions?: any[];
+  staticOptions?: { value: string | boolean; label: string }[];
   errorMessages: string[];
   hasErrorMessages: boolean;
 }
@@ -28,36 +30,29 @@ interface ICustomAutocompleteModel {
 export default function CustomAutocomplete({
   api,
   label,
+  value,
   change,
   refetech,
   optionLabel,
   errorMessages,
   staticOptions,
   hasErrorMessages,
-  initialValue = null,
 }: ICustomAutocompleteModel) {
-  const [options, setOptions] = useState(staticOptions ?? []);
+  const [options, setOptions] = useState(staticOptions ?? null);
   const { onClose } = useModal();
   const { t } = useTranslation();
 
   const fetchData = async () => {
     const res = await apiService.get(api);
 
-    const data = res.data.items.map((x) => ({
-      label: x[optionLabel],
-      value: x.id,
-    }));
+    const data = res.data.items
+      .map((x) => ({
+        label: x[optionLabel],
+        value: x.id,
+      }))
+      .filter((item) => item.label && item.value);
 
-    setOptions(
-      data.length === 0
-        ? [
-            {
-              label: t("No item found"),
-              disabled: true,
-            },
-          ]
-        : data
-    );
+    setOptions(data);
   };
 
   useEffect(() => {
@@ -77,30 +72,25 @@ export default function CustomAutocomplete({
       <InputLabel sx={{ mb: 1 }} style={textStyling}>
         {label}
       </InputLabel>
-      <Autocomplete
-        loading
-        disablePortal
-        key={
-          initialValue
-            ? `${options?.find((x) => x.value === initialValue)}`
-            : ""
-        }
-        loadingText={t("Loading...")}
-        value={
-          isNil(initialValue)
-            ? null
-            : options?.find((x) => x.value === initialValue)
-        }
-        onChange={change}
-        options={options}
-        style={textStyling}
-        sx={{ width: "100%" }}
-        size="small"
-        ListboxProps={{ style: { height: 250 } }}
-        getOptionDisabled={(option) => option.disabled}
-        isOptionEqualToValue={(option, value) => option.value === value}
-        renderInput={(params) => <TextField {...params} label="" />}
-      />
+      <Select onValueChange={change} defaultValue={String(value)}>
+        <SelectTrigger>
+          <SelectValue placeholder={t("Select option")} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem
+            value={null}
+            disabled={true}
+            className="hidden last:block"
+          >
+            {isNil(options) ? t("Loading...") : t("No item found")}
+          </SelectItem>
+          {options?.map((option) => (
+            <SelectItem value={String(option.value)} key={String(option.value)}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       {hasErrorMessages ? (
         <>
           {errorMessages?.map((item, key) => (

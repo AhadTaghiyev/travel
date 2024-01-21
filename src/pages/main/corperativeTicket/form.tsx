@@ -8,14 +8,14 @@ import cloneDeep from "lodash/cloneDeep";
 
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 import {
   invoiceDirectionInitialValues,
   planeTicketInitialValues,
 } from "./newTicket";
 
 import CustomDateTimePicker from "@/components/custom/customDateTimePicker";
-import CustomAutocomplete from "@/components/custom/customAutocomplete";
+import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/customTextField";
 
 interface ICorperativeTicketFormProps {
@@ -57,10 +57,10 @@ const CorperativeTicketForm = ({
               <CustomAutocomplete
                 api="Customers/GetAll/1"
                 label={t("customer")}
-                initialValue={values.customerId ?? null}
+                value={values.customerId ?? null}
                 optionLabel="fullName"
-                change={(_, data) => {
-                  setFieldValue("customerId", data?.value ?? null);
+                change={(value) => {
+                  setFieldValue("customerId", value ?? null);
                 }}
                 refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
@@ -152,10 +152,10 @@ const CorperativeTicketForm = ({
                     <CustomAutocomplete
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
-                      initialValue={values.paymentId ?? null}
+                      value={values.paymentId ?? null}
                       optionLabel="type"
-                      change={(_, data) =>
-                        setFieldValue("paymentId", data?.value ?? null)
+                      change={(value) =>
+                        setFieldValue("paymentId", value ?? null)
                       }
                       hasErrorMessages={
                         !!errors.paymentId && !!touched.paymentId
@@ -222,11 +222,11 @@ const CorperativeTicketForm = ({
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
-                    initialValue={planeTicket.personalId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.personalId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `corporativeTickets.${index}.personalId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createPersonal")}
@@ -257,12 +257,12 @@ const CorperativeTicketForm = ({
                   <CustomAutocomplete
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
-                    initialValue={planeTicket.supplierId ?? null}
+                    value={planeTicket.supplierId ?? null}
                     optionLabel="name"
-                    change={(_, data) => {
+                    change={(value) => {
                       setFieldValue(
                         `corporativeTickets.${index}.supplierId`,
-                        data?.value ?? null
+                        value ?? null
                       );
                     }}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
@@ -294,11 +294,11 @@ const CorperativeTicketForm = ({
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}
                     optionLabel="name"
-                    initialValue={planeTicket.airWayId ?? null}
-                    change={(_, data) =>
+                    value={planeTicket.airWayId ?? null}
+                    change={(value) =>
                       setFieldValue(
                         `corporativeTickets.${index}.airWayId`,
-                        data?.value ?? null
+                        value ?? null
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createAirway")}

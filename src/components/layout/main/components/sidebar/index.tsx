@@ -2,7 +2,7 @@ import styles from "./sidebar.module.css";
 import bubble from "@/assets/bubble.png";
 import { SidebarItem as SidebarItemType } from "./types";
 import { SidebarItem } from "./sidebarItem";
-import { cn } from "@/helpers/utils";
+import { cn } from "@/lib/utils";
 
 export default function Sidebar({ items }: SidebarItemType) {
   return (

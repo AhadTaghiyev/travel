@@ -1,5 +1,5 @@
-import { formatDate } from "@/helpers/utils";
 import { GridColDef } from "@mui/x-data-grid";
+import { formatDate } from "@/lib/utils";
 import { TFunction } from "i18next";
 
 export const getColumns = (t: TFunction): GridColDef[] => [

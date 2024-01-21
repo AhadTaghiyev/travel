@@ -29,7 +29,7 @@ import axios from "axios";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useTranslation } from "react-i18next";
 import { SERVER_BASE_URL } from "@/constants";
-import { formatDate } from "@/helpers/utils";
+import { formatDate } from "@/lib/utils";
 
 const headerStyle = {
   borderColor: "#c4c4c4",

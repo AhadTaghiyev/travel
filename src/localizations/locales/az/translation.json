@@ -95,7 +95,7 @@
     "Müştəri məlumatları": "Müştəri məlumatları",
     "Endirim": "Endirim",
     "Net qiymət": "Net qiymət",
-    "No item found": "Heç bir məhsul tapılmadı",
+    "No item found": "Hər hansı bir seçim tapılmadı",
     "Customer Created": "Müştəri yaradıldı",
     "Yeni Müştəri Yarat": "Yeni Müştəri Yarat",
     "Müştəri Adı": "Müştəri Adı",
@@ -138,10 +138,11 @@
     "Individual Tur paket": "Individual Tur paket",
     "Tur paket": "Tur paket",
     "Corporative Ticket": "Korperativ aviabilet",
-
     "Yeni Təchizatçı Yarat": "Yeni Təchizatçı Yarat",
     "Təchizatçı Adı": "Təchizatçı Adı",
     "Airway Created": "Hava yolu yaradıldı",
     "Yeni Havayolu Yarat": "Yeni Havayolu Yarat",
-    "Havayolu Adı": "Havayolu Adı"
+    "Havayolu Adı": "Havayolu Adı",
+
+    "Select option": "Seçim edin"
 }

@@ -6,6 +6,7 @@ import { ModalProvider } from "./components/providers/modalProvider";
 import { UserProvider } from "./store/UserContext";
 import router from "./routes/index";
 
+import "./styles/globals.css";
 import "./styles/custom.css";
 import "./styles/index.css";
 
