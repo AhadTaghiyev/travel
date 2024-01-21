@@ -16,7 +16,6 @@ import { apiService } from "@/server/apiServer";
 import { IReportModel } from "./types";
 
 import Loading from "@/components/custom/loading";
-import SimpleTable from "../simpleTable";
 import ReportTable from "../reportTable";
 
 import img from "@/assets/abc_home-1.jpg";
@@ -91,35 +90,8 @@ export default function Index({ headers, api }: IReportModel) {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ mb: 5, backgroundColor: "white" }}>
-      <Grid
-        container
-        spacing={3}
-        sx={{ mb: 2, width: "100%", borderTop: "1px solid #d8d3d3", mt: 1 }}
-      >
-        <Grid
-          item
-          xs={12}
-          sx={{ display: "flex", justifyContent: "end" }}
-          className="removeFromPrint"
-        >
-          {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
-          <Button
-            variant="text"
-            color="inherit"
-            sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
-          >
-            <AiOutlineMail style={{ marginRight: "8px" }} /> {t("Send mail")}
-          </Button>
-          <Button
-            onClick={handlePrint}
-            variant="text"
-            color="inherit"
-            sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
-          >
-            <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
-          </Button>
-        </Grid>
+    <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
+      <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
         <Grid
           container
           sx={{
@@ -132,6 +104,30 @@ export default function Index({ headers, api }: IReportModel) {
             <img src={img} style={{ width: "100%" }} />
           </Grid>
           <Grid item xs={5}>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "flex", justifyContent: "end" }}
+              className="removeFromPrint"
+            >
+              {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
+              <Button
+                variant="text"
+                color="inherit"
+                sx={{ fontSize: "12px", lineHeight: "16px" }}
+              >
+                <AiOutlineMail style={{ marginRight: "8px" }} />
+                {t("Send mail")}
+              </Button>
+              <Button
+                onClick={handlePrint}
+                variant="text"
+                color="inherit"
+                sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
+              >
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
+              </Button>
+            </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {currentUser?.companyName}
             </Typography>
@@ -141,19 +137,30 @@ export default function Index({ headers, api }: IReportModel) {
             </Typography>
           </Grid>
         </Grid>
-        <Container maxWidth="xl" sx={{ mb: 5, mt: 2 }}>
+        <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
           <Grid container spacing={3}>
             <Grid sx={{ backgroundColor: "white" }} item xs={6}>
-              <SimpleTable
-                header={t("Müştəri məlumatları")}
-                properties={getCustomerProperties(t)}
-                values={data?.simpleTable}
-              />
+              <div>
+                <h3 className="text-xl font-bold mb-2">
+                  {t("Müştəri məlumatları")}
+                </h3>
+                {getCustomerProperties(t).map((item, index) => (
+                  <div className="text-sm flex w-fit mb-1" key={index}>
+                    <p className="w-28 font-bold">{item.fieldName}:</p>
+                    <p>{data?.simpleTable?.[item.propertyName]}</p>
+                  </div>
+                ))}
+              </div>
             </Grid>
           </Grid>
         </Container>
-        <Container maxWidth="xl">
-          <Grid sx={{ backgroundColor: "white" }} container>
+        <Container maxWidth="xl" style={{ paddingRight: 0 }}>
+          <Grid
+            sx={{
+              width: "100%",
+            }}
+            container
+          >
             <ReportTable
               headers={headers}
               tickets={data?.tickets}

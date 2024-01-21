@@ -15,7 +15,6 @@ export default function index() {
             propertyName: "invoiceDirection",
           },
           { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
-          // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
         ]}
         api="/CorporateTickets/GetDetailAsync"
       />

@@ -7,12 +7,11 @@ import {
   TableCell,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-function getNestedProperty(obj: any, path: string): any {
+function getNestedProperty(obj, path: string) {
   const keys = path.split(".");
-  let current: any = obj;
+  let current = obj;
 
   for (const key of keys) {
     if (current[key] === undefined) {
@@ -32,35 +31,23 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default function Index({ headers, tickets, totals }: any) {
-  const [emptyCells, setEmptyCells] = useState<any>([]);
+export default function Index({ headers, tickets, totals }) {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const emptCells = [];
-
-    for (let i = 0; i < (headers.length - 2) / 2; i++) {
-      emptCells.push(
-        <TableCell
-          sx={{ borderLeft: "1px solid #e0e0e0", backgroundColor: "#F8F9FA" }}
-        />
-      );
-    }
-
-    setEmptyCells(emptCells);
-  }, []);
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            {/* <TableCell align="left" sx={{fontWeight: 'bold', fontSize: '17px', borderLeft: '1px solid #e0e0e0'}}>Invoice No</TableCell> */}
             {headers.map((elem, index) => (
               <TableCell
                 size="medium"
                 align="left"
-                sx={{ fontWeight: "bold", borderLeft: "1px solid #e0e0e0" }}
+                sx={{
+                  fontWeight: "bold",
+                  borderLeft: "1px solid #e0e0e0",
+                  padding: "10px 12px",
+                }}
                 key={index}
               >
                 {elem.fieldName}
@@ -75,7 +62,7 @@ export default function Index({ headers, tickets, totals }: any) {
               {headers.map((hElem, hKey) => (
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0" }}
+                  sx={{ borderLeft: "1px solid #e0e0e0", padding: "8px 12px" }}
                   align="left"
                   key={hKey}
                 >
@@ -109,10 +96,13 @@ export default function Index({ headers, tickets, totals }: any) {
                   backgroundColor: "#F8F9FA",
                 }}
               >
-                {emptyCells}
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
+                  sx={{
+                    borderLeft: "1px solid #e0e0e0",
+                    fontWeight: "bold",
+                    padding: "10px 12px",
+                  }}
                   align="left"
                 >
                   {t("Satış qiyməti")}:
@@ -123,12 +113,12 @@ export default function Index({ headers, tickets, totals }: any) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
+                    padding: "10px 12px",
                   }}
                   align="left"
                 >
                   {totals.totalSellingPrice}
                 </TableCell>
-                {emptyCells}
               </TableRow>
               <TableRow
                 sx={{
@@ -137,10 +127,13 @@ export default function Index({ headers, tickets, totals }: any) {
                   backgroundColor: "#F8F9FA",
                 }}
               >
-                {emptyCells}
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
+                  sx={{
+                    borderLeft: "1px solid #e0e0e0",
+                    fontWeight: "bold",
+                    padding: "10px 12px",
+                  }}
                   align="left"
                 >
                   {t("Endirim")}:
@@ -151,12 +144,12 @@ export default function Index({ headers, tickets, totals }: any) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
+                    padding: "10px 12px",
                   }}
                   align="left"
                 >
                   {totals.totalDiscountPrice}
                 </TableCell>
-                {emptyCells}
               </TableRow>
               <TableRow
                 sx={{
@@ -165,10 +158,13 @@ export default function Index({ headers, tickets, totals }: any) {
                   backgroundColor: "#F8F9FA",
                 }}
               >
-                {emptyCells}
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0", fontWeight: "bold" }}
+                  sx={{
+                    borderLeft: "1px solid #e0e0e0",
+                    fontWeight: "bold",
+                    padding: "10px 12px",
+                  }}
                   align="left"
                 >
                   {t("Net qiymət")}:
@@ -179,12 +175,12 @@ export default function Index({ headers, tickets, totals }: any) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
+                    padding: "10px 12px",
                   }}
                   align="left"
                 >
                   {totals.totalPrice}
                 </TableCell>
-                {emptyCells}
               </TableRow>
             </>
           )}
