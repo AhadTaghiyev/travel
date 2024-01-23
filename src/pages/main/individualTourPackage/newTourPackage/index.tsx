@@ -73,10 +73,14 @@ const NewTicket = () => {
 
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
-      <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
+      <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
         {t("Individual Tur Paket satışı")}
       </h1>
-      <TourPackageForm onSubmit={onSubmit} initialValues={initialValues} />
+      <TourPackageForm
+        formType="Create"
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+      />
     </div>
   );
 };

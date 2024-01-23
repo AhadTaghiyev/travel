@@ -22,6 +22,7 @@ interface ICustomAutocompleteModel {
   label: string;
   refetech?: boolean;
   optionLabel: string;
+  disabled?: boolean;
   staticOptions?: { value: string | boolean; label: string }[];
   errorMessages: string[];
   hasErrorMessages: boolean;
@@ -33,6 +34,7 @@ export default function CustomAutocomplete({
   value,
   change,
   refetech,
+  disabled = false,
   optionLabel,
   errorMessages,
   staticOptions,
@@ -72,7 +74,11 @@ export default function CustomAutocomplete({
       <InputLabel sx={{ mb: 1 }} style={textStyling}>
         {label}
       </InputLabel>
-      <Select onValueChange={change} defaultValue={String(value)}>
+      <Select
+        disabled={disabled}
+        onValueChange={change}
+        defaultValue={String(value)}
+      >
         <SelectTrigger>
           <SelectValue placeholder={t("Select option")} />
         </SelectTrigger>

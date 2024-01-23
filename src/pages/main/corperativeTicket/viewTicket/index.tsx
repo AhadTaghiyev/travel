@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { FiDownload } from "react-icons/fi";
+import { Button } from "@mui/material";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
@@ -10,7 +11,7 @@ import { IInvoiceModel } from "../types";
 import Loading from "@/components/custom/loading";
 import CorperativeTicketForm from "../form";
 
-const UpdateTicket = () => {
+const ViewTicket = () => {
   const { id } = useParams<{ id: string }>();
   const [ticket, setTicket] = useState<IInvoiceModel>();
   const [loading, setLoading] = useState(true);
@@ -34,43 +35,32 @@ const UpdateTicket = () => {
     }
   }
 
-  const onSubmit = useCallback(
-    (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      values.isCustomerPaid = undefined;
-      values.isSupplierPaid = undefined;
-      const promise = apiService
-        .put(`/CorporateTickets/Update/${id}`, values)
-        .then((response) => {
-          if (response.status === 200) {
-            toast.success(t("Ticket updated"));
-            navigate("/panel/corperativeTicket");
-          } else {
-            toast.error(response.message);
-          }
-        })
-        .finally(() => setSubmitting(false));
-      toast.promise(promise, {
-        loading: t("Loading..."),
-      });
-    },
-    [id]
-  );
-
   return (
-    <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
-      <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Korperativ güncəlləməsi")}
-      </h1>
+    <div className="mx-1 p-4 bg-white shadow-md min-h-[500px] print-view-form">
+      <div className="flex justify-between items-center pb-4 border-b border-solid border-[#1c29400f]">
+        <h1 className="text-black text-3xl font-bold">
+          {t("Corporative Ticket")}
+        </h1>
+        <Button
+          onClick={window.print}
+          variant="text"
+          color="inherit"
+          className="removeFromPrint"
+          sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
+        >
+          <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
+        </Button>
+      </div>
       {loading && <Loading />}
       {!loading && ticket && (
         <CorperativeTicketForm
-          formType="Edit"
+          formType="View"
           initialValues={ticket}
-          onSubmit={onSubmit}
+          onSubmit={() => 0}
         />
       )}
     </div>
   );
 };
 
-export default UpdateTicket;
+export default ViewTicket;

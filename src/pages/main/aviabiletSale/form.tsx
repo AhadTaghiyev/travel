@@ -19,8 +19,10 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 
+type FormType = "Create" | "Edit" | "View";
+
 interface IAviabiletTicketFormProps {
-  isEdit?: boolean;
+  formType: FormType;
   initialValues: IInvoiceModel;
   onSubmit: (
     values: IInvoiceModel,
@@ -31,9 +33,11 @@ interface IAviabiletTicketFormProps {
 const AviabiletTicketForm = ({
   initialValues,
   onSubmit,
-  isEdit = false,
+  formType,
 }: IAviabiletTicketFormProps) => {
   const { onOpen, isModalSuccess, type } = useModal();
+  const isEdit = formType === "Edit";
+  const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -58,6 +62,7 @@ const AviabiletTicketForm = ({
               <CustomAutocomplete
                 api="Customers/GetAll/1"
                 label={t("customer")}
+                disabled={isView}
                 value={values.customerId ?? null}
                 optionLabel="fullName"
                 change={(value) => {
@@ -67,16 +72,18 @@ const AviabiletTicketForm = ({
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
                 errorMessages={[t(errors.customerId?.toString())]}
               />
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => {
-                  onOpen("createCustomer");
-                }}
-                className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-              >
-                <FaPlusSquare />
-              </button>
+              {!isView && (
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    onOpen("createCustomer");
+                  }}
+                  className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                >
+                  <FaPlusSquare />
+                </button>
+              )}
             </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
@@ -85,6 +92,7 @@ const AviabiletTicketForm = ({
                 change={(data) => {
                   setFieldValue("date", data ?? new Date());
                 }}
+                disabled={isView}
                 hasErrorMessages={!!errors.date && !!touched.date}
                 errorMessages={[t(errors.date?.toString())]}
               />
@@ -96,6 +104,7 @@ const AviabiletTicketForm = ({
                 change={(data) => {
                   setFieldValue("deadLine", data ?? new Date());
                 }}
+                disabled={isView}
                 hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
                 errorMessages={[t(errors.deadLine?.toString())]}
               />
@@ -107,6 +116,7 @@ const AviabiletTicketForm = ({
                 label={t("explanation")}
                 value={values.explanation}
                 change={handleChange}
+                disabled={isView}
                 hasErrorMessages={!!errors.explanation && !!touched.explanation}
                 errorMessages={[t(errors.explanation?.toString())]}
               />
@@ -119,7 +129,7 @@ const AviabiletTicketForm = ({
                     name="isSupplierPaid"
                     checked={values.isSupplierPaid}
                     onChange={handleChange}
-                    disabled={isEdit}
+                    disabled={isEdit || isView}
                   />
                 }
                 label={t("supplierPayment")}
@@ -130,6 +140,7 @@ const AviabiletTicketForm = ({
                 "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
                 values.isCustomerPaid &&
                   !isEdit &&
+                  !isView &&
                   "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
               )}
             >
@@ -140,14 +151,16 @@ const AviabiletTicketForm = ({
                     name="isCustomerPaid"
                     checked={values.isCustomerPaid}
                     onChange={handleChange}
-                    disabled={isEdit}
+                    disabled={isEdit || isView}
                   />
                 }
                 label={
-                  values.isCustomerPaid && !isEdit ? "" : t("customerPayment")
+                  values.isCustomerPaid && !isEdit && !isView
+                    ? ""
+                    : t("customerPayment")
                 }
               />
-              {values.isCustomerPaid && !isEdit && (
+              {values.isCustomerPaid && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
                     <CustomAutocomplete
@@ -201,36 +214,38 @@ const AviabiletTicketForm = ({
                 key={`key-${planeTicket.id ?? planeTicket.key}`}
                 className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
               >
-                <div className="absolute right-0 top-2 flex gap-x-2">
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      const tickets = cloneDeep(values.planeTickets);
-                      const clonedTicketPackage = cloneDeep(planeTicket);
-                      clonedTicketPackage.key = shortid.generate();
-                      tickets.splice(index + 1, 0, clonedTicketPackage);
-                      setFieldValue("planeTickets", tickets);
-                    }}
-                    className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
-                  >
-                    {t("Copy")}
-                  </button>
-                  {index !== 0 && (
+                {!isView && (
+                  <div className="absolute right-0 top-2 flex gap-x-2">
                     <button
                       type="button"
                       disabled={isSubmitting}
                       onClick={() => {
                         const tickets = cloneDeep(values.planeTickets);
-                        tickets.splice(index, 1);
+                        const clonedTicketPackage = cloneDeep(planeTicket);
+                        clonedTicketPackage.key = shortid.generate();
+                        tickets.splice(index + 1, 0, clonedTicketPackage);
                         setFieldValue("planeTickets", tickets);
                       }}
-                      className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                      className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                     >
-                      {t("Sil")}
+                      {t("Copy")}
                     </button>
-                  )}
-                </div>
+                    {index !== 0 && (
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          const tickets = cloneDeep(values.planeTickets);
+                          tickets.splice(index, 1);
+                          setFieldValue("planeTickets", tickets);
+                        }}
+                        className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                      >
+                        {t("Sil")}
+                      </button>
+                    )}
+                  </div>
+                )}
                 <div className="w-full relative">
                   <CustomAutocomplete
                     api="Personals/GetAll/1"
@@ -240,6 +255,7 @@ const AviabiletTicketForm = ({
                     change={(value) =>
                       setFieldValue(`planeTickets.${index}.personalId`, value)
                     }
+                    disabled={isView}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.personalId &&
                       !!touched.planeTickets?.[index]?.personalId
@@ -255,6 +271,7 @@ const AviabiletTicketForm = ({
                     label={t("supplier")}
                     value={planeTicket.supplierId ?? null}
                     optionLabel="name"
+                    disabled={isView}
                     change={(value) => {
                       setFieldValue(`planeTickets.${index}.supplierId`, value);
                     }}
@@ -273,6 +290,7 @@ const AviabiletTicketForm = ({
                     label={t("airlineName")}
                     optionLabel="name"
                     value={planeTicket.airWayId ?? null}
+                    disabled={isView}
                     change={(value) =>
                       setFieldValue(`planeTickets.${index}.airWayId`, value)
                     }
@@ -285,22 +303,25 @@ const AviabiletTicketForm = ({
                       t(errors.planeTickets?.[index]?.airWayId?.toString()),
                     ]}
                   />
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => {
-                      onOpen("createAirway");
-                    }}
-                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                  >
-                    <FaPlusSquare />
-                  </button>
+                  {!isView && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        onOpen("createAirway");
+                      }}
+                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                    >
+                      <FaPlusSquare />
+                    </button>
+                  )}
                 </div>
                 <div className="w-full">
                   <CustomTextField
                     label={t("ticketNumber")}
                     value={values.planeTickets[index].ticketNo}
                     change={handleChange}
+                    disabled={isView}
                     name={`planeTickets.${index}.ticketNo`}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.ticketNo &&
@@ -316,6 +337,7 @@ const AviabiletTicketForm = ({
                     label={t("passengerName")}
                     value={values.planeTickets[index].passengerName}
                     change={handleChange}
+                    disabled={isView}
                     name={`planeTickets.${index}.passengerName`}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.passengerName &&
@@ -334,6 +356,7 @@ const AviabiletTicketForm = ({
                     value={values.planeTickets[index].segmentCount}
                     change={handleChange}
                     type="number"
+                    disabled={isView}
                     name={`planeTickets.${index}.segmentCount`}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.segmentCount &&
@@ -350,6 +373,7 @@ const AviabiletTicketForm = ({
                     value={values.planeTickets[index].purchasePrice}
                     change={handleChange}
                     type="number"
+                    disabled={isView}
                     name={`planeTickets.${index}.purchasePrice`}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.purchasePrice &&
@@ -367,6 +391,7 @@ const AviabiletTicketForm = ({
                     label={t("salePrice")}
                     value={values.planeTickets[index].sellingPrice}
                     change={handleChange}
+                    disabled={isView}
                     type="number"
                     name={`planeTickets.${index}.sellingPrice`}
                     hasErrorMessages={
@@ -384,6 +409,7 @@ const AviabiletTicketForm = ({
                     value={values.planeTickets[index].discount}
                     change={handleChange}
                     type="number"
+                    disabled={isView}
                     name={`planeTickets.${index}.discount`}
                     hasErrorMessages={
                       !!errors.planeTickets?.[index]?.discount &&
@@ -415,7 +441,7 @@ const AviabiletTicketForm = ({
                         key={invoiceDirectionIdx}
                         className="flex flex-col w-full relative"
                       >
-                        {invoiceDirectionIdx !== 0 && (
+                        {!isView && invoiceDirectionIdx !== 0 && (
                           <button
                             type="button"
                             disabled={isSubmitting}
@@ -448,6 +474,7 @@ const AviabiletTicketForm = ({
                               newValue ?? new Date()
                             );
                           }}
+                          disabled={isView}
                           hasErrorMessages={
                             !!errors.planeTickets?.[index]?.invoiceDirections?.[
                               invoiceDirectionIdx
@@ -473,6 +500,7 @@ const AviabiletTicketForm = ({
                           }
                           change={handleChange}
                           type="text"
+                          disabled={isView}
                           name={`planeTickets.${index}.invoiceDirections.${invoiceDirectionIdx}.direction`}
                           hasErrorMessages={
                             !!errors.planeTickets?.[index]?.invoiceDirections?.[
@@ -493,56 +521,62 @@ const AviabiletTicketForm = ({
                       </div>
                     )
                   )}
-                  <div className="w-full">
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        values.planeTickets[index].invoiceDirections.push(
-                          cloneDeep(invoiceDirectionInitialValues)
-                        );
-                        setFieldValue("planeTickets", [...values.planeTickets]);
-                      }}
-                      className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      + {t("newDirection")}
-                    </button>
-                  </div>
+                  {!isView && (
+                    <div className="w-full">
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          values.planeTickets[index].invoiceDirections.push(
+                            cloneDeep(invoiceDirectionInitialValues)
+                          );
+                          setFieldValue("planeTickets", [
+                            ...values.planeTickets,
+                          ]);
+                        }}
+                        className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
+                      >
+                        + {t("newDirection")}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
-          <div className="w-full flex gap-x-6 justify-end mb-6">
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() => {
-                const tickets = cloneDeep(values.planeTickets);
-                const clonedTicket = cloneDeep(planeTicketInitialValues);
-                clonedTicket.key = shortid.generate();
-                tickets.push(clonedTicket);
-                setFieldValue("planeTickets", tickets);
-              }}
-              className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
-            >
-              + {t("newPassenger")}
-            </button>
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() => navigate("/panel/aviabiletsale")}
-              className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("goBack")}
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("confirm")}
-            </button>
-          </div>
+          {!isView && (
+            <div className="w-full flex gap-x-6 justify-end mb-6">
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={() => {
+                  const tickets = cloneDeep(values.planeTickets);
+                  const clonedTicket = cloneDeep(planeTicketInitialValues);
+                  clonedTicket.key = shortid.generate();
+                  tickets.push(clonedTicket);
+                  setFieldValue("planeTickets", tickets);
+                }}
+                className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
+              >
+                + {t("newPassenger")}
+              </button>
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={() => navigate("/panel/aviabiletsale")}
+                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("goBack")}
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("confirm")}
+              </button>
+            </div>
+          )}
         </form>
       )}
     </Formik>

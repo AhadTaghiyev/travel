@@ -12,6 +12,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
+        showPrint
         exportLink="v1/TourPackages/Export/Export"
         columns={columns}
         api={"/TourPackages/GetAllFilter"}

@@ -306,4 +306,7 @@ button {
     position: relative;
     left: 0;
   }
+  .print-view-form {
+    margin-top: -80px;
+  }
 }

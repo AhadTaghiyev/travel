@@ -72,7 +72,11 @@ const NewTicket = () => {
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
         {t("Aviabilet satışı")}
       </h1>
-      <AviabiletTicketForm onSubmit={onSubmit} initialValues={initialValues} />
+      <AviabiletTicketForm
+        formType="Create"
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+      />
     </div>
   );
 };

@@ -18,6 +18,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 //icons
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import { FaPrint } from "react-icons/fa";
 import { BsEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
 import { GridPagination } from "@mui/x-data-grid";
@@ -48,6 +49,7 @@ export default function Index({
   api,
   deleteApi,
   root,
+  showPrint,
   buttonText,
   exportLink,
   deleteBtn = true,
@@ -146,6 +148,14 @@ export default function Index({
           >
             <BsEyeFill />
           </Link>
+          {showPrint && (
+            <Link
+              to={`${root}/view/${params.row.id}`}
+              className="hover:opacity-70 transition"
+            >
+              <FaPrint />
+            </Link>
+          )}
           {deleteBtn && (
             <BsFillTrashFill
               onClick={() => {

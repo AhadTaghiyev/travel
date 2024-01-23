@@ -4,6 +4,7 @@ import Home from "../pages/main/home";
 import AviabiletSale from "../pages/main/aviabiletSale";
 // import AviabiletSaleTable from "../pages/main/aviabiletSale/table";
 import NewAviaticket from "../pages/main/aviabiletSale/newTicket";
+import ViewAviaticket from "../pages/main/aviabiletSale/viewTicket";
 import Reciept from "../pages/main/aviabiletSale/reciept";
 import RecieptCoorperative from "../pages/main/corperativeTicket/reciept/index";
 import RecieptTour from "../pages/main/tourPackage/reciept/index";
@@ -76,6 +77,7 @@ import UpdateMoneyTransfer from "../pages/main/moneyTranfser/updateMoneyTransfer
 import CorperativeTicket from "../pages/main/corperativeTicket";
 import NewCorperativeTicket from "../pages/main/corperativeTicket/newTicket";
 import UpdateCorperativeTicket from "../pages/main/corperativeTicket/updateTicket";
+import ViewCorperativeTicket from "../pages/main/corperativeTicket/viewTicket";
 import ReportCorperativeTicket from "../pages/main/corperativeTicket/report";
 // GetCredits
 import GetCredit from "../pages/main/credit/getCredits";
@@ -89,9 +91,14 @@ import UpdatePaidCredit from "../pages/main/credit/paidCredits/updatePaidCredit"
 import TourPackage from "../pages/main/tourPackage";
 import NewTourPackage from "../pages/main/tourPackage/newTourPackage";
 import UpdateTourPackage from "../pages/main/tourPackage/updateTourPackage";
+import ViewTourPackage from "../pages/main/tourPackage/viewTourPackage";
 import TourReport from "../pages/main/tourPackage/report";
 
 //MassIncome
+import MassIncome2 from "../pages/main/massIncome2";
+import NewMassIncome2 from "../pages/main/massIncome2/newMassIncome";
+import UpdateMassIncome2 from "../pages/main/massIncome2/updateMassIncome";
+import InvoiceMassIncome2 from "../pages/main/massIncome2/invoice";
 import MassIncome from "../pages/main/massIncome";
 import NewMassIncome from "../pages/main/massIncome/newMassIncome";
 import UpdateMassIncome from "../pages/main/massIncome/updateMassIncome";
@@ -114,6 +121,7 @@ import DetailDeposit from "../pages/main/deposit/detail";
 import IndividualTourPackage from "../pages/main/individualTourPackage";
 import NewIndividualTourPackage from "../pages/main/individualTourPackage/newTourPackage";
 import UpdateIndividualTourPackage from "../pages/main/individualTourPackage/updateTourPackage";
+import ViewIndividualTourPackage from "../pages/main/individualTourPackage/viewTourPackage";
 import ReportIndividualTourPackage from "../pages/main/individualTourPackage/report";
 
 //other services
@@ -250,6 +258,10 @@ const router = createBrowserRouter([
         element: <NewAviaticket />,
       },
       {
+        path: "/panel/aviabiletsale/view/:id",
+        element: <ViewAviaticket />,
+      },
+      {
         path: "/panel/aviabiletsale/new/reciept/:id",
         element: <Reciept />,
       },
@@ -283,6 +295,10 @@ const router = createBrowserRouter([
         element: <UpdateCorperativeTicket />,
       },
       {
+        path: "/panel/corperativeTicket/view/:id",
+        element: <ViewCorperativeTicket />,
+      },
+      {
         path: "/panel/corperativeTicket/report",
         element: <ReportCorperativeTicket />,
       },
@@ -308,6 +324,10 @@ const router = createBrowserRouter([
         element: <UpdateTourPackage />,
       },
       {
+        path: "/panel/tourPackages/view/:id",
+        element: <ViewTourPackage />,
+      },
+      {
         path: "/panel/individualTourPackages",
         element: <IndividualTourPackage />,
       },
@@ -318,6 +338,10 @@ const router = createBrowserRouter([
       {
         path: "/panel/individualTourPackages/update/:id",
         element: <UpdateIndividualTourPackage />,
+      },
+      {
+        path: "/panel/individualTourPackages/view/:id",
+        element: <ViewIndividualTourPackage />,
       },
       {
         path: "/panel/individualTourPackages/report",
@@ -345,6 +369,23 @@ const router = createBrowserRouter([
       // ===============
       // Mass Income
       // ===============
+
+      {
+        path: "/panel/massIncome2",
+        element: <MassIncome2 />,
+      },
+      {
+        path: "/panel/massIncome2/new",
+        element: <NewMassIncome2 />,
+      },
+      {
+        path: "/panel/massIncome2/update/:id",
+        element: <UpdateMassIncome2 />,
+      },
+      {
+        path: "/panel/massIncome2/report",
+        element: <InvoiceMassIncome2 />,
+      },
 
       {
         path: "/panel/massIncome",

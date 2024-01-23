@@ -18,6 +18,7 @@ import {
 interface ICustomDateTimePickerModel {
   label: string;
   value: Date;
+  disabled?: boolean;
   change: (value: Date) => void;
   hasErrorMessages: boolean;
   errorMessages: string[];
@@ -27,8 +28,9 @@ export default function CustomDateTimePicker({
   label,
   value,
   change,
-  hasErrorMessages,
   errorMessages,
+  disabled = false,
+  hasErrorMessages,
 }: ICustomDateTimePickerModel) {
   const {
     i18n: { language },
@@ -43,7 +45,7 @@ export default function CustomDateTimePicker({
         {label}
       </InputLabel>
       <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={disabled}>
           <Button
             variant={"outline"}
             className={cn(
