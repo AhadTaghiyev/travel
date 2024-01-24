@@ -47,7 +47,7 @@ export const columns = (t: TFunction): GridColDef[] => [
   },
   {
     field: "totalPaidAmount",
-    headerName: t("commonPrice"),
+    headerName: t("paidamount"),
     flex: 1,
     headerClassName: "header-item",
   },
