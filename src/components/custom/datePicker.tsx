@@ -19,6 +19,7 @@ interface ICustomDateTimePickerModel {
   label: string;
   value: Date;
   disabled?: boolean;
+  hideError?: boolean;
   change: (value: Date) => void;
   hasErrorMessages: boolean;
   errorMessages: string[];
@@ -28,6 +29,7 @@ export default function CustomDateTimePicker({
   label,
   value,
   change,
+  hideError,
   errorMessages,
   disabled = false,
   hasErrorMessages,
@@ -81,7 +83,7 @@ export default function CustomDateTimePicker({
           })}
         </>
       ) : (
-        <div className="h-5" />
+        !hideError && <div className="h-5" />
       )}
     </>
   );

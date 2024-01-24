@@ -12,9 +12,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 //icons
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
@@ -27,10 +24,10 @@ import { TablePaginationProps } from "@mui/material/TablePagination";
 import { apiService } from "../../../server/apiServer";
 import dayjs from "dayjs";
 import axios from "axios";
-import { DatePicker } from "@mui/x-date-pickers";
 import { useTranslation } from "react-i18next";
 import { SERVER_BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
+import CustomDateTimePicker from "@/components/custom/datePicker";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -41,7 +38,7 @@ const headerStyle = {
   fontStyle: "normal",
   fontWeight: "400",
   lineHeight: "16px",
-  p: 0,
+  px: 2,
 };
 
 export default function Index({
@@ -73,11 +70,11 @@ export default function Index({
   const idToDelete = useRef("");
 
   const handleStartDateChange = (newValue) => {
-    setStartDate(newValue);
+    setStartDate(dayjs(newValue));
   };
 
   const handleEndDateChange = (newValue) => {
-    setEndDate(newValue);
+    setStartDate(dayjs(newValue));
   };
 
   const { t } = useTranslation();
@@ -234,6 +231,25 @@ export default function Index({
           </IconButton>
         </Paper>
       </Grid>
+
+      <Grid item md={2} className="min-w-[150px] flex items-center">
+        <CustomDateTimePicker
+          hideError
+          value={startDate}
+          change={(data) => {
+            handleStartDateChange(data ?? new Date());
+          }}
+        />
+      </Grid>
+      <Grid item md={2} className="min-w-[150px] flex items-center">
+        <CustomDateTimePicker
+          hideError
+          value={endDate}
+          change={(data) => {
+            handleEndDateChange(data ?? new Date());
+          }}
+        />
+      </Grid>
       <Grid item>
         <Button
           onClick={handleDownload}
@@ -245,56 +261,6 @@ export default function Index({
           <FiDownload style={{ marginRight: "6px" }} />
           {t("Export")}
         </Button>
-      </Grid>
-      <Grid item md={2} className="min-w-[150px]">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DateTimePicker"]}>
-            <DatePicker
-              slotProps={{
-                textField: {
-                  size: "small",
-                  InputProps: { sx: { fontSize: "12px" } },
-                },
-              }}
-              value={startDate}
-              sx={{ width: "100%" }}
-              label=""
-              onChange={(newValue) => {
-                const event = {
-                  target: {
-                    value: newValue,
-                  },
-                };
-                handleStartDateChange(event.target.value);
-              }}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-      </Grid>
-      <Grid item md={2} className="min-w-[150px]">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DateTimePicker"]}>
-            <DatePicker
-              slotProps={{
-                textField: {
-                  size: "small",
-                  InputProps: { sx: { fontSize: "12px" } },
-                },
-              }}
-              value={endDate}
-              sx={{ width: "100%" }}
-              label=""
-              onChange={(newValue) => {
-                const event = {
-                  target: {
-                    value: newValue,
-                  },
-                };
-                handleEndDateChange(event.target.value);
-              }}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
       </Grid>
       <Grid sx={{ backgroundColor: "white" }} item xs={12}>
         <div style={{ height: "100%", width: "100%" }}>
