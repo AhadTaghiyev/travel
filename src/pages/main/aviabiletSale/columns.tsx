@@ -22,6 +22,12 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
+    field: "supplierName",
+    headerName: t("supplier"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "ticketNo",
     headerName: t("ticketNo"),
     flex: 1,
@@ -40,15 +46,16 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
+    field: "totalPaidAmount",
+    headerName: t("commonPrice"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "personal",
     headerName: t("personal"),
     flex: 1,
     headerClassName: "header-item",
   },
-  {
-    field: "supplierName",
-    headerName: t("supplier"),
-    flex: 1,
-    headerClassName: "header-item",
-  },
+ 
 ];
