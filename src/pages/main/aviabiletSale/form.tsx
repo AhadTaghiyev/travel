@@ -15,7 +15,7 @@ import {
   planeTicketInitialValues,
 } from "./newTicket";
 
-import CustomAutocompleteSelect from "@/components/custom/autoCompleteSelect";
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomTextField from "@/components/custom/input";
 

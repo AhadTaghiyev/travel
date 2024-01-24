@@ -10,7 +10,7 @@ import { IMassIncomeModel, TicketType } from "./types";
 import { apiService } from "@/server/apiServer";
 import { MassIncomeSchema } from "./schema";
 
-import CustomAutocompleteSelect from "@/components/custom/autoCompleteSelect";
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 
