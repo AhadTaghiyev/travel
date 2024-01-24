@@ -74,7 +74,7 @@ export default function Index({
   };
 
   const handleEndDateChange = (newValue) => {
-    setStartDate(dayjs(newValue));
+    setEndDate(dayjs(newValue));
   };
 
   const { t } = useTranslation();
