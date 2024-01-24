@@ -14,7 +14,7 @@ export default function Index() {
       {/* <PageTitle title='Aviabilet satışı'  breadcrumbs={[homeBreadCrumb, planeTicketBreadCrumb]}/> */}
       <Table
         showPrint
-        exportLink="v1/PlaneTickets/Export/Export"
+        exportLink="PlaneTickets/Export/Export"
         columns={columnsresult}
         api={"/PlaneTickets/GetAllFilter"}
         buttonText="Aviabilet"
