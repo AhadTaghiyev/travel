@@ -231,8 +231,7 @@ export default function Index({
           </IconButton>
         </Paper>
       </Grid>
-
-      <Grid item md={2} className="min-w-[150px] flex items-center">
+      <Grid item md={2} className="min-w-[200px] flex items-center">
         <CustomDateTimePicker
           hideError
           value={startDate}
@@ -241,7 +240,7 @@ export default function Index({
           }}
         />
       </Grid>
-      <Grid item md={2} className="min-w-[150px] flex items-center">
+      <Grid item md={2} className="min-w-[200px] flex items-center">
         <CustomDateTimePicker
           hideError
           value={endDate}

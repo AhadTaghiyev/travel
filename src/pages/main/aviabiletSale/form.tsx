@@ -15,8 +15,8 @@ import {
   planeTicketInitialValues,
 } from "./newTicket";
 
+import CustomAutocompleteSelect from "@/components/custom/autoCompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
-import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 
 type FormType = "Create" | "Edit" | "View";
@@ -59,7 +59,7 @@ const AviabiletTicketForm = ({
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
             <div className="w-full relative">
-              <CustomAutocomplete
+              <CustomAutocompleteSelect
                 api="Customers/GetAll/1"
                 label={t("customer")}
                 disabled={isView}
@@ -163,7 +163,7 @@ const AviabiletTicketForm = ({
               {values.isCustomerPaid && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
-                    <CustomAutocomplete
+                    <CustomAutocompleteSelect
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
                       value={values.paymentId ?? null}
@@ -247,7 +247,7 @@ const AviabiletTicketForm = ({
                   </div>
                 )}
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     api="Personals/GetAll/1"
                     label={t("personal")}
                     optionLabel="fullName"
@@ -266,7 +266,7 @@ const AviabiletTicketForm = ({
                   />
                 </div>
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
                     value={planeTicket.supplierId ?? null}
@@ -285,7 +285,7 @@ const AviabiletTicketForm = ({
                   />
                 </div>
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}
                     optionLabel="name"

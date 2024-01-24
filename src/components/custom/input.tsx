@@ -1,6 +1,7 @@
 import { InputLabel, FormHelperText } from "@mui/material";
 import { textStyling } from "../../styles";
 import { Input } from "../ui/input";
+import { useTranslation } from "react-i18next";
 
 interface ICustomTextFieldModel {
   label: string;
@@ -22,9 +23,10 @@ export default function CustomTextField({
   errorMessages,
   value,
   type = "text",
-  placeholder,
   disabled,
 }: ICustomTextFieldModel) {
+  const { t } = useTranslation();
+
   return (
     <>
       <InputLabel
@@ -40,7 +42,7 @@ export default function CustomTextField({
         value={value}
         onChange={change}
         disabled={disabled}
-        placeholder={placeholder}
+        placeholder={t("Type here")} //Hola
       />
       {hasErrorMessages ? (
         <>

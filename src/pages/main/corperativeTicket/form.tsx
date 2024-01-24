@@ -15,8 +15,8 @@ import {
   corperativeTicketInitialValues,
 } from "./newTicket";
 
+import CustomAutocompleteSelect from "@/components/custom/autoCompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
-import CustomAutocomplete from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 
 type FormType = "Create" | "Edit" | "View";
@@ -59,7 +59,7 @@ const CorperativeTicketForm = ({
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
             <div className="w-full relative">
-              <CustomAutocomplete
+              <CustomAutocompleteSelect
                 disabled={isView}
                 api="Customers/GetAll/1"
                 label={t("customer")}
@@ -163,7 +163,7 @@ const CorperativeTicketForm = ({
               {values.isCustomerPaid && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
-                    <CustomAutocomplete
+                    <CustomAutocompleteSelect
                       disabled={isView}
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
@@ -251,7 +251,7 @@ const CorperativeTicketForm = ({
                   </div>
                 )}
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     disabled={isView}
                     api="Personals/GetAll/1"
                     label={t("personal")}
@@ -277,7 +277,7 @@ const CorperativeTicketForm = ({
                   />
                 </div>
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     disabled={isView}
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
@@ -303,7 +303,7 @@ const CorperativeTicketForm = ({
                   />
                 </div>
                 <div className="w-full relative">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     disabled={isView}
                     api="AirWays/GetAll/1"
                     label={t("airlineName")}

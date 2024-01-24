@@ -10,7 +10,8 @@ import { IMassIncomeModel, TicketType } from "./types";
 import { apiService } from "@/server/apiServer";
 import { MassIncomeSchema } from "./schema";
 
-import CustomAutocomplete from "@/components/custom/select";
+import CustomAutocompleteSelect from "@/components/custom/autoCompleteSelect";
+import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
@@ -70,7 +71,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full">
-              <CustomAutocomplete
+              <CustomSelect
                 label={t("Bilet növü")} /** Hola */
                 optionLabel="name"
                 value={values.ticketType ?? null}
@@ -84,7 +85,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
               />
             </div>
             <div className="w-full relative">
-              <CustomAutocomplete
+              <CustomAutocompleteSelect
                 api="Customers/GetAll/1"
                 label={t("customer")}
                 value={values.customerId ?? null}
@@ -102,7 +103,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
                 className="w-full"
                 key={`ticket-${values.ticketType}-${values.customerId}`}
               >
-                <CustomAutocomplete
+                <CustomAutocompleteSelect
                   api={`Invoices/GetAll?customerId=${values.customerId}&ticketType=${values.ticketType}`}
                   label={t("Invoice")}
                   value={values.invoiceId ?? null}
@@ -137,7 +138,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
                   />
                 </div>
                 <div className="w-full">
-                  <CustomAutocomplete
+                  <CustomAutocompleteSelect
                     api="Payments/GetAll/1"
                     label={t("Ödəniş növü")}
                     value={values.paymentId ?? null}
