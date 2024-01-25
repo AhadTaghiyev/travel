@@ -61,7 +61,7 @@ export const CreateCurrencyModal = () => {
                   value={values.name}
                   change={handleChange}
                   hasErrorMessages={!!errors.name && !!touched.name}
-                  errorMessages={[t(errors.fullName?.toString())]}
+                  errorMessages={[t(errors.name?.toString())]}
                 />
               </div>
               <div className="w-full">
