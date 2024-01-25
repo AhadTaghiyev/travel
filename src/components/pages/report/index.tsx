@@ -134,7 +134,7 @@ export default function Index({ headers, api }: IReportModel) {
               <Button
                 variant="text"
                 color="inherit"
-                sx={{ fontSize: "12px", lineHeight: "16px" }}
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
                 <AiOutlineMail style={{ marginRight: "8px" }} />
                 {t("Send mail")}
@@ -143,7 +143,7 @@ export default function Index({ headers, api }: IReportModel) {
                 onClick={handlePrint}
                 variant="text"
                 color="inherit"
-                sx={{ ml: 4, fontSize: "12px", lineHeight: "16px" }}
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
