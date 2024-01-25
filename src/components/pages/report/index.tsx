@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { BsCurrencyExchange } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AiOutlineMail } from "react-icons/ai";
@@ -16,11 +17,11 @@ import { apiService } from "@/server/apiServer";
 import { ICurrency, IReportModel } from "./types";
 
 import Loading from "@/components/custom/loading";
+import { MassIncomeTable } from "../incomeTable";
+import { useModal } from "@/hooks/useModal";
 import ReportTable from "../reportTable";
 
 import img from "@/assets/abc_home-1.jpg";
-import { BsCurrencyExchange } from "react-icons/bs";
-import { useModal } from "@/hooks/useModal";
 
 const getCustomerProperties = (t) => [
   {
@@ -67,7 +68,7 @@ export default function Index({ headers, api }: IReportModel) {
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/aviabiletSale");
+        navigate("/panel");
       }, 1000);
       return;
     }
@@ -84,6 +85,7 @@ export default function Index({ headers, api }: IReportModel) {
         totalDiscountPrice: data.totalDiscountPrice,
       },
       tickets: data.items,
+      incomes: data.massIncomes,
     });
     setLoading(false);
   }
@@ -158,21 +160,25 @@ export default function Index({ headers, api }: IReportModel) {
           </Grid>
         </Grid>
         <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
-          <Grid container spacing={3}>
-            <Grid sx={{ backgroundColor: "white" }} item xs={6}>
-              <div>
-                <h3 className="text-xl font-bold mb-2">
-                  {t("Müştəri məlumatları")}
-                </h3>
-                {getCustomerProperties(t).map((item, index) => (
-                  <div className="text-sm flex w-fit mb-1" key={index}>
-                    <p className="w-28 font-bold">{item.fieldName}:</p>
-                    <p>{data?.simpleTable?.[item.propertyName]}</p>
-                  </div>
-                ))}
-              </div>
-            </Grid>
-          </Grid>
+          <div className="flex justify-between ">
+            <div>
+              <h3 className="text-xl font-bold mb-2">
+                {t("Müştəri məlumatları")}
+              </h3>
+              {getCustomerProperties(t).map((item, index) => (
+                <div className="text-sm flex w-fit mb-1" key={index}>
+                  <p className="w-28 font-bold">{item.fieldName}:</p>
+                  <p>{data?.simpleTable?.[item.propertyName]}</p>
+                </div>
+              ))}
+            </div>
+            <div className="w-[500px] max-w-[50%] -mr-6 -mt-6">
+              <MassIncomeTable
+                currency={currency}
+                incomes={data.incomes ?? []}
+              />
+            </div>
+          </div>
         </Container>
         <Container maxWidth="xl" style={{ paddingRight: 0 }}>
           <Grid
