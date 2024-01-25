@@ -126,7 +126,6 @@ export default function Index({
     headerName: t("operations"),
     flex: 1,
     headerClassName: "header-item",
-    width: 140,
     renderCell: (params) => {
       return (
         <div
@@ -279,9 +278,13 @@ export default function Index({
             pageSizeOptions={[10, 50, 100]}
             disableRowSelectionOnClick={true}
             sx={{
+              "& .MuiDataGrid-row": {
+                width: "100%!important",
+              },
               ".MuiDataGrid-columnHeaders": {
                 height: "100%!important",
                 minHeight: "40px!important",
+                borderColor: "#00000070",
               },
               ".MuiDataGrid-columnHeader": {
                 height: "40px!important",
@@ -297,19 +300,31 @@ export default function Index({
                 borderTop: 0,
                 borderColor: "#e0e0e0",
               },
+              "& .MuiDataGrid-cell:last-child": {
+                border: 0,
+                borderBottom: 1,
+                borderColor: "#e0e0e0",
+                width: "100%!important",
+              },
               "& .MuiDataGrid-cellContent": {
                 fontSize: 12,
               },
               "& .header-item": {
-                border: 1,
+                borderLeft: 1,
                 borderRight: 0,
                 borderTop: 0,
                 borderColor: "#e0e0e0",
                 width: "100%",
                 height: "100%",
               },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                fontWeight: "bold!important",
+              },
               "& .MuiDataGrid-virtualScroller": {
                 minHeight: "160px!important",
+              },
+              "& .MuiDataGrid-virtualScrollerRenderZone": {
+                width: "100%!important",
               },
             }}
             rowCount={totalRows}
