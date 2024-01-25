@@ -7,15 +7,21 @@ export type ModalType =
   | "createDining"
   | "createCustomer"
   | "createSupplier"
-  | "createAirway";
+  | "createAirway"
+  | "createCurrency";
+
+type ModalData = {
+  [key: string]: any;
+};
 
 export interface ModalStore {
   type: ModalType | null;
+  onSuccess?: (data: ModalData) => void;
   isModalSuccess: boolean;
   onClose: () => void;
   isOpen: boolean;
   setModalSuccess: () => void;
-  onOpen: (type: ModalType) => void;
+  onOpen: (type: ModalType, onSuccess?: (data: ModalData) => void) => void;
 }
 
 export const useModal = create<ModalStore>((set) => ({
@@ -23,7 +29,7 @@ export const useModal = create<ModalStore>((set) => ({
   type: null,
   isOpen: false,
   isModalSuccess: false,
-  onOpen: (type) => set({ isOpen: true, type }),
+  onOpen: (type, onSuccess) => set({ isOpen: true, type, onSuccess }),
   setModalSuccess: () => set({ isModalSuccess: true }),
   onClose: () => set({ isOpen: false, type: null, isModalSuccess: false }),
 }));

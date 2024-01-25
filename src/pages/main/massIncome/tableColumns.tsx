@@ -4,7 +4,7 @@ export const columns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "invoiceNo",
-    headerName: "Invoice Number" /** Hola */,
+    headerName: "Invoice Number",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -16,7 +16,7 @@ export const columns: GridColDef[] = [
   },
   {
     field: "payment",
-    headerName: "Ödənişlər", // Hola
+    headerName: "Ödənişlər",
     flex: 1,
     headerClassName: "header-item",
   },

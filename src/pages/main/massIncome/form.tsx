@@ -72,7 +72,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full">
               <CustomSelect
-                label={t("Bilet növü")} /** Hola */
+                label={t("Bilet növü")}
                 optionLabel="name"
                 value={values.ticketType ?? null}
                 change={(value) => {
@@ -130,7 +130,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
                     disabled
                     name="debt"
                     type="text"
-                    label={t("Borc")} // Hola
+                    label={t("Borc")}
                     value={values.debt}
                     change={handleChange}
                     hasErrorMessages={!!errors.debt && !!touched.debt}

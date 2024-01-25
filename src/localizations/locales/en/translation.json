@@ -160,6 +160,24 @@
     "Məbləğ mənfi ola bilməz": "Amount can not be negative",
     "Endirim mənfi ola bilməz": "Discount can not be negative",
     "Uşaq sayı mənfi ola bilməz": "Children count can not be negative",
-    "Böyük sayı mənfi ola bilməz": "Adults count can not be negative"
+    "Böyük sayı mənfi ola bilməz": "Adults count can not be negative",
+    "Search option...": "Search option...",
+    "Type here...": "Type here...",
+    "Məzənnə daxil edilməlidir": "Currency must be entered",
+    "Ad daxil edilməlidir": "Name must be entered",
+    "Yeni Məzənnə Yarat": "Create Currency",
+    "Məzənnə Adı": "Currency Name",
+    "Məzənnə": "Currency",
+    "Məzənnə dəyişdir": "Change Currency",
+    "Bilet növü": "Ticket type",
+    "Borc": "Debt",
+    "Bilet növü seçilməlidir": "Ticket type must be selected",
+    "Faktura seçilməlidir": "Invoice must be selected",
+    "Məbləğ borcdan çox ola bilməz": "Amount can not be more than debt",
+    "Invoice Number": "Invoice Number",
+    "Mədaxil yaradıldı": "Entry created",
+    "Mədaxil Yarat": "Create Entry",
+    "Mədaxil güncəlləməsi": "Entry update",
+    "paidamount": "Paid amount"
 
 }

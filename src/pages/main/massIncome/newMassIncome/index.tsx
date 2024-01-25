@@ -22,7 +22,7 @@ const NewMassIncome = () => {
         .post(`/MassIncomes/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Mədaxil yaradıldı")); // Hola
+            toast.success(t("Mədaxil yaradıldı"));
 
             navigate(`/panel/massIncome`);
             // TODO: Navigate to report page
@@ -44,7 +44,7 @@ const NewMassIncome = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Mədaxil Yarat")} {/** Hola */}
+        {t("Mədaxil Yarat")}
       </h1>
       <MassIncomeForm
         onSubmit={onSubmit}

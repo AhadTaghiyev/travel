@@ -146,7 +146,6 @@
     "Select option": "Выбрать опцию",
     "commission": "Комиссия",
     "Korperativ güncəlləməsi": "Обновление корпоративного билета",
-
     "fare": "Тариф",
     "taxes": "Налоги",
     "Alış qiyməti mənfi ola bilməz": "Цена покупки не может быть отрицательной",
@@ -161,5 +160,23 @@
     "Məbləğ mənfi ola bilməz": "Сумма не может быть отрицательной",
     "Endirim mənfi ola bilməz": "Скидка не может быть отрицательной",
     "Uşaq sayı mənfi ola bilməz": "Количество детей не может быть отрицательным",
-    "Böyük sayı mənfi ola bilməz": "Количество взрослых не может быть отрицательным"
+    "Böyük sayı mənfi ola bilməz": "Количество взрослых не может быть отрицательным",
+    "Search option...": "Поиск опции...",
+    "Type here...": "Напишите здесь...",
+    "Məzənnə daxil edilməlidir": "Необходимо ввести валюту",
+    "Ad daxil edilməlidir": "Необходимо ввести имя",
+    "Yeni Məzənnə Yarat": "Создать новую валюту",
+    "Məzənnə Adı": "Название валюты",
+    "Məzənnə": "Валюта",
+    "Məzənnə dəyişdir": "Изменить валюту",
+    "Bilet növü": "Тип билета",
+    "Borc": "Долг",
+    "Bilet növü seçilməlidir": "Необходимо выбрать тип билета",
+    "Faktura seçilməlidir": "Необходимо выбрать счет",
+    "Məbləğ borcdan çox ola bilməz": "Сумма не может быть больше долга",
+    "Invoice Number": "Номер счета",
+    "Mədaxil yaradıldı": "Вход создан",
+    "Mədaxil Yarat": "Создать вход",
+    "Mədaxil güncəlləməsi": "Обновление входа",
+    "paidamount": "Оплаченная сумма"
 }

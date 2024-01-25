@@ -28,6 +28,7 @@ import { useTranslation } from "react-i18next";
 import { SERVER_BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
 import CustomDateTimePicker from "@/components/custom/datePicker";
+import { toast } from "sonner";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -101,10 +102,13 @@ export default function Index({
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.get(
-        `${SERVER_BASE_URL}/${exportLink}`,
-        config
-      );
+      const promise = axios.get(`${SERVER_BASE_URL}/${exportLink}`, config);
+
+      toast.promise(promise, {
+        loading: t("Loading..."),
+      });
+
+      const response = await promise;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;

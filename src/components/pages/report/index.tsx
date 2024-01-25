@@ -13,12 +13,14 @@ import { toast } from "sonner";
 
 import { UserContext } from "@/store/UserContext";
 import { apiService } from "@/server/apiServer";
-import { IReportModel } from "./types";
+import { ICurrency, IReportModel } from "./types";
 
 import Loading from "@/components/custom/loading";
 import ReportTable from "../reportTable";
 
 import img from "@/assets/abc_home-1.jpg";
+import { BsCurrencyExchange } from "react-icons/bs";
+import { useModal } from "@/hooks/useModal";
 
 const getCustomerProperties = (t) => [
   {
@@ -41,10 +43,15 @@ const getCustomerProperties = (t) => [
 
 export default function Index({ headers, api }: IReportModel) {
   const [searchParams] = useSearchParams();
+  const [currency, setCurrency] = useState<ICurrency>({
+    name: "USD",
+    value: 1,
+  });
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { onOpen } = useModal();
 
   const { user: currentUser } = useContext(UserContext);
 
@@ -81,6 +88,10 @@ export default function Index({ headers, api }: IReportModel) {
     setLoading(false);
   }
 
+  const onCurrencyChange = (values: ICurrency) => {
+    setCurrency(values);
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -111,6 +122,15 @@ export default function Index({ headers, api }: IReportModel) {
               className="removeFromPrint"
             >
               {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
+              <Button
+                variant="text"
+                color="inherit"
+                sx={{ fontSize: "12px", lineHeight: "16px" }}
+                onClick={() => onOpen("createCurrency", onCurrencyChange)}
+              >
+                <BsCurrencyExchange style={{ marginRight: "8px" }} />
+                {t("Məzənnə dəyişdir")}
+              </Button>
               <Button
                 variant="text"
                 color="inherit"
@@ -163,6 +183,7 @@ export default function Index({ headers, api }: IReportModel) {
           >
             <ReportTable
               headers={headers}
+              currency={currency}
               tickets={data?.tickets}
               totals={data.totals}
             />

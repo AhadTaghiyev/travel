@@ -109,7 +109,6 @@ export default function CustomAutocompleteSelect({
             }}
           >
             <CommandInput placeholder={t("Search option...")} className="h-9" />
-            {/** Hola */}
             <CommandGroup>
               <CommandItem disabled value={""} className="hidden last:block">
                 {isNil(options) ? t("Loading...") : t("No item found")}

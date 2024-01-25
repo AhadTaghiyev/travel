@@ -42,7 +42,7 @@ export default function CustomTextField({
         value={value}
         onChange={change}
         disabled={disabled}
-        placeholder={t("Type here")} //Hola
+        placeholder={t("Type here...")}
       />
       {hasErrorMessages ? (
         <>

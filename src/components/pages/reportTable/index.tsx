@@ -31,7 +31,7 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default function Index({ headers, tickets, totals }) {
+export default function Index({ headers, tickets, totals, currency }) {
   const { t } = useTranslation();
 
   return (
@@ -117,7 +117,8 @@ export default function Index({ headers, tickets, totals }) {
                   }}
                   align="left"
                 >
-                  {totals.totalSellingPrice}
+                  {(totals.totalSellingPrice * currency.value).toFixed(2)}{" "}
+                  {currency.name}
                 </TableCell>
               </TableRow>
               <TableRow
@@ -148,7 +149,8 @@ export default function Index({ headers, tickets, totals }) {
                   }}
                   align="left"
                 >
-                  {totals.totalDiscountPrice}
+                  {(totals.totalDiscountPrice * currency.value).toFixed(2)}{" "}
+                  {currency.name}
                 </TableCell>
               </TableRow>
               <TableRow
@@ -179,7 +181,8 @@ export default function Index({ headers, tickets, totals }) {
                   }}
                   align="left"
                 >
-                  {totals.totalPrice}
+                  {(totals.totalPrice * currency.value).toFixed(2)}{" "}
+                  {currency.name}
                 </TableCell>
               </TableRow>
             </>
