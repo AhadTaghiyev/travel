@@ -14,7 +14,7 @@ export default function Index() {
       <Table
         showPrint
         columns={columns}
-        exportLink="v1/individualTourPackages/Export/Export"
+        exportLink="individualTourPackages/Export/Export"
         api={"/IndividualTourPackages/GetAllFilter"}
         deleteApi="/IndividualTourPackages/Delete"
         root="/panel/individualTourPackages"
