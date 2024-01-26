@@ -39,12 +39,20 @@ const UpdateTicket = () => {
       values: IMassIncomeModel,
       { setSubmitting }: FormikHelpers<FormikValues>
     ) => {
+      const params = {
+        id,
+        paymentId: values.paymentId,
+        paidAmount: values.paidAmount,
+
+        invoiceId: values.invoiceId,
+      };
+
       const promise = apiService
-        .put(`/PlaneTickets/Update/${id}`, values)
+        .put(`/MassIncomes/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Ticket updated"));
-            navigate("/panel/aviabiletsale");
+            toast.success(t("MassIncome updated")); // Hola
+            navigate("/panel/massIncome");
           } else {
             toast.error(response.message);
           }
@@ -64,7 +72,11 @@ const UpdateTicket = () => {
       </h1>
       {loading && <Loading />}
       {!loading && massIncome && (
-        <MassIncomeForm initialValues={massIncome} onSubmit={onSubmit} />
+        <MassIncomeForm
+          formType="Edit"
+          initialValues={massIncome}
+          onSubmit={onSubmit}
+        />
       )}
     </div>
   );

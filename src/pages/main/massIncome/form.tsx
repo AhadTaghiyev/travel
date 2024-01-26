@@ -2,17 +2,20 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { InputLabel } from "@mui/material";
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { MassIncomeEditSchema, MassIncomeSchema } from "./schema";
 import { IMassIncomeModel, TicketType } from "./types";
 import { apiService } from "@/server/apiServer";
-import { MassIncomeSchema } from "./schema";
+import { textStyling } from "@/styles";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
-import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
+import CustomSelect from "@/components/custom/select";
+import { Input } from "@/components/ui/input";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Aviabilet"), value: "planeTicket" },
@@ -22,7 +25,10 @@ const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
 ];
 
+type FormType = "Edit" | "Create";
+
 interface IMassIncomeFormProps {
+  formType: FormType;
   initialValues: IMassIncomeModel;
   onSubmit: (
     values: IMassIncomeModel,
@@ -30,8 +36,13 @@ interface IMassIncomeFormProps {
   ) => void;
 }
 
-const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
+const MassIncomeForm = ({
+  initialValues,
+  onSubmit,
+  formType,
+}: IMassIncomeFormProps) => {
   const [debtLoading, setDebtLoading] = useState(false);
+  const isEdit = formType === "Edit";
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -57,7 +68,7 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={MassIncomeSchema}
+      validationSchema={isEdit ? MassIncomeEditSchema : MassIncomeSchema}
     >
       {({
         values,
@@ -70,35 +81,60 @@ const MassIncomeForm = ({ initialValues, onSubmit }: IMassIncomeFormProps) => {
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            <div className="w-full">
-              <CustomSelect
-                label={t("Bilet növü")}
-                optionLabel="name"
-                value={values.ticketType ?? null}
-                change={(value) => {
-                  setFieldValue("invoiceId", null);
-                  setFieldValue(`ticketType`, value ?? null);
-                }}
-                hasErrorMessages={!!errors.ticketType && !!touched.ticketType}
-                staticOptions={getTicketTypeOptions(t)}
-                errorMessages={[t(errors.ticketType?.toString())]}
-              />
-            </div>
-            <div className="w-full relative">
-              <CustomAutocompleteSelect
-                api="Customers/GetAll/1"
-                label={t("customer")}
-                value={values.customerId ?? null}
-                optionLabel="fullName"
-                change={(value) => {
-                  setFieldValue("invoiceId", null);
-                  setFieldValue("customerId", value ?? null);
-                }}
-                hasErrorMessages={!!errors.customerId && !!touched.customerId}
-                errorMessages={[t(errors.customerId?.toString())]}
-              />
-            </div>
-            {!!values.ticketType && !!values.customerId && (
+            {!isEdit && (
+              <>
+                <div className="w-full">
+                  <CustomSelect
+                    label={t("Bilet növü")}
+                    optionLabel="name"
+                    value={values.ticketType ?? null}
+                    change={(value) => {
+                      setFieldValue("invoiceId", null);
+                      setFieldValue(`ticketType`, value ?? null);
+                    }}
+                    hasErrorMessages={
+                      !!errors.ticketType && !!touched.ticketType
+                    }
+                    staticOptions={getTicketTypeOptions(t)}
+                    errorMessages={[t(errors.ticketType?.toString())]}
+                  />
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocompleteSelect
+                    api="Customers/GetAll/1"
+                    label={t("customer")}
+                    disabled={isEdit}
+                    value={values.customerId ?? null}
+                    optionLabel="fullName"
+                    change={(value) => {
+                      setFieldValue("invoiceId", null);
+                      setFieldValue("customerId", value ?? null);
+                    }}
+                    hasErrorMessages={
+                      !!errors.customerId && !!touched.customerId
+                    }
+                    errorMessages={[t(errors.customerId?.toString())]}
+                  />
+                </div>
+              </>
+            )}
+            {isEdit && (
+              <>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("customer")}
+                  </InputLabel>
+                  <Input value={values.customer} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Invoice")}
+                  </InputLabel>
+                  <Input value={values.invoiceNo} disabled />
+                </div>
+              </>
+            )}
+            {!isEdit && !!values.ticketType && !!values.customerId && (
               <div
                 className="w-full"
                 key={`ticket-${values.ticketType}-${values.customerId}`}

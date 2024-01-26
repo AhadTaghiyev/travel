@@ -4,9 +4,9 @@ import { FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
-import shortid from "shortid";
+// import shortid from "shortid";
 
-import { tourPackageInitialValues } from "./newTourPackage";
+// import { tourPackageInitialValues } from "./newTourPackage";
 import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
