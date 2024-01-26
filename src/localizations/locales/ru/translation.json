@@ -178,5 +178,9 @@
     "Mədaxil yaradıldı": "Вход создан",
     "Mədaxil Yarat": "Создать вход",
     "Mədaxil güncəlləməsi": "Обновление входа",
-    "paidamount": "Оплаченная сумма"
+    "paidamount": "Оплаченная сумма",
+    "Description": "Описание",
+    "No Description": "Нет описания",
+    "Total Paid Amount": "Общая оплаченная сумма",
+    "Payment not found": "Оплата не найдена"
 }
