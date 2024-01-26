@@ -218,7 +218,7 @@ const TourPackageForm = ({
               >
                 {!isView && (
                   <div className="absolute right-0 top-2 flex gap-x-2">
-                    <button
+                    {/* <button
                       type="button"
                       disabled={isSubmitting}
                       onClick={() => {
@@ -231,7 +231,7 @@ const TourPackageForm = ({
                       className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                     >
                       {t("Copy")}
-                    </button>
+                    </button> */}
                     {index !== 0 && (
                       <button
                         type="button"
@@ -511,7 +511,7 @@ const TourPackageForm = ({
                     ]}
                   />
                 </div>
-                <div className="w-full">
+                {/* <div className="w-full">
                   <CustomTextField
                     disabled={isView}
                     label={t("Referans nömrəsi")}
@@ -527,7 +527,7 @@ const TourPackageForm = ({
                       t(errors.tourPackages?.[index]?.referenceNo?.toString()),
                     ]}
                   />
-                </div>
+                </div> */}
                 <div className="w-full h-full">
                   <CustomDateTimePicker
                     disabled={isView}
@@ -628,7 +628,7 @@ const TourPackageForm = ({
           </div>
           {!isView && (
             <div className="w-full flex gap-x-6 justify-end mb-6">
-              <button
+              {/* <button
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => {
@@ -641,7 +641,7 @@ const TourPackageForm = ({
                 className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
               >
                 + {t("newPassenger")}
-              </button>
+              </button> */}
               <button
                 type="button"
                 disabled={isSubmitting}
