@@ -24,7 +24,6 @@ export const tourPackageInitialValues: ITourPackageModel = {
   tourId: null,
   transferId: null,
   diningId: null,
-  referenceNo: 0,
   purchasePrice: 0,
   sellingPrice: 0,
   discount: 0,
