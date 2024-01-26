@@ -42,7 +42,7 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
           <TableHead className="w-[100px]">{t("Invoice")}</TableHead>
           <TableHead>{t("Ödəniş növü")}</TableHead>
           <TableHead>{t("paidamount")}</TableHead>
-          <TableHead>{t("Description")}</TableHead> {/** Hola */}
+          <TableHead>{t("Description")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -57,17 +57,22 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
             </TableCell>
             <TableCell className="py-1.5 max-w-[150px] truncate">
               {income.description ?? t("No Description")}
-            </TableCell>{" "}
-            {/** Hola */}
+            </TableCell>
           </TableRow>
         ))}
+        {incomes.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={4} className="text-center py-2">
+              {t("Payment not found")}
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell className="py-2" colSpan={3}>
             {t("Total Paid Amount")}
-          </TableCell>{" "}
-          {/** Hola */}
+          </TableCell>
           <TableCell className="text-right py-2">
             {(total * currency.value).toFixed(2)} {currency.name}
           </TableCell>

@@ -178,6 +178,9 @@
     "Mədaxil yaradıldı": "Entry created",
     "Mədaxil Yarat": "Create Entry",
     "Mədaxil güncəlləməsi": "Entry update",
-    "paidamount": "Paid amount"
-
+    "paidamount": "Paid amount",
+    "Description": "Description",
+    "No Description": "No Description",
+    "Total Paid Amount": "Total Paid Amount",
+    "Payment not found": "Payment not found"
 }

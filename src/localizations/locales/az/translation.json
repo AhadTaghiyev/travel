@@ -178,5 +178,10 @@
     "Mədaxil yaradıldı": "Mədaxil yaradıldı",
     "Mədaxil Yarat": "Mədaxil Yarat",
     "Mədaxil güncəlləməsi": "Mədaxil güncəlləməsi",
-    "paidamount": "Ödənilən məbləğ"
+    "paidamount": "Ödənilən məbləğ",
+    "Description": "Açıqlama",
+    "No Description": "Açıqlama yoxdur",
+    "Total Paid Amount": "Ümumi ödənilən məbləğ",
+    "Payment not found": "Ödəniş tapılmadı"
+
 }
