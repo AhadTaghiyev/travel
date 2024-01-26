@@ -592,7 +592,7 @@ const TourPackageForm = ({
                 <div className="w-full">
                   <CustomTextField
                     disabled={isView}
-                    label={t("commission")}
+                    label={t("discount")}
                     value={values.tourPackages[index].discount}
                     change={handleChange}
                     type="number"

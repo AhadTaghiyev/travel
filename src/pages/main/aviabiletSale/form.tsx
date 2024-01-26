@@ -405,7 +405,7 @@ const AviabiletTicketForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("commission")}
+                    label={t("discount")}
                     value={values.planeTickets[index].discount}
                     change={handleChange}
                     type="number"
