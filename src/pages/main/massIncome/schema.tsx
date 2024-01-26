@@ -12,3 +12,12 @@ export const MassIncomeSchema = Yup.object().shape({
     }),
   paymentId: Yup.string().required("Ödəniş növü seçilməlidir"),
 });
+
+export const MassIncomeEditSchema = Yup.object().shape({
+  paidAmount: Yup.number()
+    .required("Məbləğ daxil edilməlidir")
+    .when("debt", ([debt]) => {
+      return Yup.number().max(debt, "Məbləğ borcdan çox ola bilməz");
+    }),
+  paymentId: Yup.string().required("Ödəniş növü seçilməlidir"),
+});

@@ -1,13 +1,13 @@
 import { FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
+import { apiService } from "@/server/apiServer";
 import { IMassIncomeModel } from "../types";
 
 import MassIncomeForm from "../form";
-import { apiService } from "@/server/apiServer";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 
 const NewMassIncome = () => {
   const { t } = useTranslation();
@@ -47,6 +47,7 @@ const NewMassIncome = () => {
         {t("Mədaxil Yarat")}
       </h1>
       <MassIncomeForm
+        formType="Create"
         onSubmit={onSubmit}
         initialValues={{
           debt: 0,
