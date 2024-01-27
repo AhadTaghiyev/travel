@@ -101,9 +101,12 @@ import UpdateMassIncome from "../pages/main/massIncome/updateMassIncome";
 import InvoiceMassIncome from "../pages/main/massIncome/invoice";
 
 // Other Services
-import OtherService from "../pages/main/otherServices";
+import OtherServices from "../pages/main/otherServices";
 import NewOtherService from "../pages/main/otherServices/newOtherService";
 import UpdateOtherService from "../pages/main/otherServices/updateOtherService";
+import ViewOtherService from "../pages/main/otherServices/viewOtherService";
+import ReportOtherService from "../pages/main/otherServices/report";
+
 // Employees
 import Employee from "../pages/main/employee";
 import NewEmployee from "../pages/main/employee/newEmployee";
@@ -121,8 +124,6 @@ import ViewIndividualTourPackage from "../pages/main/individualTourPackage/viewT
 import ReportIndividualTourPackage from "../pages/main/individualTourPackage/report";
 
 //other services
-import OtherServices from "../pages/main/otherServices";
-import OtherServicesReport from "../pages/main/otherServices";
 
 //agreements
 import Agreements from "../pages/main/agreement";
@@ -388,7 +389,7 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/otherServices",
-        element: <OtherService />,
+        element: <OtherServices />,
       },
       {
         path: "/panel/otherServices/new",
@@ -400,8 +401,12 @@ const router = createBrowserRouter([
         element: <UpdateOtherService />,
       },
       {
-        path: "panel/otherServices/report",
-        element: <OtherServicesReport />,
+        path: "/panel/otherServices/report",
+        element: <ReportOtherService />,
+      },
+      {
+        path: "/panel/otherServices/view/:id",
+        element: <ViewOtherService />,
       },
       // ===============
       // Refunds

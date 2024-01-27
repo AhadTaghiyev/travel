@@ -172,12 +172,11 @@ export default function Index({ headers, api }: IReportModel) {
                 </div>
               ))}
             </div>
-            <div className="w-[500px] max-w-[50%] -mr-6 -mt-6">
-              <MassIncomeTable
-                currency={currency}
-                incomes={data.incomes ?? []}
-              />
-            </div>
+            {data.incomes && (
+              <div className="w-[500px] max-w-[50%] -mr-6 -mt-6">
+                <MassIncomeTable currency={currency} incomes={data.incomes} />
+              </div>
+            )}
           </div>
         </Container>
         <Container maxWidth="xl" style={{ paddingRight: 0 }}>

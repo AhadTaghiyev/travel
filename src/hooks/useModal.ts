@@ -8,7 +8,8 @@ export type ModalType =
   | "createCustomer"
   | "createSupplier"
   | "createAirway"
-  | "createCurrency";
+  | "createCurrency"
+  | "createService";
 
 type ModalData = {
   [key: string]: any;

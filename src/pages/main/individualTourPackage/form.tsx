@@ -686,7 +686,7 @@ const TourPackageForm = ({
                       }
                       change={handleChange}
                       type="number"
-                      name={`individualTourPackages[${index}].discount`}
+                      name={``}
                       placeholder="Avtomatik"
                     />
                   </div>

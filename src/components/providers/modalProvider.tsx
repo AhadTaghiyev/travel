@@ -6,6 +6,7 @@ import { CreateCurrencyModal } from "@/components/modals/createCurrency";
 import { CreateAirwayModal } from "@/components/modals/createAirway";
 import { CreateDiningModal } from "@/components/modals/createDining";
 import { CreateTourModal } from "@/components/modals/createTour";
+import { CreateServiceModal } from "../modals/createService";
 
 export const ModalProvider = () => {
   return (
@@ -15,6 +16,7 @@ export const ModalProvider = () => {
       <CreateCustomerModal />
       <CreateSupplierModal />
       <CreateCurrencyModal />
+      <CreateServiceModal />
       <CreateDiningModal />
       <CreateAirwayModal />
       <CreateTourModal />

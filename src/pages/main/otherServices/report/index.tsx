@@ -1,17 +1,26 @@
-// @ts-nocheck
-import Report from '../../../../components/pages/report';
+import Report from "@/components/pages/report";
+import { useTranslation } from "react-i18next";
 
 export default function index() {
+  const { t } = useTranslation();
   return (
-    <Report headers={[
-      {fieldName: "Invoice", propertyName: "referanceNo"}, 
-      {fieldName: "Hava yolu", propertyName: "airWay.name"}, 
-      {fieldName: "Sərnişin adı", propertyName: "passengerName"}, 
-      {fieldName: "Bilet nömrəsi", propertyName: "ticketNo"}, 
-      {fieldName: "Uçuş istiqaməti və tarix", propertyName: "invoiceDirections"}, 
-      {fieldName: "Satıç qiyməti", propertyName: "sellingPrice"}, 
-      // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"}, 
-      ]}
-        api='/OtherServiceTicket/GetById'/>
-  )
+    <div className="report-table">
+      <Report
+        headers={[
+          { fieldName: t("Invoice"), propertyName: "invoiceNo" },
+          { fieldName: t("date"), propertyName: "date" },
+          { fieldName: t("Servis"), propertyName: "service" }, // Hola
+          { fieldName: t("Servis Adı"), propertyName: "serviceName" },
+          { fieldName: t("Description"), propertyName: "description" },
+          {
+            fieldName: t("Uçuş istiqaməti və tarix"),
+            propertyName: "invoiceDirection",
+          },
+          { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
+          // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
+        ]}
+        api="/OtherServices/GetDetailAsync"
+      />
+    </div>
+  );
 }

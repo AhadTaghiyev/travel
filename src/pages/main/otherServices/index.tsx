@@ -1,19 +1,25 @@
-import Container from '@mui/material/Container';
-import Table from '../../../components/pages/table';
-import {columns} from './tableColumns';
+import Container from "@mui/material/Container";
+import { useTranslation } from "react-i18next";
 
+import { columns } from "./columns";
+
+import Table from "@/components/pages/table";
 
 export default function Index() {
+  const { t } = useTranslation();
+
+  const columnsresult = columns(t);
   return (
-    <Container maxWidth='xl'>
-         {/* <PageTitle
-                    title=" Digər xidmətlər"
-                    breadcrumbs={[
-                        homeBreadCrumb,
-                        OtherServicesBreadCrumb,
-                    ]}
-                /> */}
-      <Table columns={columns} api={'/OtherServiceTicket/GetAllFilter'} deleteApi='/OtherServiceTicket/DeleteOtherServiceTicket' root='/panel/otherServices' buttonText='Xidmət'/>
+    <Container maxWidth="xl">
+      <Table
+        showPrint
+        exportLink="OtherServices/Export/Export"
+        columns={columnsresult}
+        api={"/OtherServices/GetAllFilter"}
+        buttonText="Digər Xidmət" // Hola
+        deleteApi="/OtherServices/Delete"
+        root="/panel/otherServices"
+      />
     </Container>
-  )
+  );
 }

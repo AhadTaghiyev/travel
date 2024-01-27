@@ -430,7 +430,7 @@ const AviabiletTicketForm = ({
                     }
                     change={handleChange}
                     type="number"
-                    name={`planeTickets[${index}].discount`}
+                    name={``}
                     placeholder="Avtomatik"
                   />
                 </div>

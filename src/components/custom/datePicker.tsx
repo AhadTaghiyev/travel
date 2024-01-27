@@ -2,6 +2,7 @@ import { InputLabel, FormHelperText } from "@mui/material";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
+import { useState } from "react";
 
 import { textStyling } from "../../styles";
 import { locales } from "@/constants";
@@ -34,19 +35,17 @@ export default function CustomDateTimePicker({
   disabled = false,
   hasErrorMessages,
 }: ICustomDateTimePickerModel) {
+  const [isOpen, setIsOpen] = useState(false);
   const {
     i18n: { language },
   } = useTranslation();
+
   return (
     <>
-      <InputLabel
-        id="demo-simple-select-label"
-        sx={{ mb: 1 }}
-        style={textStyling}
-      >
+      <InputLabel sx={{ mb: 1 }} style={textStyling}>
         {label}
       </InputLabel>
-      <Popover>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild disabled={disabled}>
           <Button
             variant={"outline"}
@@ -69,7 +68,10 @@ export default function CustomDateTimePicker({
           <Calendar
             mode="single"
             selected={value}
-            onSelect={change}
+            onSelect={(value) => {
+              change(value);
+              setIsOpen(false);
+            }}
             initialFocus
           />
         </PopoverContent>

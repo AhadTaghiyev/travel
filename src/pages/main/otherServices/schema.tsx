@@ -1,44 +1,49 @@
-import * as Yup from 'yup';
-
+import * as Yup from "yup";
 
 export const OtherServiceSchema = Yup.object().shape({
-
-            customerId: Yup.string().required('Mütləqdir!'),
-            supplierId: Yup.string().required('Mütləqdir!'),
-            personalId: Yup.string().required('Mütləqdir!'),
-            serviceManagerId: Yup.string().required('Mütləqdir!'),
-            passengerCount: Yup.number().min(1, 'Minimum 1 nəfər seçilməlidir').required('Mütləqdir!'),
-            reservationNo: Yup.string().required('Mütləqdir!'),
-            purchasePrice: Yup.string().required('Mütləqdir!'),
-            sellingPrice: Yup.string().required('Mütləqdir!'),
-            discount: Yup.string().required('Mütləqdir!'),
-            deadline: Yup.string().required('Mütləqdir!'),
-            paidAmount: Yup.string(),
-            note: Yup.string(),
-            explanation: Yup.string(),
-
+  serviceName: Yup.string().required("Servis adı daxil edilməlidir"), // Hola
+  purchasePrice: Yup.number()
+    .required("Alış qiyməti daxil edilməlidir")
+    .min(0, "Alış qiyməti mənfi ola bilməz"),
+  sellingPrice: Yup.number()
+    .required("Satış qiyməti daxil edilməlidir")
+    .min(0, "Satış qiyməti mənfi ola bilməz"),
+  discount: Yup.number()
+    .required("Endirim daxil edilməlidir")
+    .min(0, "Endirim mənfi ola bilməz"),
+  commonPrice: Yup.number()
+    .required("Ümumi qiymət daxil edilməlidir")
+    .min(0, "Ümumi qiymət mənfi ola bilməz"),
+  supplierId: Yup.string().nullable(),
+  personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
+  serviceId: Yup.string().required("Servis seçilməlidir"), // Hola
+  invoiceDirections: Yup.array().of(
+    Yup.object().shape({
+      flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
+      direction: Yup.string().required("İstiqamət daxil edilməlidir"),
+    })
+  ),
 });
 
-
-export const OtherServiceListSchema = Yup.object().shape({
-    ot: Yup.array().of(
-        Yup.object().shape({
-          
-            customerId: Yup.string().required('Mütləqdir!'),
-            supplierId: Yup.string().required('Mütləqdir!'),
-            personalId: Yup.string().required('Mütləqdir!'),
-            serviceManagerId: Yup.string().required('Mütləqdir!'),
-            passengerCount: Yup.number().min(1, 'Minimum 1 nəfər seçilməlidir').required('Mütləqdir!'),
-            reservationNo: Yup.string().required('Mütləqdir!'),
-            purchasePrice: Yup.string().required('Mütləqdir!'),
-            sellingPrice: Yup.string().required('Mütləqdir!'),
-            discount: Yup.string().required('Mütləqdir!'),
-            deadline: Yup.string().required('Mütləqdir!'),
-            flightDate: Yup.string().required('Mütləqdir!'),
-            paidAmount: Yup.string(),
-            note: Yup.string(),
-            explanation: Yup.string(),
-
-        })
-    )
-});
+export const getTicketSchema = (isEdit: boolean) =>
+  Yup.object().shape({
+    customerId: Yup.string().required("Müştəri seçilməlidir"),
+    date: Yup.date().required(),
+    deadLine: Yup.date().required(),
+    explanation: Yup.string().nullable(),
+    isSupplierPaid: Yup.boolean(),
+    isCustomerPaid: Yup.boolean(),
+    paymentId: Yup.string().when("isCustomerPaid", ([isCustomerPaid], sch) => {
+      return isCustomerPaid && !isEdit
+        ? sch.required("Ödəniş növü seçilməlidir")
+        : sch.notRequired();
+    }),
+    paidAmount: Yup.number()
+      .when("isCustomerPaid", ([isCustomerPaid], sch) => {
+        return isCustomerPaid && !isEdit
+          ? sch.required("Məbləğ daxil edilməlidir")
+          : sch.notRequired();
+      })
+      .min(0, "Məbləğ mənfi ola bilməz"),
+    otherServices: Yup.array().of(OtherServiceSchema),
+  });

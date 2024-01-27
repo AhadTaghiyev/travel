@@ -43,6 +43,7 @@ export default function CustomTextField({
         onChange={change}
         disabled={disabled}
         placeholder={t("Type here...")}
+        onWheel={(e) => e.currentTarget.blur()}
       />
       {hasErrorMessages ? (
         <>

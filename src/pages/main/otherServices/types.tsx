@@ -1,29 +1,29 @@
-export interface IOtherService {
-    customerId: string|null;
-    serviceManagerId: string|null;
-    supplierId: string|null;
-    personalId: string|null;
-    paymentId: string|null;
-    serviceName: string;
-    passengerCount: number;
-    purchasePrice: number;
-    sellingPrice: number;
-    discount: number;
-    paidAmount: number;
-    explanation: string;
-    reservationNo: string;
-    note: string;
-    deadline: Date;
-    flightDate: Date;
-    isCustomerPaid: boolean;
-    isSupplierPaid: boolean;
+export interface IInvoiceModel {
+  date: Date;
+  deadLine: Date;
+  paymentId: number;
+  customerId: number;
+  paidAmount: number;
+  explanation?: string;
+  isCustomerPaid: boolean;
+  isSupplierPaid: boolean;
+  otherServices: IOtherServiceModal[];
+}
+export interface IOtherServiceModal {
+  key?: string;
+  id?: string | number;
+  serviceId: number;
+  serviceName: string;
+  purchasePrice: number;
+  sellingPrice: number;
+  discount: number;
+  commonPrice: number;
+  supplierId: number;
+  personalId: number;
+  invoiceDirections: IInvoiceDirections[];
 }
 
-export interface IStore {
-    customers: Array<object>;
-    suppliers: Array<object>;
-    payments: Array<object>;
-    serviceManagers: Array<object>;
-    personals: Array<object>;
+export interface IInvoiceDirections {
+  flightDate: Date;
+  direction: string;
 }
-

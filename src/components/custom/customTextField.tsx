@@ -26,16 +26,11 @@ export default function CustomTextField({
 }: ICustomTextFieldModel) {
   return (
     <>
-      <InputLabel
-        id="demo-simple-select-label"
-        sx={{ mb: 1 }}
-        style={textStyling}
-      >
+      <InputLabel sx={{ mb: 1 }} style={textStyling}>
         {label}
       </InputLabel>
       <TextField
         disabled={disabled}
-        id="outlined-basic"
         variant="outlined"
         sx={{ width: "100%" }}
         style={textStyling}
