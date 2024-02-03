@@ -94,11 +94,11 @@ import UpdateTourPackage from "../pages/main/tourPackage/updateTourPackage";
 import ViewTourPackage from "../pages/main/tourPackage/viewTourPackage";
 import TourReport from "../pages/main/tourPackage/report";
 
-//MassIncome
-import MassIncome from "../pages/main/massIncome";
-import NewMassIncome from "../pages/main/massIncome/newMassIncome";
-import UpdateMassIncome from "../pages/main/massIncome/updateMassIncome";
-import InvoiceMassIncome from "../pages/main/massIncome/invoice";
+//Income
+import Income from "../pages/main/income";
+import NewIncome from "../pages/main/income/newIncome";
+import UpdateIncome from "../pages/main/income/updateIncome";
+import InvoiceIncome from "../pages/main/income/invoice";
 
 // Other Services
 import OtherServices from "../pages/main/otherServices";
@@ -368,20 +368,20 @@ const router = createBrowserRouter([
       // ===============
 
       {
-        path: "/panel/massIncome",
-        element: <MassIncome />,
+        path: "/panel/Income",
+        element: <Income />,
       },
       {
-        path: "/panel/massIncome/new",
-        element: <NewMassIncome />,
+        path: "/panel/Income/new",
+        element: <NewIncome />,
       },
       {
-        path: "/panel/massIncome/update/:id",
-        element: <UpdateMassIncome />,
+        path: "/panel/Income/update/:id",
+        element: <UpdateIncome />,
       },
       {
-        path: "/panel/massIncome/report",
-        element: <InvoiceMassIncome />,
+        path: "/panel/Income/report",
+        element: <InvoiceIncome />,
       },
 
       // ===============

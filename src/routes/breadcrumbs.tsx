@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 
 export const homeBreadCrumb = (
- 
-    <Link key="1" to="/panel" className="pageLink link">
-        aaaAna səhifə
-    </Link>
+  <Link key="1" to="/panel" className="pageLink link">
+    aaaAna səhifə
+  </Link>
 );
 
 //=====================
@@ -12,21 +11,21 @@ export const homeBreadCrumb = (
 //=====================
 
 export const agreementBreadCrumb = (
-    <Link key="1" to="/panel/agreements" className="pageLink link">
-        Müqavilə
-    </Link>
+  <Link key="1" to="/panel/agreements" className="pageLink link">
+    Müqavilə
+  </Link>
 );
 
 export const newAgreementBreadCrumb = (
-    <Link key="1" to="/panel/agreements/new" className="currentPageLink link">
-        Müqavilə yarat
-    </Link>
+  <Link key="1" to="/panel/agreements/new" className="currentPageLink link">
+    Müqavilə yarat
+  </Link>
 );
 
 export const updateAgreementBreadCrumb = (
-    <Link key="1" to="/panel/agreements/new" className="currentPageLink link">
-        Müqaviləyə düzəliş et
-    </Link>
+  <Link key="1" to="/panel/agreements/new" className="currentPageLink link">
+    Müqaviləyə düzəliş et
+  </Link>
 );
 
 //=====================
@@ -34,25 +33,25 @@ export const updateAgreementBreadCrumb = (
 //=====================
 
 export const planeTicketBreadCrumb = (
-    <Link key="1" to="/panel/aviabiletSale" className="currentPageLink link">
-        Aviabilet satışı
-    </Link>
+  <Link key="1" to="/panel/aviabiletSale" className="currentPageLink link">
+    Aviabilet satışı
+  </Link>
 );
 
 export const newPlaneTicketBreadCrumb = (
-    <Link key="1" to="/panel/aviabiletSale" className="currentPageLink link">
-        Yeni aviabilet yarat
-    </Link>
+  <Link key="1" to="/panel/aviabiletSale" className="currentPageLink link">
+    Yeni aviabilet yarat
+  </Link>
 );
 
 export const updatePlaneTicketBreadCrumb = (
-    <Link
-        key="1"
-        to="/panel/aviabiletSale/update/:id"
-        className="currentPageLink link"
-    >
-        Aviabileti dəyiş
-    </Link>
+  <Link
+    key="1"
+    to="/panel/aviabiletSale/update/:id"
+    className="currentPageLink link"
+  >
+    Aviabileti dəyiş
+  </Link>
 );
 
 //=====================
@@ -60,25 +59,25 @@ export const updatePlaneTicketBreadCrumb = (
 //=====================
 
 export const CoorperativeTicketBreadCrumb = (
-    <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
-        Korporativ bilet satışı
-    </Link>
+  <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
+    Korporativ bilet satışı
+  </Link>
 );
 
 export const newCoorperativeTicketBreadCrumb = (
-    <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
-        Yeni Korporativ bilet
-    </Link>
+  <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
+    Yeni Korporativ bilet
+  </Link>
 );
 
 export const updateCoorperativeTicketBreadCrumb = (
-    <Link
-        key="1"
-        to="/panel/corperativeTicket/update"
-        className="currentPageLink link"
-    >
-        Korporativ biletə düzəliş et
-    </Link>
+  <Link
+    key="1"
+    to="/panel/corperativeTicket/update"
+    className="currentPageLink link"
+  >
+    Korporativ biletə düzəliş et
+  </Link>
 );
 
 //=====================
@@ -87,23 +86,23 @@ export const updateCoorperativeTicketBreadCrumb = (
 
 export const TourPackageBreadCrumb = (
   <Link key="1" to="/panel/tourPackages" className="pageLink link">
-      Tur Paket satışı
+    Tur Paket satışı
   </Link>
 );
 
 export const newTourPackageBreadCrumb = (
   <Link key="1" to="/panel/tourPackages" className="pageLink link">
-      Yeni Tur Paketi
+    Yeni Tur Paketi
   </Link>
 );
 
 export const updateTourPackageBreadCrumb = (
   <Link
-      key="1"
-      to="/panel/tourPackages/update"
-      className="currentPageLink link"
+    key="1"
+    to="/panel/tourPackages/update"
+    className="currentPageLink link"
   >
-      Tur Paketə düzəliş et
+    Tur Paketə düzəliş et
   </Link>
 );
 
@@ -113,23 +112,23 @@ export const updateTourPackageBreadCrumb = (
 
 export const IndividualTourBreadCrumb = (
   <Link key="1" to="/panel/individualTourPackage" className="pageLink link">
-      Individual Tur Paketlərin satışı
+    Individual Tur Paketlərin satışı
   </Link>
 );
 
 export const newIndividualTourBreadCrumb = (
   <Link key="1" to="/panel/individualTourPackage" className="pageLink link">
-      Yeni Individual Tur Paketi
+    Yeni Individual Tur Paketi
   </Link>
 );
 
 export const updateIndividualTourBreadCrumb = (
   <Link
-      key="1"
-      to="/panel/individualTourPackage/update"
-      className="currentPageLink link"
+    key="1"
+    to="/panel/individualTourPackage/update"
+    className="currentPageLink link"
   >
-     Individual Tur Paketə düzəliş et
+    Individual Tur Paketə düzəliş et
   </Link>
 );
 
@@ -138,25 +137,21 @@ export const updateIndividualTourBreadCrumb = (
 //=====================
 
 export const MassIncomeBreadCrumb = (
-  <Link key="1" to="/panel/massIncome" className="pageLink link">
-  Mədaxil
-</Link>
+  <Link key="1" to="/panel/income" className="pageLink link">
+    Mədaxil
+  </Link>
 );
 
 export const newMassIncomeBreadCrumb = (
-<Link key="1" to="/panel/massIncome" className="pageLink link">
-  Yeni Mədaxil
-</Link>
+  <Link key="1" to="/panel/income" className="pageLink link">
+    Yeni Mədaxil
+  </Link>
 );
 
 export const updateMassIncomeBreadCrumb = (
-<Link
-  key="1"
-  to="/panel/massIncome/update"
-  className="currentPageLink link"
->
-Mədaxilə düzəliş et
-</Link>
+  <Link key="1" to="/panel/income/update" className="currentPageLink link">
+    Mədaxilə düzəliş et
+  </Link>
 );
 
 //=====================
@@ -165,25 +160,24 @@ Mədaxilə düzəliş et
 
 export const OtherServicesBreadCrumb = (
   <Link key="1" to="/panel/otherservices" className="pageLink link">
-  Digər Xidmətlər
-</Link>
+    Digər Xidmətlər
+  </Link>
 );
 
 export const newOtherServicesBreadCrumb = (
-<Link key="1" to="/panel/otherservices" className="currentPageLink link">
-  
-  Yeni xidmət
-</Link>
+  <Link key="1" to="/panel/otherservices" className="currentPageLink link">
+    Yeni xidmət
+  </Link>
 );
 
 export const updateOtherServicesBreadCrumb = (
-<Link
-  key="1"
-  to="/panel/otherservices/update"
-  className="currentPageLink link"
->
-Xidmətə düzəliş et
-</Link>
+  <Link
+    key="1"
+    to="/panel/otherservices/update"
+    className="currentPageLink link"
+  >
+    Xidmətə düzəliş et
+  </Link>
 );
 
 //=====================
@@ -191,24 +185,23 @@ Xidmətə düzəliş et
 //=====================
 
 export const MoneyTransfersBreadCrumb = (
-    <Link key="1" to="/panel/MoneyTransfers" className="pageLink link">
-        Vəsait transferi
+  <Link key="1" to="/panel/MoneyTransfers" className="pageLink link">
+    Vəsait transferi
   </Link>
-  );
-  
-  export const newMoneyTransfersBreadCrumb = (
+);
+
+export const newMoneyTransfersBreadCrumb = (
   <Link key="1" to="/panel/MoneyTransfers" className="currentPageLink link">
-    
-    Yeni  Vəsait transferi
+    Yeni Vəsait transferi
   </Link>
-  );
-  
-  export const updateMoneyTransfersBreadCrumb = (
+);
+
+export const updateMoneyTransfersBreadCrumb = (
   <Link
     key="1"
     to="/panel/MoneyTransfers/update"
     className="currentPageLink link"
   >
-   Vəsait transferinə düzəliş et
+    Vəsait transferinə düzəliş et
   </Link>
-  );
+);

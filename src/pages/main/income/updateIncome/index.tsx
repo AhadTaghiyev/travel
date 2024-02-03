@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IMassIncomeModel } from "../types";
+import { IIncomeModel } from "../types";
 
 import Loading from "@/components/custom/loading";
-import MassIncomeForm from "../form";
+import IncomeForm from "../form";
 
 const UpdateTicket = () => {
-  const [massIncome, setMassIncome] = useState<IMassIncomeModel>();
+  const [income, setIncome] = useState<IIncomeModel>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -22,23 +22,20 @@ const UpdateTicket = () => {
   }, []);
 
   async function getIncomeInfo(id: string) {
-    const response = await apiService.get(`/MassIncomes/Get/${id}`);
+    const response = await apiService.get(`/Incomes/Get/${id}`);
     if (response.status === 200) {
-      setMassIncome(response.data);
+      setIncome(response.data);
       setLoading(false);
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/massIncome");
+        navigate("/panel/income");
       }, 1000);
     }
   }
 
   const onSubmit = useCallback(
-    (
-      values: IMassIncomeModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
+    (values: IIncomeModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const params = {
         id,
         paymentId: values.paymentId,
@@ -48,11 +45,11 @@ const UpdateTicket = () => {
       };
 
       const promise = apiService
-        .put(`/MassIncomes/Update/${id}`, params)
+        .put(`/Incomes/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("MassIncome updated")); // Hola
-            navigate("/panel/massIncome");
+            toast.success(t("Income updated")); // Hola
+            navigate("/panel/income");
           } else {
             toast.error(response.message);
           }
@@ -71,10 +68,10 @@ const UpdateTicket = () => {
         {t("Mədaxil güncəlləməsi")}
       </h1>
       {loading && <Loading />}
-      {!loading && massIncome && (
-        <MassIncomeForm
+      {!loading && income && (
+        <IncomeForm
           formType="Edit"
-          initialValues={massIncome}
+          initialValues={income}
           onSubmit={onSubmit}
         />
       )}

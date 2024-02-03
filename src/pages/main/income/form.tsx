@@ -8,7 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { MassIncomeEditSchema, MassIncomeSchema } from "./schema";
-import { IMassIncomeModel, TicketType } from "./types";
+import { IIncomeModel, TicketType } from "./types";
 import { apiService } from "@/server/apiServer";
 import { textStyling } from "@/styles";
 
@@ -29,9 +29,9 @@ type FormType = "Edit" | "Create";
 
 interface IMassIncomeFormProps {
   formType: FormType;
-  initialValues: IMassIncomeModel;
+  initialValues: IIncomeModel;
   onSubmit: (
-    values: IMassIncomeModel,
+    values: IIncomeModel,
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
@@ -224,7 +224,7 @@ const MassIncomeForm = ({
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/massIncome")}
+              onClick={() => navigate("/panel/income")}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}

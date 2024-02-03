@@ -5,7 +5,7 @@ export type TicketType =
   | "tourPackage"
   | "otherServiceTicket";
 
-export interface IMassIncomeModel {
+export interface IIncomeModel {
   ticketType?: TicketType;
   customerId?: string;
   invoiceId?: string;

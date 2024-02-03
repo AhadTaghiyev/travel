@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IMassIncomeModel } from "../types";
+import { IIncomeModel } from "../types";
 
 import MassIncomeForm from "../form";
 
@@ -14,17 +14,14 @@ const NewMassIncome = () => {
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    (
-      values: IMassIncomeModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
+    (values: IIncomeModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const promise = apiService
         .post(`/MassIncomes/Create`, values)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Mədaxil yaradıldı"));
 
-            navigate(`/panel/massIncome`);
+            navigate(`/panel/income`);
             // TODO: Navigate to report page
             // navigate(
             //   `/panel/IndividualTourPackages/report?tickets=${response.data}`
