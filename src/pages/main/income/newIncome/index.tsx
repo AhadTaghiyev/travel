@@ -9,14 +9,20 @@ import { IIncomeModel } from "../types";
 
 import MassIncomeForm from "../form";
 
-const NewMassIncome = () => {
+const NewIncome = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
     (values: IIncomeModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const params = {
+        invoiceIds: values.invoiceIds.map((item: any) => item.value),
+        paymentId: values.paymentId,
+        paidAmount: values.paidAmount,
+      };
+
       const promise = apiService
-        .post(`/MassIncomes/Create`, values)
+        .post(`/MassIncomes/Create`, params)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Mədaxil yaradıldı"));
@@ -50,7 +56,7 @@ const NewMassIncome = () => {
           debt: 0,
           paidAmount: 0,
           paymentId: null,
-          invoiceId: null,
+          invoiceIds: [],
           customerId: null,
           ticketType: null,
         }}
@@ -59,4 +65,4 @@ const NewMassIncome = () => {
   );
 };
 
-export default NewMassIncome;
+export default NewIncome;

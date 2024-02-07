@@ -1,21 +1,19 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import { InputLabel } from "@mui/material";
 import { TFunction } from "i18next";
-import { useState } from "react";
-import { toast } from "sonner";
 
 import { MassIncomeEditSchema, MassIncomeSchema } from "./schema";
-import { IIncomeModel, TicketType } from "./types";
-import { apiService } from "@/server/apiServer";
+import { IIncomeModel } from "./types";
 import { textStyling } from "@/styles";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomTextField from "@/components/custom/input";
 import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
+import CustomMultiSelect from "@/components/custom/multiSelect";
+import { useState } from "react";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Aviabilet"), value: "planeTicket" },
@@ -24,6 +22,12 @@ const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Tur paket"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
 ];
+
+type InvoiceItem = {
+  invoiceNo: string;
+  id: number;
+  debt: number;
+};
 
 type FormType = "Edit" | "Create";
 
@@ -41,27 +45,13 @@ const MassIncomeForm = ({
   onSubmit,
   formType,
 }: IMassIncomeFormProps) => {
-  const [debtLoading, setDebtLoading] = useState(false);
   const isEdit = formType === "Edit";
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
 
-  const getDebt = async (values: {
-    invoiceId: string;
-    ticketType: TicketType;
-  }) => {
-    const response = await apiService.get(
-      `/Invoices/GetDebt?invoiceId=${values.invoiceId}&ticketType=${values.ticketType}`
-    );
-    if (response.status === 200) {
-      const {
-        data: { totaDebt },
-      } = response.data;
-      return totaDebt;
-    } else {
-      toast.error(t("Something went wrong"));
-      return 0;
-    }
+  const getOptions = (options: InvoiceItem[]) => {
+    setInvoiceItems(options);
   };
 
   return (
@@ -89,7 +79,7 @@ const MassIncomeForm = ({
                     optionLabel="name"
                     value={values.ticketType ?? null}
                     change={(value) => {
-                      setFieldValue("invoiceId", null);
+                      setFieldValue("invoiceIds", []);
                       setFieldValue(`ticketType`, value ?? null);
                     }}
                     hasErrorMessages={
@@ -107,7 +97,7 @@ const MassIncomeForm = ({
                     value={values.customerId ?? null}
                     optionLabel="fullName"
                     change={(value) => {
-                      setFieldValue("invoiceId", null);
+                      setFieldValue("invoiceIds", []);
                       setFieldValue("customerId", value ?? null);
                     }}
                     hasErrorMessages={
@@ -139,27 +129,27 @@ const MassIncomeForm = ({
                 className="w-full"
                 key={`ticket-${values.ticketType}-${values.customerId}`}
               >
-                <CustomAutocompleteSelect
+                <CustomMultiSelect
+                  secondaryOptionLabel="debt"
                   api={`Invoices/GetAll?customerId=${values.customerId}&ticketType=${values.ticketType}`}
                   label={t("Invoice")}
-                  value={values.invoiceId ?? null}
-                  optionLabel="invoiceNo"
-                  change={async (value) => {
-                    setFieldValue("invoiceId", value ?? null);
-                    setDebtLoading(true);
-                    const debt = await getDebt({
-                      invoiceId: value,
-                      ticketType: values.ticketType,
-                    });
+                  value={values.invoiceIds ?? []}
+                  change={(value) => {
+                    setFieldValue("invoiceIds", value);
+                    const debt = invoiceItems
+                      .filter((i) => value.find((v) => +v.value === i.id))
+                      .reduce((acc, curr) => acc + curr.debt, 0);
                     setFieldValue("debt", debt);
-                    setDebtLoading(false);
                   }}
-                  hasErrorMessages={!!errors.invoiceId && !!touched.invoiceId}
-                  errorMessages={[t(errors.invoiceId?.toString())]}
+                  getOptions={getOptions}
+                  hasErrorMessages={!!errors.invoiceIds && !!touched.invoiceIds}
+                  errorMessages={[t(errors.invoiceIds?.toString())]}
+                  closeMenuOnSelect={false}
+                  optionLabel="invoiceNo"
                 />
               </div>
             )}
-            {!!values.invoiceId && (
+            {values.invoiceIds.length > 0 && (
               <>
                 <div className="w-full">
                   <CustomTextField
@@ -208,15 +198,6 @@ const MassIncomeForm = ({
                   />
                 </div>
               </>
-            )}
-            {debtLoading && (
-              <div className="flex justify-center items-center w-full">
-                <ClipLoader
-                  size={20}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
             )}
           </div>
 

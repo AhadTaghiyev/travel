@@ -10,7 +10,7 @@ import { IIncomeModel } from "../types";
 import Loading from "@/components/custom/loading";
 import IncomeForm from "../form";
 
-const UpdateTicket = () => {
+const UpdateIncome = () => {
   const [income, setIncome] = useState<IIncomeModel>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
@@ -22,7 +22,7 @@ const UpdateTicket = () => {
   }, []);
 
   async function getIncomeInfo(id: string) {
-    const response = await apiService.get(`/Incomes/Get/${id}`);
+    const response = await apiService.get(`/MassIncomes/Get/${id}`);
     if (response.status === 200) {
       setIncome(response.data);
       setLoading(false);
@@ -40,12 +40,11 @@ const UpdateTicket = () => {
         id,
         paymentId: values.paymentId,
         paidAmount: values.paidAmount,
-
-        invoiceId: values.invoiceId,
+        invoiceIds: values.invoiceIds,
       };
 
       const promise = apiService
-        .put(`/Incomes/Update/${id}`, params)
+        .put(`/MassIncomes/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Income updated")); // Hola
@@ -79,4 +78,4 @@ const UpdateTicket = () => {
   );
 };
 
-export default UpdateTicket;
+export default UpdateIncome;
