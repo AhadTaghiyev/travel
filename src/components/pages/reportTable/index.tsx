@@ -31,7 +31,7 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default function Index({ headers, tickets, totals, currency }) {
+export default function Index({ headers, items, totals, currency }) {
   const { t } = useTranslation();
 
   return (
@@ -56,7 +56,7 @@ export default function Index({ headers, tickets, totals, currency }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tickets.map((elem, index) => (
+          {items.map((elem, index) => (
             <TableRow key={index}>
               {/* <TableCell sx={{borderLeft: '1px solid #e0e0e0'}} align="left">{index+1}</TableCell> */}
               {headers.map((hElem, hKey) => (

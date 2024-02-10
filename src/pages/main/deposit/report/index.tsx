@@ -1,27 +1,21 @@
 // @ts-nocheck
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { BsCurrencyExchange } from "react-icons/bs";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { AiOutlineMail } from "react-icons/ai";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { FiDownload } from "react-icons/fi";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { format } from "date-fns";
-import { toast } from "sonner";
-
-import { UserContext } from "@/store/UserContext";
-import { apiService } from "@/server/apiServer";
-import { ICurrency, IReportModel } from "./types";
-
-import Loading from "@/components/custom/loading";
-import { MassIncomeTable } from "../incomeTable";
+import { AiOutlineMail } from "react-icons/ai";
 import { useModal } from "@/hooks/useModal";
-import ReportTable from "../reportTable";
+import { useContext, useEffect, useState } from "react";
+
+import { ICurrency } from "@/components/pages/report/types";
 
 import img from "@/assets/abc_home-1.jpg";
+import { BsCurrencyExchange } from "react-icons/bs";
+import { FiDownload } from "react-icons/fi";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { apiService } from "@/server/apiServer";
+import { toast } from "sonner";
+import Loading from "@/components/custom/loading";
+import { UserContext } from "@/store/UserContext";
+import { MassIncomeTable } from "@/components/pages/incomeTable";
 
 const customerProperties = [
   {
@@ -42,28 +36,31 @@ const customerProperties = [
   },
 ];
 
-export default function Index({ headers, api }: IReportModel) {
+export default function index() {
+  const { user: currentUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
+  const [data, setData] = useState();
+  const { t } = useTranslation();
+  const { onOpen } = useModal();
+  const navigate = useNavigate();
   const [currency, setCurrency] = useState<ICurrency>({
     name: "USD",
     value: 1,
   });
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { onOpen } = useModal();
-
-  const { user: currentUser } = useContext(UserContext);
 
   useEffect(() => {
     getData();
   }, []);
 
+  const onCurrencyChange = (values: ICurrency) => {
+    setCurrency(values);
+  };
+
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-    const res = await apiService.get(`${api}/${id}`);
+    const res = await apiService.get(`/Massincomes/GetDetailAsync/${id}`);
 
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
@@ -74,29 +71,9 @@ export default function Index({ headers, api }: IReportModel) {
     }
     const { data } = res;
 
-    setData({
-      simpleTable: {
-        ...data.customer,
-        date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
-      },
-      totals: {
-        totalSellingPrice: data.totalSellingPrice,
-        totalPrice: data.totalPrice,
-        totalDiscountPrice: data.totalDiscountPrice,
-      },
-      items: data.items,
-      incomes: data.massIncomes,
-    });
+    setData(data);
     setLoading(false);
   }
-
-  const onCurrencyChange = (values: ICurrency) => {
-    setCurrency(values);
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   if (loading) {
     return <Loading />;
@@ -123,7 +100,6 @@ export default function Index({ headers, api }: IReportModel) {
               sx={{ display: "flex", justifyContent: "end" }}
               className="removeFromPrint"
             >
-              {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
               <Button
                 variant="text"
                 color="inherit"
@@ -142,7 +118,7 @@ export default function Index({ headers, api }: IReportModel) {
                 {t("Send mail")}
               </Button>
               <Button
-                onClick={handlePrint}
+                onClick={window.print}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
@@ -152,10 +128,12 @@ export default function Index({ headers, api }: IReportModel) {
             </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {currentUser?.companyName}
+              ABC
             </Typography>
             <Typography gutterBottom align="right">
               Email: {currentUser?.companyEmail} | Tel:{" "}
               {currentUser?.companyPhone}
+              email
             </Typography>
           </Grid>
         </Grid>
@@ -168,15 +146,10 @@ export default function Index({ headers, api }: IReportModel) {
               {customerProperties.map((item, index) => (
                 <div className="text-sm flex w-fit mb-1" key={index}>
                   <p className="w-28 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.simpleTable?.[item.propertyName]}</p>
+                  <p>{data?.customer?.[item.propertyName]}</p>
                 </div>
               ))}
             </div>
-            {data.incomes && (
-              <div className="w-[500px] max-w-[50%] -mr-6 -mt-6">
-                <MassIncomeTable currency={currency} incomes={data.incomes} />
-              </div>
-            )}
           </div>
         </Container>
         <Container maxWidth="xl" style={{ paddingRight: 0 }}>
@@ -186,12 +159,7 @@ export default function Index({ headers, api }: IReportModel) {
             }}
             container
           >
-            <ReportTable
-              headers={headers}
-              currency={currency}
-              items={data?.items}
-              totals={data.totals}
-            />
+            <MassIncomeTable currency={currency} incomes={data ? [data] : []} />
           </Grid>
         </Container>
       </Grid>

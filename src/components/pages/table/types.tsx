@@ -8,7 +8,8 @@ export interface ITableObject {
   root: string;
   buttonText?: string;
   exportLink?: string;
-  deleteBtn?: boolean;
+  hasEditBtn?: boolean;
+  hasDeleteBtn?: boolean;
   detailLink?: string;
   current?: string;
 }

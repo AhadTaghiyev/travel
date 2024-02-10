@@ -50,7 +50,8 @@ export default function Index({
   showPrint,
   buttonText,
   exportLink,
-  deleteBtn = true,
+  hasEditBtn = true,
+  hasDeleteBtn = true,
   detailLink,
   current = null,
 }: ITableObject) {
@@ -132,12 +133,14 @@ export default function Index({
           className="flex justify-between items-center gap-x-3"
           style={{ cursor: "pointer" }}
         >
-          <Link
-            to={`${root}/update/${params.row.id}`}
-            className="hover:opacity-70 transition"
-          >
-            <BsPencilFill />
-          </Link>
+          {hasEditBtn && (
+            <Link
+              to={`${root}/update/${params.row.id}`}
+              className="hover:opacity-70 transition"
+            >
+              <BsPencilFill />
+            </Link>
+          )}
           <Link
             to={
               detailLink
@@ -156,7 +159,7 @@ export default function Index({
               <FaPrint />
             </Link>
           )}
-          {deleteBtn && (
+          {hasDeleteBtn && (
             <BsFillTrashFill
               onClick={() => {
                 setOpen(true);

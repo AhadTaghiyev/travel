@@ -149,7 +149,7 @@ const MassIncomeForm = ({
                 />
               </div>
             )}
-            {values.invoiceIds.length > 0 && (
+            {values.invoiceIds?.length > 0 && (
               <>
                 <div className="w-full">
                   <CustomTextField

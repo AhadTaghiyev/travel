@@ -6,6 +6,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
+        hasEditBtn={false}
         columns={columns}
         api={"/MassIncomes/GetAllFilter"}
         buttonText="Mədaxil"

@@ -97,8 +97,8 @@ import TourReport from "../pages/main/tourPackage/report";
 //Income
 import Income from "../pages/main/income";
 import NewIncome from "../pages/main/income/newIncome";
-import UpdateIncome from "../pages/main/income/updateIncome";
-import InvoiceIncome from "../pages/main/income/invoice";
+// import UpdateIncome from "../pages/main/income/updateIncome";
+import InvoiceIncome from "../pages/main/income/report";
 
 // Other Services
 import OtherServices from "../pages/main/otherServices";
@@ -115,7 +115,7 @@ import UpdateEmployee from "../pages/main/employee/updateEmployee";
 import Deposit from "../pages/main/deposit";
 import NewDeposit from "../pages/main/deposit/newDeposit";
 import UpdateDeposit from "../pages/main/deposit/updateDeposit";
-import DetailDeposit from "../pages/main/deposit/detail";
+import DetailDeposit from "../pages/main/deposit/report";
 //Individual Tur Paketleri
 import IndividualTourPackage from "../pages/main/individualTourPackage";
 import NewIndividualTourPackage from "../pages/main/individualTourPackage/newTourPackage";
@@ -375,10 +375,10 @@ const router = createBrowserRouter([
         path: "/panel/Income/new",
         element: <NewIncome />,
       },
-      {
-        path: "/panel/Income/update/:id",
-        element: <UpdateIncome />,
-      },
+      // {
+      //   path: "/panel/Income/update/:id",
+      //   element: <UpdateIncome />,
+      // },
       {
         path: "/panel/Income/report",
         element: <InvoiceIncome />,

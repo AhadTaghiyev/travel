@@ -1,9 +1,23 @@
-import {GridColDef} from '@mui/x-data-grid';
+import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
-    { field: 'no', headerName: 'No', flex: 1, headerClassName: 'header-item'},
-    { field: 'customer', headerName: 'Müştəri', flex: 1, headerClassName: 'header-item' , valueGetter:({value})=> value?.fullName},
-    { field: 'paidAmount', headerName: 'Miqdar', flex: 1, headerClassName: 'header-item'},
-    { field: 'note', headerName: 'Qeyd', flex: 1, headerClassName: 'header-item'},
-    { field: 'date', headerName: 'Tarix', flex: 1, headerClassName: 'header-item',valueGetter:({value})=> value?.slice(0,10)},
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "invoiceNo",
+    headerName: "Invoice Number",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "paidAmount",
+    headerName: "Ödənilən məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "payment",
+    headerName: "Ödənişlər",
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];
