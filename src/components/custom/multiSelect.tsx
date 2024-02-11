@@ -35,6 +35,7 @@ interface IProps {
   disabled?: boolean;
   errorMessages: string[];
   hasErrorMessages: boolean;
+  isMultiSelect?: boolean;
 }
 
 const CustomMultiSelect: React.FC<IProps> = ({
@@ -50,6 +51,7 @@ const CustomMultiSelect: React.FC<IProps> = ({
   errorMessages,
   hasErrorMessages,
   secondaryOptionLabel,
+  isMultiSelect = true,
   closeMenuOnSelect = false,
 }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>();
@@ -69,7 +71,7 @@ const CustomMultiSelect: React.FC<IProps> = ({
     const data = res.data.items
       .map((x) => ({
         label: secondaryOptionLabel
-          ? `${x[optionLabel]} ~ ${x[secondaryOptionLabel]}`
+          ? `${x[optionLabel]} ~ ${x[secondaryOptionLabel] ?? 0}`
           : x[optionLabel],
         value: x.id,
       }))
@@ -148,7 +150,7 @@ const CustomMultiSelect: React.FC<IProps> = ({
               className={`z-[80] bg-red-300 `}
             >
               <Select
-                isMulti
+                isMulti={isMultiSelect}
                 isSearchable
                 placeholder={t("Search option...")}
                 isLoading={loading}

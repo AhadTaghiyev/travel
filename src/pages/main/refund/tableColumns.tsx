@@ -1,14 +1,44 @@
-import {GridColDef} from '@mui/x-data-grid';
+import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
-    { field: 'No', headerName: 'No', headerClassName: 'header-item'},
-    { field: 'planeTicket', headerName: 'Avia Bilet', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.referanceNo},
-    { field: 'cooperativeTicket', headerName: 'Korperativ Bilet', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.referanceNo},
-    { field: 'tourPackage', headerName: 'Tur Paket', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.referanceNumber},
-    { field: 'individualTour', headerName: 'Individual Tur', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.referanceNumber},
-    { field: 'deposit', headerName: 'Depozit', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.customer?.fullName },
-    { field: 'otherServiceTicket', headerName: 'Digər xidmətlər', flex: 1, headerClassName: 'header-item', valueGetter:(params)=>params.value?.referanceNo},
-    { field: 'amount', headerName: 'Miqdar', headerClassName: 'header-item'},
-    { field: 'paidToCustomer', headerName: 'Ödənilən məbləğ', headerClassName: 'header-item'},
-    { field: 'forfeit', headerName: 'Cərimə', headerClassName: 'header-item'},
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "invoiceNo",
+    headerName: "Məhsul nömrəsi", // Hola
+    flex: 1,
+    headerClassName: "header-item",
+    renderCell: (params) => {
+      return params.row.invoiceNo || params.row.advancePaymentNo;
+    },
+  },
+  {
+    field: "amount",
+    headerName: "Ödənilən məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "paidToCustomer",
+    headerName: "Qaytarılan məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "forfeit",
+    headerName: "Cərimə",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "payment",
+    headerName: "Ödəniş",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "date",
+    headerName: "Tarix",
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];

@@ -26,6 +26,7 @@ interface ICustomAutocompleteModel {
   staticOptions?: { value: string | boolean; label: string }[];
   errorMessages: string[];
   hasErrorMessages: boolean;
+  secondaryOptionLabel?: string;
 }
 
 export default function CustomAutocomplete({
@@ -39,6 +40,7 @@ export default function CustomAutocomplete({
   errorMessages,
   staticOptions,
   hasErrorMessages,
+  secondaryOptionLabel,
 }: ICustomAutocompleteModel) {
   const [options, setOptions] = useState(staticOptions ?? null);
   const { onClose } = useModal();
@@ -49,7 +51,9 @@ export default function CustomAutocomplete({
 
     const data = res.data.items
       .map((x) => ({
-        label: x[optionLabel],
+        label: secondaryOptionLabel
+          ? `${x[optionLabel]} ~ ${x[secondaryOptionLabel] ?? 0}`
+          : x[optionLabel],
         value: x.id,
       }))
       .filter((item) => item.label && item.value);

@@ -44,10 +44,7 @@ import UpdateTour from "../pages/main/settings/tour/updateTour";
 import ServiceManager from "../pages/main/settings/serviceManager";
 import NewServiceManager from "../pages/main/settings/serviceManager/newServiceManager";
 import UpdateServiceManager from "../pages/main/settings/serviceManager/updateServiceManager";
-// Refunds
-import Refund from "../pages/main/refund";
-import NewRefund from "../pages/main/refund/newRefund";
-import UpdateRefund from "../pages/main/refund/UpdateRefund";
+
 // Report
 import Report from "../pages/main/report";
 // Referance
@@ -91,6 +88,12 @@ import Income from "../pages/main/income";
 import NewIncome from "../pages/main/income/newIncome";
 // import UpdateIncome from "../pages/main/income/updateIncome";
 import InvoiceIncome from "../pages/main/income/report";
+
+// Refunds
+import Refund from "../pages/main/refund";
+import NewRefund from "../pages/main/refund/create";
+// import UpdateIncome from "../pages/main/refund/update";
+import RefundReport from "../pages/main/refund/report";
 
 // Other Services
 import OtherServices from "../pages/main/otherServices";
@@ -424,10 +427,13 @@ const router = createBrowserRouter([
         path: "/panel/refunds/new",
         element: <NewRefund />,
       },
-
+      // {
+      //   path: "/panel/refunds/update/:id",
+      //   element: <UpdateRefund />,
+      // },
       {
-        path: "/panel/refunds/update/:id",
-        element: <UpdateRefund />,
+        path: "/panel/refunds/report",
+        element: <RefundReport />,
       },
       // ===============
       // TourPackage

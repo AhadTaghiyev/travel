@@ -1,0 +1,246 @@
+import { Formik, FormikHelpers, FormikValues } from "formik";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { InputLabel } from "@mui/material";
+import { TFunction } from "i18next";
+
+import { RefundSchema, RefundEditSchema } from "./schema";
+import { IRefundModel } from "./types";
+import { textStyling } from "@/styles";
+
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomTextField from "@/components/custom/input";
+import CustomSelect from "@/components/custom/select";
+import { Input } from "@/components/ui/input";
+import CustomMultiSelect from "@/components/custom/multiSelect";
+import { useState } from "react";
+import CustomDateTimePicker from "@/components/custom/datePicker";
+
+const getTypeOptions = (t: TFunction<"translation", undefined>) => [
+  { label: t("Aviabilet"), value: "planeTicket" },
+  { label: t("Corporative Ticket"), value: "cooperativeTicket" },
+  { label: t("Individual Tur paket"), value: "individualTour" },
+  { label: t("Tur paket"), value: "tourPackage" },
+  { label: t("Depozit"), value: "deposit" }, // Hola
+  { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
+];
+
+type IItem = {
+  no: string;
+  id: number;
+  amount: number;
+};
+
+type FormType = "Edit" | "Create";
+
+interface IRefundFormProps {
+  formType: FormType;
+  initialValues: IRefundModel;
+  onSubmit: (
+    values: IRefundModel,
+    helpers: FormikHelpers<FormikValues>
+  ) => void;
+}
+
+const RefundForm = ({
+  initialValues,
+  onSubmit,
+  formType,
+}: IRefundFormProps) => {
+  const isEdit = formType === "Edit";
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [invoiceItems, setInvoiceItems] = useState<IItem[]>([]);
+
+  const getOptions = (options: IItem[]) => {
+    setInvoiceItems(options);
+  };
+
+  return (
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={isEdit ? RefundEditSchema : RefundSchema}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleSubmit,
+        setFieldValue,
+        isSubmitting,
+      }) => (
+        <form onSubmit={handleSubmit} className="pt-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
+            {!isEdit && (
+              <>
+                <div className="w-full">
+                  <CustomSelect
+                    label={t("Məhsul tipi")} // Hola
+                    optionLabel="name"
+                    value={values.type ?? null}
+                    change={(value) => {
+                      setFieldValue("invoiceId", null);
+                      setFieldValue("advancePaymentId", null);
+                      setFieldValue(`type`, value ?? null);
+                    }}
+                    hasErrorMessages={!!errors.type && !!touched.type}
+                    staticOptions={getTypeOptions(t)}
+                    errorMessages={[t(errors.type?.toString())]}
+                  />
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocompleteSelect
+                    api="Customers/GetAll/1"
+                    label={t("customer")}
+                    disabled={isEdit}
+                    value={values.customerId ?? null}
+                    optionLabel="fullName"
+                    change={(value) => {
+                      setFieldValue("invoiceId", null);
+                      setFieldValue("advancePaymentId", null);
+                      setFieldValue("customerId", value ?? null);
+                    }}
+                    hasErrorMessages={
+                      !!errors.customerId && !!touched.customerId
+                    }
+                    errorMessages={[t(errors.customerId?.toString())]}
+                  />
+                </div>
+              </>
+            )}
+            {isEdit && (
+              <>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("customer")}
+                  </InputLabel>
+                  <Input value={values.customer} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Invoice")}
+                  </InputLabel>
+                  <Input value={values.invoiceNo} disabled />
+                </div>
+              </>
+            )}
+            {!isEdit && !!values.type && !!values.customerId && (
+              <div
+                className="w-full"
+                key={`ticket-${values.type}-${values.customerId}`}
+              >
+                <CustomMultiSelect
+                  isMultiSelect={false}
+                  secondaryOptionLabel="amount"
+                  api={`Invoices/GetRefundables?customerId=${values.customerId}&type=${values.type}`}
+                  label={t("Məhsul nömrəsi")} // Hola
+                  value={[values.invoiceId || values.advancePaymentId]}
+                  change={(option: any) => {
+                    const isDeposit = values.type === "deposit";
+                    setFieldValue("invoiceId", isDeposit ? null : option);
+                    setFieldValue(
+                      "advancePaymentId",
+                      !isDeposit ? null : option
+                    );
+                    const amount = invoiceItems.find(
+                      (i) => i.id === +option.value
+                    ).amount;
+                    setFieldValue("amount", amount ?? 0);
+                  }}
+                  getOptions={getOptions}
+                  hasErrorMessages={!!errors.invoiceId && !!touched.invoiceId}
+                  errorMessages={[t(errors.invoiceId?.toString())]}
+                  closeMenuOnSelect={false}
+                  optionLabel="no"
+                />
+              </div>
+            )}
+            {(values.invoiceId || values.advancePaymentId) && (
+              <>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    name="amount"
+                    type="text"
+                    label={t("Məbləğ")}
+                    value={values.amount}
+                    change={handleChange}
+                    hasErrorMessages={!!errors.amount && !!touched.amount}
+                    errorMessages={[t(errors.amount?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomAutocompleteSelect
+                    api="Payments/GetAll/1"
+                    label={t("Ödəniş növü")}
+                    value={values.paymentId ?? null}
+                    optionLabel="type"
+                    change={(value) => setFieldValue("paymentId", value)}
+                    hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
+                    errorMessages={[t(errors.paymentId?.toString() ?? "")]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("Qaytarılan məbləğ")} // Hola
+                    value={values.paidToCustomer}
+                    change={handleChange}
+                    type="number"
+                    name={`paidToCustomer`}
+                    hasErrorMessages={
+                      !!errors.paidToCustomer && !!touched.paidToCustomer
+                    }
+                    errorMessages={[t(errors.paidToCustomer?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    label={t("Cərimə")} // Hola
+                    value={Math.max(values.amount - values.paidToCustomer, 0)}
+                    change={() => 0}
+                    type="number"
+                    name={``}
+                  />
+                </div>
+                <div className="w-full h-full">
+                  <CustomDateTimePicker
+                    label={t("date")}
+                    value={values.date}
+                    change={(data) => {
+                      setFieldValue("date", data ?? new Date());
+                    }}
+                    hasErrorMessages={!!errors.date && !!touched.date}
+                    errorMessages={[t(errors.date?.toString())]}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="w-full flex gap-x-6 justify-end mb-6">
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => navigate("/panel/income")}
+              className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+            >
+              {t("goBack")}
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+            >
+              {t("confirm")}
+            </button>
+          </div>
+        </form>
+      )}
+    </Formik>
+  );
+};
+
+export default RefundForm;
