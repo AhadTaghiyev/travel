@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormikHelpers, FormikValues } from "formik";
@@ -37,26 +36,30 @@ const UpdateDeposit = () => {
 
   const onSubmit = useCallback(
     (values: IDepositModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      // const params = {
-      //   id,
-      //   paymentId: values.paymentId,
-      //   paidAmount: values.paidAmount,
-      //   invoiceIds: values.invoiceIds,
-      // };
-      // const promise = apiService
-      //   .put(`/MassIncomes/Update/${id}`, params)
-      //   .then((response) => {
-      //     if (response.status === 200) {
-      //       toast.success(t("Income updated")); // Hola
-      //       navigate("/panel/income");
-      //     } else {
-      //       toast.error(response.message);
-      //     }
-      //   })
-      //   .finally(() => setSubmitting(false));
-      // toast.promise(promise, {
-      //   loading: t("Loading..."),
-      // });
+      console.log(values);
+
+      const params = {
+        id,
+        customerId: values.customerId,
+        paymentId: values.paymentId,
+        paidAmount: values.paidAmount,
+        date: values.date,
+        description: values.description,
+      };
+      const promise = apiService
+        .put(`/AdvancePayments/Update/${id}`, params)
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(t("Deposit updated")); // Hola
+            navigate("/panel/deposits");
+          } else {
+            toast.error(response.message);
+          }
+        })
+        .finally(() => setSubmitting(false));
+      toast.promise(promise, {
+        loading: t("Loading..."),
+      });
     },
     [id]
   );

@@ -15,7 +15,14 @@ import { apiService } from "@/server/apiServer";
 import { toast } from "sonner";
 import Loading from "@/components/custom/loading";
 import { UserContext } from "@/store/UserContext";
-import { MassIncomeTable } from "@/components/pages/incomeTable";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const customerProperties = [
   {
@@ -60,7 +67,6 @@ export default function index() {
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-    alert(id)
     const res = await apiService.get(`/AdvancePayments/GetDetail/${id}`);
 
     if (res.status !== 200) {
@@ -160,7 +166,29 @@ export default function index() {
             }}
             container
           >
-            <MassIncomeTable currency={currency} incomes={data ? [data] : []} />
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("Ödəniş növü")}</TableHead>
+                  <TableHead>{t("paidamount")}</TableHead>
+                  <TableHead>{t("Description")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data && (
+                  <TableRow key={data.id}>
+                    <TableCell className="py-1.5">{data.payment}</TableCell>
+                    <TableCell className="py-1.5">
+                      {(data.amount * currency.value).toFixed(2)}{" "}
+                      {currency.name}
+                    </TableCell>
+                    <TableCell className="py-1.5 max-w-[150px] truncate">
+                      {data.description ?? t("No Description")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </Grid>
         </Container>
       </Grid>

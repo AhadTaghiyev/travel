@@ -542,7 +542,7 @@ const router = createBrowserRouter([
         element: <UpdateDeposit />,
       },
       {
-        path: "/panel/deposits/detail/:id",
+        path: "/panel/deposits/report",
         element: <DetailDeposit />,
       },
       // ===============
