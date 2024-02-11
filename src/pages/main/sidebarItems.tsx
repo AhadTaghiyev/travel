@@ -88,7 +88,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaServicestack,
         text: "Bonus",
-        link: "/panel/supplierDeposits",
+        link: "/panel/bonus",
       },
     ],
   },

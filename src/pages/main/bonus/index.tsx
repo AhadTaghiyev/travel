@@ -8,9 +8,9 @@ export default function Index() {
       <Table
         columns={columns}
         api={"/Bonuces/GetAll"}
-        buttonText="Bonuce" // Hola
+        buttonText="Bonus" // Hola
         deleteApi="/Bonuces/Delete"
-        root="/panel/supplierDeposits"
+        root="/panel/bonus"
       />
     </Container>
   );

@@ -19,8 +19,8 @@ const NewDeposit = () => {
         .post(`/Bonuces/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Bonuces yaradıldı")); // Hola
-            navigate(`/panel/supplierDeposits`);
+            toast.success(t("Bonus yaradıldı")); // Hola
+            navigate(`/panel/bonus`);
             // TODO: Navigate to report page
             // navigate(
             //   `/panel/IndividualTourPackages/report?tickets=${response.data}`

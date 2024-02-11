@@ -19,10 +19,10 @@ const UpdateDeposit = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getIncomeInfo(id);
+    getData(id);
   }, []);
 
-  async function getIncomeInfo(id: string) {
+  async function getData(id: string) {
     const response = await apiService.get(`/Bonuces/Get/${id}`);
     if (response.status === 200) {
       setIncome(response.data);
@@ -30,33 +30,33 @@ const UpdateDeposit = () => {
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/supplierDeposits");
+        navigate("/panel/bonus");
       }, 1000);
     }
   }
 
   const onSubmit = useCallback(
     (values: IDepositModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      // const params = {
-      //   id,
-      //   paymentId: values.paymentId,
-      //   paidAmount: values.paidAmount,
-      //   invoiceIds: values.invoiceIds,
-      // };
-      // const promise = apiService
-      //   .put(`/MassIncomes/Update/${id}`, params)
-      //   .then((response) => {
-      //     if (response.status === 200) {
-      //       toast.success(t("Income updated")); // Hola
-      //       navigate("/panel/income");
-      //     } else {
-      //       toast.error(response.message);
-      //     }
-      //   })
-      //   .finally(() => setSubmitting(false));
-      // toast.promise(promise, {
-      //   loading: t("Loading..."),
-      // });
+      const params = {
+        paymentId: values.paymentId,
+        paidAmount: values.paidAmount,
+        date: values.date,
+        description: values.description,
+      };
+      const promise = apiService
+        .put(`/Bonuces/Update/${id}`, params)
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(t("Bonus updated")); // Hola
+            navigate("/panel/bonus");
+          } else {
+            toast.error(response.message);
+          }
+        })
+        .finally(() => setSubmitting(false));
+      toast.promise(promise, {
+        loading: t("Loading..."),
+      });
     },
     [id]
   );

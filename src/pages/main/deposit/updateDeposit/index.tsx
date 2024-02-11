@@ -36,10 +36,7 @@ const UpdateDeposit = () => {
 
   const onSubmit = useCallback(
     (values: IDepositModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      console.log(values);
-
       const params = {
-        id,
         customerId: values.customerId,
         paymentId: values.paymentId,
         paidAmount: values.paidAmount,

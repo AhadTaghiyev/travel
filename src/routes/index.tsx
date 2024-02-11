@@ -164,10 +164,10 @@ import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/updateSalaryToBeP
 
 import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
 
-import SupplierDeposits from "../pages/main/supplierDeposit";
-import NewSupplierDeposit from "../pages/main/supplierDeposit/newDeposit";
-import UpdateSupplierDeposit from "../pages/main/supplierDeposit/updateDeposit";
-import DetailSupplierDeposit from "../pages/main/supplierDeposit/report";
+import Bonus from "../pages/main/bonus";
+import NewBonus from "../pages/main/bonus/newBonus";
+import UpdateBonus from "../pages/main/bonus/updateBonus";
+import BonusReport from "../pages/main/bonus/report";
 
 import AgreementFormat from "../pages/main/settings/agreementFormat";
 import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";
@@ -820,20 +820,20 @@ const router = createBrowserRouter([
         element: <PaymentDetailReport />,
       },
       {
-        path: "/panel/supplierDeposits",
-        element: <SupplierDeposits />,
+        path: "/panel/bonus",
+        element: <Bonus />,
       },
       {
-        path: "/panel/supplierDeposits/new",
-        element: <NewSupplierDeposit />,
+        path: "/panel/bonus/new",
+        element: <NewBonus />,
       },
       {
-        path: "/panel/supplierDeposits/update/:id",
-        element: <UpdateSupplierDeposit />,
+        path: "/panel/bonus/update/:id",
+        element: <UpdateBonus />,
       },
       {
-        path: "/panel/supplierDeposits/detail/:id",
-        element: <DetailSupplierDeposit />,
+        path: "/panel/bonus/report",
+        element: <BonusReport />,
       },
       {
         path: "/panel/agreementFormats",

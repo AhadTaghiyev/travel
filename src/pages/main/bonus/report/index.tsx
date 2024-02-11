@@ -15,26 +15,14 @@ import { apiService } from "@/server/apiServer";
 import { toast } from "sonner";
 import Loading from "@/components/custom/loading";
 import { UserContext } from "@/store/UserContext";
-import { MassIncomeTable } from "@/components/pages/incomeTable";
-
-const customerProperties = [
-  {
-    fieldName: "Invoice Tarixi",
-    propertyName: "date",
-  },
-  {
-    fieldName: "Ad",
-    propertyName: "fullName",
-  },
-  {
-    fieldName: "Telefon",
-    propertyName: "phoneNumber",
-  },
-  {
-    fieldName: "Email",
-    propertyName: "email",
-  },
-];
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function index() {
   const { user: currentUser } = useContext(UserContext);
@@ -60,8 +48,7 @@ export default function index() {
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-    alert(id)
-    const res = await apiService.get(`/AdvancePayments/GetDetail/${id}`);
+    const res = await apiService.get(`/Bonuces/GetDetail/${id}`);
 
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
@@ -138,29 +125,36 @@ export default function index() {
             </Typography>
           </Grid>
         </Grid>
-        <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
-          <div className="flex justify-between ">
-            <div>
-              <h3 className="text-xl font-bold mb-2">
-                {t("Müştəri məlumatları")}
-              </h3>
-              {customerProperties.map((item, index) => (
-                <div className="text-sm flex w-fit mb-1" key={index}>
-                  <p className="w-28 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.customer?.[item.propertyName]}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-        <Container maxWidth="xl" style={{ paddingRight: 0 }}>
+        <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
           <Grid
             sx={{
               width: "100%",
             }}
             container
           >
-            <MassIncomeTable currency={currency} incomes={data ? [data] : []} />
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("Ödəniş növü")}</TableHead>
+                  <TableHead>{t("paidamount")}</TableHead>
+                  <TableHead>{t("Description")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data && (
+                  <TableRow key={data.id}>
+                    <TableCell className="py-1.5">{data.payment}</TableCell>
+                    <TableCell className="py-1.5">
+                      {(data.amount * currency.value).toFixed(2)}{" "}
+                      {currency.name}
+                    </TableCell>
+                    <TableCell className="py-1.5 max-w-[150px] truncate">
+                      {data.description ?? t("No Description")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </Grid>
         </Container>
       </Grid>
