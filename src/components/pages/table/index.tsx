@@ -304,7 +304,7 @@ export default function Index({
                 borderColor: "#e0e0e0",
               },
               "& .MuiDataGrid-cell:last-child": {
-                border: 0,
+                borderRight: 0,
                 borderBottom: 1,
                 borderColor: "#e0e0e0",
                 width: "100%!important",

@@ -64,10 +64,7 @@ import CompanyUpdate from "../pages/admin/company/updateCompany";
 import Airway from "../pages/main/settings/airway";
 import NewAirway from "../pages/main/settings/airway/newAirway";
 import UpdateAirway from "../pages/main/settings/airway/updateAirway";
-// Money transfer
-import MoneyTransfer from "../pages/main/moneyTranfser";
-import NewMoneyTransfer from "../pages/main/moneyTranfser/newMoneyTransfer";
-import UpdateMoneyTransfer from "../pages/main/moneyTranfser/updateMoneyTransfer";
+
 //Korperativ bilet
 import CorperativeTicket from "../pages/main/corperativeTicket";
 import NewCorperativeTicket from "../pages/main/corperativeTicket/newTicket";
@@ -170,6 +167,12 @@ import Transaction from "../pages/main/managerFinancialTransaction";
 import NewTransaction from "../pages/main/managerFinancialTransaction/newTransaction";
 import UpdateTransaction from "../pages/main/managerFinancialTransaction/updateTransaction";
 import TransactionReport from "../pages/main/managerFinancialTransaction/report";
+
+// MoneyTransfers
+import MoneyTransfer from "../pages/main/moneyTransfer";
+import NewMoneyTransfer from "../pages/main/moneyTransfer/newTransfer";
+import UpdateMoneyTransfer from "../pages/main/moneyTransfer/updateTransfer";
+import MoneyTransferReport from "../pages/main/moneyTransfer/report";
 
 import AgreementFormat from "../pages/main/settings/agreementFormat";
 import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";
@@ -597,18 +600,6 @@ const router = createBrowserRouter([
       // ===============
       // Money Transfers
       //================
-      {
-        path: "/panel/moneyTransfers",
-        element: <MoneyTransfer />,
-      },
-      {
-        path: "/panel/moneyTransfers/new",
-        element: <NewMoneyTransfer />,
-      },
-      {
-        path: "/panel/moneyTransfers/update/:id",
-        element: <UpdateMoneyTransfer />,
-      },
 
       // ===============
       // Transfers
@@ -837,6 +828,23 @@ const router = createBrowserRouter([
       {
         path: "/panel/managerFinancialTransactions/report",
         element: <TransactionReport />,
+      },
+      // MoneyTransfers
+      {
+        path: "/panel/paymentTransfers",
+        element: <MoneyTransfer />,
+      },
+      {
+        path: "/panel/paymentTransfers/new",
+        element: <NewMoneyTransfer />,
+      },
+      {
+        path: "/panel/paymentTransfers/update/:id",
+        element: <UpdateMoneyTransfer />,
+      },
+      {
+        path: "/panel/paymentTransfers/report",
+        element: <MoneyTransferReport />,
       },
 
       {

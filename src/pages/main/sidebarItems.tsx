@@ -100,7 +100,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: HiOutlineArrowPathRoundedSquare,
     text: "Vəsait transferi",
-    link: "/panel/moneyTransfers",
+    link: "/panel/paymentTransfers",
   },
   {
     icon: FaMoneyBillWave,

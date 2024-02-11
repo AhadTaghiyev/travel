@@ -185,13 +185,13 @@ export const updateOtherServicesBreadCrumb = (
 //=====================
 
 export const MoneyTransfersBreadCrumb = (
-  <Link key="1" to="/panel/MoneyTransfers" className="pageLink link">
+  <Link key="1" to="/panel/paymentTransfers" className="pageLink link">
     Vəsait transferi
   </Link>
 );
 
 export const newMoneyTransfersBreadCrumb = (
-  <Link key="1" to="/panel/MoneyTransfers" className="currentPageLink link">
+  <Link key="1" to="/panel/paymentTransfers" className="currentPageLink link">
     Yeni Vəsait transferi
   </Link>
 );
@@ -199,7 +199,7 @@ export const newMoneyTransfersBreadCrumb = (
 export const updateMoneyTransfersBreadCrumb = (
   <Link
     key="1"
-    to="/panel/MoneyTransfers/update"
+    to="/panel/paymentTransfers/update"
     className="currentPageLink link"
   >
     Vəsait transferinə düzəliş et
