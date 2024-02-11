@@ -95,7 +95,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: FaArrowsLeftRightToLine,
     text: "Təsisçidən təsisçiyə",
-    link: "/panel/supplierDebts",
+    link: "/panel/managerFinancialTransactions",
   },
   {
     icon: HiOutlineArrowPathRoundedSquare,

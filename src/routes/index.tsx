@@ -54,11 +54,6 @@ import Report from "../pages/main/report";
 import NewReferance from "../pages/main/referance/newReferance";
 import Referance from "../pages/main/referance/index";
 
-// SupplierDebts
-import SuplierDebt from "../pages/main/supplierDebt";
-import NewSuplierDebt from "../pages/main/supplierDebt/newSupplierDebt";
-import UpdateSuplierDebt from "../pages/main/supplierDebt/updateSupplierDebt";
-import SupplierDebtDetail from "../pages/main/supplierDebt/detail";
 //Admin
 import Admin from "../pages/admin";
 import CompanyAdmin from "../pages/admin/company";
@@ -164,10 +159,17 @@ import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/updateSalaryToBeP
 
 import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
 
+// Bonus
 import Bonus from "../pages/main/bonus";
 import NewBonus from "../pages/main/bonus/newBonus";
 import UpdateBonus from "../pages/main/bonus/updateBonus";
 import BonusReport from "../pages/main/bonus/report";
+
+// ManagerFinancialTransactions
+import Transaction from "../pages/main/managerFinancialTransaction";
+import NewTransaction from "../pages/main/managerFinancialTransaction/newTransaction";
+import UpdateTransaction from "../pages/main/managerFinancialTransaction/updateTransaction";
+import TransactionReport from "../pages/main/managerFinancialTransaction/report";
 
 import AgreementFormat from "../pages/main/settings/agreementFormat";
 import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";
@@ -545,25 +547,7 @@ const router = createBrowserRouter([
         path: "/panel/deposits/report",
         element: <DetailDeposit />,
       },
-      // ===============
-      // SupplierDebts
-      //================
-      {
-        path: "/panel/supplierDebts",
-        element: <SuplierDebt />,
-      },
-      {
-        path: "/panel/supplierDebts/new",
-        element: <NewSuplierDebt />,
-      },
-      {
-        path: "/panel/supplierDebts/update/:id",
-        element: <UpdateSuplierDebt />,
-      },
-      {
-        path: "/panel/supplierDebts/detail/:id",
-        element: <SupplierDebtDetail />,
-      },
+
       // ===============
       // Suplier
       //================
@@ -819,6 +803,8 @@ const router = createBrowserRouter([
         path: "/panel/payments/report/:id",
         element: <PaymentDetailReport />,
       },
+
+      // Bonus
       {
         path: "/panel/bonus",
         element: <Bonus />,
@@ -835,6 +821,24 @@ const router = createBrowserRouter([
         path: "/panel/bonus/report",
         element: <BonusReport />,
       },
+      // ManagerFinancialTransactions
+      {
+        path: "/panel/managerFinancialTransactions",
+        element: <Transaction />,
+      },
+      {
+        path: "/panel/managerFinancialTransactions/new",
+        element: <NewTransaction />,
+      },
+      {
+        path: "/panel/managerFinancialTransactions/update/:id",
+        element: <UpdateTransaction />,
+      },
+      {
+        path: "/panel/managerFinancialTransactions/report",
+        element: <TransactionReport />,
+      },
+
       {
         path: "/panel/agreementFormats",
         element: <AgreementFormat />,

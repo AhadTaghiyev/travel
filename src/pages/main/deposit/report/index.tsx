@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/lib/utils";
 
 const customerProperties = [
   {
@@ -172,6 +173,7 @@ export default function index() {
                   <TableHead>{t("Ödəniş növü")}</TableHead>
                   <TableHead>{t("paidamount")}</TableHead>
                   <TableHead>{t("Description")}</TableHead>
+                  <TableHead>{t("date")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -184,6 +186,9 @@ export default function index() {
                     </TableCell>
                     <TableCell className="py-1.5 max-w-[150px] truncate">
                       {data.description ?? t("No Description")}
+                    </TableCell>
+                    <TableCell className="py-1.5 max-w-[150px] truncate">
+                      {formatDate(data.date)}
                     </TableCell>
                   </TableRow>
                 )}

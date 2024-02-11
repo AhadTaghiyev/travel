@@ -1,33 +1,31 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { FaPlusSquare } from "react-icons/fa";
 
-import { AdvancePaymentsSchema } from "./schema";
-import { useModal } from "@/hooks/useModal";
-import { IDepositModel } from "./types";
+import { TransactionSchema } from "./schema";
+import { ITransactionModel } from "./types";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 
 type FormType = "Edit" | "Create" | "View";
 
-interface IMassIncomeFormProps {
+interface ITransactionFormProps {
   formType: FormType;
-  initialValues: IDepositModel;
+  initialValues: ITransactionModel;
   onSubmit: (
-    values: IDepositModel,
+    values: ITransactionModel,
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
 
-const MassIncomeForm = ({
+const TransactionForm = ({
   initialValues,
   onSubmit,
   formType,
-}: IMassIncomeFormProps) => {
-  const { type, isModalSuccess, onOpen } = useModal();
+}: ITransactionFormProps) => {
   const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -36,7 +34,7 @@ const MassIncomeForm = ({
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={AdvancePaymentsSchema}
+      validationSchema={TransactionSchema}
     >
       {({
         values,
@@ -49,32 +47,21 @@ const MassIncomeForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            <div className="w-full relative">
-              <CustomAutocompleteSelect
-                disabled={isView}
-                api="Customers/GetAll/1"
-                label={t("customer")}
-                value={values.customerId ?? null}
-                optionLabel="fullName"
+            <div className="w-full">
+              <CustomSelect
+                label={t("Status")} // Hola
+                optionLabel="name"
+                value={values.status ?? null}
                 change={(value) => {
-                  setFieldValue("customerId", value ?? null);
+                  setFieldValue("status", value);
                 }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
-                hasErrorMessages={!!errors.customerId && !!touched.customerId}
-                errorMessages={[t(errors.customerId?.toString())]}
+                hasErrorMessages={!!errors.status && !!touched.status}
+                staticOptions={[
+                  { label: t("Mədaxil"), value: "1" },
+                  { label: t("Məxaric"), value: "0" }, // Hola
+                ]}
+                errorMessages={[t(errors.status?.toString())]}
               />
-              {!isView && (
-                <button
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    onOpen("createCustomer");
-                  }}
-                  className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                >
-                  <FaPlusSquare />
-                </button>
-              )}
             </div>
             <div className="w-full">
               <CustomAutocompleteSelect
@@ -91,12 +78,13 @@ const MassIncomeForm = ({
             <div className="w-full">
               <CustomTextField
                 label={t("Ödənilən məbləğ")}
-                value={values.paidAmount}
+                value={values.amount}
                 change={handleChange}
                 type="number"
-                name={`paidAmount`}
-                hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
-                errorMessages={[t(errors.paidAmount?.toString())]}
+                name={`amount`}
+                disabled={isView}
+                hasErrorMessages={!!errors.amount && !!touched.amount}
+                errorMessages={[t(errors.amount?.toString())]}
               />
             </div>
             <div className="w-full h-full">
@@ -114,17 +102,16 @@ const MassIncomeForm = ({
             <div className="w-full">
               <CustomTextField
                 disabled={isView}
-                name="description"
+                name="note"
                 type="text"
-                label={t("Description")}
-                value={values.description}
+                label={t("Qeyd")} // Hola
+                value={values.note}
                 change={handleChange}
-                hasErrorMessages={!!errors.description && !!touched.description}
-                errorMessages={[t(errors.description?.toString())]}
+                hasErrorMessages={!!errors.note && !!touched.note}
+                errorMessages={[t(errors.note?.toString())]}
               />
             </div>
           </div>
-
           <div className="w-full flex gap-x-6 justify-end mb-6">
             <button
               type="button"
@@ -148,4 +135,4 @@ const MassIncomeForm = ({
   );
 };
 
-export default MassIncomeForm;
+export default TransactionForm;
