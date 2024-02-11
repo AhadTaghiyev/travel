@@ -165,9 +165,9 @@ import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/updateSalaryToBeP
 import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
 
 import SupplierDeposits from "../pages/main/supplierDeposit";
-import NewSupplierDeposit from "../pages/main/supplierDeposit/new";
-import UpdateSupplierDeposit from "../pages/main/supplierDeposit/update";
-import DetailSupplierDeposit from "../pages/main/supplierDeposit/detail";
+import NewSupplierDeposit from "../pages/main/supplierDeposit/newDeposit";
+import UpdateSupplierDeposit from "../pages/main/supplierDeposit/updateDeposit";
+import DetailSupplierDeposit from "../pages/main/supplierDeposit/report";
 
 import AgreementFormat from "../pages/main/settings/agreementFormat";
 import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";

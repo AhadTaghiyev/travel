@@ -23,14 +23,14 @@ const UpdateDeposit = () => {
   }, []);
 
   async function getIncomeInfo(id: string) {
-    const response = await apiService.get(`/AdvancePayments/Get/${id}`);
+    const response = await apiService.get(`/Bonuces/Get/${id}`);
     if (response.status === 200) {
       setIncome(response.data);
       setLoading(false);
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/income");
+        navigate("/panel/supplierDeposits");
       }, 1000);
     }
   }

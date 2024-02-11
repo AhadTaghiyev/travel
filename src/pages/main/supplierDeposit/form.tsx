@@ -57,33 +57,6 @@ const MassIncomeForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            <div className="w-full relative">
-              <CustomAutocompleteSelect
-                disabled={isView}
-                api="Customers/GetAll/1"
-                label={t("customer")}
-                value={values.customerId ?? null}
-                optionLabel="fullName"
-                change={(value) => {
-                  setFieldValue("customerId", value ?? null);
-                }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
-                hasErrorMessages={!!errors.customerId && !!touched.customerId}
-                errorMessages={[t(errors.customerId?.toString())]}
-              />
-              {!isView && (
-                <button
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    onOpen("createCustomer");
-                  }}
-                  className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                >
-                  <FaPlusSquare />
-                </button>
-              )}
-            </div>
             <div className="w-full">
               <CustomAutocompleteSelect
                 disabled={isView}
