@@ -49,7 +49,7 @@ const TransactionForm = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full">
               <CustomSelect
-                label={t("Status")} // Hola
+                label={t("Status")}
                 optionLabel="name"
                 value={values.status ?? null}
                 change={(value) => {
@@ -58,7 +58,7 @@ const TransactionForm = ({
                 hasErrorMessages={!!errors.status && !!touched.status}
                 staticOptions={[
                   { label: t("Mədaxil"), value: "1" },
-                  { label: t("Məxaric"), value: "0" }, // Hola
+                  { label: t("Məxaric"), value: "0" },
                 ]}
                 errorMessages={[t(errors.status?.toString())]}
               />
@@ -104,7 +104,7 @@ const TransactionForm = ({
                 disabled={isView}
                 name="note"
                 type="text"
-                label={t("Qeyd")} // Hola
+                label={t("Qeyd")}
                 value={values.note}
                 change={handleChange}
                 hasErrorMessages={!!errors.note && !!touched.note}

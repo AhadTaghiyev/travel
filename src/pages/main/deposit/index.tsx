@@ -8,7 +8,7 @@ export default function Index() {
       <Table
         columns={columns}
         api={"/AdvancePayments/GetAll"}
-        buttonText="Deposit" // Hola
+        buttonText="Deposit"
         deleteApi="/AdvancePayments/Delete"
         root="/panel/deposits"
       />

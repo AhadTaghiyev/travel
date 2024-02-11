@@ -47,7 +47,7 @@ const UpdateIncome = () => {
         .put(`/MassIncomes/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Income updated")); // Hola
+            toast.success(t("Income updated"));
             navigate("/panel/income");
           } else {
             toast.error(response.message);

@@ -51,7 +51,7 @@ const TransferForm = ({
               <CustomAutocompleteSelect
                 disabled={isView}
                 api="Payments/GetAll/1"
-                label={t("Haradan")} // Hola
+                label={t("Haradan")}
                 value={values.fromPaymentId ?? null}
                 optionLabel="type"
                 change={(value) =>
@@ -77,7 +77,7 @@ const TransferForm = ({
             </div>
             <div className="w-full">
               <CustomTextField
-                label={t("Məbləğ")} // Hola
+                label={t("Məbləğ")}
                 value={values.amount}
                 change={handleChange}
                 type="number"
@@ -104,7 +104,7 @@ const TransferForm = ({
                 disabled={isView}
                 name="note"
                 type="text"
-                label={t("Qeyd")} // Hola
+                label={t("Qeyd")}
                 value={values.note}
                 change={handleChange}
                 hasErrorMessages={!!errors.note && !!touched.note}

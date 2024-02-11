@@ -47,7 +47,7 @@ const UpdateDeposit = () => {
         .put(`/Bonuces/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Bonus updated")); // Hola
+            toast.success(t("Bonus updated"));
             navigate("/panel/bonus");
           } else {
             toast.error(response.message);
@@ -64,7 +64,7 @@ const UpdateDeposit = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Depozit güncəlləməsi")} {/* Hola */}
+        {t("Depozit güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && income && (

@@ -36,7 +36,7 @@ export const CreateServiceModal = () => {
       .post(`/Services/Create`, values)
       .then((response) => {
         if (response.status === 200) {
-          toast.success(t("Service Created")); // Hola
+          toast.success(t("Service Created"));
           setModalSuccess();
         } else {
           toast.error(response.message);
@@ -51,8 +51,6 @@ export const CreateServiceModal = () => {
 
   return (
     <Modal title={t("Yeni Service Yarat")} onModalClose={onClose}>
-      {" "}
-      {/* Hola */}
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}
@@ -72,7 +70,7 @@ export const CreateServiceModal = () => {
                 <CustomTextField
                   name="name"
                   type="text"
-                  label={t("Servis Adı")} // Hola
+                  label={t("Servis Adı")}
                   value={values.name}
                   change={handleChange}
                   hasErrorMessages={!!errors.name && !!touched.name}

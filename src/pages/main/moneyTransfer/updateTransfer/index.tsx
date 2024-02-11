@@ -50,7 +50,7 @@ const UpdateMoneyTransfer = () => {
         .put(`/PaymentTransfers/Update/${id}`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Payment transfer updated")); // Hola
+            toast.success(t("Payment transfer updated"));
             navigate("/panel/paymentTransfers");
           } else {
             toast.error(response.message);
@@ -67,7 +67,7 @@ const UpdateMoneyTransfer = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Vəsait transferi güncəlləməsi")} {/* Hola */}
+        {t("Vəsait transferi güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && income && (

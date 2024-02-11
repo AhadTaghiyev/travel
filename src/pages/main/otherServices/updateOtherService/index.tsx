@@ -42,7 +42,7 @@ const UpdateTicket = () => {
         .put(`/OtherServices/Update/${id}`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Other Service updated")); // Hola
+            toast.success(t("Other Service updated"));
             navigate("/panel/otherServices");
           } else {
             toast.error(response.message);
@@ -59,7 +59,7 @@ const UpdateTicket = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Digər xidmət güncəlləməsi")} {/* Hola */}
+        {t("Digər xidmət güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && ticket && (

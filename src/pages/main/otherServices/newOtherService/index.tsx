@@ -54,7 +54,7 @@ const NewOtherService = () => {
         .post(`/OtherServices/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Digər xidmət yaradıldı")); // Hola
+            toast.success(t("Digər xidmət yaradıldı"));
             navigate(`/panel/otherServices/report?tickets=${response.data}`);
           } else {
             toast.error(response.message);

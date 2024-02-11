@@ -30,7 +30,7 @@ const NewTransaction = () => {
         .post(`/ManagerFinancialTransactions/Create`, params)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Transaction yaradıldı")); // Hola
+            toast.success(t("Transaction yaradıldı"));
             navigate(`/panel/managerFinancialTransactions`);
           } else {
             toast.error(response.message || t("Something went wrong"));
@@ -46,7 +46,7 @@ const NewTransaction = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Transaction Yarat")} {/* Hola */}
+        {t("Transaction Yarat")}
       </h1>
       <TransactionForm
         formType="Create"

@@ -9,7 +9,7 @@ export default function index() {
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
           { fieldName: t("date"), propertyName: "date" },
-          { fieldName: t("Servis"), propertyName: "service" }, // Hola
+          { fieldName: t("Service"), propertyName: "service" },
           { fieldName: t("Servis Adı"), propertyName: "serviceName" },
           { fieldName: t("Description"), propertyName: "description" },
           {

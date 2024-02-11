@@ -16,7 +16,7 @@ export default function Index() {
         exportLink="OtherServices/Export/Export"
         columns={columnsresult}
         api={"/OtherServices/GetAllFilter"}
-        buttonText="Digər Xidmət" // Hola
+        buttonText="Digər Xidmət"
         deleteApi="/OtherServices/Delete"
         root="/panel/otherServices"
       />

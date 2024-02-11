@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const OtherServiceSchema = Yup.object().shape({
-  serviceName: Yup.string().required("Servis adı daxil edilməlidir"), // Hola
+  serviceName: Yup.string().required("Servis adı daxil edilməlidir"),
   purchasePrice: Yup.number()
     .required("Alış qiyməti daxil edilməlidir")
     .min(0, "Alış qiyməti mənfi ola bilməz"),
@@ -16,7 +16,7 @@ export const OtherServiceSchema = Yup.object().shape({
     .min(0, "Ümumi qiymət mənfi ola bilməz"),
   supplierId: Yup.string().nullable(),
   personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
-  serviceId: Yup.string().required("Servis seçilməlidir"), // Hola
+  serviceId: Yup.string().required("Servis seçilməlidir"),
   invoiceDirections: Yup.array().of(
     Yup.object().shape({
       flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),

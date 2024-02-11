@@ -287,7 +287,7 @@ const OtherServicesForm = ({
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     api="Services/GetAll/1"
-                    label={t("Service")} // Hola
+                    label={t("Service")}
                     optionLabel="name"
                     value={otherService.serviceId ?? null}
                     disabled={isView}
