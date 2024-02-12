@@ -1,22 +1,23 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { TFunction } from "i18next";
 
-export const columns: GridColDef[] = [
+export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "to",
-    headerName: "Haraya",
+    headerName: t("Haraya"),
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "amount",
-    headerName: "Məbləğ", // Hola
+    headerName: t("Məbləğ"), // Hola
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "date",
-    headerName: "Date",
+    headerName: t("Date"),
     flex: 1,
     headerClassName: "header-item",
   },

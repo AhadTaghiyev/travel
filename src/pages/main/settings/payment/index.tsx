@@ -1,20 +1,20 @@
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Table from '../../../../components/pages/table';
-import { columns } from './tableColumns';
+import Container from "@mui/material/Container";
+import Table from "../../../../components/pages/table";
+import { columns } from "./tableColumns";
+import { useTranslation } from "react-i18next";
 
 export default function Index() {
+  const { t } = useTranslation();
   return (
     <Container maxWidth="xl">
-      <>
-        <Divider sx={{ mb: 3 }} />
-        <Table columns={columns} 
-            api={'/Payments/GetAll'} 
-            deleteApi='/Payments/Delete' 
-            buttonText='Ödəniş' 
-            root={'/panel/payments'}
-            detailLink={'report/'} />
-      </>
+      <Table
+        hideReport
+        columns={columns(t)}
+        api={"/Payments/GetAll"}
+        buttonText="Payment" // Hola lar
+        deleteApi="/Payments/Delete"
+        root="/panel/payments"
+      />
     </Container>
   );
 }
