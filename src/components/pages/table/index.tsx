@@ -323,6 +323,7 @@ export default function Index({
                 borderBottom: 1,
                 borderColor: "#e0e0e0",
                 width: "100%!important",
+                maxWidth: "100%!important",
               },
               "& .MuiDataGrid-cellContent": {
                 fontSize: 12,

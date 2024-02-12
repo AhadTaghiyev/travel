@@ -165,9 +165,10 @@ import Fee from "../pages/main/settings/fees";
 import NewFee from "../pages/main/settings/fees/newFee";
 import UpdateFee from "../pages/main/settings/fees/updateFee";
 
+// SalaryToBePaid
 import SalaryToBePaid from "../pages/main/salaryToBePaid";
-import NewSalaryToBePaid from "../pages/main/salaryToBePaid/newSalaryToBePaid";
-import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/updateSalaryToBePaid";
+import NewSalaryToBePaid from "../pages/main/salaryToBePaid/create";
+import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/update";
 
 import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
 
