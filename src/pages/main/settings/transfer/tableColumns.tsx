@@ -1,7 +1,12 @@
-import {GridColDef} from '@mui/x-data-grid';
+import { GridColDef } from "@mui/x-data-grid";
+import { TFunction } from "i18next";
 
-export const columns: GridColDef[] = [
-    { field: 'No', headerName: 'No', flex: 1, headerClassName: 'header-item'},
-    { field: 'name', headerName: 'Transfer', flex: 1, headerClassName: 'header-item'}
-
+export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "name",
+    headerName: t("Ad"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];

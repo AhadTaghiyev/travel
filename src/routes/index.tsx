@@ -40,8 +40,8 @@ import UpdatePayment from "../pages/main/settings/payment/update";
 
 //Transfer
 import Transfer from "../pages/main/settings/transfer";
-import NewTranfser from "../pages/main/settings/transfer/newTransfer";
-import UpdateTransfer from "../pages/main/settings/transfer/updateTransfer";
+import NewTranfser from "../pages/main/settings/transfer/create";
+import UpdateTransfer from "../pages/main/settings/transfer/update";
 //Dining
 import Dining from "../pages/main/settings/dining";
 import NewDining from "../pages/main/settings/dining/newDining";
@@ -619,10 +619,6 @@ const router = createBrowserRouter([
         path: "/panel/payments/update/:id",
         element: <UpdatePayment />,
       },
-
-      // ===============
-      // Money Transfers
-      //================
 
       // ===============
       // Transfers
