@@ -4,13 +4,14 @@ export interface ITableObject {
   columns: GridColDef[];
   api: string;
   onCreateClick?: () => void;
-  showPrint?: boolean;
+  hidePrint?: boolean;
+  hideEdit?: boolean;
+  hideDelete?: boolean;
+  hideReport?: boolean;
   deleteApi?: string;
   root: string;
   buttonText?: string;
   exportLink?: string;
-  hasEditBtn?: boolean;
-  hasDeleteBtn?: boolean;
   detailLink?: string;
   current?: string;
 }

@@ -12,7 +12,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        showPrint
+        hidePrint={false}
         exportLink="OtherServices/Export/Export"
         columns={columnsresult}
         api={"/OtherServices/GetAllFilter"}

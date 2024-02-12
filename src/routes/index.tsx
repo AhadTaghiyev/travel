@@ -14,8 +14,7 @@ import Login from "../pages/authentication/login";
 import Auth from "../pages/authentication";
 import ChangePassword from "../pages/authentication/changePassword";
 import Unauth from "../Unauth";
-import Customers from "../pages/main/settings/customer";
-import NewCustomer from "../pages/main/settings/customer/newCustomer";
+
 import Supplier from "../pages/main/settings/supplier";
 import NewSupplier from "../pages/main/settings/supplier/newSupplier";
 import UpdateSupplier from "../pages/main/settings/supplier/updateSupplier";
@@ -23,11 +22,16 @@ import Personal from "../pages/main/settings/personal";
 import NewPersonal from "../pages/main/settings/personal/newPersonal";
 import Payment from "../pages/main/settings/payment";
 import NewPayment from "../pages/main/settings/payment/newPayment";
-import UpdateCustomer from "../pages/main/settings/customer/updateCustomer";
 import UpdatePersonal from "../pages/main/settings/personal/updatePersonal";
 import UpdatePayment from "../pages/main/settings/payment/updatePayment";
 import UpdateAviaticket from "../pages/main/aviabiletSale/updateTicket";
 import ReportAviaticket from "../pages/main/aviabiletSale/report";
+
+// Customers
+import Customers from "../pages/main/settings/customer";
+import NewCustomer from "../pages/main/settings/customer/create";
+import UpdateCustomer from "../pages/main/settings/customer/update";
+
 //Transfer
 import Transfer from "../pages/main/settings/transfer";
 import NewTranfser from "../pages/main/settings/transfer/newTransfer";

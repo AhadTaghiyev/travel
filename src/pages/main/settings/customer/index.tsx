@@ -5,15 +5,14 @@ import { columns } from "./tableColumns";
 export default function Index() {
   return (
     <Container maxWidth="xl">
-      <>
-        <Table
-          columns={columns}
-          api={"/Customers/GetAll"}
-          buttonText="Müştəri"
-          root={"/panel/customers"}
-          deleteApi="/Customers/Delete"
-        />
-      </>
+      <Table
+        hideReport
+        columns={columns}
+        api={"/Customers/GetAll"}
+        buttonText="Müştəri" // Hola lər
+        deleteApi="/Customers/Delete"
+        root="/panel/customers"
+      />
     </Container>
   );
 }

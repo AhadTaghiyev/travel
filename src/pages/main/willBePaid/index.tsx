@@ -75,7 +75,6 @@ export default function Index() {
           ))}
         </Grid>
         <Table
-          hasDeleteBtn
           columns={columns}
           api={`/WillBePaid/GetAllFilter`}
           root={"/panel/willbepaid"}

@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 import { useEffect, useState, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
@@ -47,11 +47,12 @@ export default function Index({
   api,
   deleteApi,
   root,
-  showPrint,
+  hideEdit,
+  hidePrint = true,
+  hideReport,
+  hideDelete,
   buttonText,
   exportLink,
-  hasEditBtn = true,
-  hasDeleteBtn = true,
   detailLink,
   onCreateClick,
   current = null,
@@ -134,7 +135,7 @@ export default function Index({
           className="flex justify-between items-center gap-x-3"
           style={{ cursor: "pointer" }}
         >
-          {hasEditBtn && (
+          {!hideEdit && (
             <Link
               to={`${root}/update/${params.row.id}`}
               className="hover:opacity-70 transition"
@@ -142,17 +143,19 @@ export default function Index({
               <BsPencilFill />
             </Link>
           )}
-          <Link
-            to={
-              detailLink
-                ? detailLink + params.row.id
-                : `${root}/report?tickets=${params.row.id}`
-            }
-            className="hover:opacity-70 transition"
-          >
-            <BsEyeFill />
-          </Link>
-          {showPrint && (
+          {!hideReport && (
+            <Link
+              to={
+                detailLink
+                  ? detailLink + params.row.id
+                  : `${root}/report?tickets=${params.row.id}`
+              }
+              className="hover:opacity-70 transition"
+            >
+              <BsEyeFill />
+            </Link>
+          )}
+          {!hidePrint && (
             <Link
               to={`${root}/view/${params.row.id}`}
               className="hover:opacity-70 transition"
@@ -160,7 +163,7 @@ export default function Index({
               <FaPrint />
             </Link>
           )}
-          {hasDeleteBtn && (
+          {!hideDelete && (
             <BsFillTrashFill
               onClick={() => {
                 setOpen(true);

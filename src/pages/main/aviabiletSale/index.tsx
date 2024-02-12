@@ -13,7 +13,7 @@ export default function Index() {
     <Container maxWidth="xl">
       {/* <PageTitle title='Aviabilet satışı'  breadcrumbs={[homeBreadCrumb, planeTicketBreadCrumb]}/> */}
       <Table
-        showPrint
+        hidePrint={false}
         exportLink="PlaneTickets/Export/Export"
         columns={columnsresult}
         api={"/PlaneTickets/GetAllFilter"}
