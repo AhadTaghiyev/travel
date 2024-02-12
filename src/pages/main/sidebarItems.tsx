@@ -384,7 +384,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaServicestack,
         text: "Xidmətlər",
-        link: "/panel/serviceManagers",
+        link: "/panel/services",
       },
       {
         icon: FaServicestack,

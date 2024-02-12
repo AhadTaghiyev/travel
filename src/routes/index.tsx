@@ -50,10 +50,10 @@ import UpdateMeal from "../pages/main/settings/meal/update";
 import Tour from "../pages/main/settings/tour";
 import NewTour from "../pages/main/settings/tour/create";
 import UpdateTour from "../pages/main/settings/tour/update";
-//ServiceManager
-import ServiceManager from "../pages/main/settings/serviceManager";
-import NewServiceManager from "../pages/main/settings/serviceManager/newServiceManager";
-import UpdateServiceManager from "../pages/main/settings/serviceManager/updateServiceManager";
+//Services
+import Service from "../pages/main/settings/service";
+import NewService from "../pages/main/settings/service/create";
+import UpdateService from "../pages/main/settings/service/update";
 
 // Report
 import Report from "../pages/main/report";
@@ -670,16 +670,16 @@ const router = createBrowserRouter([
       // Service Managers
       //=================
       {
-        path: "/panel/serviceManagers",
-        element: <ServiceManager />,
+        path: "/panel/services",
+        element: <Service />,
       },
       {
-        path: "/panel/serviceManagers/new",
-        element: <NewServiceManager />,
+        path: "/panel/services/new",
+        element: <NewService />,
       },
       {
-        path: "/panel/serviceManagers/update/:id",
-        element: <UpdateServiceManager />,
+        path: "/panel/services/update/:id",
+        element: <UpdateService />,
       },
 
       //=================
