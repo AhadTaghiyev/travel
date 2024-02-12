@@ -42,10 +42,10 @@ import UpdatePayment from "../pages/main/settings/payment/update";
 import Transfer from "../pages/main/settings/transfer";
 import NewTranfser from "../pages/main/settings/transfer/create";
 import UpdateTransfer from "../pages/main/settings/transfer/update";
-//Dining
-import Dining from "../pages/main/settings/dining";
-import NewDining from "../pages/main/settings/dining/newDining";
-import UpdateDining from "../pages/main/settings/dining/updateDining";
+// Meal
+import Meal from "../pages/main/settings/meal";
+import NewMeal from "../pages/main/settings/meal/create";
+import UpdateMeal from "../pages/main/settings/meal/update";
 //Tour
 import Tour from "../pages/main/settings/tour";
 import NewTour from "../pages/main/settings/tour/newTour";
@@ -640,16 +640,16 @@ const router = createBrowserRouter([
       // Dinings
       //================
       {
-        path: "/panel/dinings",
-        element: <Dining />,
+        path: "/panel/meals",
+        element: <Meal />,
       },
       {
-        path: "/panel/dinings/new",
-        element: <NewDining />,
+        path: "/panel/meals/new",
+        element: <NewMeal />,
       },
       {
-        path: "/panel/dinings/update/:id",
-        element: <UpdateDining />,
+        path: "/panel/meals/update/:id",
+        element: <UpdateMeal />,
       },
       //=================
       // Tours

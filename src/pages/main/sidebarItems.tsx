@@ -368,13 +368,13 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaExchangeAlt,
-        text: "Tranferlər",
+        text: "Transferlər",
         link: "/panel/transfers",
       },
       {
         icon: IoFastFood,
         text: "Qidalanma",
-        link: "/panel/dinings",
+        link: "/panel/meals",
       },
       {
         icon: FaTrailer,
