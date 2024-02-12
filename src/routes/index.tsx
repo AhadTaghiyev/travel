@@ -48,8 +48,8 @@ import NewMeal from "../pages/main/settings/meal/create";
 import UpdateMeal from "../pages/main/settings/meal/update";
 //Tour
 import Tour from "../pages/main/settings/tour";
-import NewTour from "../pages/main/settings/tour/newTour";
-import UpdateTour from "../pages/main/settings/tour/updateTour";
+import NewTour from "../pages/main/settings/tour/create";
+import UpdateTour from "../pages/main/settings/tour/update";
 //ServiceManager
 import ServiceManager from "../pages/main/settings/serviceManager";
 import NewServiceManager from "../pages/main/settings/serviceManager/newServiceManager";
