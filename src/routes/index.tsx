@@ -161,9 +161,9 @@ import CustomerDeposits from "../pages/main/customerDeposits";
 import TotalStatus from "../pages/main/totalStatus";
 import PaidSalary from "../pages/main/paidSalary";
 
-import Fee from "../pages/main/settings/fees";
-import NewFee from "../pages/main/settings/fees/newFee";
-import UpdateFee from "../pages/main/settings/fees/updateFee";
+import Fee from "../pages/main/settings/fee";
+import NewFee from "../pages/main/settings/fee/create";
+import UpdateFee from "../pages/main/settings/fee/update";
 
 // SalaryToBePaid
 import SalaryToBePaid from "../pages/main/salaryToBePaid";
@@ -786,15 +786,15 @@ const router = createBrowserRouter([
         element: <PaidSalary />,
       },
       {
-        path: "/panel/fee",
+        path: "/panel/fees",
         element: <Fee />,
       },
       {
-        path: "/panel/fee/new",
+        path: "/panel/fees/new",
         element: <NewFee />,
       },
       {
-        path: "/panel/fee/update/:id",
+        path: "/panel/fees/update/:id",
         element: <UpdateFee />,
       },
       {

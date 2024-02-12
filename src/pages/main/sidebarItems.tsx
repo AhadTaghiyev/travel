@@ -389,7 +389,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaServicestack,
         text: "Xərclər",
-        link: "/panel/fee",
+        link: "/panel/fees",
       },
       {
         icon: FaServicestack,
