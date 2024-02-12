@@ -69,9 +69,10 @@ import UpdateCorperativeTicket from "../pages/main/corperativeTicket/updateTicke
 import ViewCorperativeTicket from "../pages/main/corperativeTicket/viewTicket";
 import ReportCorperativeTicket from "../pages/main/corperativeTicket/report";
 // GetCredits
-import GetCredit from "../pages/main/credit/getCredits";
-import NewGetCredit from "../pages/main/credit/getCredits/newGetCredit";
-import UpdateGetCredit from "../pages/main/credit/getCredits/updateGetCredit";
+import GetCredit from "../pages/main/getCredits";
+import NewGetCredit from "../pages/main/getCredits/create";
+import UpdateGetCredit from "../pages/main/getCredits/update";
+// import ReportGetCredit from "../pages/main/getCredits/report";
 // PaidCredits
 import PaidCredit from "../pages/main/credit/paidCredits";
 import NewPaidCredit from "../pages/main/credit/paidCredits/newPaidCredit";
@@ -461,17 +462,21 @@ const router = createBrowserRouter([
       // GetCredits
       //================
       {
-        path: "/panel/GetCredits",
+        path: "/panel/getCredits",
         element: <GetCredit />,
       },
       {
-        path: "/panel/GetCredits/new",
+        path: "/panel/getCredits/new",
         element: <NewGetCredit />,
       },
       {
-        path: "/panel/GetCredits/update/:id",
+        path: "/panel/getCredits/update/:id",
         element: <UpdateGetCredit />,
       },
+      // {
+      //   path: "/panel/getCredits/report",
+      //   element: <ReportGetCredit />,
+      // },
       // ===============
       // PaidCredits
       //================

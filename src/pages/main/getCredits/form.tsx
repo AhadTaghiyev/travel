@@ -2,20 +2,19 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { AdvancePaymentsSchema } from "./schema";
-import { IDepositModel } from "./types";
+import { GetCreditSchema } from "./schema";
+import { IGetCreditModel } from "./types";
 
-import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
-import CustomTextField from "@/components/custom/input";
 import CustomDateTimePicker from "@/components/custom/datePicker";
+import CustomTextField from "@/components/custom/input";
 
 type FormType = "Edit" | "Create" | "View";
 
 interface IMassIncomeFormProps {
   formType: FormType;
-  initialValues: IDepositModel;
+  initialValues: IGetCreditModel;
   onSubmit: (
-    values: IDepositModel,
+    values: IGetCreditModel,
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
@@ -33,7 +32,7 @@ const MassIncomeForm = ({
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={AdvancePaymentsSchema}
+      validationSchema={GetCreditSchema}
     >
       {({
         values,
@@ -46,51 +45,37 @@ const MassIncomeForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            <div className="w-full">
-              <CustomAutocompleteSelect
-                disabled={isView}
-                api="Payments/GetAll/1"
-                label={t("Ödəniş növü")}
-                value={values.paymentId ?? null}
-                optionLabel="type"
-                change={(value) => setFieldValue("paymentId", value ?? null)}
-                hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
-                errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Ödənilən məbləğ")}
-                value={values.paidAmount}
-                change={handleChange}
-                type="number"
-                name={`paidAmount`}
-                hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
-                errorMessages={[t(errors.paidAmount?.toString())]}
-              />
-            </div>
             <div className="w-full h-full">
               <CustomDateTimePicker
-                disabled={isView}
                 label={t("date")}
                 value={values.date}
                 change={(data) => {
                   setFieldValue("date", data ?? new Date());
                 }}
+                disabled={isView}
                 hasErrorMessages={!!errors.date && !!touched.date}
                 errorMessages={[t(errors.date?.toString())]}
               />
             </div>
             <div className="w-full">
               <CustomTextField
-                disabled={isView}
-                name="description"
-                type="text"
-                label={t("Description")}
-                value={values.description}
+                label={t("Haradan")}
+                value={values.from}
                 change={handleChange}
-                hasErrorMessages={!!errors.description && !!touched.description}
-                errorMessages={[t(errors.description?.toString())]}
+                name={`from`}
+                hasErrorMessages={!!errors.from && !!touched.from}
+                errorMessages={[t(errors.from?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Məbləğ")}
+                value={values.amount}
+                change={handleChange}
+                type="number"
+                name={`amount`}
+                hasErrorMessages={!!errors.amount && !!touched.amount}
+                errorMessages={[t(errors.amount?.toString())]}
               />
             </div>
           </div>
