@@ -36,7 +36,7 @@ export const CreateSupplierModal = () => {
       .post(`/Suppliers/Create`, values)
       .then((response) => {
         if (response.status === 200) {
-          toast.success(t("Supplier Created"));
+          toast.success(t("Supplier Created")); // Hola
 
           setModalSuccess();
         } else {

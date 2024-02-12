@@ -15,9 +15,6 @@ import Auth from "../pages/authentication";
 import ChangePassword from "../pages/authentication/changePassword";
 import Unauth from "../Unauth";
 
-import Supplier from "../pages/main/settings/supplier";
-import NewSupplier from "../pages/main/settings/supplier/newSupplier";
-import UpdateSupplier from "../pages/main/settings/supplier/updateSupplier";
 import Personal from "../pages/main/settings/personal";
 import NewPersonal from "../pages/main/settings/personal/newPersonal";
 import Payment from "../pages/main/settings/payment";
@@ -31,6 +28,11 @@ import ReportAviaticket from "../pages/main/aviabiletSale/report";
 import Customers from "../pages/main/settings/customer";
 import NewCustomer from "../pages/main/settings/customer/create";
 import UpdateCustomer from "../pages/main/settings/customer/update";
+
+// Suppliers
+import Supplier from "../pages/main/settings/supplier";
+import NewSupplier from "../pages/main/settings/supplier/create";
+import UpdateSupplier from "../pages/main/settings/supplier/update";
 
 //Transfer
 import Transfer from "../pages/main/settings/transfer";

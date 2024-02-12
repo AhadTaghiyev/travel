@@ -2,23 +2,23 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { CustomerSchema } from "./schema";
-import { ICustomerModel } from "./types";
+import { SupplierSchema } from "./schema";
+import { ISupplierModel } from "./types";
 
 import CustomTextField from "@/components/custom/input";
 
 type FormType = "Edit" | "Create" | "View";
 
-interface ICustomerProps {
+interface ISupplierProps {
   formType: FormType;
-  initialValues: ICustomerModel;
+  initialValues: ISupplierModel;
   onSubmit: (
-    values: ICustomerModel,
+    values: ISupplierModel,
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
 
-const Customer = ({ initialValues, onSubmit }: ICustomerProps) => {
+const Supplier = ({ initialValues, onSubmit }: ISupplierProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Customer = ({ initialValues, onSubmit }: ICustomerProps) => {
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={CustomerSchema}
+      validationSchema={SupplierSchema}
     >
       {({
         values,
@@ -40,33 +40,12 @@ const Customer = ({ initialValues, onSubmit }: ICustomerProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full">
               <CustomTextField
-                label={t("Ad Soyad")}
-                value={values.fullName}
+                label={t("Ad")}
+                value={values.name}
                 change={handleChange}
-                name={`fullName`}
-                hasErrorMessages={!!errors.fullName && !!touched.fullName}
-                errorMessages={[t(errors.fullName?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Email")}
-                value={values.email}
-                change={handleChange}
-                name={`email`}
-                hasErrorMessages={!!errors.email && !!touched.email}
-                errorMessages={[t(errors.email?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Telefon")}
-                value={values.phoneNumber}
-                change={handleChange}
-                type="number"
-                name={`phoneNumber`}
-                hasErrorMessages={!!errors.phoneNumber && !!touched.phoneNumber}
-                errorMessages={[t(errors.phoneNumber?.toString())]}
+                name={`name`}
+                hasErrorMessages={!!errors.name && !!touched.name}
+                errorMessages={[t(errors.name?.toString())]}
               />
             </div>
           </div>
@@ -75,7 +54,7 @@ const Customer = ({ initialValues, onSubmit }: ICustomerProps) => {
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/customers")}
+              onClick={() => navigate("/panel/suppliers")}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}
@@ -94,4 +73,4 @@ const Customer = ({ initialValues, onSubmit }: ICustomerProps) => {
   );
 };
 
-export default Customer;
+export default Supplier;
