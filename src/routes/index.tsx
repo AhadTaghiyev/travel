@@ -72,11 +72,12 @@ import ReportCorperativeTicket from "../pages/main/corperativeTicket/report";
 import GetCredit from "../pages/main/getCredits";
 import NewGetCredit from "../pages/main/getCredits/create";
 import UpdateGetCredit from "../pages/main/getCredits/update";
-// import ReportGetCredit from "../pages/main/getCredits/report";
+
 // PaidCredits
-import PaidCredit from "../pages/main/credit/paidCredits";
-import NewPaidCredit from "../pages/main/credit/paidCredits/newPaidCredit";
-import UpdatePaidCredit from "../pages/main/credit/paidCredits/updatePaidCredit";
+import PaidCredit from "../pages/main/paidCredits";
+import NewPaidCredit from "../pages/main/paidCredits/create";
+import UpdatePaidCredit from "../pages/main/paidCredits/update";
+
 //Tur Paketleri
 import TourPackage from "../pages/main/tourPackage";
 import NewTourPackage from "../pages/main/tourPackage/newTourPackage";

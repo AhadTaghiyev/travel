@@ -53,6 +53,7 @@ export default function Index({
   hasEditBtn = true,
   hasDeleteBtn = true,
   detailLink,
+  onCreateClick,
   current = null,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
@@ -207,11 +208,22 @@ export default function Index({
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
       <Grid item md={2}>
-        <Link to={`${root}/new`}>
-          <Button variant="contained" color="primary" sx={headerStyle}>
+        {onCreateClick ? (
+          <Button
+            onClick={onCreateClick}
+            variant="contained"
+            color="primary"
+            sx={headerStyle}
+          >
             + {t(buttonText)} {t("YARAT")}
           </Button>
-        </Link>
+        ) : (
+          <Link to={`${root}/new`}>
+            <Button variant="contained" color="primary" sx={headerStyle}>
+              + {t(buttonText)} {t("YARAT")}
+            </Button>
+          </Link>
+        )}
       </Grid>
       <Grid item md={2} style={{ justifyContent: "center" }}>
         <Paper
