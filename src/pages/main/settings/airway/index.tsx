@@ -1,17 +1,18 @@
-import Container from '@mui/material/Container';
-import Table from '../../../../components/pages/table';
-import { columns } from './tableColumns';
+import Container from "@mui/material/Container";
+import Table from "../../../../components/pages/table";
+import { columns } from "./tableColumns";
 
 export default function Index() {
-
-
-
   return (
     <Container maxWidth="xl">
-      <>
-      
-        <Table columns={columns} api={'/airways/GetAll'} root={'/panel/airways'} deleteApi='/AirWays/delete' buttonText='Hava yolu'/>
-      </>
+      <Table
+        hideReport
+        columns={columns}
+        api={"/Airways/GetAll"}
+        buttonText="Hava yolu" // Hola lər
+        deleteApi="/Airways/Delete"
+        root="/panel/airways"
+      />
     </Container>
   );
 }

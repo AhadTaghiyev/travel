@@ -135,7 +135,7 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: PiHandshake,
-        text: "İnsan resursları",
+        text: "İşçilər", // Hola
         link: "/panel/employees",
       },
       {

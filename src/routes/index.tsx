@@ -63,8 +63,8 @@ import CompanyUpdate from "../pages/admin/company/updateCompany";
 
 //Airway
 import Airway from "../pages/main/settings/airway";
-import NewAirway from "../pages/main/settings/airway/newAirway";
-import UpdateAirway from "../pages/main/settings/airway/updateAirway";
+import NewAirway from "../pages/main/settings/airway/create";
+import UpdateAirway from "../pages/main/settings/airway/update";
 
 //Korperativ bilet
 import CorperativeTicket from "../pages/main/corperativeTicket";
@@ -110,8 +110,8 @@ import ReportOtherService from "../pages/main/otherServices/report";
 
 // Employees
 import Employee from "../pages/main/employee";
-import NewEmployee from "../pages/main/employee/newEmployee";
-import UpdateEmployee from "../pages/main/employee/updateEmployee";
+import NewEmployee from "../pages/main/employee/create";
+import UpdateEmployee from "../pages/main/employee/update";
 // Deposits
 import Deposit from "../pages/main/deposit";
 import NewDeposit from "../pages/main/deposit/newDeposit";
