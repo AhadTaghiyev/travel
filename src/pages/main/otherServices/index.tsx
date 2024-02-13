@@ -18,7 +18,7 @@ export default function Index() {
         api={"/OtherServices/GetAllFilter"}
         buttonText="Digər Xidmət"
         deleteApi="/OtherServices/Delete"
-        root="/panel/otherServices"
+        root="/panel/otherService"
       />
     </Container>
   );

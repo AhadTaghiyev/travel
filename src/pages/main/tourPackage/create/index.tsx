@@ -54,7 +54,7 @@ const NewTicket = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("TourPackage created"));
-            navigate(`/panel/tourPackages/report?tickets=${response.data}`);
+            navigate(`/panel/tourPackage/report?tickets=${response.data}`);
           } else {
             toast.error(response.message);
           }

@@ -295,28 +295,28 @@ const router = createBrowserRouter([
       // CorperativeTicket
       //================
       {
-        path: "/panel/corperativeTicket",
+        path: "/panel/cooperativeTicket",
         element: <CorperativeTicket />,
       },
       {
-        path: "/panel/corperativeTicket/new",
+        path: "/panel/cooperativeTicket/new",
         element: <NewCorperativeTicket />,
       },
       {
-        path: "/panel/corperativeTicket/new/reciept/:id",
+        path: "/panel/cooperativeTicket/new/reciept/:id",
         element: <RecieptCoorperative />,
       },
 
       {
-        path: "/panel/corperativeTicket/update/:id",
+        path: "/panel/cooperativeTicket/update/:id",
         element: <UpdateCorperativeTicket />,
       },
       {
-        path: "/panel/corperativeTicket/view/:id",
+        path: "/panel/cooperativeTicket/view/:id",
         element: <ViewCorperativeTicket />,
       },
       {
-        path: "/panel/corperativeTicket/report",
+        path: "/panel/cooperativeTicket/report",
         element: <ReportCorperativeTicket />,
       },
       {
@@ -328,40 +328,40 @@ const router = createBrowserRouter([
       // TourPackage
       //================
       {
-        path: "/panel/tourPackages",
+        path: "/panel/tourPackage",
         element: <TourPackage />,
       },
       {
-        path: "/panel/tourPackages/new",
+        path: "/panel/tourPackage/new",
         element: <NewTourPackage />,
       },
 
       {
-        path: "/panel/tourPackages/update/:id",
+        path: "/panel/tourPackage/update/:id",
         element: <UpdateTourPackage />,
       },
       {
-        path: "/panel/tourPackages/view/:id",
+        path: "/panel/tourPackage/view/:id",
         element: <ViewTourPackage />,
       },
       {
-        path: "/panel/individualTourPackages",
+        path: "/panel/individualTourPackage",
         element: <IndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackages/new",
+        path: "/panel/individualTourPackage/new",
         element: <NewIndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackages/update/:id",
+        path: "/panel/individualTourPackage/update/:id",
         element: <UpdateIndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackages/view/:id",
+        path: "/panel/individualTourPackage/view/:id",
         element: <ViewIndividualTourPackage />,
       },
       {
-        path: "/panel/individualTourPackages/report",
+        path: "/panel/individualTourPackage/report",
 
         element: <ReportIndividualTourPackage />,
       },
@@ -371,7 +371,7 @@ const router = createBrowserRouter([
         element: <NewAviaticket />,
       },
       {
-        path: "/panel/tourPackages/new/reciept/:id",
+        path: "/panel/tourPackage/new/reciept/:id",
         element: <RecieptTour />,
       },
       {
@@ -379,7 +379,7 @@ const router = createBrowserRouter([
         element: <UpdateAviaticket />,
       },
       {
-        path: "/panel/tourPackages/report",
+        path: "/panel/tourPackage/report",
         element: <TourReport />,
       },
 
@@ -408,24 +408,24 @@ const router = createBrowserRouter([
       // Other services
       //================
       {
-        path: "/panel/otherServices",
+        path: "/panel/otherService",
         element: <OtherServices />,
       },
       {
-        path: "/panel/otherServices/new",
+        path: "/panel/otherService/new",
         element: <NewOtherService />,
       },
 
       {
-        path: "/panel/otherServices/update/:id",
+        path: "/panel/otherService/update/:id",
         element: <UpdateOtherService />,
       },
       {
-        path: "/panel/otherServices/report",
+        path: "/panel/otherService/report",
         element: <ReportOtherService />,
       },
       {
-        path: "/panel/otherServices/view/:id",
+        path: "/panel/otherService/view/:id",
         element: <ViewOtherService />,
       },
       // ===============
@@ -451,7 +451,7 @@ const router = createBrowserRouter([
       // TourPackage
       //================
       {
-        path: "/panel/otherServices",
+        path: "/panel/otherService",
         element: <OtherServices />,
       },
       // ===============
@@ -557,19 +557,19 @@ const router = createBrowserRouter([
       // Deposits
       //================
       {
-        path: "/panel/deposits",
+        path: "/panel/deposit",
         element: <Deposit />,
       },
       {
-        path: "/panel/deposits/new",
+        path: "/panel/deposit/new",
         element: <NewDeposit />,
       },
       {
-        path: "/panel/deposits/update/:id",
+        path: "/panel/deposit/update/:id",
         element: <UpdateDeposit />,
       },
       {
-        path: "/panel/deposits/report",
+        path: "/panel/deposit/report",
         element: <DetailDeposit />,
       },
 

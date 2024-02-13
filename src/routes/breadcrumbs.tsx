@@ -59,13 +59,13 @@ export const updatePlaneTicketBreadCrumb = (
 //=====================
 
 export const CoorperativeTicketBreadCrumb = (
-  <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
+  <Link key="1" to="/panel/cooperativeTicket" className="pageLink link">
     Korporativ bilet satışı
   </Link>
 );
 
 export const newCoorperativeTicketBreadCrumb = (
-  <Link key="1" to="/panel/corperativeTicket" className="pageLink link">
+  <Link key="1" to="/panel/cooperativeTicket" className="pageLink link">
     Yeni Korporativ bilet
   </Link>
 );
@@ -73,7 +73,7 @@ export const newCoorperativeTicketBreadCrumb = (
 export const updateCoorperativeTicketBreadCrumb = (
   <Link
     key="1"
-    to="/panel/corperativeTicket/update"
+    to="/panel/cooperativeTicket/update"
     className="currentPageLink link"
   >
     Korporativ biletə düzəliş et
@@ -85,23 +85,19 @@ export const updateCoorperativeTicketBreadCrumb = (
 //=====================
 
 export const TourPackageBreadCrumb = (
-  <Link key="1" to="/panel/tourPackages" className="pageLink link">
+  <Link key="1" to="/panel/tourPackage" className="pageLink link">
     Tur Paket satışı
   </Link>
 );
 
 export const newTourPackageBreadCrumb = (
-  <Link key="1" to="/panel/tourPackages" className="pageLink link">
+  <Link key="1" to="/panel/tourPackage" className="pageLink link">
     Yeni Tur Paketi
   </Link>
 );
 
 export const updateTourPackageBreadCrumb = (
-  <Link
-    key="1"
-    to="/panel/tourPackages/update"
-    className="currentPageLink link"
-  >
+  <Link key="1" to="/panel/tourPackage/update" className="currentPageLink link">
     Tur Paketə düzəliş et
   </Link>
 );
@@ -159,13 +155,13 @@ export const updateMassIncomeBreadCrumb = (
 //=====================
 
 export const OtherServicesBreadCrumb = (
-  <Link key="1" to="/panel/otherservices" className="pageLink link">
+  <Link key="1" to="/panel/otherService" className="pageLink link">
     Digər Xidmətlər
   </Link>
 );
 
 export const newOtherServicesBreadCrumb = (
-  <Link key="1" to="/panel/otherservices" className="currentPageLink link">
+  <Link key="1" to="/panel/otherService" className="currentPageLink link">
     Yeni xidmət
   </Link>
 );
@@ -173,7 +169,7 @@ export const newOtherServicesBreadCrumb = (
 export const updateOtherServicesBreadCrumb = (
   <Link
     key="1"
-    to="/panel/otherservices/update"
+    to="/panel/otherService/update"
     className="currentPageLink link"
   >
     Xidmətə düzəliş et

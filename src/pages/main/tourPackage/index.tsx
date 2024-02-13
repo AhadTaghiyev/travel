@@ -17,7 +17,7 @@ export default function Index() {
         columns={columns}
         api={"/TourPackages/GetAllFilter"}
         deleteApi="/TourPackages/Delete"
-        root="/panel/tourPackages"
+        root="/panel/tourPackage"
         buttonText="Tur paket"
       />
     </Container>

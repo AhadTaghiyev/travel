@@ -51,22 +51,22 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: BsTicketDetailed,
         text: "Korperativ satış",
-        link: "/panel/corperativeTicket",
+        link: "/panel/cooperativeTicket",
       },
       {
         icon: HiOutlineTicket,
         text: "Tur paket satışı",
-        link: "/panel/tourPackages",
+        link: "/panel/tourPackage",
       },
       {
         icon: BsTicket,
         text: "İndividual tur satışı",
-        link: "/panel/individualTourPackages",
+        link: "/panel/individualTourPackage",
       },
       {
         icon: HiOutlineDotsCircleHorizontal,
         text: "Digər xidmətlər",
-        link: "/panel/otherServices",
+        link: "/panel/otherService",
       },
     ],
   },
@@ -83,7 +83,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaServicestack,
         text: "Müştəri",
-        link: "/panel/deposits",
+        link: "/panel/deposit",
       },
       {
         icon: FaServicestack,
@@ -207,7 +207,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: BsCalculator,
         text: "Individual tur paket hesabat",
-        link: "/panel/reports/individualTourPackages",
+        link: "/panel/reports/individualTourPackage",
       },
       {
         icon: BsCalculator,
@@ -226,12 +226,12 @@ export const sidebarItems: SidebarItemType[] = [
       //             {
       //                 icon: BsTicketDetailed,
       //                 text: 'Korperativ satış',
-      //                 link: '/panel/corperativeTicket'
+      //                 link: '/panel/cooperativeTicket'
       //             },
       //             {
       //                 icon: HiOutlineTicket,
       //                 text: 'Tur paket satışı',
-      //                 link: '/panel/tourPackages'
+      //                 link: '/panel/tourPackage'
       //             },
       //             {
       //                 icon: BsTicket,
@@ -241,7 +241,7 @@ export const sidebarItems: SidebarItemType[] = [
       //             {
       //                 icon: HiOutlineDotsCircleHorizontal,
       //                 text: 'Digər xidmətlər',
-      //                 link: '/panel/otherServices'
+      //                 link: '/panel/otherService'
       //             },
       //         ]
       // },

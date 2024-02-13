@@ -18,7 +18,7 @@ export default function Index() {
         api={"/CorporateTickets/GetAllFilter"}
         buttonText="Corporative Ticket"
         deleteApi="/CorporateTickets/Delete"
-        root="/panel/corperativeTicket"
+        root="/panel/cooperativeTicket"
       />
     </Container>
   );

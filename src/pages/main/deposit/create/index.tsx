@@ -20,10 +20,10 @@ const NewDeposit = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Depozit yaradıldı"));
-            navigate(`/panel/deposits`);
+            navigate(`/panel/deposit`);
             // TODO: Navigate to report page
             // navigate(
-            //   `/panel/IndividualTourPackages/report?tickets=${response.data}`
+            //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
             // );
           } else {
             toast.error(response.message || t("Something went wrong"));

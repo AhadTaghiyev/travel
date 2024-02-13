@@ -23,7 +23,7 @@ const NewDeposit = () => {
             navigate(`/panel/bonus`);
             // TODO: Navigate to report page
             // navigate(
-            //   `/panel/IndividualTourPackages/report?tickets=${response.data}`
+            //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
             // );
           } else {
             toast.error(response.message || t("Something went wrong"));

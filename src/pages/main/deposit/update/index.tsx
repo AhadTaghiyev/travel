@@ -48,7 +48,7 @@ const UpdateDeposit = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Deposit updated"));
-            navigate("/panel/deposits");
+            navigate("/panel/deposit");
           } else {
             toast.error(response.message);
           }

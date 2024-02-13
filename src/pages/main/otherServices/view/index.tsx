@@ -30,7 +30,7 @@ const ViewTicket = () => {
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/otherServices");
+        navigate("/panel/otherService");
       }, 1000);
     }
   }

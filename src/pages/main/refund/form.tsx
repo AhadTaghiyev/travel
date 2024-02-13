@@ -1,28 +1,29 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputLabel } from "@mui/material";
+import { FaLink } from "react-icons/fa6";
 import { TFunction } from "i18next";
+import { useState } from "react";
 
 import { RefundSchema, RefundEditSchema } from "./schema";
 import { IRefundModel } from "./types";
 import { textStyling } from "@/styles";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomDateTimePicker from "@/components/custom/datePicker";
+import CustomMultiSelect from "@/components/custom/multiSelect";
 import CustomTextField from "@/components/custom/input";
 import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
-import CustomMultiSelect from "@/components/custom/multiSelect";
-import { useState } from "react";
-import CustomDateTimePicker from "@/components/custom/datePicker";
 
 const getTypeOptions = (t: TFunction<"translation", undefined>) => [
-  { label: t("Aviabilet"), value: "planeTicket" },
+  { label: t("Aviabilet"), value: "aviabiletSale" },
   { label: t("Corporative Ticket"), value: "cooperativeTicket" },
-  { label: t("Individual Tur paket"), value: "individualTour" },
   { label: t("Tur paket"), value: "tourPackage" },
+  { label: t("Individual Tur paket"), value: "individualTourPackage" },
+  { label: t("Digər xidmətlər"), value: "otherService" },
   { label: t("Depozit"), value: "deposit" }, // Hola
-  { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
 ];
 
 type IItem = {
@@ -128,7 +129,7 @@ const RefundForm = ({
             )}
             {!isEdit && !!values.type && !!values.customerId && (
               <div
-                className="w-full"
+                className="w-full flex items-center gap-x-1"
                 key={`ticket-${values.type}-${values.customerId}`}
               >
                 <CustomMultiSelect
@@ -155,6 +156,21 @@ const RefundForm = ({
                   closeMenuOnSelect={false}
                   optionLabel="no"
                 />
+                {(values.invoiceId || values.advancePaymentId) && (
+                  <Link
+                    to={`/panel/${values.type}/report?tickets=${
+                      values.invoiceId?.value || values.advancePaymentId.value
+                    }`}
+                    className="h-full py-3 px-2.5 rounded-lg mt-1 hover:opacity-80"
+                    style={{
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                    }}
+                    target="_blank"
+                  >
+                    <FaLink className="text-blue-600" />
+                  </Link>
+                )}
               </div>
             )}
             {(values.invoiceId || values.advancePaymentId) && (

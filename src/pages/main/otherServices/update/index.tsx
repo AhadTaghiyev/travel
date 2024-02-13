@@ -29,7 +29,7 @@ const UpdateTicket = () => {
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/otherServices");
+        navigate("/panel/otherService");
       }, 1000);
     }
   }
@@ -43,7 +43,7 @@ const UpdateTicket = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Other Service updated"));
-            navigate("/panel/otherServices");
+            navigate("/panel/otherService");
           } else {
             toast.error(response.message);
           }

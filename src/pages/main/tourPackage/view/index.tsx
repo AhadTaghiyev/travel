@@ -30,7 +30,7 @@ const UpdateTicket = () => {
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/tourPackages");
+        navigate("/panel/tourPackage");
       }, 1000);
     }
   }

@@ -94,7 +94,7 @@ const CustomMultiSelect: React.FC<IProps> = ({
   }, [refetech]);
 
   return (
-    <Popover>
+    <Popover className="w-full">
       {(isOpen) => (
         <>
           <InputLabel sx={{ mb: 1 }} style={textStyling}>

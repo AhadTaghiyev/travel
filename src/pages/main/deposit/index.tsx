@@ -10,7 +10,7 @@ export default function Index() {
         api={"/AdvancePayments/GetAll"}
         buttonText="Deposit"
         deleteApi="/AdvancePayments/Delete"
-        root="/panel/deposits"
+        root="/panel/deposit"
       />
     </Container>
   );

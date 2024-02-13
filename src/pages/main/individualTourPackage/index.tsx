@@ -17,7 +17,7 @@ export default function Index() {
         exportLink="individualTourPackages/Export/Export"
         api={"/IndividualTourPackages/GetAllFilter"}
         deleteApi="/IndividualTourPackages/Delete"
-        root="/panel/individualTourPackages"
+        root="/panel/individualTourPackage"
         buttonText="Individual Tur paket"
       />
     </Container>

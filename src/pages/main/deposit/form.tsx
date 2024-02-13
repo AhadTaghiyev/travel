@@ -129,7 +129,7 @@ const MassIncomeForm = ({
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/deposits")}
+              onClick={() => navigate("/panel/deposit")}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}
