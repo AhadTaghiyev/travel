@@ -1,26 +1,27 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputLabel } from "@mui/material";
 import { TFunction } from "i18next";
+import { useState } from "react";
 
 import { MassIncomeEditSchema, MassIncomeSchema } from "./schema";
 import { IIncomeModel } from "./types";
 import { textStyling } from "@/styles";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomMultiSelect from "@/components/custom/multiSelect";
 import CustomTextField from "@/components/custom/input";
 import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
-import CustomMultiSelect from "@/components/custom/multiSelect";
-import { useState } from "react";
+import { FaLink } from "react-icons/fa6";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
-  { label: t("Aviabilet"), value: "planeTicket" },
+  { label: t("Aviabilet"), value: "aviabiletSale" },
   { label: t("Corporative Ticket"), value: "cooperativeTicket" },
-  { label: t("Individual Tur paket"), value: "individualTour" },
+  { label: t("Individual Tur paket"), value: "individualTourPackage" },
   { label: t("Tur paket"), value: "tourPackage" },
-  { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
+  { label: t("Digər xidmətlər"), value: "otherService" },
 ];
 
 type InvoiceItem = {
@@ -200,23 +201,42 @@ const MassIncomeForm = ({
               </>
             )}
           </div>
-
-          <div className="w-full flex gap-x-6 justify-end mb-6">
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() => navigate("/panel/income")}
-              className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("goBack")}
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("confirm")}
-            </button>
+          <div className="w-full flex  gap-x-6 gap-y-3 justify-between mb-6">
+            <div className="flex gap-2 flex-wrap">
+              {values.ticketType &&
+                values.invoiceIds?.map((invoice) => (
+                  <Link
+                    to={`/panel/${values.ticketType}/report?tickets=${invoice.value}`}
+                    key={invoice.value}
+                    className=" py-2 px-2.5 rounded-lg  hover:border-blue-600 border border-solid border-blue-400 flex items-center gap-x-2"
+                    style={{
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                    }}
+                    target="_blank"
+                  >
+                    <FaLink className="text-blue-600" />
+                    {invoice.label.split("~")[0]}
+                  </Link>
+                ))}
+            </div>
+            <div className="min-w-60">
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={() => navigate("/panel/income")}
+                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("goBack")}
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("confirm")}
+              </button>
+            </div>
           </div>
         </form>
       )}
