@@ -139,9 +139,9 @@ import UpdateAgreement from "../pages/main/agreement/updateAgreement";
 
 //willBePaid
 import WillBePaid from "../pages/main/willBePaid";
-import NewWillBePaid from "../pages/main/willBePaid/newWillBePaid";
-import UpdateWillBePaid from "../pages/main/willBePaid/updateWillBePaid";
-import DetailWillBePaid from "../pages/main/willBePaid/detail";
+import NewWillBePaid from "../pages/main/willBePaid/create";
+import UpdateWillBePaid from "../pages/main/willBePaid/update";
+import DetailWillBePaid from "../pages/main/willBePaid/report";
 
 //documents
 import DocumentCreate from "../pages/main/document/sendDocument";

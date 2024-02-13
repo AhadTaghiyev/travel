@@ -7,6 +7,7 @@ import { IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ITableObject } from "./types";
+import { toast } from "sonner";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -28,7 +29,14 @@ import { useTranslation } from "react-i18next";
 import { SERVER_BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
 import CustomDateTimePicker from "@/components/custom/datePicker";
-import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { isNil } from "lodash";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -54,8 +62,8 @@ export default function Index({
   buttonText,
   exportLink,
   detailLink,
+  filterOptions,
   onCreateClick,
-  current = null,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({
@@ -69,7 +77,7 @@ export default function Index({
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
-
+  const [filter, setFilter] = useState<string>("");
   const [open, setOpen] = useState(false);
   const idToDelete = useRef("");
 
@@ -184,7 +192,7 @@ export default function Index({
         const response = await apiService.get(
           `${api}/${
             paginationModel.page + 1
-          }?starDate=${startDate}&endDate=${endDate}&search=${search}&query=${current}`
+          }?starDate=${startDate}&endDate=${endDate}&search=${search}&query=${filter}`
         );
         const formattedData = response?.data?.items.map((item) => {
           const newItem = { ...item };
@@ -206,7 +214,7 @@ export default function Index({
     };
 
     fetchData();
-  }, [paginationModel.page, startDate, endDate, search, current]);
+  }, [paginationModel.page, startDate, endDate, search, filter]);
 
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
@@ -252,6 +260,36 @@ export default function Index({
           </IconButton>
         </Paper>
       </Grid>
+      {filterOptions && (
+        <Grid item md={2} className="items-center">
+          <Select
+            onValueChange={(value) => {
+              setFilter(value);
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={t("Select option")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                value={null}
+                disabled={true}
+                className="hidden last:block"
+              >
+                {isNil(filterOptions) ? t("Loading...") : t("No item found")}
+              </SelectItem>
+              {filterOptions?.map((option) => (
+                <SelectItem
+                  value={String(option.value)}
+                  key={String(option.value)}
+                >
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Grid>
+      )}
       <Grid item md={2} className="min-w-[200px] flex items-center">
         <CustomDateTimePicker
           hideError

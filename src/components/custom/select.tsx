@@ -75,9 +75,11 @@ export default function CustomAutocomplete({
 
   return (
     <>
-      <InputLabel sx={{ mb: 1 }} style={textStyling}>
-        {label}
-      </InputLabel>
+      {label && (
+        <InputLabel sx={{ mb: 1 }} style={textStyling}>
+          {label}
+        </InputLabel>
+      )}
       <Select
         disabled={disabled}
         onValueChange={change}
