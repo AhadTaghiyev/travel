@@ -36,6 +36,8 @@ const UpdateIncome = () => {
 
   const onSubmit = useCallback(
     (values: IRefundModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      console.log(values, setSubmitting);
+
       // const params = {
       //   id,
       //   paymentId: values.paymentId,

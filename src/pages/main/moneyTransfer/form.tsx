@@ -6,7 +6,6 @@ import { TransferSchema } from "./schema";
 import { ITransferModel } from "./types";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
-import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 
