@@ -192,7 +192,7 @@ export default function Index({
         const response = await apiService.get(
           `${api}/${
             paginationModel.page + 1
-          }?starDate=${startDate}&endDate=${endDate}&search=${search}&query=${filter}`
+          }?starDate=${startDate}&endDate=${endDate}&search=${search}&type=${filter}`
         );
         const formattedData = response?.data?.items.map((item) => {
           const newItem = { ...item };

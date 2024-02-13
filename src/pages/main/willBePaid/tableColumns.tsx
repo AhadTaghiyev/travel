@@ -2,39 +2,33 @@ import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+
   {
-    field: "invoiceNo",
-    headerName: "Məhsul nömrəsi", // Hola
-    flex: 1,
-    headerClassName: "header-item",
-    renderCell: (params) => {
-      return params.row.invoiceNo || params.row.advancePaymentNo;
-    },
-  },
-  {
-    field: "amount",
-    headerName: "Ödənilən məbləğ",
+    field: "debt",
+    headerName: "Ümumi məbləğ",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "paidToCustomer",
-    headerName: "Qaytarılan məbləğ",
+    field: "paidAmount",
+    headerName: "Ödəilən məbləğ",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "forfeit",
-    headerName: "Cərimə",
+    field: "id",
+    headerName: "Qəbz Nömrəsi",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "payment",
-    headerName: "Ödəniş",
+    field: "name",
+    headerName: "Ödənilən Təşkilat",
     flex: 1,
     headerClassName: "header-item",
   },
+ 
+
   {
     field: "date",
     headerName: "Tarix",
