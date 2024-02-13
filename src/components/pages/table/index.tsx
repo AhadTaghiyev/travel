@@ -56,6 +56,7 @@ export default function Index({
   deleteApi,
   root,
   hideEdit,
+  hideCreate,
   hidePrint = true,
   hideReport,
   hideDelete,
@@ -219,24 +220,26 @@ export default function Index({
 
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
-      <Grid item md={2}>
-        {onCreateClick ? (
-          <Button
-            onClick={onCreateClick}
-            variant="contained"
-            color="primary"
-            sx={headerStyle}
-          >
-            + {t(buttonText)} {t("YARAT")}
-          </Button>
-        ) : (
-          <Link to={`${root}/new`}>
-            <Button variant="contained" color="primary" sx={headerStyle}>
+      {!hideCreate && (
+        <Grid item md={2}>
+          {onCreateClick ? (
+            <Button
+              onClick={onCreateClick}
+              variant="contained"
+              color="primary"
+              sx={headerStyle}
+            >
               + {t(buttonText)} {t("YARAT")}
             </Button>
-          </Link>
-        )}
-      </Grid>
+          ) : (
+            <Link to={`${root}/new`}>
+              <Button variant="contained" color="primary" sx={headerStyle}>
+                + {t(buttonText)} {t("YARAT")}
+              </Button>
+            </Link>
+          )}
+        </Grid>
+      )}
       <Grid item md={2} style={{ justifyContent: "center" }}>
         <Paper
           sx={{

@@ -9,6 +9,9 @@ export default function Index() {
     <Container maxWidth="xl">
       <Table
         hideEdit
+        hideReport
+        hideCreate
+        hideDelete
         columns={columns}
         api={"/WillBePaids/GetAll"}
         buttonText="WillBePaid" // Hola
