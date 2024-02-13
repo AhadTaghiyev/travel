@@ -64,6 +64,7 @@ export default function Index({
   detailLink,
   filterOptions,
   onCreateClick,
+  defaultFilterValue,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({
@@ -77,7 +78,7 @@ export default function Index({
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>(defaultFilterValue || "");
   const [open, setOpen] = useState(false);
   const idToDelete = useRef("");
 
@@ -266,6 +267,7 @@ export default function Index({
             onValueChange={(value) => {
               setFilter(value);
             }}
+            defaultValue={defaultFilterValue}
           >
             <SelectTrigger>
               <SelectValue placeholder={t("Select option")} />

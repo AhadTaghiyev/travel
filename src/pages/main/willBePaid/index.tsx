@@ -14,6 +14,7 @@ export default function Index() {
         buttonText="WillBePaid" // Hola
         deleteApi="/WillBePaids/Delete"
         root="/panel/willBePaids"
+        defaultFilterValue="supplier"
         filterOptions={[
           { label: t("supplier"), value: "supplier" },
           { label: t("Kredit"), value: "credit" }, // Hola

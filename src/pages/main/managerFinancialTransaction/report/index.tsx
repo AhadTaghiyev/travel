@@ -49,7 +49,9 @@ export default function index() {
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-    const res = await apiService.get(`/Bonuces/GetDetail/${id}`);
+    const res = await apiService.get(
+      `/ManagerFinancialTransactions/GetDetail/${id}`
+    );
 
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
@@ -136,24 +138,28 @@ export default function index() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>{t("Status")}</TableHead>
                   <TableHead>{t("Ödəniş növü")}</TableHead>
                   <TableHead>{t("paidamount")}</TableHead>
-                  <TableHead>{t("Description")}</TableHead>
+                  <TableHead>{t("Qeyd")}</TableHead>
                   <TableHead>{t("date")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {data && (
                   <TableRow key={data.id}>
+                    <TableCell className="py-1.5">
+                      {data.status === "1" ? "Mədaxil" : "Məxaric"}
+                    </TableCell>
                     <TableCell className="py-1.5">{data.payment}</TableCell>
                     <TableCell className="py-1.5">
                       {(data.amount * currency.value).toFixed(2)}{" "}
                       {currency.name}
                     </TableCell>
                     <TableCell className="py-1.5 max-w-[150px] truncate">
-                      {data.description ?? t("No Description")}
+                      {data.note ?? t("Qeyd Yoxdur")} {/** Hola */}
                     </TableCell>
-                    <TableCell className="py-1.5 max-w-[150px] truncate">
+                    <TableCell className="py-1.5">
                       {formatDate(data.date)}
                     </TableCell>
                   </TableRow>

@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import {
   invoiceDirectionInitialValues,
   planeTicketInitialValues,
-} from "./newTicket";
+} from "./create";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";

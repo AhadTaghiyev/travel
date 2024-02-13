@@ -1,11 +1,7 @@
 import { createBrowserRouter } from "../../node_modules/react-router-dom/dist/index";
 import Main from "../pages/main";
 import Home from "../pages/main/home";
-import AviabiletSale from "../pages/main/aviabiletSale";
-// import AviabiletSaleTable from "../pages/main/aviabiletSale/table";
-import NewAviaticket from "../pages/main/aviabiletSale/newTicket";
-import ViewAviaticket from "../pages/main/aviabiletSale/viewTicket";
-import Reciept from "../pages/main/aviabiletSale/reciept";
+
 import RecieptCoorperative from "../pages/main/corperativeTicket/reciept/index";
 import RecieptTour from "../pages/main/tourPackage/reciept/index";
 import App from "../App";
@@ -15,7 +11,12 @@ import Auth from "../pages/authentication";
 import ChangePassword from "../pages/authentication/changePassword";
 import Unauth from "../Unauth";
 
-import UpdateAviaticket from "../pages/main/aviabiletSale/updateTicket";
+// Aviabilet Sales
+import AviabiletSale from "../pages/main/aviabiletSale";
+import Reciept from "../pages/main/aviabiletSale/reciept";
+import ViewAviaticket from "../pages/main/aviabiletSale/view";
+import NewAviaticket from "../pages/main/aviabiletSale/create";
+import UpdateAviaticket from "../pages/main/aviabiletSale/update";
 import ReportAviaticket from "../pages/main/aviabiletSale/report";
 
 // Customers
@@ -74,9 +75,9 @@ import UpdateAirway from "../pages/main/settings/airway/update";
 
 //Korperativ bilet
 import CorperativeTicket from "../pages/main/corperativeTicket";
-import NewCorperativeTicket from "../pages/main/corperativeTicket/newTicket";
-import UpdateCorperativeTicket from "../pages/main/corperativeTicket/updateTicket";
-import ViewCorperativeTicket from "../pages/main/corperativeTicket/viewTicket";
+import NewCorperativeTicket from "../pages/main/corperativeTicket/create";
+import UpdateCorperativeTicket from "../pages/main/corperativeTicket/update";
+import ViewCorperativeTicket from "../pages/main/corperativeTicket/view";
 import ReportCorperativeTicket from "../pages/main/corperativeTicket/report";
 // GetCredits
 import GetCredit from "../pages/main/getCredits";
@@ -90,14 +91,14 @@ import UpdatePaidCredit from "../pages/main/paidCredits/update";
 
 //Tur Paketleri
 import TourPackage from "../pages/main/tourPackage";
-import NewTourPackage from "../pages/main/tourPackage/newTourPackage";
-import UpdateTourPackage from "../pages/main/tourPackage/updateTourPackage";
-import ViewTourPackage from "../pages/main/tourPackage/viewTourPackage";
+import NewTourPackage from "../pages/main/tourPackage/create";
+import UpdateTourPackage from "../pages/main/tourPackage/update";
+import ViewTourPackage from "../pages/main/tourPackage/view";
 import TourReport from "../pages/main/tourPackage/report";
 
 //Income
 import Income from "../pages/main/income";
-import NewIncome from "../pages/main/income/newIncome";
+import NewIncome from "../pages/main/income/create";
 // import UpdateIncome from "../pages/main/income/updateIncome";
 import InvoiceIncome from "../pages/main/income/report";
 
@@ -109,9 +110,9 @@ import RefundReport from "../pages/main/refund/report";
 
 // Other Services
 import OtherServices from "../pages/main/otherServices";
-import NewOtherService from "../pages/main/otherServices/newOtherService";
-import UpdateOtherService from "../pages/main/otherServices/updateOtherService";
-import ViewOtherService from "../pages/main/otherServices/viewOtherService";
+import NewOtherService from "../pages/main/otherServices/create";
+import UpdateOtherService from "../pages/main/otherServices/update";
+import ViewOtherService from "../pages/main/otherServices/view";
 import ReportOtherService from "../pages/main/otherServices/report";
 
 // Employees
@@ -120,17 +121,15 @@ import NewEmployee from "../pages/main/employee/create";
 import UpdateEmployee from "../pages/main/employee/update";
 // Deposits
 import Deposit from "../pages/main/deposit";
-import NewDeposit from "../pages/main/deposit/newDeposit";
-import UpdateDeposit from "../pages/main/deposit/updateDeposit";
+import NewDeposit from "../pages/main/deposit/create";
+import UpdateDeposit from "../pages/main/deposit/update";
 import DetailDeposit from "../pages/main/deposit/report";
 //Individual Tur Paketleri
 import IndividualTourPackage from "../pages/main/individualTourPackage";
-import NewIndividualTourPackage from "../pages/main/individualTourPackage/newTourPackage";
-import UpdateIndividualTourPackage from "../pages/main/individualTourPackage/updateTourPackage";
-import ViewIndividualTourPackage from "../pages/main/individualTourPackage/viewTourPackage";
+import NewIndividualTourPackage from "../pages/main/individualTourPackage/create";
+import UpdateIndividualTourPackage from "../pages/main/individualTourPackage/update";
+import ViewIndividualTourPackage from "../pages/main/individualTourPackage/view";
 import ReportIndividualTourPackage from "../pages/main/individualTourPackage/report";
-
-//other services
 
 //agreements
 import Agreements from "../pages/main/agreement";
@@ -174,20 +173,20 @@ import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
 
 // Bonus
 import Bonus from "../pages/main/bonus";
-import NewBonus from "../pages/main/bonus/newBonus";
-import UpdateBonus from "../pages/main/bonus/updateBonus";
+import NewBonus from "../pages/main/bonus/create";
+import UpdateBonus from "../pages/main/bonus/update";
 import BonusReport from "../pages/main/bonus/report";
 
 // ManagerFinancialTransactions
 import Transaction from "../pages/main/managerFinancialTransaction";
-import NewTransaction from "../pages/main/managerFinancialTransaction/newTransaction";
-import UpdateTransaction from "../pages/main/managerFinancialTransaction/updateTransaction";
+import NewTransaction from "../pages/main/managerFinancialTransaction/create";
+import UpdateTransaction from "../pages/main/managerFinancialTransaction/update";
 import TransactionReport from "../pages/main/managerFinancialTransaction/report";
 
 // MoneyTransfers
 import MoneyTransfer from "../pages/main/moneyTransfer";
-import NewMoneyTransfer from "../pages/main/moneyTransfer/newTransfer";
-import UpdateMoneyTransfer from "../pages/main/moneyTransfer/updateTransfer";
+import NewMoneyTransfer from "../pages/main/moneyTransfer/create";
+import UpdateMoneyTransfer from "../pages/main/moneyTransfer/update";
 import MoneyTransferReport from "../pages/main/moneyTransfer/report";
 
 import AgreementFormat from "../pages/main/settings/agreementFormat";

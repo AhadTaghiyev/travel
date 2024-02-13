@@ -13,6 +13,7 @@ export interface ITableObject {
   buttonText?: string;
   exportLink?: string;
   detailLink?: string;
+  defaultFilterValue?: string;
   filterOptions?: {
     label: string;
     value: string;
