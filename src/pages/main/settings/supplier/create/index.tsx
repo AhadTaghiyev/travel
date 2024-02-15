@@ -45,6 +45,7 @@ const NewSupplier = () => {
         onSubmit={onSubmit}
         initialValues={{
           name: "",
+          balance: 0,
         }}
       />
     </div>

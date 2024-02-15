@@ -48,6 +48,17 @@ const Supplier = ({ initialValues, onSubmit }: ISupplierProps) => {
                 errorMessages={[t(errors.name?.toString())]}
               />
             </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Balans")}
+                value={values.balance}
+                change={handleChange}
+                name={`balance`}
+                type="number"
+                hasErrorMessages={!!errors.balance && !!touched.balance}
+                errorMessages={[t(errors.balance?.toString())]}
+              />
+            </div>
           </div>
 
           <div className="w-full flex gap-x-6 justify-end mb-6">
