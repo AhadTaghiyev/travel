@@ -56,8 +56,6 @@ import Service from "../pages/main/settings/service";
 import NewService from "../pages/main/settings/service/create";
 import UpdateService from "../pages/main/settings/service/update";
 
-// Report
-import Report from "../pages/main/report";
 // Referance
 import NewReferance from "../pages/main/referance/newReferance";
 import Referance from "../pages/main/referance/index";
@@ -194,24 +192,25 @@ import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";
 import UpdateAgreementFormat from "../pages/main/settings/agreementFormat/updateAgreement";
 
 //reports
-import PlaneTicketReport from "../pages/main/reports/planeTickets";
-import CorporateReport from "../pages/main/reports/corporate";
-import TourPackageReport from "../pages/main/reports/tourPackage";
-import IndividualTourPackageReport from "../pages/main/reports/individualTourPackage";
-import OtherServiceReport from "../pages/main/reports/otherServices";
-import MasIncomeReport from "../pages/main/reports/masincome";
-import WillBePaidReport from "../pages/main/reports/willbepaids";
-import DebtReport from "../pages/main/reports/debt";
-import GetCreditReport from "../pages/main/reports/getcredit";
-import PaidCreditReport from "../pages/main/reports/paidcredit";
-import PaidSalaryReport from "../pages/main/reports/paidsalary";
-import CustomerReport from "../pages/main/reports/customers";
-import CustomerReportDetail from "../pages/main/reports/customers/customerReport";
-import PersonalReport from "../pages/main/reports/personal";
-import PersonalReportDetail from "../pages/main/reports/personal/personalReport";
-import FeeReports from "../pages/main/reports/fees";
-import FeeReportsDetails from "../pages/main/reports/fees/details";
-import NearestFlightReport from "../pages/main/reports/nearestFlights";
+import SuppliersReport from "../pages/main/reports/suppliers";
+// import PlaneTicketReport from "../pages/main/reports/planeTickets";
+// import CorporateReport from "../pages/main/reports/corporate";
+// import TourPackageReport from "../pages/main/reports/tourPackage";
+// import IndividualTourPackageReport from "../pages/main/reports/individualTourPackage";
+// import OtherServiceReport from "../pages/main/reports/otherServices";
+// import MasIncomeReport from "../pages/main/reports/masincome";
+// import WillBePaidReport from "../pages/main/reports/willbepaids";
+// import DebtReport from "../pages/main/reports/debt";
+// import GetCreditReport from "../pages/main/reports/getcredit";
+// import PaidCreditReport from "../pages/main/reports/paidcredit";
+// import PaidSalaryReport from "../pages/main/reports/paidsalary";
+// import CustomerReport from "../pages/main/reports/customers";
+// import CustomerReportDetail from "../pages/main/reports/customers/customerReport";
+// import PersonalReport from "../pages/main/reports/personal";
+// import PersonalReportDetail from "../pages/main/reports/personal/personalReport";
+// import FeeReports from "../pages/main/reports/fees";
+// import FeeReportsDetails from "../pages/main/reports/fees/details";
+// import NearestFlightReport from "../pages/main/reports/nearestFlights";
 
 const router = createBrowserRouter([
   {
@@ -537,10 +536,6 @@ const router = createBrowserRouter([
       // ===============
       // Reoprts
       //================
-      {
-        path: "/panel/reports",
-        element: <Report />,
-      },
       // ===============
       // Reoprts
       //================
@@ -876,78 +871,82 @@ const router = createBrowserRouter([
 
       //reports
       {
-        path: "/panel/reports/planeTicket",
-        element: <PlaneTicketReport />,
+        path: "/panel/reports/suppliers",
+        element: <SuppliersReport />,
       },
-      {
-        path: "/panel/reports/corperative",
-        element: <CorporateReport />,
-      },
-      {
-        path: "/panel/reports/tourPackage",
-        element: <TourPackageReport />,
-      },
-      {
-        path: "/panel/reports/individualTourPackage",
-        element: <IndividualTourPackageReport />,
-      },
-      {
-        path: "/panel/reports/otherServices",
-        element: <OtherServiceReport />,
-      },
-      {
-        path: "/panel/reports/masincome",
-        element: <MasIncomeReport />,
-      },
-      {
-        path: "/panel/reports/willbepaids",
-        element: <WillBePaidReport />,
-      },
-      {
-        path: "/panel/reports/debt",
-        element: <DebtReport />,
-      },
-      {
-        path: "/panel/reports/getcredit",
-        element: <GetCreditReport />,
-      },
-      {
-        path: "/panel/reports/paidcredit",
-        element: <PaidCreditReport />,
-      },
-      {
-        path: "/panel/reports/paidsalary",
-        element: <PaidSalaryReport />,
-      },
-      {
-        path: "/panel/reports/customer",
-        element: <CustomerReport />,
-      },
+      // {
+      //   path: "/panel/reports/planeTicket",
+      //   element: <PlaneTicketReport />,
+      // },
+      // {
+      //   path: "/panel/reports/corperative",
+      //   element: <CorporateReport />,
+      // },
+      // {
+      //   path: "/panel/reports/tourPackage",
+      //   element: <TourPackageReport />,
+      // },
+      // {
+      //   path: "/panel/reports/individualTourPackage",
+      //   element: <IndividualTourPackageReport />,
+      // },
+      // {
+      //   path: "/panel/reports/otherServices",
+      //   element: <OtherServiceReport />,
+      // },
+      // {
+      //   path: "/panel/reports/masincome",
+      //   element: <MasIncomeReport />,
+      // },
+      // {
+      //   path: "/panel/reports/willbepaids",
+      //   element: <WillBePaidReport />,
+      // },
+      // {
+      //   path: "/panel/reports/debt",
+      //   element: <DebtReport />,
+      // },
+      // {
+      //   path: "/panel/reports/getcredit",
+      //   element: <GetCreditReport />,
+      // },
+      // {
+      //   path: "/panel/reports/paidcredit",
+      //   element: <PaidCreditReport />,
+      // },
+      // {
+      //   path: "/panel/reports/paidsalary",
+      //   element: <PaidSalaryReport />,
+      // },
+      // {
+      //   path: "/panel/reports/customer",
+      //   element: <CustomerReport />,
+      // },
 
-      {
-        path: "/panel/reports/customer/:id",
-        element: <CustomerReportDetail />,
-      },
-      {
-        path: "/panel/reports/personal",
-        element: <PersonalReport />,
-      },
-      {
-        path: "/panel/reports/personal/:id",
-        element: <PersonalReportDetail />,
-      },
-      {
-        path: "/panel/reports/fee",
-        element: <FeeReports />,
-      },
-      {
-        path: "/panel/reports/feeDetails/:id",
-        element: <FeeReportsDetails />,
-      },
-      {
-        path: "/panel/reports/nearestFlights",
-        element: <NearestFlightReport />,
-      },
+      // {
+      //   path: "/panel/reports/customer/:id",
+      //   element: <CustomerReportDetail />,
+      // },
+      // {
+      //   path: "/panel/reports/personal",
+      //   element: <PersonalReport />,
+      // },
+      // {
+      //   path: "/panel/reports/personal/:id",
+      //   element: <PersonalReportDetail />,
+      // },
+      // {
+      //   path: "/panel/reports/fee",
+      //   element: <FeeReports />,
+      // },
+      // {
+      //   path: "/panel/reports/feeDetails/:id",
+      //   element: <FeeReportsDetails />,
+      // },
+      // {
+      //   path: "/panel/reports/nearestFlights",
+      //   element: <NearestFlightReport />,
+      // },
     ],
   },
   {

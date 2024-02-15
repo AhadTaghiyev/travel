@@ -160,6 +160,11 @@ export const sidebarItems: SidebarItemType[] = [
     text: "Hesabatlar",
     children: [
       {
+        icon: BsFileEarmarkPerson,
+        text: "Təchizatçı",
+        link: "/panel/reports/suppliers",
+      },
+      {
         icon: FaMoneyBill1Wave,
         text: "Ödəniş Növü",
         link: "/panel/payments",
