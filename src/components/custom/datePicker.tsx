@@ -35,6 +35,7 @@ export default function CustomDateTimePicker({
   disabled = false,
   hasErrorMessages,
 }: ICustomDateTimePickerModel) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const {
     i18n: { language },
@@ -60,7 +61,10 @@ export default function CustomDateTimePicker({
                 locale: locales[language],
               })
             ) : (
-              <span>Pick a date</span>
+              <span>
+                {t("Pick a date")}
+                {/** Hola */}
+              </span>
             )}
           </Button>
         </PopoverTrigger>
