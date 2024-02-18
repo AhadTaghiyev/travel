@@ -11,7 +11,7 @@ export default function Index() {
         hideReport
         columns={columns(t)}
         api={"/PaySalarys/GetAll"}
-        buttonText="Ödəniləcək maaş" // Hola lar
+        buttonText="Ödəniləcək maaş"
         deleteApi="/PaySalarys/Delete"
         root="/panel/salaryToBePaid"
       />

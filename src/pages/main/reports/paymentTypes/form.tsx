@@ -2,24 +2,30 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { SalaryToBePaidSchema } from "./schema";
-import { ISalaryToBePaidModel } from "./types";
+import { PaymentsTypeSchema } from "./schema";
+import { IDepositModel } from "./types";
 
-import CustomTextField from "@/components/custom/input";
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomTextField from "@/components/custom/input";
+import CustomDateTimePicker from "@/components/custom/datePicker";
 
 type FormType = "Edit" | "Create" | "View";
 
-interface ISalaryToBePaidProps {
+interface IPaymentTypesFormProps {
   formType: FormType;
-  initialValues: ISalaryToBePaidModel;
+  initialValues: IDepositModel;
   onSubmit: (
-    values: ISalaryToBePaidModel,
+    values: IDepositModel,
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
 
-const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
+const PaymentTypesForm = ({
+  initialValues,
+  onSubmit,
+  formType,
+}: IPaymentTypesFormProps) => {
+  const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -27,83 +33,64 @@ const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={SalaryToBePaidSchema}
+      validationSchema={PaymentsTypeSchema}
     >
       {({
         values,
         errors,
         touched,
-        setFieldValue,
         handleChange,
         handleSubmit,
+        setFieldValue,
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full">
               <CustomAutocompleteSelect
-                api="Employees/GetAll/1"
-                label={t("Işçi")}
-                value={values.employeeId ?? null}
-                optionLabel="fullName"
-                change={(value) => setFieldValue("employeeId", value)}
-                hasErrorMessages={!!errors.employeeId && !!touched.employeeId}
-                errorMessages={[t(errors.employeeId?.toString() ?? "")]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomAutocompleteSelect
+                disabled={isView}
                 api="Payments/GetAll/1"
                 label={t("Ödəniş növü")}
                 value={values.paymentId ?? null}
                 optionLabel="type"
-                change={(value) => setFieldValue("paymentId", value)}
+                change={(value) => setFieldValue("paymentId", value ?? null)}
                 hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
                 errorMessages={[t(errors.paymentId?.toString() ?? "")]}
               />
             </div>
             <div className="w-full">
               <CustomTextField
-                label={t("Maaş")}
-                value={values.salary}
+                label={t("Ödənilən məbləğ")}
+                value={values.paidAmount}
                 change={handleChange}
                 type="number"
-                name={`salary`}
-                hasErrorMessages={!!errors.salary && !!touched.salary}
-                errorMessages={[t(errors.salary?.toString())]}
+                name={`paidAmount`}
+                hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
+                errorMessages={[t(errors.paidAmount?.toString())]}
+              />
+            </div>
+            <div className="w-full h-full">
+              <CustomDateTimePicker
+                disabled={isView}
+                label={t("date")}
+                value={values.date}
+                change={(data) => {
+                  setFieldValue("date", data ?? new Date());
+                }}
+                hasErrorMessages={!!errors.date && !!touched.date}
+                errorMessages={[t(errors.date?.toString())]}
               />
             </div>
             <div className="w-full">
               <CustomTextField
-                label={t("Əlavə maaş")}
-                value={values.extraSalary}
-                change={handleChange}
-                type="number"
-                name={`extraSalary`}
-                hasErrorMessages={!!errors.extraSalary && !!touched.extraSalary}
-                errorMessages={[t(errors.extraSalary?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Bonus")}
-                value={values.bonus}
-                change={handleChange}
-                type="number"
-                name={`bonus`}
-                hasErrorMessages={!!errors.bonus && !!touched.bonus}
-                errorMessages={[t(errors.bonus?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                name="note"
+                disabled={isView}
+                name="description"
                 type="text"
-                label={t("Qeyd")}
-                value={values.note}
+                label={t("Description")}
+                value={values.description}
                 change={handleChange}
-                hasErrorMessages={!!errors.note && !!touched.note}
-                errorMessages={[t(errors.note?.toString())]}
+                hasErrorMessages={!!errors.description && !!touched.description}
+                errorMessages={[t(errors.description?.toString())]}
               />
             </div>
           </div>
@@ -112,7 +99,7 @@ const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/salaryToBePaid")}
+              onClick={() => navigate(-1)}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}
@@ -131,4 +118,4 @@ const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
   );
 };
 
-export default SalaryToBePaid;
+export default PaymentTypesForm;

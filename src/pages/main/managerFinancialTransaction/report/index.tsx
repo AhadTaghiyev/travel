@@ -157,7 +157,7 @@ export default function index() {
                       {currency.name}
                     </TableCell>
                     <TableCell className="py-1.5 max-w-[150px] truncate">
-                      {data.note ?? t("Qeyd Yoxdur")} {/** Hola */}
+                      {data.note ?? t("Qeyd Yoxdur")}
                     </TableCell>
                     <TableCell className="py-1.5">
                       {formatDate(data.date)}

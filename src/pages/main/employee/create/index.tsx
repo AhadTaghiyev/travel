@@ -22,7 +22,7 @@ const NewEmployee = () => {
         .post(`/Employees/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("İşçi yaradıldı")); // Hola
+            toast.success(t("İşçi yaradıldı"));
             navigate(`/panel/employees`);
             // TODO: Navigate to report page
             // navigate(
@@ -42,7 +42,7 @@ const NewEmployee = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("İşçi Yarat")} {/*Hola*/}
+        {t("İşçi Yarat")}
       </h1>
       <EmployeeForm
         formType="Create"

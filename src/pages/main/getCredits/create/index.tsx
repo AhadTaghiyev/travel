@@ -22,7 +22,7 @@ const NewGetCredit = () => {
         .post(`/GetCredits/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Alınan kredit yaradıldı")); // Hola
+            toast.success(t("Alınan kredit yaradıldı"));
             navigate(`/panel/getCredits`);
             // TODO: Navigate to report page
             // navigate(

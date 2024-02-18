@@ -11,7 +11,7 @@ export default function Index() {
         hideReport
         columns={columns(t)}
         api={"/Airways/GetAll"}
-        buttonText="Hava yolu" // Hola lər
+        buttonText="Hava yolu"
         deleteApi="/Airways/Delete"
         root="/panel/airways"
       />

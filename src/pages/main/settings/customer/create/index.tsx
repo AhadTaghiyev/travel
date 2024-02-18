@@ -22,7 +22,7 @@ const NewCustomer = () => {
         .post(`/Customers/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Müştəri yaradıldı")); // Hola
+            toast.success(t("Müştəri yaradıldı"));
             navigate(`/panel/customers`);
             // TODO: Navigate to report page
             // navigate(

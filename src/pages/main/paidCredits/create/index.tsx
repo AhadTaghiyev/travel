@@ -22,7 +22,7 @@ const NewPaidCredit = () => {
         .post(`/PaidCredits/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Ödənilən kredit yaradıldı")); // Hola
+            toast.success(t("Ödənilən kredit yaradıldı"));
             navigate(`/panel/paidCredits`);
             // TODO: Navigate to report page
             // navigate(
@@ -42,7 +42,7 @@ const NewPaidCredit = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Ödənilən Kredit Yarat")} {/* Hola */}
+        {t("Ödənilən Kredit Yarat")}
       </h1>
       <PaidCreditForm
         formType="Create"

@@ -61,10 +61,7 @@ export default function CustomDateTimePicker({
                 locale: locales[language],
               })
             ) : (
-              <span>
-                {t("Pick a date")}
-                {/** Hola */}
-              </span>
+              <span>{t("Pick a date")}</span>
             )}
           </Button>
         </PopoverTrigger>

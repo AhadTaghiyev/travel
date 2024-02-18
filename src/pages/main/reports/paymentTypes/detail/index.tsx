@@ -49,7 +49,7 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/SupplierReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
         const items = res.data.items.map((item) => ({
           ...item,

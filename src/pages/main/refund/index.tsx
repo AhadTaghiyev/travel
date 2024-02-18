@@ -9,7 +9,7 @@ export default function Index() {
         hideEdit
         columns={columns}
         api={"/Refunds/GetAll"}
-        buttonText="Refund" // Hola
+        buttonText="Refund"
         deleteApi="/Refunds/Delete"
         root="/panel/refunds"
       />

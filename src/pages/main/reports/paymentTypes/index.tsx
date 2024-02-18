@@ -1,19 +1,19 @@
 import Container from "@mui/material/Container";
 import Table from "../../../../components/pages/table";
 import { columns } from "./tableColumns";
-import { useTranslation } from "react-i18next";
 
 export default function Index() {
-  const { t } = useTranslation();
   return (
     <Container maxWidth="xl">
       <Table
-        hideReport
-        columns={columns(t)}
-        api={"/Dinings/GetAll"}
-        buttonText="Meal"
-        deleteApi="/Dinings/Delete"
-        root="/panel/meals"
+        hideDelete
+        hideCreate
+        hideEdit
+        hidePrint
+        columns={columns}
+        detailLink="/panel/reports/paymentTypes/"
+        api={"/Reports/PaymentReport"}
+        root="/panel/reports/paymentTypes"
       />
     </Container>
   );

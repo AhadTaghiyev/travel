@@ -135,7 +135,7 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: PiHandshake,
-        text: "İşçilər", // Hola
+        text: "İşçilər",
         link: "/panel/employees",
       },
       {
@@ -167,7 +167,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaMoneyBill1Wave,
         text: "Ödəniş Növü",
-        link: "/panel/payments",
+        link: "/panel/reports/paymentTypes",
       },
       {
         icon: BsFillPeopleFill,
