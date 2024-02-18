@@ -23,8 +23,12 @@ import { ClipLoader } from "react-spinners";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Ad", name: "name" },
-  { label: "Balans", name: "balance" },
+  { label: "Date", name: "date" },
+  { label: "Ref.", name: "ref" },
+  { label: "Details.", name: "details" },
+  { label: "Debit.", name: "debit" },
+  { label: "Credit.", name: "credit" },
+  { label: "Balance.", name: "balance" },
 ];
 
 const Detail = () => {
@@ -43,7 +47,7 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/SupplierReport/${id}?${searchParams.toString()}`)
+      .get(`/Reports/SupplierReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
       })
@@ -167,7 +171,7 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data &&
+              {
                 data.map((row) => (
                   <TableRow key={row.id}>
                     {columns.map((column) => (
