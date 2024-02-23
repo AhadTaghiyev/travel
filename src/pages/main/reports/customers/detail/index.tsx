@@ -87,6 +87,9 @@ const Detail = () => {
           <Grid item xs={3}>
             <img src={img} style={{ width: "100%" }} />
           </Grid>
+          <Grid item xs={3}>
+            Ahd Taghiyev
+          </Grid>
           <Grid item xs={5}>
             <Grid
               item

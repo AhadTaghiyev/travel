@@ -25,9 +25,9 @@ const columns = [
   { label: "Id", name: "id" },
   { label: "Date", name: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "DeadLine.", name: "deadLine" },
-  { label: "Note.", name: "note" },
-  { label: "Reciveables.", name: "amount" },
+  { label: "BuyingPrice.", name: "buyingPrice" },
+  { label: "SellingPrice.", name: "sellingPrice" },
+  { label: "ProfiT.", name: "profiy" },
 ];
 
 const Detail = () => {
@@ -38,15 +38,16 @@ const Detail = () => {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    getData(parseInt(id));
+    getData(id);
   }, [id]);
 
-  const getData = async (id: number, startDate?: Date, endDate?: Date) => {
+  const getData = async (id: string, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
+    if (id) searchParams.append("ticketType", String(id));
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/ReciveAblesReportDetail/?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
       })
@@ -62,7 +63,7 @@ const Detail = () => {
     values: { startDate: Date; endDate: Date },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
-    getData(parseInt(id), values.startDate, values.endDate).finally(() => {
+    getData(id, values.startDate, values.endDate).finally(() => {
       setSubmitting(false);
     });
   };
