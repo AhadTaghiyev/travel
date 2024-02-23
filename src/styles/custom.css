@@ -310,3 +310,22 @@ button {
     margin-top: -80px;
   }
 }
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+.landing-container {
+  width: 1144px;
+  margin: auto;
+}
+
+@media screen and (max-width: 1280px) {
+  .landing-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}

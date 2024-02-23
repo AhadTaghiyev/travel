@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "../../node_modules/react-router-dom/dist/index";
-import Main from "../pages/main";
-import Home from "../pages/main/home";
+import Main from "../pages/dashboard";
+import Home from "../pages/dashboard/home";
 
-import RecieptCoorperative from "../pages/main/corperativeTicket/reciept/index";
-import RecieptTour from "../pages/main/tourPackage/reciept/index";
-import App from "../App";
+import RecieptCoorperative from "../pages/dashboard/corperativeTicket/reciept/index";
+import RecieptTour from "../pages/dashboard/tourPackage/reciept/index";
+import App from "../pages/main/home";
 import Error from "../Error";
 import Login from "../pages/authentication/login";
 import Auth from "../pages/authentication";
@@ -12,53 +12,53 @@ import ChangePassword from "../pages/authentication/changePassword";
 import Unauth from "../Unauth";
 
 // Aviabilet Sales
-import AviabiletSale from "../pages/main/aviabiletSale";
-import Reciept from "../pages/main/aviabiletSale/reciept";
-import ViewAviaticket from "../pages/main/aviabiletSale/view";
-import NewAviaticket from "../pages/main/aviabiletSale/create";
-import UpdateAviaticket from "../pages/main/aviabiletSale/update";
-import ReportAviaticket from "../pages/main/aviabiletSale/report";
+import AviabiletSale from "../pages/dashboard/aviabiletSale";
+import Reciept from "../pages/dashboard/aviabiletSale/reciept";
+import ViewAviaticket from "../pages/dashboard/aviabiletSale/view";
+import NewAviaticket from "../pages/dashboard/aviabiletSale/create";
+import UpdateAviaticket from "../pages/dashboard/aviabiletSale/update";
+import ReportAviaticket from "../pages/dashboard/aviabiletSale/report";
 
 // Customers
-import Customers from "../pages/main/settings/customer";
-import NewCustomer from "../pages/main/settings/customer/create";
-import UpdateCustomer from "../pages/main/settings/customer/update";
+import Customers from "../pages/dashboard/settings/customer";
+import NewCustomer from "../pages/dashboard/settings/customer/create";
+import UpdateCustomer from "../pages/dashboard/settings/customer/update";
 
 // Suppliers
-import Supplier from "../pages/main/settings/supplier";
-import NewSupplier from "../pages/main/settings/supplier/create";
-import UpdateSupplier from "../pages/main/settings/supplier/update";
+import Supplier from "../pages/dashboard/settings/supplier";
+import NewSupplier from "../pages/dashboard/settings/supplier/create";
+import UpdateSupplier from "../pages/dashboard/settings/supplier/update";
 
 // Personals
-import Personal from "../pages/main/settings/personal";
-import NewPersonal from "../pages/main/settings/personal/create";
-import UpdatePersonal from "../pages/main/settings/personal/update";
+import Personal from "../pages/dashboard/settings/personal";
+import NewPersonal from "../pages/dashboard/settings/personal/create";
+import UpdatePersonal from "../pages/dashboard/settings/personal/update";
 
 // Payments
-import Payment from "../pages/main/settings/payment";
-import NewPayment from "../pages/main/settings/payment/create";
-import UpdatePayment from "../pages/main/settings/payment/update";
+import Payment from "../pages/dashboard/settings/payment";
+import NewPayment from "../pages/dashboard/settings/payment/create";
+import UpdatePayment from "../pages/dashboard/settings/payment/update";
 
 //Transfer
-import Transfer from "../pages/main/settings/transfer";
-import NewTranfser from "../pages/main/settings/transfer/create";
-import UpdateTransfer from "../pages/main/settings/transfer/update";
+import Transfer from "../pages/dashboard/settings/transfer";
+import NewTranfser from "../pages/dashboard/settings/transfer/create";
+import UpdateTransfer from "../pages/dashboard/settings/transfer/update";
 // Meal
-import Meal from "../pages/main/settings/meal";
-import NewMeal from "../pages/main/settings/meal/create";
-import UpdateMeal from "../pages/main/settings/meal/update";
+import Meal from "../pages/dashboard/settings/meal";
+import NewMeal from "../pages/dashboard/settings/meal/create";
+import UpdateMeal from "../pages/dashboard/settings/meal/update";
 //Tour
-import Tour from "../pages/main/settings/tour";
-import NewTour from "../pages/main/settings/tour/create";
-import UpdateTour from "../pages/main/settings/tour/update";
+import Tour from "../pages/dashboard/settings/tour";
+import NewTour from "../pages/dashboard/settings/tour/create";
+import UpdateTour from "../pages/dashboard/settings/tour/update";
 //Services
-import Service from "../pages/main/settings/service";
-import NewService from "../pages/main/settings/service/create";
-import UpdateService from "../pages/main/settings/service/update";
+import Service from "../pages/dashboard/settings/service";
+import NewService from "../pages/dashboard/settings/service/create";
+import UpdateService from "../pages/dashboard/settings/service/update";
 
 // Referance
-import NewReferance from "../pages/main/referance/newReferance";
-import Referance from "../pages/main/referance/index";
+import NewReferance from "../pages/dashboard/referance/newReferance";
+import Referance from "../pages/dashboard/referance/index";
 
 //Admin
 import Admin from "../pages/admin";
@@ -67,138 +67,138 @@ import CompanyCreate from "../pages/admin/company/createCompany";
 import CompanyUpdate from "../pages/admin/company/updateCompany";
 
 //Airway
-import Airway from "../pages/main/settings/airway";
-import NewAirway from "../pages/main/settings/airway/create";
-import UpdateAirway from "../pages/main/settings/airway/update";
+import Airway from "../pages/dashboard/settings/airway";
+import NewAirway from "../pages/dashboard/settings/airway/create";
+import UpdateAirway from "../pages/dashboard/settings/airway/update";
 
 //Korperativ bilet
-import CorperativeTicket from "../pages/main/corperativeTicket";
-import NewCorperativeTicket from "../pages/main/corperativeTicket/create";
-import UpdateCorperativeTicket from "../pages/main/corperativeTicket/update";
-import ViewCorperativeTicket from "../pages/main/corperativeTicket/view";
-import ReportCorperativeTicket from "../pages/main/corperativeTicket/report";
+import CorperativeTicket from "../pages/dashboard/corperativeTicket";
+import NewCorperativeTicket from "../pages/dashboard/corperativeTicket/create";
+import UpdateCorperativeTicket from "../pages/dashboard/corperativeTicket/update";
+import ViewCorperativeTicket from "../pages/dashboard/corperativeTicket/view";
+import ReportCorperativeTicket from "../pages/dashboard/corperativeTicket/report";
 // GetCredits
-import GetCredit from "../pages/main/getCredits";
-import NewGetCredit from "../pages/main/getCredits/create";
-import UpdateGetCredit from "../pages/main/getCredits/update";
+import GetCredit from "../pages/dashboard/getCredits";
+import NewGetCredit from "../pages/dashboard/getCredits/create";
+import UpdateGetCredit from "../pages/dashboard/getCredits/update";
 
 // PaidCredits
-import PaidCredit from "../pages/main/paidCredits";
-import NewPaidCredit from "../pages/main/paidCredits/create";
-import UpdatePaidCredit from "../pages/main/paidCredits/update";
+import PaidCredit from "../pages/dashboard/paidCredits";
+import NewPaidCredit from "../pages/dashboard/paidCredits/create";
+import UpdatePaidCredit from "../pages/dashboard/paidCredits/update";
 
 //Tur Paketleri
-import TourPackage from "../pages/main/tourPackage";
-import NewTourPackage from "../pages/main/tourPackage/create";
-import UpdateTourPackage from "../pages/main/tourPackage/update";
-import ViewTourPackage from "../pages/main/tourPackage/view";
-import TourReport from "../pages/main/tourPackage/report";
+import TourPackage from "../pages/dashboard/tourPackage";
+import NewTourPackage from "../pages/dashboard/tourPackage/create";
+import UpdateTourPackage from "../pages/dashboard/tourPackage/update";
+import ViewTourPackage from "../pages/dashboard/tourPackage/view";
+import TourReport from "../pages/dashboard/tourPackage/report";
 
 //Income
-import Income from "../pages/main/income";
-import NewIncome from "../pages/main/income/create";
+import Income from "../pages/dashboard/income";
+import NewIncome from "../pages/dashboard/income/create";
 // import UpdateIncome from "../pages/main/income/updateIncome";
-import InvoiceIncome from "../pages/main/income/report";
+import InvoiceIncome from "../pages/dashboard/income/report";
 
 // Refunds
-import Refund from "../pages/main/refund";
-import NewRefund from "../pages/main/refund/create";
+import Refund from "../pages/dashboard/refund";
+import NewRefund from "../pages/dashboard/refund/create";
 // import UpdateIncome from "../pages/main/refund/update";
-import RefundReport from "../pages/main/refund/report";
+import RefundReport from "../pages/dashboard/refund/report";
 
 // Other Services
-import OtherServices from "../pages/main/otherServices";
-import NewOtherService from "../pages/main/otherServices/create";
-import UpdateOtherService from "../pages/main/otherServices/update";
-import ViewOtherService from "../pages/main/otherServices/view";
-import ReportOtherService from "../pages/main/otherServices/report";
+import OtherServices from "../pages/dashboard/otherServices";
+import NewOtherService from "../pages/dashboard/otherServices/create";
+import UpdateOtherService from "../pages/dashboard/otherServices/update";
+import ViewOtherService from "../pages/dashboard/otherServices/view";
+import ReportOtherService from "../pages/dashboard/otherServices/report";
 
 // Employees
-import Employee from "../pages/main/employee";
-import NewEmployee from "../pages/main/employee/create";
-import UpdateEmployee from "../pages/main/employee/update";
+import Employee from "../pages/dashboard/employee";
+import NewEmployee from "../pages/dashboard/employee/create";
+import UpdateEmployee from "../pages/dashboard/employee/update";
 // Deposits
-import Deposit from "../pages/main/deposit";
-import NewDeposit from "../pages/main/deposit/create";
-import UpdateDeposit from "../pages/main/deposit/update";
-import DetailDeposit from "../pages/main/deposit/report";
+import Deposit from "../pages/dashboard/deposit";
+import NewDeposit from "../pages/dashboard/deposit/create";
+import UpdateDeposit from "../pages/dashboard/deposit/update";
+import DetailDeposit from "../pages/dashboard/deposit/report";
 //Individual Tur Paketleri
-import IndividualTourPackage from "../pages/main/individualTourPackage";
-import NewIndividualTourPackage from "../pages/main/individualTourPackage/create";
-import UpdateIndividualTourPackage from "../pages/main/individualTourPackage/update";
-import ViewIndividualTourPackage from "../pages/main/individualTourPackage/view";
-import ReportIndividualTourPackage from "../pages/main/individualTourPackage/report";
+import IndividualTourPackage from "../pages/dashboard/individualTourPackage";
+import NewIndividualTourPackage from "../pages/dashboard/individualTourPackage/create";
+import UpdateIndividualTourPackage from "../pages/dashboard/individualTourPackage/update";
+import ViewIndividualTourPackage from "../pages/dashboard/individualTourPackage/view";
+import ReportIndividualTourPackage from "../pages/dashboard/individualTourPackage/report";
 
 //agreements
-import Agreements from "../pages/main/agreement";
-import NewAgreement from "../pages/main/agreement/newAgreement";
-import UpdateAgreement from "../pages/main/agreement/updateAgreement";
+import Agreements from "../pages/dashboard/agreement";
+import NewAgreement from "../pages/dashboard/agreement/newAgreement";
+import UpdateAgreement from "../pages/dashboard/agreement/updateAgreement";
 
 //willBePaid
-import WillBePaid from "../pages/main/willBePaid";
-import NewWillBePaid from "../pages/main/willBePaid/create";
-import UpdateWillBePaid from "../pages/main/willBePaid/update";
-import DetailWillBePaid from "../pages/main/willBePaid/report";
+import WillBePaid from "../pages/dashboard/willBePaid";
+import NewWillBePaid from "../pages/dashboard/willBePaid/create";
+import UpdateWillBePaid from "../pages/dashboard/willBePaid/update";
+import DetailWillBePaid from "../pages/dashboard/willBePaid/report";
 
 //documents
-import DocumentCreate from "../pages/main/document/sendDocument";
-import DocumentsList from "../pages/main/document/documentsList";
+import DocumentCreate from "../pages/dashboard/document/sendDocument";
+import DocumentsList from "../pages/dashboard/document/documentsList";
 
 //email
-import EmailSend from "../pages/main/email";
+import EmailSend from "../pages/dashboard/email";
 
 //willBeGet
-import WillBeGet from "../pages/main/willBeGet";
-import WillBeGetDetail from "../pages/main/willBeGet/detail";
-import GetPaymentDetail from "../pages/main/paymenDetailReport/detail";
-import ReportCredit from "../pages/main/reportCredit";
-import DailyInvoice from "../pages/main/dailyInvoice";
-import TotalInvoiceRevenue from "../pages/main/totalInvoiceRevenue";
-import CustomerDeposits from "../pages/main/customerDeposits";
-import TotalStatus from "../pages/main/totalStatus";
-import PaidSalary from "../pages/main/paidSalary";
+import WillBeGet from "../pages/dashboard/willBeGet";
+import WillBeGetDetail from "../pages/dashboard/willBeGet/detail";
+import GetPaymentDetail from "../pages/dashboard/paymenDetailReport/detail";
+import ReportCredit from "../pages/dashboard/reportCredit";
+import DailyInvoice from "../pages/dashboard/dailyInvoice";
+import TotalInvoiceRevenue from "../pages/dashboard/totalInvoiceRevenue";
+import CustomerDeposits from "../pages/dashboard/customerDeposits";
+import TotalStatus from "../pages/dashboard/totalStatus";
+import PaidSalary from "../pages/dashboard/paidSalary";
 
-import Fee from "../pages/main/settings/fee";
-import NewFee from "../pages/main/settings/fee/create";
-import UpdateFee from "../pages/main/settings/fee/update";
+import Fee from "../pages/dashboard/settings/fee";
+import NewFee from "../pages/dashboard/settings/fee/create";
+import UpdateFee from "../pages/dashboard/settings/fee/update";
 
 // SalaryToBePaid
-import SalaryToBePaid from "../pages/main/salaryToBePaid";
-import NewSalaryToBePaid from "../pages/main/salaryToBePaid/create";
-import UpdateSalaryToBePaid from "../pages/main/salaryToBePaid/update";
+import SalaryToBePaid from "../pages/dashboard/salaryToBePaid";
+import NewSalaryToBePaid from "../pages/dashboard/salaryToBePaid/create";
+import UpdateSalaryToBePaid from "../pages/dashboard/salaryToBePaid/update";
 
-import PaymentDetailReport from "../pages/main/paymenDetailReport/detail";
+import PaymentDetailReport from "../pages/dashboard/paymenDetailReport/detail";
 
 // Bonus
-import Bonus from "../pages/main/bonus";
-import NewBonus from "../pages/main/bonus/create";
-import UpdateBonus from "../pages/main/bonus/update";
-import BonusReport from "../pages/main/bonus/report";
+import Bonus from "../pages/dashboard/bonus";
+import NewBonus from "../pages/dashboard/bonus/create";
+import UpdateBonus from "../pages/dashboard/bonus/update";
+import BonusReport from "../pages/dashboard/bonus/report";
 
 // ManagerFinancialTransactions
-import Transaction from "../pages/main/managerFinancialTransaction";
-import NewTransaction from "../pages/main/managerFinancialTransaction/create";
-import UpdateTransaction from "../pages/main/managerFinancialTransaction/update";
-import TransactionReport from "../pages/main/managerFinancialTransaction/report";
+import Transaction from "../pages/dashboard/managerFinancialTransaction";
+import NewTransaction from "../pages/dashboard/managerFinancialTransaction/create";
+import UpdateTransaction from "../pages/dashboard/managerFinancialTransaction/update";
+import TransactionReport from "../pages/dashboard/managerFinancialTransaction/report";
 
 // MoneyTransfers
-import MoneyTransfer from "../pages/main/moneyTransfer";
-import NewMoneyTransfer from "../pages/main/moneyTransfer/create";
-import UpdateMoneyTransfer from "../pages/main/moneyTransfer/update";
-import MoneyTransferReport from "../pages/main/moneyTransfer/report";
+import MoneyTransfer from "../pages/dashboard/moneyTransfer";
+import NewMoneyTransfer from "../pages/dashboard/moneyTransfer/create";
+import UpdateMoneyTransfer from "../pages/dashboard/moneyTransfer/update";
+import MoneyTransferReport from "../pages/dashboard/moneyTransfer/report";
 
-import AgreementFormat from "../pages/main/settings/agreementFormat";
-import NewAgreementFormat from "../pages/main/settings/agreementFormat/new";
-import UpdateAgreementFormat from "../pages/main/settings/agreementFormat/updateAgreement";
+import AgreementFormat from "../pages/dashboard/settings/agreementFormat";
+import NewAgreementFormat from "../pages/dashboard/settings/agreementFormat/new";
+import UpdateAgreementFormat from "../pages/dashboard/settings/agreementFormat/updateAgreement";
 
 //reports
-import SuppliersReport from "../pages/main/reports/suppliers";
-import SuppliersReportDetail from "../pages/main/reports/suppliers/detail";
-import CustomersReport from "../pages/main/reports/customers";
-import CustomersReportDetail from "../pages/main/reports/customers/detail";
+import SuppliersReport from "../pages/dashboard/reports/suppliers";
+import SuppliersReportDetail from "../pages/dashboard/reports/suppliers/detail";
+import CustomersReport from "../pages/dashboard/reports/customers";
+import CustomersReportDetail from "../pages/dashboard/reports/customers/detail";
 
-import ProfitsReport from "../pages/main/reports/profits";
-import ProfitsReportDetail from "../pages/main/reports/profits/detail";
+import ProfitsReport from "../pages/dashboard/reports/profits";
+import ProfitsReportDetail from "../pages/dashboard/reports/profits/detail";
 // import PlaneTicketReport from "../pages/main/reports/planeTickets";
 // import CorporateReport from "../pages/main/reports/corporate";
 // import TourPackageReport from "../pages/main/reports/tourPackage";
