@@ -10,10 +10,11 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
+        hideReport
         columns={columns}
-        detailLink="/panel/reports/paymentTypes/"
-        api={"/Reports/PaymentReport"}
-        root="/panel/reports/paymentTypes"
+        detailLink="/panel/reports/customers/"
+        api={"/Reports/FinancalStatusReport"}
+        root="/panel/reports/customers"
       />
     </Container>
   );

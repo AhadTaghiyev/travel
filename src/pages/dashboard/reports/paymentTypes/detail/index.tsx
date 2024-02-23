@@ -20,17 +20,14 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { formatDate } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
+  { label: "Date", name: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "Details.", name: "details" },
-  { label: "Debit", name: "debit" },
-  { label: "Credit", name: "credit" },
-  { label: "Balance", name: "balance" },
-  { label: "Total", name: "total" },
+  { label: "DeadLine.", name: "deadLine" },
+  { label: "Note.", name: "note" },
+  { label: "Reciveables.", name: "amount" },
 ];
 
 const Detail = () => {
@@ -49,13 +46,9 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
-        const items = res.data.items.map((item) => ({
-          ...item,
-          total: item.debit + item.credit + item.balance,
-        }));
-        setData(items);
+        setData(res.data.items);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -157,7 +150,7 @@ const Detail = () => {
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
-                {t("Axtar")}
+                {t("Axtar")} {/* Hola */}
               </button>
             </form>
           )}
@@ -177,25 +170,47 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data &&
-                data.map((row) => (
-                  <TableRow key={row.id}>
-                    {columns.map((column) => (
-                      <TableCell key={column.name} className="py-1.5">
-                        {column.type === "date"
-                          ? formatDate(row?.[column.name])
-                          : row?.[column.name]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
+            {
+  data.map((row) => (
+    <TableRow key={row.id}>
+      {columns.map((column) => {
+        const value = String(row[column.name]).toLowerCase();
+
+        let url = "";
+        if (value.startsWith("pl")) {
+          url = `/panel/aviabiletsale/report?tickets=${row['invoiceId']}`;
+        } else if (value.startsWith("cp")) {
+          url = `/panel/cooperativeTicket/report?tickets=${row['invoiceId']}`;
+        } else if (value.startsWith("itp")) {
+          url = `/panel/individualTourPackage/report?tickets=${row['invoiceId']}`;
+        } else if (value.startsWith("tp")) {
+          url = `/panel/tourPackage/report?tickets=${row['invoiceId']}`;
+        }else{
+          url = `/panel/otherService/report?tickets=${row['invoiceId']}`;
+        }
+
+        return (
+          <TableCell key={column.name} className="py-1.5">
+            {column.name === "ref" ?
+              <a style={{color:"blue",cursor:"pointer"}} href={url}>{value}</a> // URL'yi link olarak kullan
+              :
+              value // Diğer durumlarda değeri normal metin olarak göster
+            }
+          </TableCell>
+        );
+      })}
+    </TableRow>
+  ))
+}
+
+
             </TableBody>
-            <TableFooter className="w-full">
-              <TableRow className="w-full">
-                <TableCell className="py-2" colSpan={columns.length - 1}>
-                  {t("Total Amount")}
+            <TableFooter>
+              <TableRow>
+                <TableCell className="py-2" colSpan={3}>
+                  {t("Total Amount")} {/* Hola */}
                 </TableCell>
-                <TableCell className="text-center py-2">{total}</TableCell>
+                <TableCell className="text-right py-2">{total}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

@@ -199,6 +199,7 @@ import CustomersReportDetail from "../pages/dashboard/reports/customers/detail";
 
 import ProfitsReport from "../pages/dashboard/reports/profits";
 import ProfitsReportDetail from "../pages/dashboard/reports/profits/detail";
+import PaymentsReport from "../pages/dashboard/reports/paymentTypes";
 // import PlaneTicketReport from "../pages/main/reports/planeTickets";
 // import CorporateReport from "../pages/main/reports/corporate";
 // import TourPackageReport from "../pages/main/reports/tourPackage";
@@ -900,6 +901,11 @@ const router = createBrowserRouter([
         path: "/panel/reports/profits/:id",
         element: <ProfitsReportDetail />,
       },
+      {
+        path: "/panel/reports/paymentTypes",
+        element: <PaymentsReport />,
+      },
+      
       // {
       //   path: "/panel/reports/planeTicket",
       //   element: <PlaneTicketReport />,
