@@ -161,6 +161,16 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: BsFileEarmarkPerson,
+        text: "Recivebales",
+        link: "/panel/reports/customers",
+      },
+      {
+        icon: BsFileEarmarkPerson,
+        text: "Profits",
+        link: "/panel/reports/profits",
+      },
+      {
+        icon: BsFileEarmarkPerson,
         text: "Təchizatçı",
         link: "/panel/reports/suppliers",
       },

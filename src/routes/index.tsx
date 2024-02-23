@@ -194,6 +194,9 @@ import UpdateAgreementFormat from "../pages/main/settings/agreementFormat/update
 //reports
 import SuppliersReport from "../pages/main/reports/suppliers";
 import SuppliersReportDetail from "../pages/main/reports/suppliers/detail";
+import CustomersReport from "../pages/main/reports/customers";
+import CustomersReportDetail from "../pages/main/reports/customers/detail";
+import ProfitsReport from "../pages/main/reports/profits";
 // import PlaneTicketReport from "../pages/main/reports/planeTickets";
 // import CorporateReport from "../pages/main/reports/corporate";
 // import TourPackageReport from "../pages/main/reports/tourPackage";
@@ -879,6 +882,19 @@ const router = createBrowserRouter([
         path: "/panel/reports/suppliers/:id",
         element: <SuppliersReportDetail />,
       },
+      {
+        path: "/panel/reports/customers",
+        element: <CustomersReport />,
+      },
+      {
+        path: "/panel/reports/customers/:id",
+        element: <CustomersReportDetail />,
+      },
+      {
+        path: "/panel/reports/profits",
+        element: <ProfitsReport />,
+      },
+      
       // {
       //   path: "/panel/reports/planeTicket",
       //   element: <PlaneTicketReport />,

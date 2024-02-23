@@ -4,28 +4,35 @@ export const columns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
 
   {
-    field: "fullName",
-    headerName: "Ad",
+    field: "type",
+    headerName: "Type",
     flex: 1,
     headerClassName: "header-item",
   },
 
   {
-    field: "phone",
-    headerName: "Telefon",
+    field: "count",
+    headerName: "Count",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "category",
-    headerName: "Category",
+    field: "purchasePrice",
+    headerName: "Purchase Price",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "debt",
-    headerName: "Debt",
+    field: "salePrice",
+    headerName: "Sale Price",
     flex: 1,
     headerClassName: "header-item",
   },
+  {
+    field: "profit",
+    headerName: "Profit",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  
 ];
