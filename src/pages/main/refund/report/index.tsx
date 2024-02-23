@@ -171,11 +171,11 @@ export default function index() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("Məhsul nömrəsi")}</TableHead> {/* Hola */}
-                    <TableHead>{t("Ödəniş növü")}</TableHead> {/* Hola */}
+                    <TableHead>{t("Məhsul nömrəsi")}</TableHead>
+                    <TableHead>{t("Ödəniş növü")}</TableHead>
                     <TableHead>{t("Ödənilən məbləğ")}</TableHead>
                     <TableHead>{t("Qaytarılan məbləğ")}</TableHead>
-                    <TableHead>{t("Cərimə")}</TableHead> {/* Hola */}
+                    <TableHead>{t("Cərimə")}</TableHead>
                     <TableHead>{t("date")}</TableHead>
                   </TableRow>
                 </TableHeader>

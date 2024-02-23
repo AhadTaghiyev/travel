@@ -49,7 +49,7 @@ const NewIncome = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Refund Yarat")} {/* Hola */}
+        {t("Refund Yarat")}
       </h1>
       <MassIncomeForm
         formType="Create"

@@ -23,7 +23,7 @@ const getTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Tur paket"), value: "tourPackage" },
   { label: t("Individual Tur paket"), value: "individualTourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
-  { label: t("Depozit"), value: "deposit" }, // Hola
+  { label: t("Depozit"), value: "deposit" },
 ];
 
 type IItem = {
@@ -78,7 +78,7 @@ const RefundForm = ({
               <>
                 <div className="w-full">
                   <CustomSelect
-                    label={t("Məhsul tipi")} // Hola
+                    label={t("Məhsul tipi")}
                     optionLabel="name"
                     value={values.type ?? null}
                     change={(value) => {
@@ -136,7 +136,7 @@ const RefundForm = ({
                   isMultiSelect={false}
                   secondaryOptionLabel="amount"
                   api={`Invoices/GetRefundables?customerId=${values.customerId}&type=${values.type}`}
-                  label={t("Məhsul nömrəsi")} // Hola
+                  label={t("Məhsul nömrəsi")}
                   value={[values.invoiceId || values.advancePaymentId]}
                   change={(option: any) => {
                     const isDeposit = values.type === "deposit";
@@ -200,7 +200,7 @@ const RefundForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
-                    label={t("Qaytarılan məbləğ")} // Hola
+                    label={t("Qaytarılan məbləğ")}
                     value={values.paidToCustomer}
                     change={handleChange}
                     type="number"
@@ -214,7 +214,7 @@ const RefundForm = ({
                 <div className="w-full">
                   <CustomTextField
                     disabled
-                    label={t("Cərimə")} // Hola
+                    label={t("Cərimə")}
                     value={Math.max(values.amount - values.paidToCustomer, 0)}
                     change={() => 0}
                     type="number"

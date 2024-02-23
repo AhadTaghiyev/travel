@@ -71,7 +71,7 @@ const Employee = ({ initialValues, onSubmit }: IEmployeeProps) => {
             </div>
             <div className="w-full">
               <CustomTextField
-                label={t("Vəzifə")} /*Hola*/
+                label={t("Vəzifə")}
                 value={values.position}
                 change={handleChange}
                 name={`position`}
@@ -81,7 +81,7 @@ const Employee = ({ initialValues, onSubmit }: IEmployeeProps) => {
             </div>
             <div className="w-full">
               <CustomTextField
-                label={t("Maaş")} /*Hola*/
+                label={t("Maaş")}
                 value={values.salary}
                 change={handleChange}
                 type="number"

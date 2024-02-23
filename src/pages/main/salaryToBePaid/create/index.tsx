@@ -22,7 +22,7 @@ const NewSalaryToBePaid = () => {
         .post(`/PaySalarys/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("SalaryToBePaid Created")); // Hola
+            toast.success(t("SalaryToBePaid Created"));
             navigate(`/panel/salaryToBePaid`);
           } else {
             toast.error(response.message || t("Something went wrong"));

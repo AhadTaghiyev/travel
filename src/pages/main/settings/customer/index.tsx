@@ -11,7 +11,7 @@ export default function Index() {
         hideReport
         columns={columns(t)}
         api={"/Customers/GetAll"}
-        buttonText="Müştəri" // Hola lər
+        buttonText="Müştəri"
         deleteApi="/Customers/Delete"
         root="/panel/customers"
       />

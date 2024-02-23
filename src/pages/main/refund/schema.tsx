@@ -3,7 +3,7 @@ import * as Yup from "yup";
 export const RefundSchema = Yup.object().shape(
   {
     date: Yup.date().required("Tarix seçilməlidir"),
-    type: Yup.string().required("Tip seçilməlidir"), // Hola
+    type: Yup.string().required("Tip seçilməlidir"),
     customerId: Yup.string().required("Müştəri seçilməlidir"),
     amount: Yup.number().min(0),
     invoiceId: Yup.object().when(
@@ -13,7 +13,7 @@ export const RefundSchema = Yup.object().shape(
           ? sch.required("Məhsul seçilməlidir")
           : sch.notRequired();
       }
-    ), // Hola
+    ),
     advancePaymentId: Yup.object().when("invoiceId", ([invoiceId], sch) => {
       return !invoiceId
         ? sch.required("Məhsul seçilməlidir")

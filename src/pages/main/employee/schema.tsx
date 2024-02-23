@@ -6,8 +6,8 @@ export const EmployeeSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email doğru formatda deyil")
     .required("Email daxil edilməlidir"),
-  position: Yup.string().required("Vəzifə daxil edilməlidir"), // Hola
+  position: Yup.string().required("Vəzifə daxil edilməlidir"),
   salary: Yup.number()
-    .min(0, "Maaş mənfi ola bilməz") // Hola
-    .required("Maaş daxil edilməlidir"), // Hola
+    .min(0, "Maaş mənfi ola bilməz")
+    .required("Maaş daxil edilməlidir"),
 });

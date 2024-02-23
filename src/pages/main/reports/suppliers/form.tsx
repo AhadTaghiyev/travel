@@ -2,7 +2,7 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { AdvancePaymentsSchema } from "./schema";
+import { SupplierReportSchema } from "./schema";
 import { IDepositModel } from "./types";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
@@ -11,7 +11,7 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 
 type FormType = "Edit" | "Create" | "View";
 
-interface IMassIncomeFormProps {
+interface ISupplierReportFormProps {
   formType: FormType;
   initialValues: IDepositModel;
   onSubmit: (
@@ -20,11 +20,11 @@ interface IMassIncomeFormProps {
   ) => void;
 }
 
-const MassIncomeForm = ({
+const SupplierReportForm = ({
   initialValues,
   onSubmit,
   formType,
-}: IMassIncomeFormProps) => {
+}: ISupplierReportFormProps) => {
   const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const MassIncomeForm = ({
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={AdvancePaymentsSchema}
+      validationSchema={SupplierReportSchema}
     >
       {({
         values,
@@ -118,4 +118,4 @@ const MassIncomeForm = ({
   );
 };
 
-export default MassIncomeForm;
+export default SupplierReportForm;
