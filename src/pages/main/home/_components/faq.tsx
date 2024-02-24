@@ -26,7 +26,10 @@ const questions = [
 const FaqSection = () => {
   const [activeQuestion, setActiveQuestion] = useState(null);
   return (
-    <div className="relative landing-container text-[#1c2940] my-14">
+    <div
+      id="landing-faq-section"
+      className="relative landing-container text-[#1c2940] py-16"
+    >
       <h1 className="text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Frequently Asked Questions (FAQ)
       </h1>

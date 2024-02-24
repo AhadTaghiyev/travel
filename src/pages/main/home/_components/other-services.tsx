@@ -31,7 +31,7 @@ const data = [
 
 const OtherServicesSection = () => {
   return (
-    <div className="landing-container my-14">
+    <div className="landing-container py-16">
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Other Services
       </h1>

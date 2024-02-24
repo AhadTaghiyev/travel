@@ -329,3 +329,7 @@ body,
     padding-left: 15px;
   }
 }
+
+* {
+  scroll-behavior: smooth;
+}

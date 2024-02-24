@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PricingSection = () => {
   return (
-    <div className="py-14 bg-white">
+    <div id="landing-pricing-section" className="py-16 bg-white">
       <div className="landing-container">
         <h1 className="text-[#59C1FF] font-semibold text-2xl xl:text-5xl xl:leading-[60px] text-center">
           Check Our Valuable Price

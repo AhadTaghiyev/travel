@@ -1,6 +1,9 @@
 const GetInTouchSection = () => {
   return (
-    <div className="landing-container text-[#1c2940] my-14">
+    <div
+      id="landing-contact-section"
+      className="landing-container text-[#1c2940] py-16"
+    >
       <h1 className="text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Get in Touch Today!
       </h1>

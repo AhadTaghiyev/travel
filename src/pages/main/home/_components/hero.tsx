@@ -3,7 +3,10 @@ import HeroImg from "@/assets/hero.png";
 
 const HeroSection = () => {
   return (
-    <div className="py-10 md:py-[80px] landing-container flex flex-col md:flex-row justify-between items-center">
+    <div
+      id="landing-hero-section"
+      className="py-10 md:py-[80px] landing-container flex flex-col md:flex-row justify-between items-center"
+    >
       <div className="text-[#24272B] md:w-[609px]">
         <h1 className="text-2xl md:text-5xl md:leading-[60px] font-extrabold">
           Best Accounting Software for Travel Agency

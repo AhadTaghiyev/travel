@@ -30,7 +30,7 @@ const FeedbacksSection = () => {
 
   const slide = slides[activeSlide % slides.length];
   return (
-    <div className="relative landing-container text-[#1c2940] my-14">
+    <div className="relative landing-container text-[#1c2940] py-16">
       <h1 className="text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Feedbacks
       </h1>
@@ -38,7 +38,7 @@ const FeedbacksSection = () => {
         Discover what our customers tell us about their satisfaction.
       </p>
       <div
-        className="w-full relative flex-col-reverse items-center lg:items-start lg:flex-row border justify-between border-solid border-[#EBEDF0] mt-12 px-4 lg:px-16 xl:px-24 flex gap-6 py-14"
+        className="w-full relative flex-col-reverse items-center lg:items-start lg:flex-row border justify-between border-solid border-[#EBEDF0] mt-12 px-4 lg:px-16 xl:px-24 flex gap-6 py-16"
         style={{
           boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
         }}
