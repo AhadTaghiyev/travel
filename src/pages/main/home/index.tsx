@@ -6,10 +6,14 @@ import AccountingSoftwareSection from "./_components/accounting-software";
 import AboutSection from "./_components/about";
 import OtherServicesSection from "./_components/other-services";
 import PricingSection from "./_components/pricing";
+import GetInTouchSection from "./_components/get-in-touch";
+import FeedbacksSection from "./_components/feedbacks";
+import FaqSection from "./_components/faq";
+import FooterSection from "./_components/footer";
 
 const Home = () => {
   return (
-    <div className="w-full bg-[#F8F9FB] h-full pb-20">
+    <div className="w-full bg-[#F8F9FB] h-full">
       <Navbar />
       <HeroSection />
       <PartnersSection />
@@ -18,6 +22,10 @@ const Home = () => {
       <AboutSection />
       <OtherServicesSection />
       <PricingSection />
+      <GetInTouchSection />
+      <FeedbacksSection />
+      <FaqSection />
+      <FooterSection />
     </div>
   );
 };
