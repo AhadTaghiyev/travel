@@ -170,14 +170,14 @@ export const sidebarItems: SidebarItemType[] = [
         link: "/panel/reports/profits",
       },
       {
+        icon: FaMoneyBill1Wave,
+        text: "Finansal Status",
+        link: "/panel/reports/paymentTypes",
+      },
+      {
         icon: BsFileEarmarkPerson,
         text: "Təchizatçı",
         link: "/panel/reports/suppliers",
-      },
-      {
-        icon: FaMoneyBill1Wave,
-        text: "Ödəniş Növü",
-        link: "/panel/reports/paymentTypes",
       },
       {
         icon: BsFillPeopleFill,
