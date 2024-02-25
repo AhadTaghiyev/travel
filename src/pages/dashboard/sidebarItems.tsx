@@ -172,6 +172,11 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaMoneyBill1Wave,
         text: "Finansal Status",
+        link: "/panel/reports/finaceStatus",
+      },
+      {
+        icon: FaMoneyBill1Wave,
+        text: "Payment Methods",
         link: "/panel/reports/paymentTypes",
       },
       {
@@ -182,12 +187,12 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: BsFillPeopleFill,
         text: "Müştəri",
-        link: "/panel/reports/customer",
+        link: "/panel/reports/customerprofit",
       },
       {
         icon: FaPeopleGroup,
         text: "Personal",
-        link: "/panel/reports/personal",
+        link: "/panel/reports/personals",
       },
       {
         icon: MdOutlineAirplaneTicket,

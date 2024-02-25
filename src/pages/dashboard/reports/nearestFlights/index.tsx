@@ -1,7 +1,21 @@
-import Reports from '../../../../components/pages/reports';
+import Container from "@mui/material/Container";
+import Table from "../../../../components/pages/table";
+import { columns } from "./tableColumns";
 
 export default function Index() {
   return (
-    <Reports api='GetNearestFly'/>
-  )
+    <Container maxWidth="xl">
+      <Table
+        hideDelete
+        hideCreate
+        hideEdit
+        hidePrint
+        hideReport
+        columns={columns}
+        detailLink="/panel/reports/NearestTravelReport/"
+        api={"/Reports/NearestTravelReport"}
+        root="/panel/reports/customers"
+      />
+    </Container>
+  );
 }

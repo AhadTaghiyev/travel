@@ -11,8 +11,8 @@ export default function Index() {
         hideEdit
         hidePrint
         columns={columns}
-        detailLink="/panel/reports/personals/"
-        api={"/Reports/PersonalsReport"}
+        detailLink="/panel/reports/customerprofit/"
+        api={"/Reports/CustomersReport"}
         root="/panel/reports/customers"
       />
     </Container>

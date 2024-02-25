@@ -9,4 +9,12 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
+
+  {
+    field: "phone",
+    headerName: "Telefon",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+
 ];

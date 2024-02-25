@@ -56,7 +56,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
       color="default"
       sx={{ right: "0px", position: "fixed", width: "80%" }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" style={{backgroundColor:"black",color:"white"}}>
         <Toolbar disableGutters>
           {!isAdmin ? (
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
@@ -95,7 +95,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                     to="/panel"
                     key={page}
                     style={{
-                      color: "black",
+                      color: "white",
                       display: "block",
                       fontSize: "12px",
                       fontWeight: "400",

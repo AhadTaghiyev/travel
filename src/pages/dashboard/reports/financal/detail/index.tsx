@@ -22,12 +22,12 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 
 const columns = [
-  // { label: "Id", name: "id" },
+  { label: "Id", name: "id" },
   { label: "Date", name: "date" },
-  { label: "Beneficeary.", name: "detail" },
-  { label: "Service.", name: "service" },
-  { label: "Debit.", name: "debit" },
-  { label: "Credit.", name: "credit" },
+  { label: "Ref.", name: "ref" },
+  { label: "DeadLine.", name: "deadLine" },
+  { label: "Note.", name: "note" },
+  { label: "Reciveables.", name: "amount" },
 ];
 
 const Detail = () => {
@@ -46,7 +46,7 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
       })
@@ -107,14 +107,14 @@ const Detail = () => {
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
-        <Formik className="removeFromPrint"
+        <Formik
           onSubmit={onSubmit}
           initialValues={{ startDate: null, endDate: null }}
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form 
+            <form
               onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6 removeFromPrint"
+              className="pt-4 flex flex-wrap items-center gap-x-6"
             >
               <div className="w-52">
                 <CustomDateTimePicker

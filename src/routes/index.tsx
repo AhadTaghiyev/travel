@@ -199,7 +199,18 @@ import CustomersReportDetail from "../pages/dashboard/reports/customers/detail";
 
 import ProfitsReport from "../pages/dashboard/reports/profits";
 import ProfitsReportDetail from "../pages/dashboard/reports/profits/detail";
+import FinancesReport from "../pages/dashboard/reports/financal";
 import PaymentsReport from "../pages/dashboard/reports/paymentTypes";
+import PaymentReportDetail from "../pages/dashboard/reports/paymentTypes/detail";
+
+import CustomerProfitsReport from "../pages/dashboard/reports/customersProfit";
+import CustomerProfitsDetail from "../pages/dashboard/reports/customersProfit/detail";
+
+import PersonalsReport from "../pages/dashboard/reports/personal";
+import PersonalsDetail from "../pages/dashboard/reports/personal/detail";
+
+import NearestFlights from "../pages/dashboard/reports/nearestFlights";
+
 // import PlaneTicketReport from "../pages/main/reports/planeTickets";
 // import CorporateReport from "../pages/main/reports/corporate";
 // import TourPackageReport from "../pages/main/reports/tourPackage";
@@ -902,9 +913,41 @@ const router = createBrowserRouter([
         element: <ProfitsReportDetail />,
       },
       {
+        path: "/panel/reports/finaceStatus",
+        element: <FinancesReport />,
+      },
+      {
         path: "/panel/reports/paymentTypes",
         element: <PaymentsReport />,
       },
+      {
+        path: "/panel/reports/paymentTypes/:id",
+        element: <PaymentReportDetail />,
+      },
+      {
+        path: "/panel/reports/customerprofit",
+        element: <CustomerProfitsReport />,
+      },
+      {
+        path: "/panel/reports/customerprofit/:id",
+        element: <CustomerProfitsDetail />,
+      },
+
+      {
+        path: "/panel/reports/personals",
+        element: <PersonalsReport />,
+      },
+      {
+        path: "/panel/reports/personals/:id",
+        element: <PersonalsDetail />,
+      },
+      {
+        path: "/panel/reports/nearestFlights",
+        element: <NearestFlights />,
+      },
+      
+
+
       
       // {
       //   path: "/panel/reports/planeTicket",
