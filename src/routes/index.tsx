@@ -194,6 +194,13 @@ import UpdateAgreementFormat from "../pages/dashboard/settings/agreementFormat/u
 //reports
 import SuppliersReport from "../pages/dashboard/reports/suppliers";
 import SuppliersReportDetail from "../pages/dashboard/reports/suppliers/detail";
+
+import ExpendituresReport from "../pages/dashboard/reports/expenditure";
+import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/detail";
+
+import DeadlineReport from "../pages/dashboard/reports/deadline";
+import FlightTicketsReport from "../pages/dashboard/reports/flightTickets";
+//customer
 import CustomersReport from "../pages/dashboard/reports/customers";
 import CustomersReportDetail from "../pages/dashboard/reports/customers/detail";
 
@@ -897,6 +904,22 @@ const router = createBrowserRouter([
         element: <SuppliersReportDetail />,
       },
       {
+        path: "/panel/reports/expenditures",
+        element: <ExpendituresReport />,
+      },
+      {
+        path: "/panel/reports/expenditures/:id",
+        element: <ExpendituresReportDetail />,
+      },
+      {
+        path: "/panel/reports/deadlines",
+        element: <DeadlineReport />,
+      },
+      {
+        path: "/panel/reports/flightTickets",
+        element: <FlightTicketsReport />,
+      },
+      {
         path: "/panel/reports/customers",
         element: <CustomersReport />,
       },
@@ -945,10 +968,7 @@ const router = createBrowserRouter([
         path: "/panel/reports/nearestFlights",
         element: <NearestFlights />,
       },
-      
 
-
-      
       // {
       //   path: "/panel/reports/planeTicket",
       //   element: <PlaneTicketReport />,

@@ -24,18 +24,26 @@ import { formatDate } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "DeadLine.", name: "deadLine", type: "date" },
-  { label: "Note.", name: "note" },
-  { label: "Reciveables.", name: "amount" },
+  { label: "Debit", name: "debit" },
+  { label: "Credit", name: "credit" },
+  { label: "Balance", name: "balance" },
+  { label: "Total", name: "total" },
 ];
 
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [data, setData] =
-    useState<{ id: string; name: string; amount: number }[]>();
+  const [data, setData] = useState<
+    {
+      id: string;
+      name: string;
+      balance: number;
+      total: number;
+      credit: number;
+      debit: number;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -47,9 +55,13 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/ExpenditureReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
-        setData(res.data.items);
+        const items = res.data.items.map((item) => ({
+          ...item,
+          total: item.debit + item.credit + item.balance,
+        }));
+        setData(items);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -72,7 +84,10 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.amount, 0) || 0;
+  const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
+  const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
+  const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -151,7 +166,7 @@ const Detail = () => {
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
-                {t("Axtar")} {/* Hola */}
+                {t("Axtar")}
               </button>
             </form>
           )}
@@ -171,52 +186,26 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((row) => (
-                <TableRow key={row.id}>
-                  {columns.map((column) => {
-                    const value = String(row[column.name]).toLowerCase();
-
-                    let url = "";
-                    if (value.startsWith("pl")) {
-                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
-                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
-                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
-                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else {
-                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
-                    }
-
-                    return (
-                      <TableCell key={column.name}>
-                        {
-                          column.name === "ref" ? (
-                            <a
-                              style={{ color: "blue", cursor: "pointer" }}
-                              href={url}
-                            >
-                              {value}
-                            </a> // URL'yi link olarak kullan
-                          ) : column.type === "date" ? (
-                            formatDate(value)
-                          ) : (
-                            value
-                          ) // Diğer durumlarda değeri normal metin olarak göster
-                        }
+              {data &&
+                data.map((row) => (
+                  <TableRow key={row.id}>
+                    {columns.map((column) => (
+                      <TableCell key={column.name} className="py-1.5">
+                        {row?.[column.name]}
                       </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+                    ))}
+                  </TableRow>
+                ))}
             </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={columns.length - 1}>
-                  {t("Total Amount")} {/* Hola */}
+            <TableFooter className="w-full">
+              <TableRow className="w-full">
+                <TableCell className="py-2" colSpan={2}>
+                  {t("Total Amount")}
                 </TableCell>
-                <TableCell>{total}</TableCell>
+                <TableCell className="py-2">{totalDebit}</TableCell>
+                <TableCell className="py-2">{totalCredit}</TableCell>
+                <TableCell className="py-2">{totalBalance}</TableCell>
+                <TableCell className="py-2">{total}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

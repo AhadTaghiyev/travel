@@ -55,6 +55,7 @@ export default function Index({
   api,
   deleteApi,
   root,
+  hideFilter,
   hideEdit,
   hideCreate,
   hidePrint = true,
@@ -240,30 +241,32 @@ export default function Index({
           )}
         </Grid>
       )}
-      <Grid item md={2} style={{ justifyContent: "center" }}>
-        <Paper
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            boxShadow: "none",
-            border: "1px solid #c4c4c4",
-            height: "36px",
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1, fontSize: "12px" }}
-            placeholder={t("Axtar")}
-            inputProps={{ "aria-label": "axtar" }}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <IconButton type="button" sx={{ p: 0 }} aria-label="search">
-            <AiOutlineSearch style={{ fontSize: "15px", padding: 0 }} />
-          </IconButton>
-        </Paper>
-      </Grid>
+      {!hideFilter && (
+        <Grid item md={2} style={{ justifyContent: "center" }}>
+          <Paper
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              boxShadow: "none",
+              border: "1px solid #c4c4c4",
+              height: "36px",
+            }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1, fontSize: "12px" }}
+              placeholder={t("Axtar")}
+              inputProps={{ "aria-label": "axtar" }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton type="button" sx={{ p: 0 }} aria-label="search">
+              <AiOutlineSearch style={{ fontSize: "15px", padding: 0 }} />
+            </IconButton>
+          </Paper>
+        </Grid>
+      )}
       {filterOptions && (
         <Grid item md={2} className="items-center">
           <Select
@@ -295,36 +298,40 @@ export default function Index({
           </Select>
         </Grid>
       )}
-      <Grid item md={2} className="min-w-[200px] flex items-center">
-        <CustomDateTimePicker
-          hideError
-          value={startDate}
-          change={(data) => {
-            handleStartDateChange(data ?? new Date());
-          }}
-        />
-      </Grid>
-      <Grid item md={2} className="min-w-[200px] flex items-center">
-        <CustomDateTimePicker
-          hideError
-          value={endDate}
-          change={(data) => {
-            handleEndDateChange(data ?? new Date());
-          }}
-        />
-      </Grid>
-      <Grid item>
-        <Button
-          onClick={handleDownload}
-          variant="outlined"
-          sx={headerStyle}
-          style={{ fontSize: "9px" }}
-          color="inherit"
-        >
-          <FiDownload style={{ marginRight: "6px" }} />
-          {t("Export")}
-        </Button>
-      </Grid>
+      {!hideFilter && (
+        <>
+          <Grid item md={2} className="min-w-[200px] flex items-center">
+            <CustomDateTimePicker
+              hideError
+              value={startDate}
+              change={(data) => {
+                handleStartDateChange(data ?? new Date());
+              }}
+            />
+          </Grid>
+          <Grid item md={2} className="min-w-[200px] flex items-center">
+            <CustomDateTimePicker
+              hideError
+              value={endDate}
+              change={(data) => {
+                handleEndDateChange(data ?? new Date());
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              onClick={handleDownload}
+              variant="outlined"
+              sx={headerStyle}
+              style={{ fontSize: "9px" }}
+              color="inherit"
+            >
+              <FiDownload style={{ marginRight: "6px" }} />
+              {t("Export")}
+            </Button>
+          </Grid>
+        </>
+      )}
       <Grid sx={{ backgroundColor: "white" }} item xs={12}>
         <div style={{ height: "100%", width: "100%" }}>
           <DataGrid

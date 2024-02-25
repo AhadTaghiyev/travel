@@ -36,8 +36,16 @@ const columns = [
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [data, setData] =
-    useState<{ id: string; name: string; balance: number }[]>();
+  const [data, setData] = useState<
+    {
+      id: string;
+      name: string;
+      balance: number;
+      total: number;
+      credit: number;
+      debit: number;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -78,7 +86,10 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
+  const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
+  const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -192,10 +203,13 @@ const Detail = () => {
             </TableBody>
             <TableFooter className="w-full">
               <TableRow className="w-full">
-                <TableCell className="py-2" colSpan={columns.length - 1}>
+                <TableCell className="py-2" colSpan={4}>
                   {t("Total Amount")}
                 </TableCell>
-                <TableCell className="text-center py-2">{total}</TableCell>
+                <TableCell className="py-2">{totalDebit}</TableCell>
+                <TableCell className="py-2">{totalCredit}</TableCell>
+                <TableCell className="py-2">{totalBalance}</TableCell>
+                <TableCell className="py-2">{total}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

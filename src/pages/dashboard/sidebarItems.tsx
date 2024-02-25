@@ -185,6 +185,21 @@ export const sidebarItems: SidebarItemType[] = [
         link: "/panel/reports/suppliers",
       },
       {
+        icon: BsFileEarmarkPerson,
+        text: "Deadline", // Hola
+        link: "/panel/reports/deadLines",
+      },
+      {
+        icon: BsFileEarmarkPerson,
+        text: "Flight Tickets", // Hola
+        link: "/panel/reports/flightTickets",
+      },
+      {
+        icon: BsFileEarmarkPerson,
+        text: "Expenditures", // Hola
+        link: "/panel/reports/expenditures",
+      },
+      {
         icon: BsFillPeopleFill,
         text: "Müştəri",
         link: "/panel/reports/customerprofit",

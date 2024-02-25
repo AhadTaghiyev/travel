@@ -20,12 +20,13 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
+import { formatDate } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Date", name: "date" },
+  { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "DeadLine.", name: "deadLine" },
+  { label: "DeadLine.", name: "deadLine", type: "date" },
   { label: "Note.", name: "note" },
   { label: "Buying.", name: "sellingPrice" },
   { label: "Selling.", name: "totalAmount" },
@@ -35,8 +36,15 @@ const columns = [
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [data, setData] =
-    useState<{ id: string; name: string; balance: number }[]>();
+  const [data, setData] = useState<
+    {
+      id: string;
+      name: string;
+      sellingPrice: number;
+      totalAmount: number;
+      profit: number;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -73,7 +81,11 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  const totalProfit = data?.reduce((acc, item) => acc + item.profit, 0) || 0;
+  const totalSellingPrice =
+    data?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
+  const totalAmount =
+    data?.reduce((acc, item) => acc + item.totalAmount, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -172,47 +184,54 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-            {
-  data.map((row) => (
-    <TableRow key={row.id}>
-      {columns.map((column) => {
-        const value = String(row[column.name]).toLowerCase();
+              {data.map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map((column) => {
+                    const value = String(row[column.name]).toLowerCase();
 
-        let url = "";
-        if (value.startsWith("pl")) {
-          url = `/panel/aviabiletsale/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("cp")) {
-          url = `/panel/cooperativeTicket/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("itp")) {
-          url = `/panel/individualTourPackage/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("tp")) {
-          url = `/panel/tourPackage/report?tickets=${row['invoiceId']}`;
-        }else{
-          url = `/panel/otherService/report?tickets=${row['invoiceId']}`;
-        }
+                    let url = "";
+                    if (value.startsWith("pl")) {
+                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("cp")) {
+                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("itp")) {
+                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("tp")) {
+                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else {
+                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
+                    }
 
-        return (
-          <TableCell key={column.name} className="py-1.5">
-            {column.name === "ref" ?
-              <a style={{color:"blue",cursor:"pointer"}} href={url}>{value}</a> // URL'yi link olarak kullan
-              :
-              value // Diğer durumlarda değeri normal metin olarak göster
-            }
-          </TableCell>
-        );
-      })}
-    </TableRow>
-  ))
-}
-
-
+                    return (
+                      <TableCell key={column.name} className="py-1.5">
+                        {
+                          column.name === "ref" ? (
+                            <a
+                              style={{ color: "blue", cursor: "pointer" }}
+                              href={url}
+                            >
+                              {value}
+                            </a> // URL'yi link olarak kullan
+                          ) : column.type === "date" ? (
+                            formatDate(value)
+                          ) : (
+                            value
+                          ) // Diğer durumlarda değeri normal metin olarak göster
+                        }
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={3}>
+                <TableCell className="py-2" colSpan={5}>
                   {t("Total Amount")} {/* Hola */}
                 </TableCell>
-                <TableCell className="text-right py-2">{total}</TableCell>
+                <TableCell className="py-2">{totalSellingPrice}</TableCell>
+                <TableCell className="py-2">{totalAmount}</TableCell>
+                <TableCell className="py-2">{totalProfit}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

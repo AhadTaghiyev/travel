@@ -20,10 +20,11 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
+import { formatDate } from "@/lib/utils";
 
 const columns = [
   // { label: "Id", name: "id" },
-  { label: "Date", name: "date" },
+  { label: "Date", name: "date", type: "date" },
   { label: "Beneficeary.", name: "detail" },
   { label: "Service.", name: "service" },
   { label: "Debit.", name: "debit" },
@@ -34,7 +35,7 @@ const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [data, setData] =
-    useState<{ id: string; name: string; balance: number }[]>();
+    useState<{ id: string; name: string; debit: number; credit: number }[]>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -71,7 +72,8 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
+  const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -107,12 +109,13 @@ const Detail = () => {
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
-        <Formik className="removeFromPrint"
+        <Formik
+          className="removeFromPrint"
           onSubmit={onSubmit}
           initialValues={{ startDate: null, endDate: null }}
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form 
+            <form
               onSubmit={handleSubmit}
               className="pt-4 flex flex-wrap items-center gap-x-6 removeFromPrint"
             >
@@ -170,47 +173,53 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-            {
-  data.map((row) => (
-    <TableRow key={row.id}>
-      {columns.map((column) => {
-        const value = String(row[column.name]).toLowerCase();
+              {data.map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map((column) => {
+                    const value = String(row[column.name]).toLowerCase();
 
-        let url = "";
-        if (value.startsWith("pl")) {
-          url = `/panel/aviabiletsale/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("cp")) {
-          url = `/panel/cooperativeTicket/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("itp")) {
-          url = `/panel/individualTourPackage/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("tp")) {
-          url = `/panel/tourPackage/report?tickets=${row['invoiceId']}`;
-        }else{
-          url = `/panel/otherService/report?tickets=${row['invoiceId']}`;
-        }
+                    let url = "";
+                    if (value.startsWith("pl")) {
+                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("cp")) {
+                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("itp")) {
+                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("tp")) {
+                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else {
+                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
+                    }
 
-        return (
-          <TableCell key={column.name} className="py-1.5">
-            {column.name === "ref" ?
-              <a style={{color:"blue",cursor:"pointer"}} href={url}>{value}</a> // URL'yi link olarak kullan
-              :
-              value // Diğer durumlarda değeri normal metin olarak göster
-            }
-          </TableCell>
-        );
-      })}
-    </TableRow>
-  ))
-}
-
-
+                    return (
+                      <TableCell key={column.name} className="py-1.5">
+                        {
+                          column.name === "ref" ? (
+                            <a
+                              style={{ color: "blue", cursor: "pointer" }}
+                              href={url}
+                            >
+                              {value}
+                            </a> // URL'yi link olarak kullan
+                          ) : column.type === "date" ? (
+                            formatDate(value)
+                          ) : (
+                            value
+                          ) // Diğer durumlarda değeri normal metin olarak göster
+                        }
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TableCell className="py-2" colSpan={3}>
                   {t("Total Amount")} {/* Hola */}
                 </TableCell>
-                <TableCell className="text-right py-2">{total}</TableCell>
+                <TableCell className="py-2">{totalDebit}</TableCell>
+                <TableCell className="py-2">{totalCredit}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

@@ -6,16 +6,14 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        hideFilter
         hideDelete
         hideCreate
         hideEdit
         hidePrint
-        hideReport
         columns={columns}
-        detailLink="/panel/reports/NearestTravelReport/"
-        api={"/Reports/NearestTravelReport"}
-        root="/panel/reports/customers"
+        detailLink="/panel/reports/expenditures/"
+        api={"/Reports/ExpenditureReport"}
+        root="/panel/reports/expenditures"
       />
     </Container>
   );
