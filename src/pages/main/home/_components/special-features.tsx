@@ -1,20 +1,21 @@
-import RocketImage from "@/assets/icons/rocket.png";
-import TimeImage from "@/assets/icons/time.png";
-import SettingsImage from "@/assets/icons/settings.png";
+import { DownloadCloud, GitBranchPlus, UserCheck } from "lucide-react";
 
 const features = [
   {
-    image: RocketImage,
+    image:<DownloadCloud  color="#fff"  />,
+    color:"#655F59",
     title: "Cloud Based ERP",
     description: "Cloud Based ERP system that can be used anywhere",
   },
   {
-    image: TimeImage,
+    image: <UserCheck  color="#fff"  />,
+    color:"#C4A153",
     title: "Easy to Use",
     description: "Easy to use even for the newbies in accounts",
   },
   {
-    image: SettingsImage,
+    image: <GitBranchPlus color="#fff" />,
+    color:"#6E7971",
     title: "Multi Branch",
     description: "Easy to manage multiple branches in single admin",
   },
@@ -26,10 +27,10 @@ const SpecialFeaturesSection = () => {
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Our Special Features
       </h1>
-      <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
+      {/* <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
         There are many variations of passages of Lorem Ipsum available, but the
         majority have suffered alteration in some form travacco.
-      </p>
+      </p> */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {features.map((feature, index) => (
           <div
@@ -39,8 +40,10 @@ const SpecialFeaturesSection = () => {
               boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
             }}
           >
-            <div className="w-fit px-6 py-[22px] text-[#1c2940] bg-[rgba(89,193,255,0.10)] rounded">
-              <img src={feature.image} alt={`Feature ${feature.title}`} />
+         {/* <FontAwesomeIcon icon="fa-regular fa-cloud-arrow-down" /> */}
+ 
+            <div style={{backgroundColor:feature.color}}  className="w-fit px-6 py-[22px] text-[#1c2940] rounded">
+              {feature.image}
             </div>
             <h2 className="text-2xl mt-9 mb-4">{feature.title}</h2>
             <p className="text-xs mb-6">{feature.description}</p>

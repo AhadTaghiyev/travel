@@ -55,6 +55,7 @@ export default function index() {
   const [moneyTracking, setMoneyTracking] = useState<IAlertTableModel>({});
 
   useEffect(() => {
+
     async function fetcMoneyTracking() {
       try {
         const res = await apiService.get("Report/GetMoneyTracking");

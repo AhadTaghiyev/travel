@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@headlessui/react": "^1.7.18",
     "@hookform/resolvers": "^3.3.4",
     "@mui/lab": "5.0.0-alpha.137",

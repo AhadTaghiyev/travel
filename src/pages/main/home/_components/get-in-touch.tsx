@@ -7,10 +7,10 @@ const GetInTouchSection = () => {
       <h1 className="text-2xl xl:text-5xl xl:leading-[60px] text-center">
         Get in Touch Today!
       </h1>
-      <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
+      {/* <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
         Proactively deliver seamless core competencies with scalable. Completely
         fabricate transparent paradigms.
-      </p>
+      </p> */}
       <div className="w-full flex-col lg:flex-row bg-white mt-12 px-4 lg:px-16 xl:px-24 flex gap-6 pt-8 pb-16">
         <div className="lg:w-[360px]">
           <h3 className="text-xl font-bold">Contacts</h3>
@@ -24,8 +24,8 @@ const GetInTouchSection = () => {
             <p className="mt-5 mb-2 text-xs">
               Questions about our product or pricing? Call for support
             </p>
-            <a href="tel:+994557777887" className="text-xs text-[#59C1FF]">
-              +994 55 777 78 87
+            <a href="tel:+994557777887" className="text-xs text-[#1876D1]">
+              +994 50 516 26 66
             </a>
           </div>
           <div
@@ -36,8 +36,20 @@ const GetInTouchSection = () => {
           >
             <h4 className="font-semibold">Chat Us</h4>
             <p className="mt-5 mb-2 text-xs">Our support will help you from</p>
-            <a href="mailto:+994557777887" className="text-xs text-[#59C1FF]">
-              travvacco@info.az
+            <a href="mailto:+994557777887" className="text-xs text-[#1876D1]">
+              support@travvacco.com
+            </a>
+          </div>
+          <div
+            className="mt-4 p-6 w-full"
+            style={{
+              boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
+            }}
+          >
+            <h4 className="font-semibold">Locations</h4>
+            <p className="mt-5 mb-2 text-xs">Adress</p>
+            <a href="mailto:+994557777887" className="text-xs text-[#1876D1]">
+            Fatali Khan Khoyski 166B, Narimanov, Baku, Azerbaijan
             </a>
           </div>
         </div>
@@ -101,7 +113,7 @@ const GetInTouchSection = () => {
                 boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
               }}
             />
-            <button className="xl:col-span-2 px-6 py-3 bg-[#59C1FF] rounded text-xs text-[#f8f9fb] hover:bg-[#4bb7f6] transition">
+            <button className="xl:col-span-2 px-6 py-3 bg-[#1876D1] rounded text-xs text-[#f8f9fb] hover:bg-[#4bb7f6] transition">
               Send
             </button>
           </div>

@@ -1,4 +1,5 @@
-import PlaceholderImage from "@/assets/placeholder.png";
+import PlaceholderImage from "@/assets/dash.jpeg";
+import PlaceholderImage2 from "@/assets/tickercreate.jpeg";
 
 const data = [
   {
@@ -8,7 +9,7 @@ const data = [
       "From the dashboard, you can understand Cash in Hand, Cash in Bank, Recipient List, Supplier Bible List, Passenger Details, and Customer Passport Validity in the next few days.",
   },
   {
-    image: PlaceholderImage,
+    image: PlaceholderImage2,
     title: "Report generation",
     description:
       "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
@@ -21,10 +22,10 @@ const AboutSection = () => {
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
         About Travacco
       </h1>
-      <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
+      {/* <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
         There are many variations of passages of Lorem Ipsum available, but the
         majority have suffered alteration in some form travacco.
-      </p>
+      </p> */}
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {data.map((feature, index) => (
           <div

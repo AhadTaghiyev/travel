@@ -1,28 +1,30 @@
-import TransferImage from "@/assets/icons/transfer.png";
-import AgreementImage from "@/assets/icons/agreement.png";
-import ConfirmationImage from "@/assets/icons/confirmation.png";
-import LikeImage from "@/assets/icons/like.png";
+import { ArrowUpNarrowWide, Building2, LayoutDashboard } from "lucide-react";
+import { BsClipboardMinus } from "react-icons/bs";
 
 const data = [
   {
-    image: TransferImage,
+    image: <LayoutDashboard color="#fff" />,
+    color:"#655F59",
     title: "Easy-to-Use Dashboard",
     description:
       "From the dashboard, you can understand Cash in Hand, Cash in Bank, Recipient List, Supplier Bible List, Passenger Details, and Customer Passport Validity in the next few days.",
   },
   {
-    image: AgreementImage,
+    image: <BsClipboardMinus color="#fff" />,
+    color:"#B1B2A1",
     title: "Report generation",
     description:
       "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
   },
   {
-    image: ConfirmationImage,
+    image: <ArrowUpNarrowWide color="#fff" />,
+    color:"#C4A153",
     title: "Branch Sorting Facility",
     description: "Easy to manage multiple branches in single admin",
   },
   {
-    image: LikeImage,
+    image: <Building2 color="#fff" />,
+    color:"#6E7971",
     title: "Add-ons available",
     description:
       "Tour Plus, UMRA Plus, VISA Plus, Money transfer accounting, E-service accounting, SMS and Whatsapp integration",
@@ -35,10 +37,10 @@ const AccountingSoftwareSection = () => {
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
         All-inclusive accounting software
       </h1>
-      <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
+      {/* <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
         In just five years, we have over 1500 customer in India, UAE, Saudi
         Arabia, Qatar, Oman, Nepal and Egypt
-      </p>
+      </p> */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {data.map((feature, index) => (
           <div
@@ -48,8 +50,8 @@ const AccountingSoftwareSection = () => {
               boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
             }}
           >
-            <div className="w-fit px-6 py-[22px] text-[#1c2940] bg-[rgba(89,193,255,0.10)] rounded">
-              <img src={feature.image} alt={`Feature ${feature.title}`} />
+            <div style={{backgroundColor:feature.color}} className="w-fit px-6 py-[22px] text-[#1c2940]  rounded">
+            {feature.image}
             </div>
             <h2 className="text-base mt-6 mb-4 font-bold">{feature.title}</h2>
             <p className="text-xs">{feature.description}</p>
