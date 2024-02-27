@@ -164,7 +164,7 @@ const Detail = () => {
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
-                {t("Axtar")} {/* Hola */}
+                {t("Axtar")}
               </button>
             </form>
           )}
@@ -227,7 +227,7 @@ const Detail = () => {
             <TableFooter>
               <TableRow>
                 <TableCell className="py-2" colSpan={5}>
-                  {t("Total Amount")} {/* Hola */}
+                  {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalSellingPrice}</TableCell>
                 <TableCell className="py-2">{totalAmount}</TableCell>

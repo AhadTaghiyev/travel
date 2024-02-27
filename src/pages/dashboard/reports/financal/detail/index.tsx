@@ -150,7 +150,7 @@ const Detail = () => {
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
-                {t("Axtar")} {/* Hola */}
+                {t("Axtar")}
               </button>
             </form>
           )}
@@ -170,45 +170,48 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-            {
-  data.map((row) => (
-    <TableRow key={row.id}>
-      {columns.map((column) => {
-        const value = String(row[column.name]).toLowerCase();
+              {data.map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map((column) => {
+                    const value = String(row[column.name]).toLowerCase();
 
-        let url = "";
-        if (value.startsWith("pl")) {
-          url = `/panel/aviabiletsale/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("cp")) {
-          url = `/panel/cooperativeTicket/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("itp")) {
-          url = `/panel/individualTourPackage/report?tickets=${row['invoiceId']}`;
-        } else if (value.startsWith("tp")) {
-          url = `/panel/tourPackage/report?tickets=${row['invoiceId']}`;
-        }else{
-          url = `/panel/otherService/report?tickets=${row['invoiceId']}`;
-        }
+                    let url = "";
+                    if (value.startsWith("pl")) {
+                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("cp")) {
+                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("itp")) {
+                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else if (value.startsWith("tp")) {
+                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
+                    } else {
+                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
+                    }
 
-        return (
-          <TableCell key={column.name} className="py-1.5">
-            {column.name === "ref" ?
-              <a style={{color:"blue",cursor:"pointer"}} href={url}>{value}</a> // URL'yi link olarak kullan
-              :
-              value // Diğer durumlarda değeri normal metin olarak göster
-            }
-          </TableCell>
-        );
-      })}
-    </TableRow>
-  ))
-}
-
-
+                    return (
+                      <TableCell key={column.name} className="py-1.5">
+                        {
+                          column.name === "ref" ? (
+                            <a
+                              style={{ color: "blue", cursor: "pointer" }}
+                              href={url}
+                            >
+                              {value}
+                            </a> // URL'yi link olarak kullan
+                          ) : (
+                            value
+                          ) // Diğer durumlarda değeri normal metin olarak göster
+                        }
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TableCell className="py-2" colSpan={3}>
-                  {t("Total Amount")} {/* Hola */}
+                  {t("Total Amount")}
                 </TableCell>
                 <TableCell className="text-right py-2">{total}</TableCell>
               </TableRow>

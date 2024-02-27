@@ -25,10 +25,10 @@ const columns = [
   { label: "Ref.", name: "ref", className: "min-w-14" },
   { label: "Təchizatçı", name: "supplier" },
   { label: "Havayolu", name: "airway" },
-  { label: "Ticket Number", name: "ticketNumber" }, // Hola
-  { label: "Passanger", name: "passanger" }, // Hola
-  { label: "Purchase Price", name: "purchasePrice" }, // Hola
-  { label: "Selling Price", name: "sellingPrice" }, // Hola
+  { label: "Ticket Number", name: "ticketNumber" },
+  { label: "Passanger", name: "passanger" },
+  { label: "Purchase Price", name: "purchasePrice" },
+  { label: "Selling Price", name: "sellingPrice" },
 ];
 
 const FlightTicketsReport = ({ selectedYear }: IFlightTicketsReportProps) => {

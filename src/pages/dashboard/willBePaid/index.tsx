@@ -14,16 +14,16 @@ export default function Index() {
         hideDelete
         columns={columns}
         api={"/WillBePaids/GetAll"}
-        buttonText="WillBePaid" // Hola
+        buttonText="WillBePaid"
         deleteApi="/WillBePaids/Delete"
         root="/panel/willBePaids"
         defaultFilterValue="supplier"
         filterOptions={[
           { label: t("supplier"), value: "supplier" },
-          { label: t("Kredit"), value: "credit" }, // Hola
-          { label: t("Geri qaytarma"), value: "refund" }, // Hola
-          { label: t("Xərc"), value: "fee" }, // Hola
-          { label: t("Maaş"), value: "salary" }, // Hola
+          { label: t("Credit"), value: "credit" },
+          { label: t("Geri qaytarma"), value: "refund" },
+          { label: t("Xərc"), value: "fee" },
+          { label: t("Maaş"), value: "salary" },
         ]}
       />
     </Container>

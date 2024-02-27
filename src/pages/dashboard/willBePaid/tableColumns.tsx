@@ -21,7 +21,6 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
- 
 
   {
     field: "date",
@@ -35,7 +34,7 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
- 
+
   {
     field: "debit",
     headerName: "Ödəilən məbləğ",

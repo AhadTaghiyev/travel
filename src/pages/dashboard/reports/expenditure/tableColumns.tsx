@@ -10,19 +10,19 @@ export const columns: GridColDef[] = [
   },
   {
     field: "count",
-    headerName: "Count", // Hola
+    headerName: "Count",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "debit",
-    headerName: "Debit", // Hola
+    headerName: "Debit",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "credit",
-    headerName: "Credit", // Hola
+    headerName: "Credit",
     flex: 1,
     headerClassName: "header-item",
   },

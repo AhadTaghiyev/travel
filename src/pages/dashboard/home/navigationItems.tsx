@@ -56,7 +56,7 @@ export const navigationItems: INavigationItemType[] = [
     quantity: 1,
   },
   {
-    text: "Kreditlər/ Borclar",
+    text: "Kreditlər/Borclar",
     path: "/panel/getCredits",
     color: "#B1B2A1",
     Icon: LuDivideCircle,

@@ -115,7 +115,7 @@ export default function Index() {
               <TableFooter className="w-full">
                 <TableRow className="w-full">
                   <TableCell className="py-2" colSpan={1}>
-                    {t("Reciveables")} {/* Hola */}
+                    {t("Reciveables")}
                   </TableCell>
                   <TableCell className="py-2" colSpan={2}>
                     {data.willBeGet}
@@ -123,7 +123,7 @@ export default function Index() {
                 </TableRow>
                 <TableRow className="w-full">
                   <TableCell className="py-2" colSpan={1}>
-                    {t("Payables")} {/* Hola */}
+                    {t("Payables")}
                   </TableCell>
                   <TableCell className="py-2" colSpan={2}>
                     {data.willBePaids}
@@ -133,7 +133,7 @@ export default function Index() {
                   <TableCell className="py-2" colSpan={1}>
                     {t("Current Financal Status")}
                   </TableCell>
-                  {/* Hola */}
+
                   <TableCell className="py-2" colSpan={2}>
                     {totalAmount}
                   </TableCell>

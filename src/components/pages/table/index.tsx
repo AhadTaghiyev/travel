@@ -337,7 +337,13 @@ export default function Index({
           <DataGrid
             rowHeight={35}
             loading={loading}
-            columns={[...columns, field]}
+            columns={[
+              ...columns.map((col) => ({
+                ...col,
+                headerName: t(col.headerName),
+              })),
+              field,
+            ]}
             paginationMode="server"
             rows={rows?.map((row, index: number) => ({
               No: index + 1,

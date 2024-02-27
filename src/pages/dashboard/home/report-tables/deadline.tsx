@@ -23,9 +23,9 @@ interface IDeadlineReportProps {
 const columns = [
   { label: "Id", name: "id" },
   { label: "Ref.", name: "ref", className: "min-w-14" },
-  { label: "Beneficiery", name: "beneficiery" }, // Hola
-  { label: "dueDate", name: "dueDate", type: "date" }, // Hola
-  { label: "Məbləğ", name: "amount" }, // Hola
+  { label: "Beneficiery", name: "beneficiery" },
+  { label: "Deadline", name: "dueDate", type: "date" },
+  { label: "Məbləğ", name: "amount" },
 ];
 
 const DeadlineReport = ({ selectedYear }: IDeadlineReportProps) => {

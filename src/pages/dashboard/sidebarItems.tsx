@@ -152,7 +152,7 @@ export const sidebarItems: SidebarItemType[] = [
   },
   {
     icon: MdOutlinePersonPin,
-    text: "Referans",
+    text: "Referance",
     link: "/panel/referances",
   },
   {
@@ -161,7 +161,7 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: BsFileEarmarkPerson,
-        text: "Recivebales",
+        text: "Reciveables",
         link: "/panel/reports/customers",
       },
       {
@@ -171,12 +171,12 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaMoneyBill1Wave,
-        text: "Finansal Status",
+        text: "Financal Status",
         link: "/panel/reports/finaceStatus",
       },
       {
         icon: FaMoneyBill1Wave,
-        text: "Payment Methods",
+        text: "Ödəniş növləri",
         link: "/panel/reports/paymentTypes",
       },
       {
@@ -186,17 +186,17 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: BsFileEarmarkPerson,
-        text: "Deadline", // Hola
+        text: "Deadline",
         link: "/panel/reports/deadLines",
       },
       {
         icon: BsFileEarmarkPerson,
-        text: "Flight Tickets", // Hola
+        text: "Flight Tickets",
         link: "/panel/reports/flightTickets",
       },
       {
         icon: BsFileEarmarkPerson,
-        text: "Expenditures", // Hola
+        text: "Expenditures",
         link: "/panel/reports/expenditures",
       },
       {
@@ -221,7 +221,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaServicestack,
-        text: "Xərclər",
+        text: "Fees",
         link: "/panel/reports/fee",
       },
       {
@@ -413,17 +413,17 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaTrailer,
-        text: "Turlar",
+        text: "Tours",
         link: "/panel/tours",
       },
       {
         icon: FaServicestack,
-        text: "Xidmətlər",
+        text: "Services",
         link: "/panel/services",
       },
       {
         icon: FaServicestack,
-        text: "Xərclər",
+        text: "Fees",
         link: "/panel/fees",
       },
       {

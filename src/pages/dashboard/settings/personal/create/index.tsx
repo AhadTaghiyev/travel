@@ -22,7 +22,7 @@ const NewPersonal = () => {
         .post(`/Personals/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Personal Created")); // Hola
+            toast.success(t("Personal Created"));
             navigate(`/panel/personals`);
           } else {
             toast.error(response.message || t("Something went wrong"));
@@ -38,7 +38,7 @@ const NewPersonal = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Personal Yarat")} {/* Hola */}
+        {t("Personal Yarat")}
       </h1>
       <PersonalForm
         formType="Create"

@@ -22,7 +22,7 @@ const NewSupplier = () => {
         .post(`/Suppliers/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Supplier Created")); // Hola
+            toast.success(t("Supplier Created"));
             navigate(`/panel/suppliers`);
           } else {
             toast.error(response.message || t("Something went wrong"));
