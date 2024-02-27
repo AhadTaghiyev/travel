@@ -1,87 +1,33 @@
-// @ts-nocheck
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import NavigationItem from "../../../components/pages/home/navigationItem";
-import { navigationItems } from "./navigationItems";
-import AlertTable, {
-  IAlertTableModel,
-  IAlertTableHeadingsModel,
-  IAlertTableHeading,
-} from "../../../components/pages/alertTable";
-import { AiFillFilePdf } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import { apiService } from "../../../server/apiServer";
 import { useTranslation } from "react-i18next";
+import { useMemo, useState } from "react";
+import Grid from "@mui/material/Grid";
 
-const title: IAlertTableHeading = {
-  text: "Check Alerts",
-  icon: AiFillFilePdf,
-  iconColor: "red",
-};
-
-const tableHeadings: IAlertTableHeadingsModel[] = [
-  {
-    fieldName: "Due date",
-    propertyName: "date",
-  },
-  {
-    fieldName: "Beneficery",
-    propertyName: "beneficery",
-  },
-  {
-    fieldName: "Amount",
-    propertyName: "amount",
-  },
-];
-
-const headings: IAlertTableModel = {
-  heading: title,
-  tableHeadings: tableHeadings,
-  rows: [
-    {
-      date: "28/11/2001",
-      amount: 100,
-      beneficery: "Mum",
-    },
-    {
-      date: "28/11/2001",
-    },
-  ],
-  link: "",
-};
+import NavigationItem from "@/components/pages/home/navigationItem";
+import NearestFlightsReport from "./report-tables/nearest-flights";
+import FlightTicketsReport from "./report-tables/flight-tickets";
+import { navigationItems } from "./navigationItems";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import DeadlineReport from "./report-tables/deadline";
+import PaymentTypes from "./report-tables/payment-types";
 
 export default function index() {
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const { t } = useTranslation();
-  const [moneyTracking, setMoneyTracking] = useState<IAlertTableModel>({});
 
-  useEffect(() => {
-
-    async function fetcMoneyTracking() {
-      try {
-        const res = await apiService.get("Report/GetMoneyTracking");
-        if (res && res.data) {
-          const newMoneyTracking: IAlertTableModel = {
-            heading: { text: "Vəsaitlərin izlənməsi" },
-            link: "/panel/income",
-            rows: res.data,
-            tableHeadings: [],
-          };
-
-          for (const key in res.data[0]) {
-            newMoneyTracking.tableHeadings.push({
-              fieldName: key,
-              propertyName: key,
-            });
-          }
-
-          setMoneyTracking(newMoneyTracking);
-        }
-      } catch (error) {
-        console.error("Error fetching current user:", error);
-      }
+  const years = useMemo(() => {
+    const years = [];
+    for (let i = currentYear; i >= new Date(0).getFullYear(); i--) {
+      years.push(i);
     }
-
-    fetcMoneyTracking();
+    return years;
   }, []);
 
   return (
@@ -97,15 +43,35 @@ export default function index() {
             />
           </Grid>
         ))}
-        <Grid item xs={6}>
-          <AlertTable
-            heading={moneyTracking.heading}
-            tableHeadings={moneyTracking.tableHeadings}
-            rows={moneyTracking.rows}
-            link={moneyTracking.link}
-          />
-        </Grid>
       </Grid>
+      <div className="mt-6">
+        <div className="w-60">
+          <Select
+            defaultValue={selectedYear}
+            onValueChange={(value) => setSelectedYear(value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Date"></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((year) => (
+                <SelectItem key={year} value={`${year}`}>
+                  {`${year} ${t("JAN")} - ${year} ${t("DEC")}`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      <div className="mt-6 mb-10">
+        <h1 className="text-2xl font-bold mb-4">{t("Reports")}</h1>
+        <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-5">
+          <FlightTicketsReport selectedYear={selectedYear} />
+          <NearestFlightsReport />
+          <DeadlineReport selectedYear={selectedYear} />
+          <PaymentTypes selectedYear={selectedYear} />
+        </div>
+      </div>
     </Container>
   );
 }
