@@ -24,8 +24,6 @@ const RegisterSchema = Yup.object().shape({
 const cookies = new Cookies();
 
 export default function Index() {
-  const navigate = useNavigate();
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -44,17 +42,17 @@ export default function Index() {
   const [isLoading, seIsLoading] = useState(false);
 
   const onRegister = async (values) => {
-    console.log(values);
-
     seIsLoading(true);
     const res = await userService.register(values);
-    console.log(res);
 
-    // if (res?.statusCode === 200) {
-    // } else {
-    //   seIsLoading(false);
-    //   toast.error("Password ve ya Username yalnisdi!");
-    // }
+    if (res?.status === 200) {
+      seIsLoading(false);
+      toast.success("Registered successfully!");
+      window.open(res.data, "_blank");
+    } else {
+      seIsLoading(false);
+      toast.error("Something went wrong!");
+    }
   };
 
   return (

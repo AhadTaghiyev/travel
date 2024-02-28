@@ -40,17 +40,13 @@ export const userService = {
   }): Promise<any> {
     try {
       return await (
-        await Axios.post(
-          `/Company`,
-          { values },
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Content-Type": "application/json",
-              accept: "application/json",
-            },
-          }
-        )
+        await Axios.post(`/Company`, values, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        })
       ).data;
     } catch (error) {
       console.log("err: ", error);
