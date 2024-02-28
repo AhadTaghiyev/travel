@@ -1,31 +1,92 @@
 import Container from "@mui/material/Container";
 import Table from "../../../components/pages/table";
-import { columns } from "./tableColumns";
+import {
+  supplierColumns,
+  refundColumns,
+  salaryColumns,
+  expenditureColumns,
+} from "./tableColumns";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+const tabs = [
+  {
+    id: 1,
+    title: "Təchizatçı",
+    hideReport: false,
+    detailLink: "/panel/reports/suppliers/",
+    api: "/Reports/SupplierReport",
+    columns: supplierColumns,
+  },
+  {
+    id: 2,
+    title: "Refund",
+    hideReport: true,
+    api: "/Reports/RefundReportDetail",
+    columns: refundColumns,
+  },
+  {
+    id: 3,
+    title: "Maaş",
+    hideReport: true,
+    api: "/Reports/SalaryReportDetail",
+    columns: salaryColumns,
+  },
+  {
+    id: 4,
+    title: "Credit",
+    hideReport: true,
+    api: "/Reports/CreditReport",
+    columns: salaryColumns,
+  },
+  {
+    id: 5,
+    title: "Xərc",
+    hideReport: false,
+    detailLink: "/panel/reports/expenditures/",
+    api: "/Reports/ExpenditureReport",
+    columns: expenditureColumns,
+  },
+];
 
 export default function Index() {
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+
   return (
     <Container maxWidth="xl">
-      <Table
-        hideEdit
-        hideReport
-        hideCreate
-        hideDelete
-        columns={columns}
-        api={"/WillBePaids/GetAll"}
-        buttonText="WillBePaid"
-        deleteApi="/WillBePaids/Delete"
-        root="/panel/willBePaids"
-        defaultFilterValue="supplier"
-        filterOptions={[
-          { label: t("supplier"), value: "supplier" },
-          { label: t("Credit"), value: "credit" },
-          { label: t("Geri qaytarma"), value: "refund" },
-          { label: t("Xərc"), value: "fee" },
-          { label: t("Maaş"), value: "salary" },
-        ]}
-      />
+      <ul className="mb-2 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400">
+        {tabs.map((tab, index) => (
+          <li key={index} className="me-2">
+            <button
+              onClick={() => setActiveTab(tab)}
+              aria-current="page"
+              className={cn(
+                "border-none p-4 rounded-lg text-gray-600 hover:bg-gray-50",
+                activeTab.id === tab.id &&
+                  "bg-white hover:bg-white text-blue-500"
+              )}
+            >
+              {t(tab.title)}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {tabs.map((tab) => (
+        <div className={tab.id !== activeTab.id && "hidden"} key={tab.id}>
+          <Table
+            hideEdit
+            hidePrint
+            hideDelete
+            api={tab.api}
+            root="/panel/willbepaid"
+            columns={tab.columns}
+            hideReport={tab.hideReport}
+            detailLink={tab.detailLink}
+          />
+        </div>
+      ))}
     </Container>
   );
 }

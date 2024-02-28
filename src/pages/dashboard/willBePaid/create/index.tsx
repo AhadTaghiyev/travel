@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IWillBePaidModel } from "../types";
+import { IWillBePaid } from "../types";
 
 import MassIncomeForm from "../form";
 
@@ -14,26 +14,13 @@ const NewIncome = () => {
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    (
-      values: IWillBePaidModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
-      const params = {
-        paidToCustomer: values.paidToCustomer,
-        amount: values.amount,
-        forfeit: values.amount - values.paidToCustomer,
-        invoiceId: values.invoiceId?.value ?? undefined,
-        advancePaymentId: values.advancePaymentId?.value ?? undefined,
-        date: values.date,
-        paymentId: +values.paymentId,
-      };
-
+    (values: IWillBePaid, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const promise = apiService
-        .post(`/WillBePaids/Create`, params)
+        .post(`/WillBePaids/Create`, values)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Mədaxil yaradıldı"));
-            navigate(`/panel/willBePaids`);
+            navigate(`/panel/willBePaid`);
             // TODO: Navigate to report page
             // navigate(
             //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
@@ -58,15 +45,10 @@ const NewIncome = () => {
         formType="Create"
         onSubmit={onSubmit}
         initialValues={{
-          type: null,
-          amount: 0,
-          forfeit: 0,
-          invoiceId: null,
-          paymentId: null,
           date: new Date(),
-          customerId: null,
-          paidToCustomer: 0,
-          advancePaymentId: null,
+          feeId: null,
+          note: "",
+          totalAmount: 0,
         }}
       />
     </div>

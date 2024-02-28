@@ -1,8 +1,18 @@
+import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Button, Container, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
+import { ClipLoader } from "react-spinners";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import * as Yup from "yup";
 
-import img from "@/assets/abc_home-1.jpg";
+import { apiService } from "@/server/apiServer";
+
+import CustomDateTimePicker from "@/components/custom/datePicker";
+import CustomTextField from "@/components/custom/input";
+import Loading from "@/components/custom/loading";
 import {
   Table,
   TableBody,
@@ -12,14 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Loading from "@/components/custom/loading";
-import { useEffect, useState } from "react";
-import { apiService } from "@/server/apiServer";
-import { useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { Formik, FormikHelpers, FormikValues } from "formik";
-import CustomDateTimePicker from "@/components/custom/datePicker";
-import { ClipLoader } from "react-spinners";
+
+import img from "@/assets/abc_home-1.jpg";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -182,6 +186,7 @@ const Detail = () => {
                 {columns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
+                <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -193,6 +198,9 @@ const Detail = () => {
                         {row?.[column.name]}
                       </TableCell>
                     ))}
+                    <TableCell className="w-48">
+                      <PayAction id={row.id} />
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -205,12 +213,83 @@ const Detail = () => {
                 <TableCell className="py-2">{totalCredit}</TableCell>
                 <TableCell className="py-2">{totalBalance}</TableCell>
                 <TableCell className="py-2">{total}</TableCell>
+                <TableCell className="py-2"></TableCell>
               </TableRow>
             </TableFooter>
           </Table>
         </Grid>
       </Container>
     </Container>
+  );
+};
+
+const amountValidationSchema = Yup.object().shape({
+  amount: Yup.number().required("Məbləğ daxil edin"),
+});
+export const PayAction = ({ id }: { id: string }) => {
+  const { t } = useTranslation();
+
+  const onSubmit = (
+    values: { amount: number },
+    { setSubmitting }: FormikHelpers<FormikValues>
+  ) => {
+    apiService
+      .post(`/WillBePaids/Create/${id}`, { amount: values.amount })
+      .then((res) => {
+        toast.success(t("Mədaxil yaradıldı"));
+        setSubmitting(false);
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast.error(err.message || t("Something went wrong!"));
+      });
+  };
+  return (
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={{ amount: 0 }}
+      validationSchema={amountValidationSchema}
+    >
+      {({
+        values,
+        handleSubmit,
+        handleChange,
+        isSubmitting,
+        errors,
+        touched,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <div className="w-48 flex items-start gap-x-2">
+            <div>
+              <CustomTextField
+                name="amount"
+                type="number"
+                label={""}
+                value={values.amount}
+                placeholder={t("Məbləğ")}
+                change={handleChange}
+                hasErrorMessages={!!errors.amount && !!touched.amount}
+                errorMessages={[t(errors.amount?.toString())]}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="p-2 mt-2.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+            >
+              <ClipLoader
+                size={14}
+                color="white"
+                loading={isSubmitting}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+              {t("Ödə")} {/* Hola */}
+            </button>
+          </div>
+        </form>
+      )}
+    </Formik>
   );
 };
 

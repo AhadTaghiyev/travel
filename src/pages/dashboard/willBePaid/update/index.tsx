@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IWillBePaidModel } from "../types";
+import { IWillBePaid } from "../types";
 
 import Loading from "@/components/custom/loading";
 import IncomeForm from "../form";
 
 const UpdateIncome = () => {
-  const [income, setIncome] = useState<IWillBePaidModel>();
+  const [income, setIncome] = useState<IWillBePaid>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -35,10 +35,7 @@ const UpdateIncome = () => {
   }
 
   const onSubmit = useCallback(
-    (
-      values: IWillBePaidModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
+    (values: IWillBePaid, { setSubmitting }: FormikHelpers<FormikValues>) => {
       console.log(values, setSubmitting);
 
       // const params = {

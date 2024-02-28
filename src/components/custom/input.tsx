@@ -24,6 +24,7 @@ export default function CustomTextField({
   value,
   type = "text",
   disabled,
+  placeholder,
 }: ICustomTextFieldModel) {
   const { t } = useTranslation();
 
@@ -42,7 +43,7 @@ export default function CustomTextField({
         value={value}
         onChange={change}
         disabled={disabled}
-        placeholder={t("Type here...")}
+        placeholder={t(placeholder ?? "Type here...")}
         onWheel={(e) => e.currentTarget.blur()}
       />
       {hasErrorMessages ? (

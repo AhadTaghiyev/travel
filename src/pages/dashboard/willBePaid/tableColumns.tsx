@@ -1,17 +1,26 @@
 import { GridColDef } from "@mui/x-data-grid";
 
-export const columns: GridColDef[] = [
+export const supplierColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
 
   {
-    field: "id",
-    headerName: "Qəbz Nömrəsi",
+    field: "name",
+    headerName: "Ad",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "name",
-    headerName: "Ödənilən Təşkilat",
+    field: "balance",
+    headerName: "Balans",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+];
+export const refundColumns: GridColDef[] = [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "customer",
+    headerName: "Customer",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -21,29 +30,102 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
-
+  {
+    field: "refundRef",
+    headerName: "Refund Ref.", // Hola
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "refundableAmount",
+    headerName: "Məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
   {
     field: "date",
-    headerName: "Tarix",
+    headerName: "Date",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+];
+export const salaryColumns: GridColDef[] = [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "employee",
+    headerName: "İşçi", // Hola
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "ref",
+    headerName: "Ref.",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "amount",
+    headerName: "Məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+];
+export const creditColumns: GridColDef[] = [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "name",
+    headerName: "Ad",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "credit",
-    headerName: "Borc",
+    headerName: "Credit",
     flex: 1,
     headerClassName: "header-item",
   },
-
   {
     field: "debit",
-    headerName: "Ödəilən məbləğ",
+    headerName: "Debit",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "balance",
-    headerName: "Ümumi məbləğ",
+    field: "totalDebt",
+    headerName: "Total Debt",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+];
+export const expenditureColumns: GridColDef[] = [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
+    field: "name",
+    headerName: "Ad",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "credit",
+    headerName: "Credit",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "debit",
+    headerName: "Debit",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "count",
+    headerName: "Count",
     flex: 1,
     headerClassName: "header-item",
   },

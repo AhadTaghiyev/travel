@@ -1,66 +1,36 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { InputLabel } from "@mui/material";
-import { TFunction } from "i18next";
 
-import { WillBePaidSchema, WillBePaidEditSchema } from "./schema";
-import { IWillBePaidModel } from "./types";
-import { textStyling } from "@/styles";
+import { WillBePaidSchema } from "./schema";
+import { IWillBePaid } from "./types";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomTextField from "@/components/custom/input";
-import CustomSelect from "@/components/custom/select";
-import { Input } from "@/components/ui/input";
-import CustomMultiSelect from "@/components/custom/multiSelect";
-import { useState } from "react";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 
-const getTypeOptions = (t: TFunction<"translation", undefined>) => [
-  { label: t("Aviabilet"), value: "planeTicket" },
-  { label: t("Corporative Ticket"), value: "cooperativeTicket" },
-  { label: t("Individual Tur paket"), value: "individualTour" },
-  { label: t("Tur paket"), value: "tourPackage" },
-  { label: t("Depozit"), value: "deposit" },
-  { label: t("Digər xidmətlər"), value: "otherServiceTicket" },
-];
+type FormType = "Edit" | "Create" | "View";
 
-type IItem = {
-  no: string;
-  id: number;
-  amount: number;
-};
-
-type FormType = "Edit" | "Create";
-
-interface IWillBePaidFormProps {
+interface IWillBePaidProps {
   formType: FormType;
-  initialValues: IWillBePaidModel;
-  onSubmit: (
-    values: IWillBePaidModel,
-    helpers: FormikHelpers<FormikValues>
-  ) => void;
+  initialValues: IWillBePaid;
+  onSubmit: (values: IWillBePaid, helpers: FormikHelpers<FormikValues>) => void;
 }
 
-const WillBePaidForm = ({
+const WillBePaid = ({
   initialValues,
   onSubmit,
   formType,
-}: IWillBePaidFormProps) => {
-  const isEdit = formType === "Edit";
+}: IWillBePaidProps) => {
+  const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [invoiceItems, setInvoiceItems] = useState<IItem[]>([]);
-
-  const getOptions = (options: IItem[]) => {
-    setInvoiceItems(options);
-  };
 
   return (
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validationSchema={isEdit ? WillBePaidEditSchema : WillBePaidSchema}
+      validationSchema={WillBePaidSchema}
     >
       {({
         values,
@@ -73,158 +43,60 @@ const WillBePaidForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            {!isEdit && (
-              <>
-                <div className="w-full">
-                  <CustomSelect
-                    label={t("Məhsul tipi")}
-                    optionLabel="name"
-                    value={values.type ?? null}
-                    change={(value) => {
-                      setFieldValue("invoiceId", null);
-                      setFieldValue("advancePaymentId", null);
-                      setFieldValue(`type`, value ?? null);
-                    }}
-                    hasErrorMessages={!!errors.type && !!touched.type}
-                    staticOptions={getTypeOptions(t)}
-                    errorMessages={[t(errors.type?.toString())]}
-                  />
-                </div>
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    api="Customers/GetAll/1"
-                    label={t("customer")}
-                    disabled={isEdit}
-                    value={values.customerId ?? null}
-                    optionLabel="fullName"
-                    change={(value) => {
-                      setFieldValue("invoiceId", null);
-                      setFieldValue("advancePaymentId", null);
-                      setFieldValue("customerId", value ?? null);
-                    }}
-                    hasErrorMessages={
-                      !!errors.customerId && !!touched.customerId
-                    }
-                    errorMessages={[t(errors.customerId?.toString())]}
-                  />
-                </div>
-              </>
-            )}
-            {isEdit && (
-              <>
-                <div className="w-full flex flex-col mb-5">
-                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
-                    {t("customer")}
-                  </InputLabel>
-                  <Input value={values.customer} disabled />
-                </div>
-                <div className="w-full flex flex-col mb-5">
-                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
-                    {t("Invoice")}
-                  </InputLabel>
-                  <Input value={values.invoiceNo} disabled />
-                </div>
-              </>
-            )}
-            {!isEdit && !!values.type && !!values.customerId && (
-              <div
-                className="w-full"
-                key={`ticket-${values.type}-${values.customerId}`}
-              >
-                <CustomMultiSelect
-                  isMultiSelect={false}
-                  secondaryOptionLabel="amount"
-                  api={`Invoices/GetWillBePaidables?customerId=${values.customerId}&type=${values.type}`}
-                  label={t("Məhsul nömrəsi")}
-                  value={[values.invoiceId || values.advancePaymentId]}
-                  change={(option: any) => {
-                    const isDeposit = values.type === "deposit";
-                    setFieldValue("invoiceId", isDeposit ? null : option);
-                    setFieldValue(
-                      "advancePaymentId",
-                      !isDeposit ? null : option
-                    );
-                    const amount = invoiceItems.find(
-                      (i) => i.id === +option.value
-                    ).amount;
-                    setFieldValue("amount", amount ?? 0);
-                  }}
-                  getOptions={getOptions}
-                  hasErrorMessages={!!errors.invoiceId && !!touched.invoiceId}
-                  errorMessages={[t(errors.invoiceId?.toString())]}
-                  closeMenuOnSelect={false}
-                  optionLabel="no"
-                />
-              </div>
-            )}
-            {(values.invoiceId || values.advancePaymentId) && (
-              <>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled
-                    name="amount"
-                    type="text"
-                    label={t("Məbləğ")}
-                    value={values.amount}
-                    change={handleChange}
-                    hasErrorMessages={!!errors.amount && !!touched.amount}
-                    errorMessages={[t(errors.amount?.toString())]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomAutocompleteSelect
-                    api="Payments/GetAll/1"
-                    label={t("Ödəniş növü")}
-                    value={values.paymentId ?? null}
-                    optionLabel="type"
-                    change={(value) => setFieldValue("paymentId", value)}
-                    hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
-                    errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    label={t("Qaytarılan məbləğ")}
-                    value={values.paidToCustomer}
-                    change={handleChange}
-                    type="number"
-                    name={`paidToCustomer`}
-                    hasErrorMessages={
-                      !!errors.paidToCustomer && !!touched.paidToCustomer
-                    }
-                    errorMessages={[t(errors.paidToCustomer?.toString())]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled
-                    label={t("Cərimə")}
-                    value={Math.max(values.amount - values.paidToCustomer, 0)}
-                    change={() => 0}
-                    type="number"
-                    name={``}
-                  />
-                </div>
-                <div className="w-full h-full">
-                  <CustomDateTimePicker
-                    label={t("date")}
-                    value={values.date}
-                    change={(data) => {
-                      setFieldValue("date", data ?? new Date());
-                    }}
-                    hasErrorMessages={!!errors.date && !!touched.date}
-                    errorMessages={[t(errors.date?.toString())]}
-                  />
-                </div>
-              </>
-            )}
+            <div className="w-full">
+              <CustomAutocompleteSelect
+                disabled={isView}
+                api="Fees/GetAll/1"
+                label={t("Xərc")}
+                value={values.feeId ?? null}
+                optionLabel="name"
+                change={(value) => setFieldValue("feeId", value ?? null)}
+                hasErrorMessages={!!errors.feeId && !!touched.feeId}
+                errorMessages={[t(errors.feeId?.toString() ?? "")]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Məbləğ")}
+                value={values.totalAmount}
+                change={handleChange}
+                type="number"
+                name={`totalAmount`}
+                disabled={isView}
+                hasErrorMessages={!!errors.totalAmount && !!touched.totalAmount}
+                errorMessages={[t(errors.totalAmount?.toString())]}
+              />
+            </div>
+            <div className="w-full h-full">
+              <CustomDateTimePicker
+                disabled={isView}
+                label={t("date")}
+                value={values.date}
+                change={(data) => {
+                  setFieldValue("date", data ?? new Date());
+                }}
+                hasErrorMessages={!!errors.date && !!touched.date}
+                errorMessages={[t(errors.date?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                disabled={isView}
+                name="note"
+                type="text"
+                label={t("Qeyd")}
+                value={values.note}
+                change={handleChange}
+                hasErrorMessages={!!errors.note && !!touched.note}
+                errorMessages={[t(errors.note?.toString())]}
+              />
+            </div>
           </div>
-
           <div className="w-full flex gap-x-6 justify-end mb-6">
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/income")}
+              onClick={() => navigate(-1)}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}
@@ -243,4 +115,4 @@ const WillBePaidForm = ({
   );
 };
 
-export default WillBePaidForm;
+export default WillBePaid;

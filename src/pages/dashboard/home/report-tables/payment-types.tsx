@@ -78,7 +78,7 @@ const PaymentTypes = ({ selectedYear }: IPaymentTypesProps) => {
             data.map((row) => (
               <TableRow
                 key={row.id}
-                className="bg-[#CF08080F] border-b border-solid border-gray-100"
+                className="border-b border-solid border-gray-100"
               >
                 {columns.map((column) => (
                   <TableCell key={column.name} className={cn("py-1.5")}>
