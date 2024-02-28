@@ -224,31 +224,7 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Fees",
         link: "/panel/reports/fee",
       },
-      {
-        icon: BsCalculator,
-        text: "Aviabilet hesabat",
-        link: "/panel/reports/planeTicket",
-      },
-      {
-        icon: BsCalculator,
-        text: "Korperativ hesabat",
-        link: "/panel/reports/corperative",
-      },
-      {
-        icon: BsCalculator,
-        text: "Tur paket hesabat",
-        link: "/panel/reports/tourPackage",
-      },
-      {
-        icon: BsCalculator,
-        text: "Individual tur paket hesabat",
-        link: "/panel/reports/individualTourPackage",
-      },
-      {
-        icon: BsCalculator,
-        text: "Digər xidmətlər hesabat",
-        link: "/panel/reports/otherServices",
-      },
+      
       // {
       //     icon: MdOutlineAirplaneTicket,
       //     text: 'Invoice',
@@ -280,42 +256,9 @@ export const sidebarItems: SidebarItemType[] = [
       //             },
       //         ]
       // },
-      {
-        icon: BsCalculator,
-        text: "Mədaxil hesabat",
-        link: "/panel/reports/masincome",
-      },
-      {
-        icon: BsCalculator,
-        text: "Alınan və verilən borclar",
-        link: "/panel/reports/debt",
-      },
 
-      {
-        icon: BsCalculator,
-        text: "Alınan Kreditlər",
-        link: "/panel/reports/getcredit",
-      },
-      {
-        icon: BsCalculator,
-        text: "Ödənilən Kreditlər",
-        link: "/panel/reports/paidcredit",
-      },
-      {
-        icon: BsCalculator,
-        text: "Ödənilən Maaşlar",
-        link: "/panel/reports/paidsalary",
-      },
-      {
-        icon: BsCalculator,
-        text: "Ümumi kassa hesabatı",
-        link: "/panel/totalStatus",
-      },
-      {
-        icon: BsCalculator,
-        text: "Gündəlik hesabat",
-        link: "/panel/dailyInvoice",
-      },
+      
+      
 
       // {
       //     icon: BsCalculator,
