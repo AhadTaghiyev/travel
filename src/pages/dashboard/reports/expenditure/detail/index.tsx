@@ -234,11 +234,11 @@ export const PayAction = ({ id }: { id: string }) => {
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
     apiService
-      .post(`/WillBePaids/Create/${id}`, { amount: values.amount })
+      .post(`/WillBePaids/Create/${id}?amount=${values.amount}`, {})
       .then((res) => {
         toast.success(t("Mədaxil yaradıldı"));
         setSubmitting(false);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
