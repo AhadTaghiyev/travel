@@ -79,7 +79,7 @@ const Detail = () => {
     getData(parseInt(id));
   }, [id]);
 
-  const getData = async (id: number, startDate?: Date, endDate?: Date) => {
+  const getData = async (_: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
     if (startDate) searchParams.append("starDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
