@@ -1,7 +1,7 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Container, FormHelperText, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
 import { ClipLoader } from "react-spinners";
 import { useEffect, useState } from "react";
@@ -24,6 +24,14 @@ import {
 } from "@/components/ui/table";
 
 import img from "@/assets/abc_home-1.jpg";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { isNil } from "lodash";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -37,6 +45,9 @@ const columns = [
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+  const [paymentTypes, setPaymentTypes] = useState<
+    { label: string; value: string }[] | null
+  >(null);
   const [data, setData] = useState<
     {
       id: string;
@@ -48,6 +59,23 @@ const Detail = () => {
     }[]
   >();
   const { id } = useParams<{ id: string }>();
+
+  const fetchData = async () => {
+    const res = await apiService.get("Payments/GetAll/1");
+
+    const data = res.data.items
+      .map((x) => ({
+        label: x.type,
+        value: x.id,
+      }))
+      .filter((item) => item.label && item.value);
+
+    setPaymentTypes(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     getData(parseInt(id));
@@ -198,8 +226,11 @@ const Detail = () => {
                         {row?.[column.name]}
                       </TableCell>
                     ))}
-                    <TableCell className="w-48">
-                      <PayAction id={row.id} />
+                    <TableCell className="w-48 py-0">
+                      <PayAction
+                        paymentTypeOptions={paymentTypes}
+                        id={row.id}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -224,21 +255,35 @@ const Detail = () => {
 };
 
 const amountValidationSchema = Yup.object().shape({
-  amount: Yup.number().required("Məbləğ daxil edin"),
+  amount: Yup.number()
+    .required("Məbləğ daxil edin")
+    .min(1, "Məbləğ mənfi ola bilməz"), // Hola
+  paymentId: Yup.string().required("Ödəniş növünü seçin"), // Hola
 });
-export const PayAction = ({ id }: { id: string }) => {
+
+export const PayAction = ({
+  id,
+  paymentTypeOptions,
+}: {
+  paymentTypeOptions: { value: string; label: string }[];
+  id: string;
+}) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const onSubmit = (
-    values: { amount: number },
+    values: { amount: number; paymentId: string },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
     apiService
-      .post(`/WillBePaids/Create/${id}?amount=${values.amount}`, {})
-      .then((res) => {
+      .post(
+        `/WillBePaids/Create/${id}?amount=${values.amount}&paymentId=${values.paymentId}`,
+        {}
+      )
+      .then(() => {
         toast.success(t("Mədaxil yaradıldı"));
         setSubmitting(false);
-        // window.location.reload();
+        navigate(-1);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -247,7 +292,7 @@ export const PayAction = ({ id }: { id: string }) => {
   return (
     <Formik
       onSubmit={onSubmit}
-      initialValues={{ amount: 0 }}
+      initialValues={{ amount: 0, paymentId: "" }}
       validationSchema={amountValidationSchema}
     >
       {({
@@ -255,12 +300,56 @@ export const PayAction = ({ id }: { id: string }) => {
         handleSubmit,
         handleChange,
         isSubmitting,
+        setFieldValue,
         errors,
         touched,
       }) => (
         <form onSubmit={handleSubmit}>
-          <div className="w-48 flex items-start gap-x-2">
-            <div>
+          <div className="flex items-start gap-x-2">
+            <div className="w-32 mt-2">
+              <Select
+                onValueChange={(v) => setFieldValue("paymentId", v)}
+                defaultValue={String(values.paymentId)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t("Select option")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    value={null}
+                    disabled={true}
+                    className="hidden last:block"
+                  >
+                    {isNil(paymentTypeOptions)
+                      ? t("Loading...")
+                      : t("No item found")}
+                  </SelectItem>
+                  {paymentTypeOptions?.map((option) => (
+                    <SelectItem
+                      value={String(option.value)}
+                      key={String(option.value)}
+                    >
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {!!errors.paymentId && !!touched.paymentId ? (
+                <>
+                  {[t(errors.paymentId?.toString())]?.map((item, key) => (
+                    <FormHelperText
+                      key={key}
+                      sx={{ color: "red", margin: 0, height: 20 }}
+                    >
+                      {item}
+                    </FormHelperText>
+                  ))}
+                </>
+              ) : (
+                <div className="w-full h-5 " />
+              )}
+            </div>
+            <div className="w-28">
               <CustomTextField
                 name="amount"
                 type="number"
@@ -275,7 +364,7 @@ export const PayAction = ({ id }: { id: string }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="p-2 mt-2.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+              className="p-2 mt-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
             >
               <ClipLoader
                 size={14}

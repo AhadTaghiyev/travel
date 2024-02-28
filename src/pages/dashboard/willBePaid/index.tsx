@@ -9,6 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const tabs = [
   {
@@ -22,14 +23,16 @@ const tabs = [
   {
     id: 2,
     title: "Refund",
-    hideReport: true,
+    hideReport: false,
+    detailLink: "/panel/reports/refunds/",
     api: "/Reports/RefundReportDetail",
     columns: refundColumns,
   },
   {
     id: 3,
     title: "Maaş",
-    hideReport: true,
+    hideReport: false,
+    detailLink: "/panel/reports/salaries/",
     api: "/Reports/SalaryReportDetail",
     columns: salaryColumns,
   },
@@ -52,7 +55,11 @@ const tabs = [
 
 export default function Index() {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState(
+    tabs.find((t) => t.id.toString() === tab) ?? tabs[0]
+  );
 
   return (
     <Container maxWidth="xl">
@@ -60,7 +67,10 @@ export default function Index() {
         {tabs.map((tab, index) => (
           <li key={index} className="me-2">
             <button
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                setSearchParams({ tab: tab.id.toString() });
+                setActiveTab(tab);
+              }}
               aria-current="page"
               className={cn(
                 "border-none p-4 rounded-lg text-gray-600 hover:bg-gray-50",

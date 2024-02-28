@@ -195,6 +195,10 @@ import UpdateAgreementFormat from "../pages/dashboard/settings/agreementFormat/u
 import SuppliersReport from "../pages/dashboard/reports/suppliers";
 import SuppliersReportDetail from "../pages/dashboard/reports/suppliers/detail";
 
+import RefundsReportDetail from "../pages/dashboard/reports/refunds/detail";
+
+import SalariesReportDetail from "../pages/dashboard/reports/salaries/detail";
+
 import ExpendituresReport from "../pages/dashboard/reports/expenditure";
 import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/detail";
 
@@ -902,6 +906,14 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/suppliers/:id",
         element: <SuppliersReportDetail />,
+      },
+      {
+        path: "/panel/reports/refunds/:id",
+        element: <RefundsReportDetail />,
+      },
+      {
+        path: "/panel/reports/salaries/:id",
+        element: <SalariesReportDetail />,
       },
       {
         path: "/panel/reports/expenditures",

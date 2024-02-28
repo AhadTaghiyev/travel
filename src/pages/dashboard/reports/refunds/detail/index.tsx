@@ -1,8 +1,18 @@
+import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Button, Container, FormHelperText, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
+import { ClipLoader } from "react-spinners";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import * as Yup from "yup";
 
-import img from "@/assets/abc_home-1.jpg";
+import { apiService } from "@/server/apiServer";
+
+import CustomDateTimePicker from "@/components/custom/datePicker";
+import CustomTextField from "@/components/custom/input";
+import Loading from "@/components/custom/loading";
 import {
   Table,
   TableBody,
@@ -12,15 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Loading from "@/components/custom/loading";
-import { useEffect, useState } from "react";
-import { apiService } from "@/server/apiServer";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { Formik, FormikHelpers, FormikValues } from "formik";
-import CustomDateTimePicker from "@/components/custom/datePicker";
-import { ClipLoader } from "react-spinners";
-import { formatDate } from "@/lib/utils";
+
+import img from "@/assets/abc_home-1.jpg";
 import {
   Select,
   SelectContent,
@@ -29,18 +32,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { isNil } from "lodash";
-import CustomTextField from "@/components/custom/input";
-import * as Yup from "yup";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
+  { label: "Müştəri", name: "customer" },
   { label: "Ref.", name: "ref" },
-  { label: "Details.", name: "details" },
-  { label: "Debit", name: "debit" },
-  { label: "Credit", name: "credit" },
-  { label: "Balance", name: "balance" },
-  { label: "Total", name: "total" },
+  { label: "Refund Ref.", name: "refundRef" },
+  { label: "Məbləğ", name: "refundableAmount" },
+  { label: "Date", name: "date" },
 ];
 
 const Detail = () => {
@@ -52,11 +51,11 @@ const Detail = () => {
   const [data, setData] = useState<
     {
       id: string;
-      name: string;
-      balance: number;
-      total: number;
-      credit: number;
-      debit: number;
+      customer: string;
+      ref: string;
+      refundRef: string;
+      refundableAmount: number;
+      date: string;
     }[]
   >();
   const { id } = useParams<{ id: string }>();
@@ -84,16 +83,12 @@ const Detail = () => {
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
+    if (startDate) searchParams.append("starDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/SupplierReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/RefundReportDetail/1?${searchParams.toString()}`)
       .then((res) => {
-        const items = res.data.items.map((item) => ({
-          ...item,
-          total: item.debit + item.credit + item.balance,
-        }));
-        setData(items);
+        setData(res.data.items);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -116,10 +111,8 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
-  const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
-  const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
-  const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
+  const total =
+    data?.reduce((acc, item) => acc + item.refundableAmount, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -224,9 +217,7 @@ const Detail = () => {
                   <TableRow key={row.id}>
                     {columns.map((column) => (
                       <TableCell key={column.name} className="py-1.5">
-                        {column.type === "date"
-                          ? formatDate(row?.[column.name])
-                          : row?.[column.name]}
+                        {row?.[column.name]}
                       </TableCell>
                     ))}
                     <TableCell className="w-48 py-0">
@@ -243,11 +234,10 @@ const Detail = () => {
                 <TableCell className="py-2" colSpan={4}>
                   {t("Total Amount")}
                 </TableCell>
-                <TableCell className="py-2">{totalDebit}</TableCell>
-                <TableCell className="py-2">{totalCredit}</TableCell>
-                <TableCell className="py-2">{totalBalance}</TableCell>
+
                 <TableCell className="py-2">{total}</TableCell>
-                <TableCell></TableCell>
+                <TableCell className="py-2"></TableCell>
+                <TableCell className="py-2"></TableCell>
               </TableRow>
             </TableFooter>
           </Table>
