@@ -6,7 +6,8 @@ export const apiService = {
   get: async function Get(api: string): Promise<any> {
     try {
       const res = await Axios.get(api);
-      if (res.status === 401) window.location.pathname = `${BASE_URL}/auth`;
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;
     } catch (error: any) {
       return error.response;
@@ -22,7 +23,8 @@ export const apiService = {
           accept: "application/json",
         },
       });
-      if (res.status === 401) window.location.pathname = `${BASE_URL}/auth`;
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;
     } catch (error: any) {
       return error.response;
@@ -37,7 +39,8 @@ export const apiService = {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (res.status === 401) window.location.pathname = `${BASE_URL}/auth`;
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;
     } catch (error: any) {
       return error.response;
@@ -53,7 +56,8 @@ export const apiService = {
           accept: "application/json",
         },
       });
-      if (res.status === 401) window.location.pathname = `${BASE_URL}/auth`;
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;
     } catch (error: any) {
       return error.response;
@@ -62,7 +66,8 @@ export const apiService = {
   delete: async function Delete(api: string, id: any): Promise<any> {
     try {
       const res = await Axios.delete(api + "/" + id);
-      if (res.status === 401) window.location.pathname = `${BASE_URL}/auth`;
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;
     } catch (error: any) {
       return error.response;

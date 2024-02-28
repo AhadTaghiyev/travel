@@ -34,7 +34,7 @@ Axios.interceptors.response.use(
 
       if (!access_token) {
         userService.logout();
-        window.location.href = "/auth";
+        window.location.href = "/auth/login";
         return Promise.reject(error);
       }
 

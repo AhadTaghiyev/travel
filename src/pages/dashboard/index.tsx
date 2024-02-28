@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function index() {
   useEffect(() => {
-    if (!localStorage.getItem("token")) navigate("/auth");
+    if (!localStorage.getItem("token")) navigate("/auth/login");
   }, []);
 
   const navigate = useNavigate();

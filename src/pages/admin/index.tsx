@@ -10,7 +10,7 @@ export default function Index() {
   // console.log(currentUser);
 
   useEffect(() => {
-    localStorage.getItem("role") !== "Admin" && navigate("/auth");
+    localStorage.getItem("role") !== "Admin" && navigate("/auth/login");
   }, []);
 
   return (

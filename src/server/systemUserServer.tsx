@@ -30,6 +30,32 @@ export const userService = {
       console.log("err: ", error);
     }
   },
+  register: async function Register(values: {
+    name: string;
+    email: string;
+    phoneNumber: string;
+    adress?: string;
+    detail?: string;
+    subscribeType: string;
+  }): Promise<any> {
+    try {
+      return await (
+        await Axios.post(
+          `/Company`,
+          { values },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+          }
+        )
+      ).data;
+    } catch (error) {
+      console.log("err: ", error);
+    }
+  },
   get: async function Get(): Promise<any> {
     try {
       return (

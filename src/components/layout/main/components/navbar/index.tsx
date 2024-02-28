@@ -49,14 +49,17 @@ export default function Navbar({ isAdmin }: NavbarProp) {
 
   const handleLogout = () => {
     userService.logout();
-    navigate("/auth");
+    navigate("/auth/login");
   };
   return (
     <AppBar
       color="default"
       sx={{ right: "0px", position: "fixed", width: "80%" }}
     >
-      <Container maxWidth="xl" style={{backgroundColor:"black",color:"white"}}>
+      <Container
+        maxWidth="xl"
+        style={{ backgroundColor: "black", color: "white" }}
+      >
         <Toolbar disableGutters>
           {!isAdmin ? (
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>

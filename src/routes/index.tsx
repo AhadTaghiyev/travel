@@ -7,6 +7,7 @@ import RecieptTour from "../pages/dashboard/tourPackage/reciept/index";
 import App from "../pages/main/home";
 import Error from "../Error";
 import Login from "../pages/authentication/login";
+import Register from "../pages/authentication/register";
 import Auth from "../pages/authentication";
 import ChangePassword from "../pages/authentication/changePassword";
 import Unauth from "../Unauth";
@@ -256,8 +257,12 @@ const router = createBrowserRouter([
     element: <Auth />,
     children: [
       {
-        path: "/auth",
+        path: "/auth/login",
         element: <Login />,
+      },
+      {
+        path: "/auth/register",
+        element: <Register />,
       },
       {
         path: "/auth/changePassword",

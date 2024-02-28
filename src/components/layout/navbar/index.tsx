@@ -54,7 +54,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-x-3">
           <Link
-            to="/auth"
+            to="/auth/login"
             className="px-6 py-3 bg-gray-950  rounded text-xs text-[#f8f9fb] hover:bg-gray-500 transition"
           >
             Sign in

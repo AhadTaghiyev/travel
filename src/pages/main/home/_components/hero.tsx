@@ -16,7 +16,7 @@ const HeroSection = () => {
           designed for travel agencies
         </p>
         <Link
-          to="/auth"
+          to="/auth/login"
           className="px-6 py-3 bg-gray-950   rounded text-xs text-[#f8f9fb] hover:bg-gray-500 transition"
         >
           Try free
