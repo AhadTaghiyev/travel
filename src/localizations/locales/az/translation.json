@@ -188,12 +188,12 @@
     "Yeni Service Yarat": "Yeni Service Yarat",
     "Servis Adı": "Servis Adı",
     "balance": "Balans",
-    "Bonus": "Bonus",
+    "Bonus": "Incentive",
     "Bonus yaradıldı":  "Bonus yaradıldı",
-    "Depozit Yarat": "Depozit Yarat",
+    "Depozit Yarat": "Advance Receipt",
     "Bonus updated": "Bonus güncəlləndi",
     "Depozit güncəlləməsi": "Depozit güncəlləməsi",
-    "Deposit": "Depozit",
+    "Deposit":  "Advance Receipt",
     "Depozit yaradıldı": "Depozit yaradıldı",
     "Deposit updated": "Depozit güncəlləndi",
     "Income updated": "Gəlir güncəlləndi",
@@ -365,5 +365,6 @@
 "Introducing simple and easy to use accounting software specially designed for travel agencies": "Səyahət agentlikləri üçün xüsusi hazırlanmış sadə və istifadəsi asan muhasebe proqramı",
 "Try free": "Pulsuz Yoxlayın",
 "Our Special Features": "Xüsusi Xüsusiyyətlərimiz",
-"Logout":"Çıxış"
+"Logout":"Çıxış",
+"Personal seçilməlidir":"Personal seçilməlidir"
 }
