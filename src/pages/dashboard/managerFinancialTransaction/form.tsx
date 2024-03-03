@@ -57,8 +57,8 @@ const TransactionForm = ({
                 }}
                 hasErrorMessages={!!errors.status && !!touched.status}
                 staticOptions={[
-                  { label: t("Mədaxil"), value: "1" },
-                  { label: t("Məxaric"), value: "0" },
+                  { label: t("From"), value: "1" },
+                  { label: t("To"), value: "0" },
                 ]}
                 errorMessages={[t(errors.status?.toString())]}
               />

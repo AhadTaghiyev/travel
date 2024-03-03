@@ -188,12 +188,12 @@
     "Yeni Service Yarat": "Создать новый сервис",
     "Servis Adı": "Название сервиса",
     "balance": "Баланс",
-    "Bonus": "Бонус",
+    "Bonus": "Incentive",
     "Bonus yaradıldı": "Бонус создан",
-    "Depozit Yarat": "Создать депозит",
+    "Depozit Yarat": "Advance Receipt",
     "Bonus updated": "Бонус обновлен",
     "Depozit güncəlləməsi": "Обновление депозита",
-    "Deposit": "Депозит",
+    "Deposit": "Advance Receipt",
     "Depozit yaradıldı": "Депозит создан",
     "Deposit updated": "Депозит обновлен",
     "Income updated": "Доход обновлен",
@@ -365,5 +365,6 @@
 "Introducing simple and easy to use accounting software specially designed for travel agencies": "Представляем простое в использовании бухгалтерское программное обеспечение, специально разработанное для туристических агентств",
 "Try free": "Попробуйте бесплатно",
 "Our Special Features": "Наши особенности",
-"Logout":"Выйти"
+"Logout":"Выйти",
+"Personal seçilməlidir":"Персонал необходимо подбирать"
 }

@@ -5,13 +5,25 @@ export const columns: GridColDef[] = [
 
   {
     field: "amount",
-    headerName: "Ödənilən məbləğ",
+    headerName: "Amount",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "payment",
-    headerName: "Ödənişlər",
+    headerName: "Payment",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "status",
+    headerName: "Payment",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "note",
+    headerName: "Note",
     flex: 1,
     headerClassName: "header-item",
   },

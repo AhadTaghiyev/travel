@@ -82,12 +82,12 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaServicestack,
-        text: "Müştəri",
+        text: "Advance Receipt",
         link: "/panel/deposit",
       },
       {
         icon: FaServicestack,
-        text: "Bonus",
+        text: "Incentive",
         link: "/panel/bonus",
       },
     ],

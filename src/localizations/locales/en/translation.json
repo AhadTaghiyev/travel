@@ -1,7 +1,7 @@
 {
     "Yeni aviabilet": "New flight ticket",
     "Mədaxil": "Receipt",
-    "Təsisçidən təsisçiyə": "From founder to founder",
+    "Təsisçidən təsisçiyə": "Debt From/To Founder",
     "Vəsait transferi": "Fund transfer",
     "Ödənişlər": "Payments",
     "Geri qaytarmalar": "Refunds",
@@ -188,12 +188,12 @@
     "Yeni Service Yarat": "Create New Service",
     "Servis Adı": "Service Name",
     "balance": "Balance",
-    "Bonus": "Bonus",
+    "Bonus": "Incentive",
     "Bonus yaradıldı": "Bonus Created",
-    "Depozit Yarat": "Create Deposit",
+    "Depozit Yarat": "Advance Receipt",
     "Bonus updated": "Bonus Updated",
     "Depozit güncəlləməsi": "Deposit Update",
-    "Deposit": "Deposit",
+    "Deposit": "Advance Receipt",
     "Depozit yaradıldı": "Deposit Created",
     "Deposit updated": "Deposit Updated",
     "Income updated": "Income Updated",
@@ -365,5 +365,6 @@
 "Introducing simple and easy to use accounting software specially designed for travel agencies": "Introducing simple and easy to use accounting software specially designed for travel agencies",
 "Try free": "Try free",
 "Our Special Features": "Our Special Features",
-"Logout":"Logout"
+"Logout":"Logout",
+"Personal seçilməlidir":"Personnel must be selected"
 }
