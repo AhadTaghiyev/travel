@@ -6,18 +6,18 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
-import bubbleBlue from "../../../../assets/bubbleBlue.png";
+import bubbleBlue from "@/assets/bubbleBlue.png";
 
 import styles from "./navbar.module.css";
 
 const pages = ["FAQ", "Haqqımızda", "Bizimlə əlaqə"];
 
 export default function Index() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const changeDirecktory=(path:string)=>{
-navigate(path);
-  }
+  const changeDirecktory = (path: string) => {
+    navigate(path);
+  };
   const { t } = useTranslation();
   return (
     <>
@@ -37,11 +37,16 @@ navigate(path);
                 alignItems: "center",
               }}
             >
-               {/* <Link className="flex" to="/"> */}
-               <img src={bubbleBlue} />
-              <h3 style={{cursor:"pointer"}} onClick={e=>changeDirecktory("/")} className={styles.logoText}>Travacco</h3>
-               {/* </Link> */}
-         
+              {/* <Link className="flex" to="/"> */}
+              <img src={bubbleBlue} />
+              <h3
+                style={{ cursor: "pointer" }}
+                onClick={(e) => changeDirecktory("/")}
+                className={styles.logoText}
+              >
+                Travacco
+              </h3>
+              {/* </Link> */}
             </Typography>
             <Box sx={{ flexGrow: 1, display: "flex", ml: 5 }}>
               {pages.map((page) => (

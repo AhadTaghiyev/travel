@@ -28,7 +28,7 @@ export const otherServicesInitialValues: IOtherServiceModal = {
   supplierId: null,
   personalId: null,
   serviceId: null,
-  invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
+  // invoiceDirections: [cloneDeep(invoiceDirectionInitialValues)],
   key: "AluUqcIjj",
 };
 

@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { userService } from "../server/systemUserServer";
 
-export const UserContext = createContext<{ user?: any }>({});
+export const UserContext = createContext<{ user?: any; loading: boolean }>({});
 
 export const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -12,16 +13,19 @@ export const UserProvider = ({ children }: any) => {
   }, [window]);
 
   const getUser = async () => {
+    setLoading(true);
     const res = await userService.get();
     if (res) setUser(res);
     else {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
     }
+    setLoading(false);
   };
 
   const values = {
     user,
+    loading,
     getUser,
     setUser,
   };

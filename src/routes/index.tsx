@@ -257,6 +257,16 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
+    path: "/en",
+    element: <App />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/ru",
+    element: <App />,
+    errorElement: <Error />,
+  },
+  {
     path: "/403",
     element: <Unauth />,
   },
@@ -1022,8 +1032,6 @@ const router = createBrowserRouter([
         path: "/panel/reports/profit",
         element: <Profit />,
       },
-
-      
 
       // {
       //   path: "/panel/reports/planeTicket",

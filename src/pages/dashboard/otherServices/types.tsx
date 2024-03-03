@@ -20,7 +20,7 @@ export interface IOtherServiceModal {
   commonPrice: number;
   supplierId: number;
   personalId: number;
-  invoiceDirections: IInvoiceDirections[];
+  // invoiceDirections: IInvoiceDirections[];
 }
 
 export interface IInvoiceDirections {

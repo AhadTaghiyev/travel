@@ -17,12 +17,12 @@ export const OtherServiceSchema = Yup.object().shape({
   supplierId: Yup.string().nullable(),
   personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
   serviceId: Yup.string().required("Servis seçilməlidir"),
-  invoiceDirections: Yup.array().of(
-    Yup.object().shape({
-      flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
-      direction: Yup.string().required("İstiqamət daxil edilməlidir"),
-    })
-  ),
+  // invoiceDirections: Yup.array().of(
+  //   Yup.object().shape({
+  //     flightDate: Yup.date().required("Uçuş tarixi daxil edilməlidir"),
+  //     direction: Yup.string().required("İstiqamət daxil edilməlidir"),
+  //   })
+  // ),
 });
 
 export const getTicketSchema = (isEdit: boolean) =>
