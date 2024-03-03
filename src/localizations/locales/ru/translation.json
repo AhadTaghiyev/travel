@@ -1,6 +1,6 @@
 {
     "Yeni aviabilet": "Новый авиабилет",
-    "Mədaxil": "Вход",
+    "Mədaxil": "Приход",
     "Təsisçidən təsisçiyə": "От основателя к основателю",
     "Vəsait transferi": "Перевод средств",
     "Ödənişlər": "Платежи",
@@ -364,5 +364,6 @@
     "Best Accounting Software for Travel Agency": "Лучшее бухгалтерское программное обеспечение для туристических агентств",
 "Introducing simple and easy to use accounting software specially designed for travel agencies": "Представляем простое в использовании бухгалтерское программное обеспечение, специально разработанное для туристических агентств",
 "Try free": "Попробуйте бесплатно",
-"Our Special Features": "Наши особенности"
+"Our Special Features": "Наши особенности",
+"Logout":"Выйти"
 }
