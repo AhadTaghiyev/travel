@@ -15,8 +15,6 @@ const NewAbout = () => {
 
   const onSubmit = useCallback(
     (values: IAboutModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-       
-
       const formData = new FormData();
       formData.append("titleEn", values.titleEn);
       formData.append("titleRu", values.titleRu);
@@ -26,7 +24,6 @@ const NewAbout = () => {
       formData.append("descAz", values.descAz);
       // formData.append("imageFile", values.image);
       if (values.image && values.image instanceof File) {
-        console.log(values.image)
         formData.append("imageFile", values.image);
       }
       const promise = apiService
@@ -61,7 +58,7 @@ const NewAbout = () => {
           descEn: "",
           descRu: "",
           descAz: "",
-          image:null
+          image: null,
         }}
       />
     </div>

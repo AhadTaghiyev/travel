@@ -118,9 +118,9 @@ export default function Navbar({ isAdmin }: NavbarProp) {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box sx={{ marginRight: "12px" }}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <IconButton sx={{ fontSize: "12px" }} onClick={handleClick}>
+                  {/* <IconButton sx={{ fontSize: "12px" }} onClick={handleClick}>
                     <AiOutlineDown />
-                  </IconButton>
+                  </IconButton> */}
                   <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
@@ -132,7 +132,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   >
                     <MenuItem onClick={handleLogout}>
                       <BiLogOut />
-                      <Typography sx={{ mx: 4 }}>Çıxış et</Typography>
+                      <Typography sx={{ mx: 4 }}>{t("Logout")}</Typography>
                     </MenuItem>
                   </Menu>
                   <h6
@@ -157,7 +157,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   {role}
                 </p>
               </Box>
-              <IconButton sx={{ p: 0 }}>
+              <IconButton onClick={handleClick} sx={{ p: 0 }}>
                 <Avatar
                   variant="square"
                   alt={userName}

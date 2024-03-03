@@ -211,109 +211,118 @@ const TourPackageForm = ({
           </div>
           <div className="mt-4">
             {values.individualTourPackages.map(
-              (individualTourPackage, index) => (
-                <div
-                  key={`key-${
-                    individualTourPackage.id ?? individualTourPackage.key
-                  }`}
-                  className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
-                >
-                  {!isView && (
-                    <div className="absolute right-0 top-2 flex gap-x-2">
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          const tourPackages = cloneDeep(
-                            values.individualTourPackages
-                          );
-                          const clonedTourPackage = cloneDeep(
-                            individualTourPackage
-                          );
-                          clonedTourPackage.key = shortid.generate();
-                          tourPackages.splice(index + 1, 0, clonedTourPackage);
-                          setFieldValue("individualTourPackages", tourPackages);
-                        }}
-                        className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
-                      >
-                        {t("Copy")}
-                      </button>
-                      {index !== 0 && (
+              (individualTourPackage, index) => {
+                const isFirst = index === 0;
+                return (
+                  <div
+                    key={`key-${
+                      individualTourPackage.id ?? individualTourPackage.key
+                    }`}
+                    className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
+                  >
+                    {!isView && (
+                      <div className="absolute right-0 top-2 flex gap-x-2">
                         <button
                           type="button"
                           disabled={isSubmitting}
                           onClick={() => {
-                            const tours = cloneDeep(
+                            const tourPackages = cloneDeep(
                               values.individualTourPackages
                             );
-                            tours.splice(index, 1);
-                            setFieldValue("individualTourPackages", tours);
+                            const clonedTourPackage = cloneDeep(
+                              individualTourPackage
+                            );
+                            clonedTourPackage.key = shortid.generate();
+                            tourPackages.splice(
+                              index + 1,
+                              0,
+                              clonedTourPackage
+                            );
+                            setFieldValue(
+                              "individualTourPackages",
+                              tourPackages
+                            );
                           }}
-                          className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                          className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
                         >
-                          {t("Sil")}
+                          {t("Copy")}
                         </button>
-                      )}
+                        {index !== 0 && (
+                          <button
+                            type="button"
+                            disabled={isSubmitting}
+                            onClick={() => {
+                              const tours = cloneDeep(
+                                values.individualTourPackages
+                              );
+                              tours.splice(index, 1);
+                              setFieldValue("individualTourPackages", tours);
+                            }}
+                            className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                          >
+                            {t("Sil")}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    <div className="w-full relative">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Personals/GetAll/1"
+                        label={t("personal")}
+                        optionLabel="fullName"
+                        value={individualTourPackage.personalId ?? null}
+                        change={(value) =>
+                          setFieldValue(
+                            `individualTourPackages.${index}.personalId`,
+                            value ?? null
+                          )
+                        }
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.personalId &&
+                          !!touched.individualTourPackages?.[index]?.personalId
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.personalId?.toString()
+                          ),
+                        ]}
+                      />
                     </div>
-                  )}
-                  <div className="w-full relative">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Personals/GetAll/1"
-                      label={t("personal")}
-                      optionLabel="fullName"
-                      value={individualTourPackage.personalId ?? null}
-                      change={(value) =>
-                        setFieldValue(
-                          `individualTourPackages.${index}.personalId`,
-                          value ?? null
-                        )
-                      }
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.personalId &&
-                        !!touched.individualTourPackages?.[index]?.personalId
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.personalId?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
 
-                  <div className="w-full relative">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Suppliers/GetAll/1"
-                      label={t("supplier")}
-                      value={individualTourPackage.supplierId ?? null}
-                      optionLabel="name"
-                      change={(value) => {
-                        setFieldValue(
-                          `individualTourPackages.${index}.supplierId`,
-                          value ?? null
-                        );
-                      }}
-                 
-                       refetech={!!(isModalSuccess && type === "createSupplier")}
-                  
-
-
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.supplierId &&
-                        !!touched.individualTourPackages?.[index]?.supplierId
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.supplierId?.toString()
-                        ),
-                      ]}
-                    />
-                         {!isView && (
+                    <div className="w-full relative">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Suppliers/GetAll/1"
+                        label={t("supplier")}
+                        value={individualTourPackage.supplierId ?? null}
+                        optionLabel="name"
+                        change={(value) => {
+                          setFieldValue(
+                            `individualTourPackages.${index}.supplierId`,
+                            value ?? null
+                          );
+                        }}
+                        refetech={
+                          !!(isModalSuccess && type === "createSupplier")
+                        }
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.supplierId &&
+                          !!touched.individualTourPackages?.[index]?.supplierId
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.supplierId?.toString()
+                          ),
+                        ]}
+                      />
+                      {!isView && (
                         <button
                           type="button"
                           disabled={isSubmitting}
@@ -325,390 +334,405 @@ const TourPackageForm = ({
                           <FaPlusSquare />
                         </button>
                       )}
-                  </div>
-                  <div className="w-full relative">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Tours/GetAll/1"
-                      label={t("Tur Adı")}
-                      optionLabel="name"
-                      value={individualTourPackage.tourId ?? null}
-                      change={(value) =>
-                        setFieldValue(
-                          `individualTourPackages.${index}.tourId`,
-                          value ?? null
-                        )
-                      }
-                      refetech={!!(isModalSuccess && type === "createTour")}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.tourId &&
-                        !!touched.individualTourPackages?.[index]?.tourId
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.tourId?.toString()
-                        ),
-                      ]}
-                    />
-                    {!isView && (
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          onOpen("createTour");
+                    </div>
+                    <div className="w-full relative">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Tours/GetAll/1"
+                        label={t("Tur Adı")}
+                        optionLabel="name"
+                        value={individualTourPackage.tourId ?? null}
+                        change={(value) =>
+                          setFieldValue(
+                            `individualTourPackages.${index}.tourId`,
+                            value ?? null
+                          )
+                        }
+                        refetech={!!(isModalSuccess && type === "createTour")}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.tourId &&
+                          !!touched.individualTourPackages?.[index]?.tourId
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.tourId?.toString()
+                          ),
+                        ]}
+                      />
+                      {!isView && (
+                        <button
+                          type="button"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            onOpen("createTour");
+                          }}
+                          className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                        >
+                          <FaPlusSquare />
+                        </button>
+                      )}
+                    </div>
+                    <div className="w-full relative">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Transfers/GetAll/1"
+                        label={t("Transfer")}
+                        optionLabel="name"
+                        value={individualTourPackage.transferId ?? null}
+                        change={(value) =>
+                          setFieldValue(
+                            `individualTourPackages.${index}.transferId`,
+                            value ?? null
+                          )
+                        }
+                        refetech={
+                          !!(isModalSuccess && type === "createTransfer")
+                        }
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.transferId &&
+                          !!touched.individualTourPackages?.[index]?.transferId
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.transferId?.toString()
+                          ),
+                        ]}
+                      />
+                      {!isView && (
+                        <button
+                          type="button"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            onOpen("createTransfer");
+                          }}
+                          className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                        >
+                          <FaPlusSquare />
+                        </button>
+                      )}
+                    </div>
+                    <div className="w-full relative">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Dinings/GetAll/1"
+                        label={t("Yemək")}
+                        optionLabel="name"
+                        value={individualTourPackage.diningId ?? null}
+                        change={(value) =>
+                          setFieldValue(
+                            `individualTourPackages.${index}.diningId`,
+                            value ?? null
+                          )
+                        }
+                        refetech={!!(isModalSuccess && type === "createDining")}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.diningId &&
+                          !!touched.individualTourPackages?.[index]?.diningId
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.diningId?.toString()
+                          ),
+                        ]}
+                      />
+                      {!isView && (
+                        <button
+                          type="button"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            onOpen("createDining");
+                          }}
+                          className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                        >
+                          <FaPlusSquare />
+                        </button>
+                      )}
+                    </div>
+                    <div className="w-full">
+                      <CustomSelect
+                        disabled={isView}
+                        label={t("Sığorta")}
+                        optionLabel="name"
+                        value={individualTourPackage.insurance ?? null}
+                        change={(value) =>
+                          setFieldValue(
+                            `individualTourPackages.${index}.insurance`,
+                            value ?? null
+                          )
+                        }
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.insurance &&
+                          !!touched.individualTourPackages?.[index]?.insurance
+                        }
+                        staticOptions={[
+                          { label: t("Bəli"), value: true },
+                          { label: t("Xeyr"), value: false },
+                        ]}
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.insurance?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView}
+                        label={t("Otel adı")}
+                        value={values.individualTourPackages[index].otelName}
+                        change={handleChange}
+                        name={`individualTourPackages.${index}.otelName`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.otelName &&
+                          !!touched.individualTourPackages?.[index]?.otelName
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.otelName?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView}
+                        label={t("Otaq adı")}
+                        value={values.individualTourPackages[index].roomName}
+                        change={handleChange}
+                        name={`individualTourPackages.${index}.roomName`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.roomName &&
+                          !!touched.individualTourPackages?.[index]?.roomName
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.roomName?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView}
+                        label={t("Rezervasiya nömrəsi")}
+                        value={
+                          values.individualTourPackages[index].rezervationNumber
+                        }
+                        change={handleChange}
+                        name={`individualTourPackages.${index}.rezervationNumber`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.rezervationNumber &&
+                          !!touched.individualTourPackages?.[index]
+                            ?.rezervationNumber
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.rezervationNumber?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView || !isFirst}
+                        label={t("Uşaqların sayı")}
+                        value={
+                          values.individualTourPackages[index].childrenCount
+                        }
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.childrenCount`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.childrenCount &&
+                          !!touched.individualTourPackages?.[index]
+                            ?.childrenCount
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.childrenCount?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView || !isFirst}
+                        label={t("Böyüklərin sayı")}
+                        value={values.individualTourPackages[index].adultCount}
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.adultCount`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.adultCount &&
+                          !!touched.individualTourPackages?.[index]?.adultCount
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.adultCount?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    {/* <div className="w-full">
+                      <CustomTextField
+                        disabled={isView}
+                        label={t("Referans nömrəsi")}
+                        value={values.individualTourPackages[index].referenceNo}
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.referenceNo`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.referenceNo &&
+                          !!touched.individualTourPackages?.[index]?.referenceNo
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.referenceNo?.toString()
+                          ),
+                        ]}
+                      />
+                    </div> */}
+                    <div className="w-full h-full">
+                      <CustomDateTimePicker
+                        disabled={isView}
+                        label={t("Gediş tarixi")}
+                        value={values.dateOfDeparture}
+                        change={(data) => {
+                          setFieldValue("dateOfDeparture", data ?? new Date());
                         }}
-                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                      >
-                        <FaPlusSquare />
-                      </button>
-                    )}
-                  </div>
-                  <div className="w-full relative">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Transfers/GetAll/1"
-                      label={t("Transfer")}
-                      optionLabel="name"
-                      value={individualTourPackage.transferId ?? null}
-                      change={(value) =>
-                        setFieldValue(
-                          `individualTourPackages.${index}.transferId`,
-                          value ?? null
-                        )
-                      }
-                      refetech={!!(isModalSuccess && type === "createTransfer")}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.transferId &&
-                        !!touched.individualTourPackages?.[index]?.transferId
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.transferId?.toString()
-                        ),
-                      ]}
-                    />
-                    {!isView && (
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          onOpen("createTransfer");
+                        hasErrorMessages={
+                          !!errors.dateOfDeparture && !!touched.dateOfDeparture
+                        }
+                        errorMessages={[t(errors.dateOfDeparture?.toString())]}
+                      />
+                    </div>
+                    <div className="w-full h-full">
+                      <CustomDateTimePicker
+                        disabled={isView}
+                        label={t("Dönüş tarixi")}
+                        value={values.returnDate}
+                        change={(data) => {
+                          setFieldValue("returnDate", data ?? new Date());
                         }}
-                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                      >
-                        <FaPlusSquare />
-                      </button>
-                    )}
+                        hasErrorMessages={
+                          !!errors.returnDate && !!touched.returnDate
+                        }
+                        errorMessages={[t(errors.returnDate?.toString())]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView || !isFirst}
+                        label={t("purchasePrice")}
+                        value={
+                          values.individualTourPackages[index].purchasePrice
+                        }
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.purchasePrice`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.purchasePrice &&
+                          !!touched.individualTourPackages?.[index]
+                            ?.purchasePrice
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.purchasePrice?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView || !isFirst}
+                        label={t("salePrice")}
+                        value={
+                          values.individualTourPackages[index].sellingPrice
+                        }
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.sellingPrice`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]
+                            ?.sellingPrice &&
+                          !!touched.individualTourPackages?.[index]
+                            ?.sellingPrice
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.sellingPrice?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView || !isFirst}
+                        label={t("discount")}
+                        value={values.individualTourPackages[index].discount}
+                        change={handleChange}
+                        type="number"
+                        name={`individualTourPackages.${index}.discount`}
+                        hasErrorMessages={
+                          !!errors.individualTourPackages?.[index]?.discount &&
+                          !!touched.individualTourPackages?.[index]?.discount
+                        }
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.discount?.toString()
+                          ),
+                        ]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled
+                        label={t("totalSalePrice")}
+                        value={
+                          values.individualTourPackages[index].sellingPrice -
+                          values.individualTourPackages[index].discount
+                        }
+                        change={handleChange}
+                        type="number"
+                        name={``}
+                        placeholder="Avtomatik"
+                      />
+                    </div>
                   </div>
-                  <div className="w-full relative">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Dinings/GetAll/1"
-                      label={t("Yemək")}
-                      optionLabel="name"
-                      value={individualTourPackage.diningId ?? null}
-                      change={(value) =>
-                        setFieldValue(
-                          `individualTourPackages.${index}.diningId`,
-                          value ?? null
-                        )
-                      }
-                      refetech={!!(isModalSuccess && type === "createDining")}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.diningId &&
-                        !!touched.individualTourPackages?.[index]?.diningId
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.diningId?.toString()
-                        ),
-                      ]}
-                    />
-                    {!isView && (
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          onOpen("createDining");
-                        }}
-                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                      >
-                        <FaPlusSquare />
-                      </button>
-                    )}
-                  </div>
-                  <div className="w-full">
-                    <CustomSelect
-                      disabled={isView}
-                      label={t("Sığorta")}
-                      optionLabel="name"
-                      value={individualTourPackage.insurance ?? null}
-                      change={(value) =>
-                        setFieldValue(
-                          `individualTourPackages.${index}.insurance`,
-                          value ?? null
-                        )
-                      }
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.insurance &&
-                        !!touched.individualTourPackages?.[index]?.insurance
-                      }
-                      staticOptions={[
-                        { label: t("Bəli"), value: true },
-                        { label: t("Xeyr"), value: false },
-                      ]}
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.insurance?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Otel adı")}
-                      value={values.individualTourPackages[index].otelName}
-                      change={handleChange}
-                      name={`individualTourPackages.${index}.otelName`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.otelName &&
-                        !!touched.individualTourPackages?.[index]?.otelName
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.otelName?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Otaq adı")}
-                      value={values.individualTourPackages[index].roomName}
-                      change={handleChange}
-                      name={`individualTourPackages.${index}.roomName`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.roomName &&
-                        !!touched.individualTourPackages?.[index]?.roomName
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.roomName?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Rezervasiya nömrəsi")}
-                      value={
-                        values.individualTourPackages[index].rezervationNumber
-                      }
-                      change={handleChange}
-                      name={`individualTourPackages.${index}.rezervationNumber`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]
-                          ?.rezervationNumber &&
-                        !!touched.individualTourPackages?.[index]
-                          ?.rezervationNumber
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.rezervationNumber?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Uşaqların sayı")}
-                      value={values.individualTourPackages[index].childrenCount}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.childrenCount`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]
-                          ?.childrenCount &&
-                        !!touched.individualTourPackages?.[index]?.childrenCount
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.childrenCount?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Böyüklərin sayı")}
-                      value={values.individualTourPackages[index].adultCount}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.adultCount`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.adultCount &&
-                        !!touched.individualTourPackages?.[index]?.adultCount
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.adultCount?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Referans nömrəsi")}
-                      value={values.individualTourPackages[index].referenceNo}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.referenceNo`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.referenceNo &&
-                        !!touched.individualTourPackages?.[index]?.referenceNo
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.referenceNo?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full h-full">
-                    <CustomDateTimePicker
-                      disabled={isView}
-                      label={t("Gediş tarixi")}
-                      value={values.dateOfDeparture}
-                      change={(data) => {
-                        setFieldValue("dateOfDeparture", data ?? new Date());
-                      }}
-                      hasErrorMessages={
-                        !!errors.dateOfDeparture && !!touched.dateOfDeparture
-                      }
-                      errorMessages={[t(errors.dateOfDeparture?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full h-full">
-                    <CustomDateTimePicker
-                      disabled={isView}
-                      label={t("Dönüş tarixi")}
-                      value={values.returnDate}
-                      change={(data) => {
-                        setFieldValue("returnDate", data ?? new Date());
-                      }}
-                      hasErrorMessages={
-                        !!errors.returnDate && !!touched.returnDate
-                      }
-                      errorMessages={[t(errors.returnDate?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("purchasePrice")}
-                      value={values.individualTourPackages[index].purchasePrice}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.purchasePrice`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]
-                          ?.purchasePrice &&
-                        !!touched.individualTourPackages?.[index]?.purchasePrice
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.purchasePrice?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("salePrice")}
-                      value={values.individualTourPackages[index].sellingPrice}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.sellingPrice`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]
-                          ?.sellingPrice &&
-                        !!touched.individualTourPackages?.[index]?.sellingPrice
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.sellingPrice?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("discount")}
-                      value={values.individualTourPackages[index].discount}
-                      change={handleChange}
-                      type="number"
-                      name={`individualTourPackages.${index}.discount`}
-                      hasErrorMessages={
-                        !!errors.individualTourPackages?.[index]?.discount &&
-                        !!touched.individualTourPackages?.[index]?.discount
-                      }
-                      errorMessages={[
-                        t(
-                          errors.individualTourPackages?.[
-                            index
-                          ]?.discount?.toString()
-                        ),
-                      ]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      label={t("totalSalePrice")}
-                      value={
-                        values.individualTourPackages[index].sellingPrice -
-                        values.individualTourPackages[index].discount
-                      }
-                      change={handleChange}
-                      type="number"
-                      name={``}
-                      placeholder="Avtomatik"
-                    />
-                  </div>
-                </div>
-              )
+                );
+              }
             )}
           </div>
           {!isView && (

@@ -16,7 +16,6 @@ const TourPackageSchema = Yup.object().shape({
   tourId: Yup.number().required("Tur seçilməlidir"),
   transferId: Yup.number().required("Transfer seçilməlidir"),
   diningId: Yup.number().required("Yemək seçilməlidir"),
-  referenceNo: Yup.number().required("Referans nömrəsi daxil edilməlidir"),
   purchasePrice: Yup.number().required("Alış qiyməti daxil edilməlidir"),
   sellingPrice: Yup.number().required("Satış qiyməti daxil edilməlidir"),
   discount: Yup.number().required("Endirim daxil edilməlidir"),

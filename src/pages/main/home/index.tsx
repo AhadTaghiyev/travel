@@ -17,11 +17,11 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (user) {
+    if (user && user?.role !== "Admin") {
       navigate("/panel");
     }
-    console.log(user);
   }, [user]);
 
   return (
