@@ -81,7 +81,6 @@ export default function index() {
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
-  
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
         <Grid
           container
@@ -139,7 +138,12 @@ export default function index() {
           </Grid>
         </Grid>
         <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
-        <h1 className="text-xl font-bold mb-2" style={{textAlign:"center"}}>Receipt</h1>
+          <h1
+            className="text-xl font-bold mb-2"
+            style={{ textAlign: "center" }}
+          >
+            Receipt
+          </h1>
           <div className="flex justify-between ">
             <div>
               <h3 className="text-xl font-bold mb-2">

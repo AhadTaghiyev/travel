@@ -9,7 +9,9 @@ export interface IIncomeModel {
   ticketType?: TicketType;
   customerId?: string;
   invoiceIds?: string[];
+  personalId: string;
   debt?: number;
   paymentId?: string;
   paidAmount?: number;
+  description?: string;
 }

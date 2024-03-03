@@ -33,7 +33,7 @@ export const SidebarItem: React.FC<{ item: SidebarItemType }> = ({ item }) => {
             />
             <span className={styles.sidebarItemText}>{t(item.text)}</span>
           </div>
-          <AiOutlineRight />
+          {item.children?.length > 0 && <AiOutlineRight />}
         </Link>
       ) : (
         <div

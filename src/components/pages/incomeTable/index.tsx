@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "react-router-dom";
 
 interface IIncomeTableProps {
   incomes: {
@@ -21,6 +22,8 @@ interface IIncomeTableProps {
     ref: string;
     invoiceNo: string;
     description: string | null;
+    type: string;
+    invoiceId: number;
   }[];
   currency: ICurrency;
 }
@@ -50,11 +53,18 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
       <TableBody>
         {incomes.map((income) => (
           <TableRow key={income.id}>
+            <TableCell className="font-medium py-1.5">{income.ref}</TableCell>
             <TableCell className="font-medium py-1.5">
-              {income.ref}
-            </TableCell>
-            <TableCell className="font-medium py-1.5">
-              {income.invoiceNo}
+              {income.type ? (
+                <Link
+                  to={`/panel/${income.type}/report?tickets=${income.invoiceId}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {income.invoiceNo}
+                </Link>
+              ) : (
+                income.invoiceNo
+              )}
             </TableCell>
             <TableCell className="py-1.5">{income.payment}</TableCell>
             <TableCell className="py-1.5">
@@ -75,7 +85,7 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell className="py-2" colSpan={3}>
+          <TableCell className="py-2" colSpan={4}>
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">

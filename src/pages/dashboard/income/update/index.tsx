@@ -41,6 +41,7 @@ const UpdateIncome = () => {
         paymentId: values.paymentId,
         paidAmount: values.paidAmount,
         invoiceIds: values.invoiceIds,
+        description: values.description,
       };
 
       const promise = apiService

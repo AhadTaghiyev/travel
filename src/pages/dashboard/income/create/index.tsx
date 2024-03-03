@@ -18,7 +18,9 @@ const NewIncome = () => {
       const params = {
         invoiceIds: values.invoiceIds.map((item: any) => item.value),
         paymentId: values.paymentId,
+        personalId: values.personalId,
         paidAmount: values.paidAmount,
+        description: values.description,
       };
 
       const promise = apiService
@@ -26,12 +28,7 @@ const NewIncome = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Mədaxil yaradıldı"));
-
             navigate(`/panel/income`);
-            // TODO: Navigate to report page
-            // navigate(
-            //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
-            // );
           } else {
             toast.error(response.message || t("Something went wrong"));
           }

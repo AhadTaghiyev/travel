@@ -92,6 +92,21 @@ const MassIncomeForm = ({
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
+                    api="Personals/GetAll/1"
+                    label={t("personal")}
+                    optionLabel="fullName"
+                    value={values.personalId ?? null}
+                    change={(value) =>
+                      setFieldValue(`personalId`, value ?? null)
+                    }
+                    hasErrorMessages={
+                      !!errors.personalId && !!touched.personalId
+                    }
+                    errorMessages={[t(errors.personalId?.toString())]}
+                  />
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocompleteSelect
                     api="Customers/GetAll/1"
                     label={t("customer")}
                     disabled={isEdit}
@@ -196,6 +211,19 @@ const MassIncomeForm = ({
                     change={() => 0}
                     type="number"
                     name={``}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    name="description"
+                    type="text"
+                    label={t("Description")}
+                    value={values.description}
+                    change={handleChange}
+                    hasErrorMessages={
+                      !!errors.description && !!touched.description
+                    }
+                    errorMessages={[t(errors.description?.toString())]}
                   />
                 </div>
               </>

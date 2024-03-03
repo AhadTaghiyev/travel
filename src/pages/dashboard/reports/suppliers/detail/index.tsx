@@ -20,7 +20,7 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -163,7 +163,9 @@ const Detail = () => {
               onSubmit={handleSubmit}
               className="pt-4 flex flex-wrap items-center gap-x-6"
             >
-              <div className="w-52">
+              <div
+                className={cn("w-52", !values.startDate && "removeFromPrint")}
+              >
                 <CustomDateTimePicker
                   label={t("Start Date")}
                   value={values.startDate}
@@ -174,7 +176,7 @@ const Detail = () => {
                   errorMessages={[]}
                 />
               </div>
-              <div className="w-52">
+              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
                 <CustomDateTimePicker
                   label={t("End Date")}
                   value={values.endDate}
@@ -188,12 +190,13 @@ const Detail = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
               >
                 <ClipLoader
                   size={14}
                   color="white"
                   loading={isSubmitting}
+                  className="removeFromPrint"
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
@@ -351,7 +354,8 @@ export const PayAction = ({
                 <div className="w-full h-5 " />
               )}
             </div>
-            <div className="w-28">
+            <div className="pt-4 onlyPrint">{values.amount}</div>
+            <div className="w-28 removeFromPrint">
               <CustomTextField
                 name="amount"
                 type="number"
@@ -366,7 +370,7 @@ export const PayAction = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="p-2 mt-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+              className="p-2 mt-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
             >
               <ClipLoader
                 size={14}

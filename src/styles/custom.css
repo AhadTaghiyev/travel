@@ -297,9 +297,16 @@ button {
   right: 0;
 }
 
+.onlyPrint {
+  display: none !important;
+}
+
 @media print {
   .removeFromPrint {
     display: none !important;
+  }
+  .onlyPrint {
+    display: block !important;
   }
   .main {
     width: 100%;
@@ -332,4 +339,9 @@ body,
 
 * {
   scroll-behavior: smooth;
+}
+
+@page {
+  size: A4;
+  margin: 0;
 }
