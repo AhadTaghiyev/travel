@@ -330,7 +330,7 @@ const TourPackageForm = ({
                     <CustomAutocompleteSelect
                       disabled={isView}
                       api="Tours/GetAll/1"
-                      label={t("Tur adı")}
+                      label={t("Tur Adı")}
                       optionLabel="name"
                       value={individualTourPackage.tourId ?? null}
                       change={(value) =>
