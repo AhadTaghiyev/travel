@@ -14,6 +14,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 
 import { userService } from "@/server/systemUserServer";
+import Navbar from "@/components/layout/navbar";
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string().required("Mütləqdir!"),
@@ -70,6 +71,8 @@ export default function Index() {
   };
 
   return (
+ <>
+    <Navbar />
     <Container
       maxWidth="sm"
       sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -145,5 +148,6 @@ export default function Index() {
       </form>
       <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
     </Container>
+ </>
   );
 }

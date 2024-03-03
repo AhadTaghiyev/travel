@@ -5,6 +5,7 @@ export default function index() {
   const { t } = useTranslation();
   return (
     <div className="report-table">
+  
       <Report
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },

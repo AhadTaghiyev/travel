@@ -230,12 +230,12 @@ export default function Index({
               color="primary"
               sx={headerStyle}
             >
-              + {t(buttonText)} {t("YARAT")}
+              + {t(buttonText)} 
             </Button>
           ) : (
             <Link to={`${root}/new`}>
               <Button variant="contained" color="primary" sx={headerStyle}>
-                + {t(buttonText)} {t("YARAT")}
+                + {t(buttonText)}
               </Button>
             </Link>
           )}

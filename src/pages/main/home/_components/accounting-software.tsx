@@ -1,37 +1,44 @@
+import { apiService } from "@/server/apiServer";
 import { ArrowUpNarrowWide, Building2, LayoutDashboard } from "lucide-react";
+import { useEffect, useState } from "react";
 import { BsClipboardMinus } from "react-icons/bs";
-
-const data = [
-  {
-    image: <LayoutDashboard color="#fff" />,
-    color:"#655F59",
-    title: "Easy-to-Use Dashboard",
-    description:
-      "From the dashboard, you can understand Cash in Hand, Cash in Bank, Recipient List, Supplier Bible List, Passenger Details, and Customer Passport Validity in the next few days.",
-  },
-  {
-    image: <BsClipboardMinus color="#fff" />,
-    color:"#B1B2A1",
-    title: "Report generation",
-    description:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-  {
-    image: <ArrowUpNarrowWide color="#fff" />,
-    color:"#C4A153",
-    title: "Branch Sorting Facility",
-    description: "Easy to manage multiple branches in single admin",
-  },
-  {
-    image: <Building2 color="#fff" />,
-    color:"#6E7971",
-    title: "Add-ons available",
-    description:
-      "Tour Plus, UMRA Plus, VISA Plus, Money transfer accounting, E-service accounting, SMS and Whatsapp integration",
-  },
+import { useTranslation } from "react-i18next";
+// const { t } = useTranslation();
+const icons = [
+  <LayoutDashboard color="#fff" />,
+  <BsClipboardMinus color="#fff" />,
+  <ArrowUpNarrowWide color="#fff" />,
+  <Building2 color="#fff" />,
 ];
 
+// Renkler için dizi
+const colors = ["#655F59", "#B1B2A1", "#C4A153", "#6E7971"];
+
+
+
+
+
 const AccountingSoftwareSection = () => {
+  const { t } = useTranslation();
+
+  const[data,setData]=useState([])
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.get(
+          `/Software/getall/1`
+        );
+        
+        setData(response?.data?.items)
+       
+      
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
   return (
     <div className="landing-container py-16">
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
@@ -42,7 +49,7 @@ const AccountingSoftwareSection = () => {
         Arabia, Qatar, Oman, Nepal and Egypt
       </p> */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
-        {data.map((feature, index) => (
+      {data.map((feature, index) => (
           <div
             key={index}
             className="text-[#1C2940] max-w-96 mx-auto bg-transparent min-h-full w-full p-4 border border-solid border-[#EBEDF0] rounded hover:bg-white hover:scale-105 duration-150"
@@ -50,11 +57,15 @@ const AccountingSoftwareSection = () => {
               boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
             }}
           >
-            <div style={{backgroundColor:feature.color}} className="w-fit px-6 py-[22px] text-[#1c2940]  rounded">
-            {feature.image}
+            <div className="w-fit px-6 py-[22px] text-[#1c2940] rounded"
+             style={{
+              backgroundColor: colors[index % colors.length], // Renk seçimi
+            }}
+            >
+              {icons[index % icons.length]}
             </div>
-            <h2 className="text-base mt-6 mb-4 font-bold">{feature.title}</h2>
-            <p className="text-xs">{feature.description}</p>
+            <h2 className="text-2xl mt-9 mb-4">{t('culture')=="en"?feature.titleEn:t('culture')=="ru"?feature.titleRu:feature.titleAz}</h2>
+          <p className="text-xs mb-6">{t('culture')=="en"?feature.descEn:t('culture')=="ru"?feature.descRu:feature.descAz}</p>
           </div>
         ))}
       </div>

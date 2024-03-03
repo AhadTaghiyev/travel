@@ -31,11 +31,11 @@ const PricingSection = () => {
               <li>Paid Virtual Accountant Service</li>
               </ul>
               <div className="flex items-center gap-x-2 text-[#1976d2] mb-4">
-                <p className="text-2xl leading-9 font-extrabold"> {index==0?"$120":index==1?"$1200":"Agreement"}</p>
+                <p className="text-2xl leading-9 font-extrabold"> {index==0?"$110":index==1?"$1100":"Agreement"}</p>
                 {/* <p className="text-xs font-bold">/per yera (+GTS)</p> */}
               </div>
               <Link
-                to="/"
+                to="/auth/register"
                 className="w-full block cursor-pointer text-center px-6 py-3 bg-[#1976d2] rounded text-xs text-[#f8f9fb] hover:bg-[#4bb7f6] transition"
               >
                 {index==2?"Contact Us":"Subscribe"}

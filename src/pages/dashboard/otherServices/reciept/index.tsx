@@ -27,7 +27,7 @@ const breadcrumbs = [
     Aviabilet satışı
   </Link>,
   <Link key="1" to="/panel/aviabiletSale/new" className="pageLink link">
-    Yeni aviabilet yarat
+    Yeni B2C Aviabiletlər
   </Link>,
   <Link
     key="1"

@@ -18,6 +18,7 @@ interface IIncomeTableProps {
     id: number;
     payment: string;
     paidAmount: number;
+    ref: string;
     invoiceNo: string;
     description: string | null;
   }[];
@@ -39,7 +40,8 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{t("Invoice")}</TableHead>
+          <TableHead>{t("Receipt Number")}</TableHead>
+          <TableHead>{t("Invoice Number")}</TableHead>
           <TableHead>{t("Ödəniş növü")}</TableHead>
           <TableHead>{t("paidamount")}</TableHead>
           <TableHead>{t("Description")}</TableHead>
@@ -48,6 +50,9 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
       <TableBody>
         {incomes.map((income) => (
           <TableRow key={income.id}>
+            <TableCell className="font-medium py-1.5">
+              {income.ref}
+            </TableCell>
             <TableCell className="font-medium py-1.5">
               {income.invoiceNo}
             </TableCell>

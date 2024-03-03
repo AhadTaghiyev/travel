@@ -1,26 +1,34 @@
-import PlaceholderImage from "@/assets/dash.jpeg";
-import PlaceholderImage2 from "@/assets/tickercreate.jpeg";
-
-const data = [
-  {
-    image: PlaceholderImage,
-    title: "Easy-to-Use Dashboard",
-    description:
-      "From the dashboard, you can understand Cash in Hand, Cash in Bank, Recipient List, Supplier Bible List, Passenger Details, and Customer Passport Validity in the next few days.",
-  },
-  {
-    image: PlaceholderImage2,
-    title: "Report generation",
-    description:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-];
+import { apiService } from "@/server/apiServer";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+// const { t } = useTranslation();
 
 const AboutSection = () => {
+  const { t } = useTranslation();
+  const[data,setData]=useState([])
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.get(
+          `/About/getall/1`
+        );
+        
+        setData(response?.data?.items)
+       
+      
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+
   return (
     <div id="landing-about-section" className="landing-container py-16">
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
-        About Travacco
+        {t('About')} Travacco
       </h1>
       {/* <p className="w-full max-w-[552px] text-center mx-auto mt-4 text-xs text-[#24272b]">
         There are many variations of passages of Lorem Ipsum available, but the
@@ -37,12 +45,13 @@ const AboutSection = () => {
           >
             <img
               src={feature.image}
-              alt={`Feature ${feature.title}`}
+              alt={`Feature ${feature.titleEn}`}
               className="w-full h-[196px] object-contain rounded"
             />
 
-            <h2 className="text-base mt-6 mb-4 font-bold">{feature.title}</h2>
-            <p className="text-xs">{feature.description}</p>
+            <h2 className="text-base mt-6 mb-4 font-bold">{t('culture')=="en"?feature.titleEn:t('culture')=="ru"?feature.titleRu:feature.titleAz}</h2>
+            <p className="text-xs">{t('culture')=="en"?feature.descEn:t('culture')=="ru"?feature.descRu:feature.descAz}</p>
+
           </div>
         ))}
       </div>

@@ -42,7 +42,7 @@ export const getColumns = (t: TFunction): GridColDef[] => [
   },
   {
     field: "hotelName",
-    headerName: t("Otel Adı"),
+    headerName: t("Otel adı"),
     flex: 1,
     headerClassName: "header-item",
   },

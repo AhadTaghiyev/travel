@@ -15,13 +15,13 @@ export default function Index() {
 
   return (
     <>
-      <Sidebar items={sidebarItems} color="rgb(42 98 137)" />
-      <div style={{ paddingLeft: "228px" }}>
-        <Navbar isAdmin />
-        <div style={{ paddingTop: "80px" }}>
-          <Outlet />
-        </div>
+    <Sidebar items={sidebarItems} color="#24272b" />
+    <div id="forPadding" className="main">
+      <Navbar />
+      <div style={{ paddingTop: "80px" }}>
+        <Outlet />
       </div>
-    </>
+    </div>
+  </>
   );
 }

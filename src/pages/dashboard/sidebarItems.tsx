@@ -194,11 +194,7 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Flight Tickets",
         link: "/panel/reports/flightTickets",
       },
-      {
-        icon: BsFileEarmarkPerson,
-        text: "Expenditures",
-        link: "/panel/reports/expenditures",
-      },
+  
       {
         icon: BsFillPeopleFill,
         text: "Müştəri",
@@ -214,11 +210,7 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Yaxın uçuşlar",
         link: "/panel/reports/nearestFlights",
       },
-      {
-        icon: FaMoneyBill1Wave,
-        text: "Ödənilən və ödəniləcəklər",
-        link: "/panel/reports/willbepaids",
-      },
+   
       {
         icon: FaServicestack,
         text: "Fees",

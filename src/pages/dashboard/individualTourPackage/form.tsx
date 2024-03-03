@@ -296,6 +296,11 @@ const TourPackageForm = ({
                           value ?? null
                         );
                       }}
+                 
+                       refetech={!!(isModalSuccess && type === "createSupplier")}
+                  
+
+
                       hasErrorMessages={
                         !!errors.individualTourPackages?.[index]?.supplierId &&
                         !!touched.individualTourPackages?.[index]?.supplierId
@@ -308,6 +313,18 @@ const TourPackageForm = ({
                         ),
                       ]}
                     />
+                         {!isView && (
+                        <button
+                          type="button"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            onOpen("createSupplier");
+                          }}
+                          className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                        >
+                          <FaPlusSquare />
+                        </button>
+                      )}
                   </div>
                   <div className="w-full relative">
                     <CustomAutocompleteSelect
@@ -708,7 +725,7 @@ const TourPackageForm = ({
                 }}
                 className="font-semibold text-blue-500 border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
               >
-                + {t("newPassenger")}
+                + {t("New Hotel")}
               </button>
               <button
                 type="button"

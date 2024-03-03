@@ -22,6 +22,7 @@ const CorperativeTicketSchema = Yup.object().shape({
     .required("Ümumi qiymət daxil edilməlidir")
     .min(0, "Ümumi qiymət mənfi ola bilməz"),
   supplierId: Yup.string().required("Tədarikçi seçilməlidir"),
+  
   personalId: Yup.string().required("Şəxsiyyət seçilməlidir"),
   airWayId: Yup.string().required("Aviaşirkət seçilməlidir"),
   invoiceDirections: Yup.array().of(

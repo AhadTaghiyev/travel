@@ -40,7 +40,6 @@ const columns = [
   { label: "Debit", name: "debit" },
   { label: "Credit", name: "credit" },
   { label: "Balance", name: "balance" },
-  { label: "Total", name: "total" },
 ];
 
 const Detail = () => {

@@ -130,6 +130,10 @@ export default function Index({ headers, api }: IReportModel) {
                 sx={{ fontSize: "12px", lineHeight: "16px" }}
                 onClick={() => onOpen("createCurrency", onCurrencyChange)}
               >
+
+
+
+                
                 <BsCurrencyExchange style={{ marginRight: "8px" }} />
                 {t("Məzənnə dəyişdir")}
               </Button>
@@ -148,6 +152,15 @@ export default function Index({ headers, api }: IReportModel) {
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
+              </Button>
+
+              <Button
+                onClick={e=>navigate("/panel/aviabiletsale/new")}
+                variant="text"
+                color="inherit"
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
+              >
+              {t("Aviabilet")}
               </Button>
             </Grid>
             <Typography variant="h4" gutterBottom align="right">

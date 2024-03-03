@@ -3,6 +3,12 @@ import { GridColDef } from "@mui/x-data-grid";
 export const columns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
+    field: "ref",
+    headerName: "Receipt Number",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "invoiceNo",
     headerName: "Invoice Number",
     flex: 1,

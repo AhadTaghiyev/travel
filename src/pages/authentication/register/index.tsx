@@ -1,9 +1,9 @@
 import { OutlinedInput, Typography } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -21,7 +21,7 @@ const RegisterSchema = Yup.object().shape({
   subscribeType: Yup.string().required("Mütləqdir!"),
 });
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 export default function Index() {
   const formik = useFormik({

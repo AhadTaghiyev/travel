@@ -1,6 +1,6 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
+import {  FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
@@ -11,7 +11,6 @@ import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
 import { cn } from "@/lib/utils";
 import {
-  invoiceDirectionInitialValues,
   otherServicesInitialValues,
 } from "./create";
 
@@ -275,6 +274,8 @@ const OtherServicesForm = ({
                     change={(value) => {
                       setFieldValue(`otherServices.${index}.supplierId`, value);
                     }}
+                    refetech={!!(isModalSuccess && type === "createSupplier")}
+                 
                     hasErrorMessages={
                       !!errors.otherServices?.[index]?.supplierId &&
                       !!touched.otherServices?.[index]?.supplierId
@@ -283,6 +284,18 @@ const OtherServicesForm = ({
                       t(errors.otherServices?.[index]?.supplierId?.toString()),
                     ]}
                   />
+                     {!isView && (
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          onOpen("createSupplier");
+                        }}
+                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                      >
+                        <FaPlusSquare />
+                      </button>
+                    )}
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
@@ -401,7 +414,7 @@ const OtherServicesForm = ({
                     placeholder="Avtomatik"
                   />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 gap-x-4 pt-2 w-full items-center bg-[rgba(0,0,0,0.03)]">
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 gap-x-4 pt-2 w-full items-center bg-[rgba(0,0,0,0.03)]">
                   {values.otherServices[index].invoiceDirections.map(
                     (_, invoiceDirectionIdx) => (
                       <div
@@ -511,7 +524,7 @@ const OtherServicesForm = ({
                       </button>
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
             ))}
           </div>

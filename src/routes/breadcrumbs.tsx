@@ -40,7 +40,7 @@ export const planeTicketBreadCrumb = (
 
 export const newPlaneTicketBreadCrumb = (
   <Link key="1" to="/panel/aviabiletSale" className="currentPageLink link">
-    Yeni aviabilet yarat
+    Yeni B2C Aviabiletlər
   </Link>
 );
 

@@ -272,6 +272,7 @@ const AviabiletTicketForm = ({
                     value={planeTicket.supplierId ?? null}
                     optionLabel="name"
                     disabled={isView}
+                    refetech={!!(isModalSuccess && type === "createSupplier")}
                     change={(value) => {
                       setFieldValue(`planeTickets.${index}.supplierId`, value);
                     }}
@@ -283,6 +284,19 @@ const AviabiletTicketForm = ({
                       t(errors.planeTickets?.[index]?.supplierId?.toString()),
                     ]}
                   />
+                  
+                      {!isView && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        onOpen("createSupplier");
+                      }}
+                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                    >
+                      <FaPlusSquare />
+                    </button>
+                  )}
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect

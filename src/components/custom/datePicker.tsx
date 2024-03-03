@@ -57,7 +57,7 @@ export default function CustomDateTimePicker({
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {value ? (
-              format(new Date(value), "PPP", {
+              format(new Date(value), "dd MMMM yyyy", {
                 locale: locales[language],
               })
             ) : (

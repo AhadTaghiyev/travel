@@ -7,7 +7,17 @@ import {BsFillPeopleFill} from 'react-icons/bs'
 export const sidebarItems : SidebarItemType[] = [
     {
         icon: BsFillPeopleFill,
-        text: 'Kampaniyalar',
-        link: '/admin/company'
+        text: 'About',
+        link: '/admin/abouts'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Software',
+        link: '/admin/softwares'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Feature',
+        link: '/admin/features'
     },
 ]

@@ -63,6 +63,26 @@ export const apiService = {
       return error.response;
     }
   },
+
+  putForm: async function Put(api: string, object: any): Promise<any> {
+    try {
+      const res = await Axios.put(api, object, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          // "Content-Type" başlığını kaldırın veya yorum satırı yapın
+          // Axios, FormData ile yapılan istekler için bu başlığı otomatik olarak yönetir
+        },
+      });
+      if (res.status === 401) {
+        window.location.pathname = `${BASE_URL}/auth/login`;
+      } else {
+        return res;
+      }
+    } catch (error: any) {
+      return error.response;
+    }
+  },
+
   delete: async function Delete(api: string, id: any): Promise<any> {
     try {
       const res = await Axios.delete(api + "/" + id);

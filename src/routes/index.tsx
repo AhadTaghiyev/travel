@@ -63,10 +63,17 @@ import Referance from "../pages/dashboard/referance/index";
 
 //Admin
 import Admin from "../pages/admin";
-import CompanyAdmin from "../pages/admin/company";
-import CompanyCreate from "../pages/admin/company/createCompany";
-import CompanyUpdate from "../pages/admin/company/updateCompany";
+import SoftwareAdmin from "../pages/admin/software";
+import SoftwareCreate from "../pages/admin/software/create";
+import SoftwareUpdate from "../pages/admin/software/update";
 
+import FeatureAdmin from "../pages/admin/feature";
+import FeatureCreate from "../pages/admin/feature/create";
+import FeatureUpdate from "../pages/admin/feature/update";
+
+import AboutAdmin from "../pages/admin/about";
+import AboutCreate from "../pages/admin/about/create";
+import AboutUpdate from "../pages/admin/about/update";
 //Airway
 import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
@@ -222,6 +229,7 @@ import PersonalsReport from "../pages/dashboard/reports/personal";
 import PersonalsDetail from "../pages/dashboard/reports/personal/detail";
 
 import NearestFlights from "../pages/dashboard/reports/nearestFlights";
+import Profit from "../pages/dashboard/reports/profit";
 
 // import PlaneTicketReport from "../pages/main/reports/planeTickets";
 // import CorporateReport from "../pages/main/reports/corporate";
@@ -275,16 +283,41 @@ const router = createBrowserRouter([
     element: <Admin />,
     children: [
       {
-        path: "/admin/company",
-        element: <CompanyAdmin />,
+        path: "/admin/Softwares",
+        element: <SoftwareAdmin />,
       },
       {
-        path: "/admin/company/update/:id",
-        element: <CompanyUpdate />,
+        path: "/admin/Softwares/update/:id",
+        element: <SoftwareUpdate />,
       },
       {
-        path: "/admin/company/create",
-        element: <CompanyCreate />,
+        path: "/admin/softwares/new",
+        element: <SoftwareCreate />,
+      },
+      {
+        path: "/admin/Features",
+        element: <FeatureAdmin />,
+      },
+      {
+        path: "/admin/Features/update/:id",
+        element: <FeatureUpdate />,
+      },
+      {
+        path: "/admin/Features/new",
+        element: <FeatureCreate />,
+      },
+
+      {
+        path: "/admin/Abouts",
+        element: <AboutAdmin />,
+      },
+      {
+        path: "/admin/Abouts/update/:id",
+        element: <AboutUpdate />,
+      },
+      {
+        path: "/admin/Abouts/new",
+        element: <AboutCreate />,
       },
     ],
   },
@@ -985,6 +1018,12 @@ const router = createBrowserRouter([
         path: "/panel/reports/nearestFlights",
         element: <NearestFlights />,
       },
+      {
+        path: "/panel/reports/profit",
+        element: <Profit />,
+      },
+
+      
 
       // {
       //   path: "/panel/reports/planeTicket",
