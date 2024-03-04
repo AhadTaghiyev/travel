@@ -15,6 +15,7 @@ import "./styles/index.css";
 import translationAZ from "./localizations/locales/az/translation.json";
 import translationEN from "./localizations/locales/en/translation.json";
 import translationRU from "./localizations/locales/ru/translation.json";
+import { CompanyProvider } from "./store/CompanyContext";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -29,8 +30,10 @@ i18n.use(initReactI18next).init({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <UserProvider>
-    <RouterProvider router={router} />
-    <ModalProvider />
-    <Toaster richColors expand={true} />
+    <CompanyProvider>
+      <RouterProvider router={router} />
+      <ModalProvider />
+      <Toaster richColors expand={true} />
+    </CompanyProvider>
   </UserProvider>
 );

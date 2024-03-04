@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from "react";
 
 import { ICurrency } from "@/components/pages/report/types";
 
-import img from "@/assets/abc_home-1.jpg";
 import { BsCurrencyExchange } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -46,6 +45,8 @@ const customerProperties = [
 
 export default function index() {
   const { user: currentUser } = useContext(UserContext);
+  const { loading: companyLoading, company } = useContext(CompanyContext);
+
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const [data, setData] = useState();
@@ -83,7 +84,7 @@ export default function index() {
     setLoading(false);
   }
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
 
@@ -99,7 +100,7 @@ export default function index() {
           }}
         >
           <Grid item xs={3}>
-            <img src={img} style={{ width: "100%" }} />
+            <img src={company.image} style={{ width: "100%" }} />
           </Grid>
           <Grid item xs={5}>
             <Grid
@@ -141,7 +142,6 @@ export default function index() {
             <Typography gutterBottom align="right">
               Email: {currentUser?.companyEmail} | Tel:{" "}
               {currentUser?.companyPhone}
-              email
             </Typography>
           </Grid>
         </Grid>

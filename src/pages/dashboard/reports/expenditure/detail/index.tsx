@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
 import { ClipLoader } from "react-spinners";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
 
@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import img from "@/assets/abc_home-1.jpg";
 import {
   Select,
   SelectContent,
@@ -32,6 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { isNil } from "lodash";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -43,6 +43,7 @@ const columns = [
 ];
 
 const Detail = () => {
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [paymentTypes, setPaymentTypes] = useState<
@@ -111,7 +112,7 @@ const Detail = () => {
     });
   };
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
 
@@ -132,7 +133,7 @@ const Detail = () => {
           }}
         >
           <Grid item xs={3}>
-            <img src={img} style={{ width: "100%" }} />
+            <img src={company.image} style={{ width: "100%" }} />
           </Grid>
           <Grid item xs={5}>
             <Grid

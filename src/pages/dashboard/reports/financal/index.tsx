@@ -1,8 +1,8 @@
 import Container from "@mui/material/Container";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { apiService } from "../../../../server/apiServer";
 import { Button, Grid } from "@mui/material";
-import img from "@/assets/abc_home-1.jpg";
+
 import { FiDownload } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,8 +15,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Loading from "@/components/custom/loading";
+import { CompanyContext } from "@/store/CompanyContext";
 
 export default function Index() {
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const [data, setData] = useState<any>({});
   const [payments, setPayments] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +44,7 @@ export default function Index() {
     fetchData();
   }, []);
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
   let totalAmount =
@@ -63,7 +65,7 @@ export default function Index() {
             }}
           >
             <Grid item xs={3}>
-              <img src={img} style={{ width: "100%" }} />
+              <img src={company.image} style={{ width: "100%" }} />
             </Grid>
             <Grid item xs={5}>
               <Grid

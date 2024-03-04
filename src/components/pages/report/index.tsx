@@ -21,7 +21,7 @@ import { MassIncomeTable } from "../incomeTable";
 import { useModal } from "@/hooks/useModal";
 import ReportTable from "../reportTable";
 
-import img from "@/assets/abc_home-1.jpg";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const customerProperties = [
   {
@@ -49,6 +49,7 @@ export default function Index({ headers, api }: IReportModel) {
     value: 1,
   });
   const [loading, setLoading] = useState(true);
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const [data, setData] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ export default function Index({ headers, api }: IReportModel) {
     window.print();
   };
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
 
@@ -114,7 +115,10 @@ export default function Index({ headers, api }: IReportModel) {
           }}
         >
           <Grid item xs={3}>
-            <img src={img} style={{ width: "100%" }} />
+            <img
+              src={company.image}
+              style={{ width: 400, height: 200, objectFit: "contain" }}
+            />
           </Grid>
           <Grid item xs={5}>
             <Grid
@@ -130,10 +134,6 @@ export default function Index({ headers, api }: IReportModel) {
                 sx={{ fontSize: "12px", lineHeight: "16px" }}
                 onClick={() => onOpen("createCurrency", onCurrencyChange)}
               >
-
-
-
-                
                 <BsCurrencyExchange style={{ marginRight: "8px" }} />
                 {t("Məzənnə dəyişdir")}
               </Button>
@@ -155,12 +155,12 @@ export default function Index({ headers, api }: IReportModel) {
               </Button>
 
               <Button
-                onClick={e=>navigate("/panel/aviabiletsale/new")}
+                onClick={(e) => navigate("/panel/aviabiletsale/new")}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
-              {t("Aviabilet")}
+                {t("Aviabilet")}
               </Button>
             </Grid>
             <Typography variant="h4" gutterBottom align="right">

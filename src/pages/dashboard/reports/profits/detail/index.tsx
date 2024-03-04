@@ -2,7 +2,6 @@ import { Button, Container, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
 
-import img from "@/assets/abc_home-1.jpg";
 import {
   Table,
   TableBody,
@@ -33,6 +32,7 @@ const columns = [
 
 const Detail = () => {
   const { t } = useTranslation();
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<
     {
@@ -83,7 +83,7 @@ const Detail = () => {
     });
   };
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
 
@@ -105,7 +105,7 @@ const Detail = () => {
           }}
         >
           <Grid item xs={3}>
-            <img src={img} style={{ width: "100%" }} />
+            <img src={company.image} style={{ width: "100%" }} />
           </Grid>
           <Grid item xs={5}>
             <Grid

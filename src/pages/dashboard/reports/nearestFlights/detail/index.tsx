@@ -2,7 +2,6 @@ import { Button, Container, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
 
-import img from "@/assets/abc_home-1.jpg";
 import {
   Table,
   TableBody,
@@ -13,13 +12,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Loading from "@/components/custom/loading";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -33,6 +33,7 @@ const columns = [
 ];
 
 const Detail = () => {
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [data, setData] =
@@ -69,7 +70,7 @@ const Detail = () => {
     });
   };
 
-  if (loading) {
+  if (loading || companyLoading) {
     return <Loading />;
   }
 
@@ -87,7 +88,7 @@ const Detail = () => {
           }}
         >
           <Grid item xs={3}>
-            <img src={img} style={{ width: "100%" }} />
+            <img src={company.image} style={{ width: "100%" }} />
           </Grid>
           <Grid item xs={5}>
             <Grid

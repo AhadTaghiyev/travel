@@ -187,7 +187,9 @@ const Company = () => {
             </div>
             {values.formFile && (
               <div className="w-full">
-                <h1>Company Image</h1>
+                <h1 className="text-xl font-bold tracking-wider">
+                  Company Image
+                </h1>
                 <img
                   src={
                     typeof values.formFile === "string"
