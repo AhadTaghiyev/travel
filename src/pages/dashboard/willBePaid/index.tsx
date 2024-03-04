@@ -95,6 +95,7 @@ export default function Index() {
             columns={tab.columns}
             hideReport={tab.hideReport}
             detailLink={tab.detailLink}
+            buttonText="Expenditure"
           />
         </div>
       ))}
