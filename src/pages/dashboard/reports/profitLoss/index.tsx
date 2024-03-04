@@ -5,13 +5,17 @@ import { FiDownload } from "react-icons/fi";
 import Loading from "@/components/custom/loading";
 import { useContext, useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
-import { useParams } from "react-router-dom";
+
 import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
+
+const formatPrice = (price: number) => {
+  return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};
 
 const Detail = () => {
   const { t } = useTranslation();
@@ -23,16 +27,14 @@ const Detail = () => {
     new Date(new Date().getFullYear(), 0, 1),
     new Date(),
   ]);
-  const [data, setData] = useState<
-    {
-      id: string;
-      name: string;
-      buyingPrice: number;
-      sellingPrice: number;
-      profiy: number;
-    }[]
-  >();
-  const { id } = useParams<{ id: string }>();
+  const [data, setData] = useState<{
+    totslPurchase: number;
+    totalSale: number;
+    bonuces: number;
+    paidSalary: number;
+    expenduture: number;
+    refund: number;
+  }>();
 
   useEffect(() => {
     getData();
@@ -44,8 +46,8 @@ const Detail = () => {
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
       .get(`/Reports/Profit?${searchParams.toString()}`)
-      .then((res) => {
-        console.log("res", res);
+      .then(({ data }) => {
+        setData(data.res);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -172,9 +174,9 @@ const Detail = () => {
             </form>
           )}
         </Formik>
-        <div className="w-full max-w-[1000px]  mx-auto border-2 border-solid border-black">
+        <div className="flex w-full max-w-[1000px]  mx-auto border-2 border-solid border-black">
           <div className="w-1/2 border-r-2 border-solid border-black">
-            <div className="flex justify-between items-center border-b border-solid border-black px-2">
+            <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
               <h3 className="text-lg font-bold">Particulars</h3>
               <p className="text-sm">
                 {`${formatDate(date[0])} to ${formatDate(date[1])}`}
@@ -183,21 +185,112 @@ const Detail = () => {
             <div className="px-4 py-6">
               <div className="flex justify-between items-center">
                 <h4 className="font-bold text-base">Purchase Accounts</h4>
-                <p className="font-bold">0.00</p>
+                <p className="font-bold">{formatPrice(data.totslPurchase)}</p>
               </div>
               <div className="flex justify-between items-center mt-3">
                 <h4 className="text-base">Gross Profit c/o</h4>
-                <p>0.00</p>
+                <p>{formatPrice(data.totalSale - data.totslPurchase)}</p>
               </div>
               <div className="flex justify-end mt-3">
-                <p className="w-24 text-end border-y-2 border-solid border-black font-bold">
-                  0.00
+                <p className="min-w-24 text-end border-y-2 border-solid border-black font-bold">
+                  {formatPrice(data.totalSale)}
                 </p>
               </div>
               <div className="flex justify-between items-center mt-2">
                 <h4 className="font-bold text-base">Indirect Expenses</h4>
-                <p className="font-bold">0.00</p>
+                <p className="font-bold">
+                  {formatPrice(data.expenduture + data.paidSalary)}
+                </p>
               </div>
+              <div className="pl-6">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-base">Total Expenduture</h4>
+                  <p>{formatPrice(data.expenduture)}</p>
+                </div>
+                <div className="flex justify-between items-center">
+                  <h4 className="text-base">Total Paid Salary</h4>
+                  <p>{formatPrice(data.paidSalary)}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4">
+                <h4 className="text-base">Nett Profit</h4>
+                <p>
+                  {formatPrice(
+                    data.totalSale -
+                      data.totslPurchase -
+                      data.expenduture -
+                      data.paidSalary +
+                      data.refund +
+                      data.bonuces
+                  )}
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-between items-center border-t-2 border-solid border-black px-4">
+              <h3 className="text-lg font-bold">Total</h3>
+              <p className="text-sm">
+                {formatPrice(
+                  data.totalSale -
+                    data.totslPurchase -
+                    data.expenduture -
+                    data.paidSalary +
+                    data.refund +
+                    data.bonuces
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="w-1/2 ">
+            <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
+              <h3 className="text-lg font-bold">Particulars</h3>
+              <p className="text-sm">
+                {`${formatDate(date[0])} to ${formatDate(date[1])}`}
+              </p>
+            </div>
+            <div className="px-4 py-6">
+              <div className="flex justify-between items-center">
+                <h4 className="font-bold text-base">Sales Accounts</h4>
+                <p className="font-bold">{formatPrice(data.totalSale)}</p>
+              </div>
+
+              <div className="flex justify-end mt-12">
+                <p className="min-w-24 text-end border-y-2 border-solid border-black font-bold">
+                  {formatPrice(data.totalSale)}
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <h4 className="font-bold text-base">Gross Profit b/f</h4>
+                <p className="font-bold">
+                  {formatPrice(data.totalSale - data.totslPurchase)}
+                </p>
+              </div>
+              <div className="pl-6">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-base">Total Refund Margin</h4>
+                  <p>{formatPrice(data.refund)}</p>
+                </div>
+                <div className="flex justify-between items-center">
+                  <h4 className="text-base">Total Incentive Recieved</h4>
+                  <p>{formatPrice(data.bonuces)}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4">
+                <h4 className="text-base">Nett Loss</h4>
+                <p>0</p>
+              </div>
+            </div>
+            <div className="flex justify-between items-center border-t-2 border-solid border-black px-4">
+              <h3 className="text-lg font-bold">Total</h3>
+              <p className="text-sm">
+                {formatPrice(
+                  data.totalSale -
+                    data.totslPurchase -
+                    data.expenduture -
+                    data.paidSalary +
+                    data.refund +
+                    data.bonuces
+                )}
+              </p>
             </div>
           </div>
         </div>
