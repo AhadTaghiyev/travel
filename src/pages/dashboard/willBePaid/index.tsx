@@ -5,6 +5,7 @@ import {
   refundColumns,
   salaryColumns,
   expenditureColumns,
+  advanceCollectsColumns,
 } from "./tableColumns";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
@@ -50,6 +51,13 @@ const tabs = [
     detailLink: "/panel/reports/expenditures/",
     api: "/Reports/ExpenditureReport",
     columns: expenditureColumns,
+  },
+  {
+    id: 6,
+    title: "Advance Receipt",
+    hideReport: true,
+    api: "/Reports/AdvanceCollectsReport",
+    columns: advanceCollectsColumns,
   },
 ];
 
