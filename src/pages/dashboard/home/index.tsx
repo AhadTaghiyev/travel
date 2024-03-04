@@ -67,7 +67,7 @@ export default function index() {
       </div>
       <div className="mt-6 mb-10">
         <h1 className="text-2xl font-bold mb-4">{t("Reports")}</h1>
-        <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-5">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
           <ReciveablesReport selectedYear={selectedYear} />
           <SupplierPaymentsReport selectedYear={selectedYear} />
           <PaymentTypes selectedYear={selectedYear} />
