@@ -51,6 +51,7 @@ const NewIncome = () => {
         onSubmit={onSubmit}
         initialValues={{
           debt: 0,
+          personalId: null,
           paidAmount: 0,
           paymentId: null,
           invoiceIds: [],

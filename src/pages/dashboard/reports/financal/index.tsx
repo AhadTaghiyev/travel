@@ -84,6 +84,9 @@ export default function Index() {
             </Grid>
           </Grid>
         </Grid>
+        <h1 className="text-center mb-6 font-bold text-2xl">
+          {t("Financal Status")}
+        </h1>
         <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
           <Grid
             sx={{
@@ -98,7 +101,7 @@ export default function Index() {
                     <TableHead key={column.name}>{t(column.label)}</TableHead>
                   ))} */}
                   <TableHead key={"payment-type"}>{t("Ödəniş növü")}</TableHead>
-                  <TableHead key={"amount"}>{t("Məbləğ")}</TableHead>
+                  <TableHead key={"amount"}></TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
@@ -114,27 +117,33 @@ export default function Index() {
               </TableBody>
               <TableFooter className="w-full">
                 <TableRow className="w-full">
-                  <TableCell className="py-2" colSpan={1}>
+                  <TableCell className="" colSpan={1}>
                     {t("Reciveables")}
                   </TableCell>
-                  <TableCell className="py-2" colSpan={2}>
+                  <TableCell className="" colSpan={2}>
                     {data.willBeGet}
                   </TableCell>
                 </TableRow>
                 <TableRow className="w-full">
-                  <TableCell className="py-2" colSpan={1}>
+                  <TableCell
+                    className=" border-b border-solid border-black"
+                    colSpan={2}
+                  >
                     {t("Payables")}
                   </TableCell>
-                  <TableCell className="py-2" colSpan={2}>
+                  <TableCell
+                    className=" border-b border-solid border-black"
+                    colSpan={2}
+                  >
                     {data.willBePaids}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="py-2" colSpan={1}>
+                  <TableCell className="" colSpan={1}>
                     {t("Current Financal Status")}
                   </TableCell>
 
-                  <TableCell className="py-2" colSpan={2}>
+                  <TableCell className="" colSpan={2}>
                     {totalAmount}
                   </TableCell>
                 </TableRow>

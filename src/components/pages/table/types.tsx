@@ -11,6 +11,7 @@ export interface ITableObject {
   hideDelete?: boolean;
   hideReport?: boolean;
   deleteApi?: string;
+  addDateToReport?: boolean;
   root: string;
   buttonText?: string;
   exportLink?: string;

@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 
 import NavigationItem from "@/components/pages/home/navigationItem";
 import NearestFlightsReport from "./report-tables/nearest-flights";
-import FlightTicketsReport from "./report-tables/flight-tickets";
 import { navigationItems } from "./navigationItems";
 import {
   Select,
@@ -16,6 +15,9 @@ import {
 } from "@/components/ui/select";
 import DeadlineReport from "./report-tables/deadline";
 import PaymentTypes from "./report-tables/payment-types";
+import ReciveablesReport from "./report-tables/receivables";
+import SupplierPaymentsReport from "./report-tables/supplier-payments";
+import FinancialStatusReport from "./report-tables/financial-status";
 
 export default function index() {
   const currentYear = new Date().getFullYear();
@@ -66,10 +68,12 @@ export default function index() {
       <div className="mt-6 mb-10">
         <h1 className="text-2xl font-bold mb-4">{t("Reports")}</h1>
         <div className="grid 2xl:grid-cols-2 grid-cols-1 gap-5">
-          <FlightTicketsReport selectedYear={selectedYear} />
-          <NearestFlightsReport />
-          <DeadlineReport selectedYear={selectedYear} />
+          <ReciveablesReport selectedYear={selectedYear} />
+          <SupplierPaymentsReport selectedYear={selectedYear} />
           <PaymentTypes selectedYear={selectedYear} />
+          <FinancialStatusReport />
+          <DeadlineReport selectedYear={selectedYear} />
+          <NearestFlightsReport />
         </div>
       </div>
     </Container>

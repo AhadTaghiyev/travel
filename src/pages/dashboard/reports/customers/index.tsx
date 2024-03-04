@@ -10,6 +10,7 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
+        hideFilter
         columns={columns}
         detailLink="/panel/reports/customers/"
         api={"/Reports/ReciveAblesReport"}

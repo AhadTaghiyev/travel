@@ -119,12 +119,12 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: PiWalletLight,
-        text: "Alınan Kreditlər",
+        text: "Alınan Kredit",
         link: "/panel/getCredits",
       },
       {
         icon: BiWalletAlt,
-        text: "Ödənilən kreditlər",
+        text: "Ödənilən Kredit",
         link: "/panel/paidCredits",
       },
     ],
@@ -194,7 +194,7 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Flight Tickets",
         link: "/panel/reports/flightTickets",
       },
-  
+
       {
         icon: BsFillPeopleFill,
         text: "Müştəri",
@@ -210,13 +210,13 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Yaxın uçuşlar",
         link: "/panel/reports/nearestFlights",
       },
-   
+
       {
         icon: FaServicestack,
         text: "Fees",
-        link: "/panel/reports/fee",
+        link: "/panel/reports/expenditures",
       },
-      
+
       // {
       //     icon: MdOutlineAirplaneTicket,
       //     text: 'Invoice',
@@ -248,9 +248,6 @@ export const sidebarItems: SidebarItemType[] = [
       //             },
       //         ]
       // },
-
-      
-      
 
       // {
       //     icon: BsCalculator,

@@ -11,6 +11,7 @@ export default function Index() {
         hideEdit
         hidePrint
         columns={columns}
+        addDateToReport
         detailLink="/panel/reports/personals/"
         api={"/Reports/PersonalsReport"}
         root="/panel/reports/customers"

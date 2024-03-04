@@ -65,57 +65,59 @@ const PaymentTypes = ({ selectedYear }: IPaymentTypesProps) => {
       <h3 className="text-lg pl-1 pb-1 font-bold border-b border-solid border-gray-200">
         {t("Payment Types")}
       </h3>
-      <Table className="mt-2 text-xs">
-        <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
-          <TableRow className="w-full">
-            {columns.map((column) => (
-              <TableHead key={column.name}>{t(column.label)}</TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data &&
-            data.map((row) => (
-              <TableRow
-                key={row.id}
-                className="border-b border-solid border-gray-100"
-              >
-                {columns.map((column) => (
-                  <TableCell key={column.name} className={cn("py-1.5")}>
-                    {row?.[column.name]}
-                  </TableCell>
-                ))}
+      <div className="max-h-[280px] overflow-auto">
+        <Table className="mt-2 text-xs">
+          <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
+            <TableRow className="w-full">
+              {columns.map((column) => (
+                <TableHead key={column.name}>{t(column.label)}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data &&
+              data.map((row) => (
+                <TableRow
+                  key={row.id}
+                  className="border-b border-solid border-gray-100"
+                >
+                  {columns.map((column) => (
+                    <TableCell key={column.name} className={cn("py-1.5")}>
+                      {row?.[column.name]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            {loading &&
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  {columns.map((column) => (
+                    <TableCell key={column.name} className="py-1.5">
+                      <Skeleton />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            {!loading && (!data || data.length === 0) && (
+              <TableRow className="hover:bg-transparent">
+                <TableCell colSpan={8} className="text-center text-base">
+                  {t("No data found")}
+                </TableCell>
               </TableRow>
-            ))}
-          {loading &&
-            Array.from({ length: 5 }).map((_, index) => (
-              <TableRow key={index}>
-                {columns.map((column) => (
-                  <TableCell key={column.name} className="py-1.5">
-                    <Skeleton />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          {!loading && (!data || data.length === 0) && (
+            )}
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={8} className="text-center text-base">
-                {t("No data found")}
+              <TableCell colSpan={8} className="text-center">
+                <Link
+                  to="/panel/reports/paymentTypes"
+                  className="text-blue-400 text-base hover:underline"
+                >
+                  {t("See More")}
+                </Link>
               </TableCell>
             </TableRow>
-          )}
-          <TableRow className="hover:bg-transparent">
-            <TableCell colSpan={8} className="text-center">
-              <Link
-                to="/panel/reports/paymentTypes"
-                className="text-blue-400 text-base hover:underline"
-              >
-                {t("See More")}
-              </Link>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

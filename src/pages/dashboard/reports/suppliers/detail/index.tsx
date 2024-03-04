@@ -15,7 +15,7 @@ import {
 import Loading from "@/components/custom/loading";
 import { useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
@@ -59,6 +59,13 @@ const Detail = () => {
     }[]
   >();
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const defaultStartDate = searchParams.get("startDate")
+    ? new Date(searchParams.get("startDate") as string)
+    : null;
+  const defaultEndDate = searchParams.get("startDate")
+    ? new Date(searchParams.get("endDate") as string)
+    : null;
 
   const fetchData = async () => {
     const res = await apiService.get("Payments/GetAll/1");
@@ -78,7 +85,7 @@ const Detail = () => {
   }, []);
 
   useEffect(() => {
-    getData(parseInt(id));
+    getData(parseInt(id), defaultStartDate, defaultEndDate);
   }, [id]);
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
@@ -156,7 +163,10 @@ const Detail = () => {
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
         <Formik
           onSubmit={onSubmit}
-          initialValues={{ startDate: null, endDate: null }}
+          initialValues={{
+            startDate: defaultStartDate,
+            endDate: defaultEndDate,
+          }}
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
             <form
@@ -196,7 +206,6 @@ const Detail = () => {
                   size={14}
                   color="white"
                   loading={isSubmitting}
-                  className="removeFromPrint"
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />

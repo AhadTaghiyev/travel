@@ -15,12 +15,12 @@ import {
 import Loading from "@/components/custom/loading";
 import { useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -44,9 +44,16 @@ const Detail = () => {
     }[]
   >();
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const defaultStartDate = searchParams.get("startDate")
+    ? new Date(searchParams.get("startDate") as string)
+    : null;
+  const defaultEndDate = searchParams.get("startDate")
+    ? new Date(searchParams.get("endDate") as string)
+    : null;
 
   useEffect(() => {
-    getData(id);
+    getData(id, defaultStartDate, defaultEndDate);
   }, [id]);
 
   const getData = async (id: string, startDate?: Date, endDate?: Date) => {
@@ -55,7 +62,7 @@ const Detail = () => {
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/ReciveAblesReportDetail/?${searchParams.toString()}`)
+      .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
       })
@@ -122,14 +129,19 @@ const Detail = () => {
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
         <Formik
           onSubmit={onSubmit}
-          initialValues={{ startDate: null, endDate: null }}
+          initialValues={{
+            startDate: defaultStartDate,
+            endDate: defaultEndDate,
+          }}
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
             <form
               onSubmit={handleSubmit}
               className="pt-4 flex flex-wrap items-center gap-x-6"
             >
-              <div className="w-52">
+              <div
+                className={cn("w-52", !values.startDate && "removeFromPrint")}
+              >
                 <CustomDateTimePicker
                   label={t("Start Date")}
                   value={values.startDate}
@@ -140,7 +152,8 @@ const Detail = () => {
                   errorMessages={[]}
                 />
               </div>
-              <div className="w-52">
+
+              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
                 <CustomDateTimePicker
                   label={t("End Date")}
                   value={values.endDate}
@@ -154,7 +167,7 @@ const Detail = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
               >
                 <ClipLoader
                   size={14}

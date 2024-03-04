@@ -90,6 +90,7 @@ export default function Index() {
             hidePrint
             hideDelete
             api={tab.api}
+            hideFilter
             root="/panel/willbepaid"
             columns={tab.columns}
             hideReport={tab.hideReport}

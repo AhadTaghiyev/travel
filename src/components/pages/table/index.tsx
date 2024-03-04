@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
 import { InputBase, Divider } from "@mui/material";
@@ -66,6 +66,7 @@ export default function Index({
   detailLink,
   filterOptions,
   onCreateClick,
+  addDateToReport,
   defaultFilterValue,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
@@ -141,6 +142,15 @@ export default function Index({
     flex: 1,
     headerClassName: "header-item",
     renderCell: (params) => {
+      let detailUrl = detailLink
+        ? detailLink + params.row.id
+        : `${root}/report?tickets=${params.row.id}`;
+
+      if (addDateToReport) {
+        detailUrl += detailUrl.includes("?") ? "&" : "?";
+        detailUrl += `startDate=${startDate}&endDate=${endDate}`;
+      }
+
       return (
         <div
           className="flex justify-between items-center gap-x-3"
@@ -155,14 +165,7 @@ export default function Index({
             </Link>
           )}
           {!hideReport && (
-            <Link
-              to={
-                detailLink
-                  ? detailLink + params.row.id
-                  : `${root}/report?tickets=${params.row.id}`
-              }
-              className="hover:opacity-70 transition"
-            >
+            <Link to={detailUrl} className="hover:opacity-70 transition">
               <BsEyeFill />
             </Link>
           )}
@@ -230,7 +233,7 @@ export default function Index({
               color="primary"
               sx={headerStyle}
             >
-              + {t(buttonText)} 
+              + {t(buttonText)}
             </Button>
           ) : (
             <Link to={`${root}/new`}>
