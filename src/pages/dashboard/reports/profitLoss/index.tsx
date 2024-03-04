@@ -1,20 +1,11 @@
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Loading from "@/components/custom/loading";
 import { useContext, useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
@@ -22,44 +13,39 @@ import { ClipLoader } from "react-spinners";
 import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
-const columns = [
-  { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
-  { label: "Ref.", name: "ref" },
-  { label: "DeadLine.", name: "deadLine", type: "date" },
-  { label: "Note.", name: "note" },
-  { label: "Buying.", name: "sellingPrice" },
-  { label: "Selling.", name: "totalAmount" },
-  { label: "Profit.", name: "profit" },
-];
-
 const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
   const [loading, setLoading] = useState(true);
-  const [data, setData] =
-    useState<{ id: string; name: string; balance: number }[]>();
+  // date from first day of year
+
+  const [date, setDate] = useState<Date[]>([
+    new Date(new Date().getFullYear(), 0, 1),
+    new Date(),
+  ]);
+  const [data, setData] = useState<
+    {
+      id: string;
+      name: string;
+      buyingPrice: number;
+      sellingPrice: number;
+      profiy: number;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const defaultStartDate = searchParams.get("startDate")
-    ? new Date(searchParams.get("startDate") as string)
-    : null;
-  const defaultEndDate = searchParams.get("startDate")
-    ? new Date(searchParams.get("endDate") as string)
-    : null;
 
   useEffect(() => {
-    getData(parseInt(id), defaultStartDate, defaultEndDate);
-  }, [id]);
+    getData();
+  }, []);
 
-  const getData = async (id: number, startDate?: Date, endDate?: Date) => {
+  const getData = async (startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
     await apiService
-      .get(`/Reports/PersonalsReportDetail/${id}?${searchParams.toString()}`)
+      .get(`/Reports/Profit?${searchParams.toString()}`)
       .then((res) => {
-        setData(res.data.items);
+        console.log("res", res);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -73,16 +59,15 @@ const Detail = () => {
     values: { startDate: Date; endDate: Date },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
-    getData(parseInt(id), values.startDate, values.endDate).finally(() => {
+    getData(values.startDate, values.endDate).finally(() => {
       setSubmitting(false);
     });
+    setDate([values.startDate, values.endDate]);
   };
 
   if (loading || companyLoading) {
     return <Loading />;
   }
-
-  const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -122,6 +107,13 @@ const Detail = () => {
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
             </Grid>
+            <Typography variant="h4" gutterBottom align="right">
+              {company.name}
+              ABC
+            </Typography>
+            <Typography gutterBottom align="right">
+              Email: {company.email} | Tel: {company.phoneNumber}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -129,8 +121,8 @@ const Detail = () => {
         <Formik
           onSubmit={onSubmit}
           initialValues={{
-            startDate: defaultStartDate,
-            endDate: defaultEndDate,
+            startDate: null,
+            endDate: null,
           }}
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
@@ -151,6 +143,7 @@ const Detail = () => {
                   errorMessages={[]}
                 />
               </div>
+
               <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
                 <CustomDateTimePicker
                   label={t("End Date")}
@@ -179,71 +172,35 @@ const Detail = () => {
             </form>
           )}
         </Formik>
-        <Grid
-          sx={{
-            width: "100%",
-          }}
-          container
-        >
-          <Table className="border border-solid border-gray-300">
-            <TableHeader className="border-b border-solid border-black/60">
-              <TableRow className="w-full">
-                {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((row) => (
-                <TableRow key={row.id}>
-                  {columns.map((column) => {
-                    const value = String(row[column.name]).toLowerCase();
-
-                    let url = "";
-                    if (value.startsWith("pl")) {
-                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
-                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
-                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
-                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else {
-                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
-                    }
-
-                    return (
-                      <TableCell key={column.name} className="py-1.5">
-                        {
-                          column.name === "ref" ? (
-                            <a
-                              style={{ color: "blue", cursor: "pointer" }}
-                              href={url}
-                            >
-                              {value}
-                            </a> // URL'yi link olarak kullan
-                          ) : column.type === "date" ? (
-                            formatDate(value)
-                          ) : (
-                            value
-                          ) // Diğer durumlarda değeri normal metin olarak göster
-                        }
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell className="py-2" colSpan={7}>
-                  {t("Total Amount")}
-                </TableCell>
-                <TableCell className="text-right py-2">{total}</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </Grid>
+        <div className="w-full max-w-[1000px]  mx-auto border-2 border-solid border-black">
+          <div className="w-1/2 border-r-2 border-solid border-black">
+            <div className="flex justify-between items-center border-b border-solid border-black px-2">
+              <h3 className="text-lg font-bold">Particulars</h3>
+              <p className="text-sm">
+                {`${formatDate(date[0])} to ${formatDate(date[1])}`}
+              </p>
+            </div>
+            <div className="px-4 py-6">
+              <div className="flex justify-between items-center">
+                <h4 className="font-bold text-base">Purchase Accounts</h4>
+                <p className="font-bold">0.00</p>
+              </div>
+              <div className="flex justify-between items-center mt-3">
+                <h4 className="text-base">Gross Profit c/o</h4>
+                <p>0.00</p>
+              </div>
+              <div className="flex justify-end mt-3">
+                <p className="w-24 text-end border-y-2 border-solid border-black font-bold">
+                  0.00
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <h4 className="font-bold text-base">Indirect Expenses</h4>
+                <p className="font-bold">0.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
     </Container>
   );

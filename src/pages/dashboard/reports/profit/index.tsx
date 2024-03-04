@@ -54,9 +54,7 @@ export default function Index() {
   // totalAmount -= data.willBePaids;
 
   return (
-    <>
-    
-    </>
+    <></>
     // <Container maxWidth="xl">
     //   <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
     //     <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
@@ -90,7 +88,7 @@ export default function Index() {
     //         </Grid>
     //       </Grid>
     //     </Grid>
-    //     <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
+    //     <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
     //       <Grid
     //         sx={{
     //           width: "100%",

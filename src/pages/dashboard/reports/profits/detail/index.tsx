@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Loading from "@/components/custom/loading";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { apiService } from "@/server/apiServer";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -20,6 +20,7 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate } from "@/lib/utils";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -105,7 +106,15 @@ const Detail = () => {
           }}
         >
           <Grid item xs={3}>
-            <img src={company.image} style={{ width: "100%" }} />
+            <img
+              src={company.image}
+              style={{
+                width: 400,
+                height: 200,
+                objectFit: "contain",
+                marginLeft: 30,
+              }}
+            />
           </Grid>
           <Grid item xs={5}>
             <Grid
@@ -126,7 +135,7 @@ const Detail = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
+      <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
         <Formik
           onSubmit={onSubmit}
           initialValues={{

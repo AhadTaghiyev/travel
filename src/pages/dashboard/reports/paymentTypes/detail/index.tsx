@@ -95,7 +95,15 @@ const Detail = () => {
           }}
         >
           <Grid item xs={3}>
-            <img src={company.image} style={{ width: "100%" }} />
+            <img
+              src={company.image}
+              style={{
+                width: 400,
+                height: 200,
+                objectFit: "contain",
+                marginLeft: 30,
+              }}
+            />
           </Grid>
           <Grid item xs={5}>
             <Grid
@@ -116,7 +124,7 @@ const Detail = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
+      <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
         <Formik
           onSubmit={onSubmit}
           initialValues={{

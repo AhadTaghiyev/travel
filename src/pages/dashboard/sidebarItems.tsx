@@ -170,6 +170,11 @@ export const sidebarItems: SidebarItemType[] = [
         link: "/panel/reports/profits",
       },
       {
+        icon: BsFileEarmarkPerson,
+        text: "Profit Loss", // TODO: translate
+        link: "/panel/reports/profitLoss",
+      },
+      {
         icon: FaMoneyBill1Wave,
         text: "Financal Status",
         link: "/panel/reports/finaceStatus",

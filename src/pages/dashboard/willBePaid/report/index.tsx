@@ -100,7 +100,15 @@ export default function index() {
           }}
         >
           <Grid item xs={3}>
-            <img src={company.image} style={{ width: "100%" }} />
+            <img
+              src={company.image}
+              style={{
+                width: 400,
+                height: 200,
+                objectFit: "contain",
+                marginLeft: 30,
+              }}
+            />
           </Grid>
           <Grid item xs={5}>
             <Grid

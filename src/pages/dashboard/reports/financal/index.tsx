@@ -65,7 +65,15 @@ export default function Index() {
             }}
           >
             <Grid item xs={3}>
-              <img src={company.image} style={{ width: "100%" }} />
+              <img
+                src={company.image}
+                style={{
+                  width: 400,
+                  height: 200,
+                  objectFit: "contain",
+                  marginLeft: 30,
+                }}
+              />
             </Grid>
             <Grid item xs={5}>
               <Grid
@@ -89,7 +97,7 @@ export default function Index() {
         <h1 className="text-center mb-6 font-bold text-2xl">
           {t("Financal Status")}
         </h1>
-        <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 50 }}>
+        <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
           <Grid
             sx={{
               width: "100%",

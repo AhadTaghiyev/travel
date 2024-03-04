@@ -230,6 +230,7 @@ import PersonalsDetail from "../pages/dashboard/reports/personal/detail";
 
 import NearestFlights from "../pages/dashboard/reports/nearestFlights";
 import Profit from "../pages/dashboard/reports/profit";
+import ProfitLoss from "../pages/dashboard/reports/profitLoss";
 import CompanySettings from "../pages/dashboard/settings/company";
 
 const router = createBrowserRouter([
@@ -1013,6 +1014,10 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/profit",
         element: <Profit />,
+      },
+      {
+        path: "/panel/reports/profitLoss",
+        element: <ProfitLoss />,
       },
       {
         path: "/panel/company",
