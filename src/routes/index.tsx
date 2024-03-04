@@ -230,25 +230,7 @@ import PersonalsDetail from "../pages/dashboard/reports/personal/detail";
 
 import NearestFlights from "../pages/dashboard/reports/nearestFlights";
 import Profit from "../pages/dashboard/reports/profit";
-
-// import PlaneTicketReport from "../pages/main/reports/planeTickets";
-// import CorporateReport from "../pages/main/reports/corporate";
-// import TourPackageReport from "../pages/main/reports/tourPackage";
-// import IndividualTourPackageReport from "../pages/main/reports/individualTourPackage";
-// import OtherServiceReport from "../pages/main/reports/otherServices";
-// import MasIncomeReport from "../pages/main/reports/masincome";
-// import WillBePaidReport from "../pages/main/reports/willbepaids";
-// import DebtReport from "../pages/main/reports/debt";
-// import GetCreditReport from "../pages/main/reports/getcredit";
-// import PaidCreditReport from "../pages/main/reports/paidcredit";
-// import PaidSalaryReport from "../pages/main/reports/paidsalary";
-// import CustomerReport from "../pages/main/reports/customers";
-// import CustomerReportDetail from "../pages/main/reports/customers/customerReport";
-// import PersonalReport from "../pages/main/reports/personal";
-// import PersonalReportDetail from "../pages/main/reports/personal/personalReport";
-// import FeeReports from "../pages/main/reports/fees";
-// import FeeReportsDetails from "../pages/main/reports/fees/details";
-// import NearestFlightReport from "../pages/main/reports/nearestFlights";
+import CompanySettings from "../pages/dashboard/settings/company";
 
 const router = createBrowserRouter([
   {
@@ -1032,7 +1014,10 @@ const router = createBrowserRouter([
         path: "/panel/reports/profit",
         element: <Profit />,
       },
-
+      {
+        path: "/panel/company",
+        element: <CompanySettings />,
+      },
       // {
       //   path: "/panel/reports/planeTicket",
       //   element: <PlaneTicketReport />,

@@ -363,6 +363,11 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Müqavilə formatı",
         link: "/panel/agreementFormats",
       },
+      {
+        icon: FaServicestack,
+        text: "Company", // TODO: translate
+        link: "/panel/company",
+      },
     ],
   },
 ];
