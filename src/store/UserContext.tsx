@@ -1,7 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { userService } from "../server/systemUserServer";
 
-export const UserContext = createContext<{ user?: any; loading?: boolean }>({});
+export const UserContext = createContext<{
+  user?: any;
+  loading?: boolean;
+  getUser: () => Promise<void>;
+}>({});
 
 export const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState();

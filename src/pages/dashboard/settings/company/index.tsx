@@ -1,7 +1,7 @@
 import Loading from "@/components/custom/loading";
 import { apiService } from "@/server/apiServer";
 import { Formik, FormikHelpers, FormikValues } from "formik";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -10,11 +10,15 @@ import { CompanySchema } from "./schema";
 import CustomTextField from "@/components/custom/input";
 import { FormHelperText, InputLabel } from "@mui/material";
 import { textStyling } from "@/styles";
+import { UserContext } from "@/store/UserContext";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const Company = () => {
   const [companyData, setCompanyData] = useState<ICompany>();
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { getUser } = useContext(UserContext);
+  const { getCompany } = useContext(CompanyContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +58,8 @@ const Company = () => {
       .putForm("/Company", formData)
       .then((response) => {
         if (response.status === 200) {
+          getUser();
+          getCompany();
           toast.success(t("Company Updated")); // TODO: Translate
         } else {
           toast.error(response.message);

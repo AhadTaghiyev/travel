@@ -13,6 +13,7 @@ export const CompanyContext = createContext<{
     concurency: string;
   };
   loading?: boolean;
+  getCompany?: () => Promise<void>;
 }>({});
 
 export const CompanyProvider = ({ children }: any) => {
@@ -23,6 +24,12 @@ export const CompanyProvider = ({ children }: any) => {
   useEffect(() => {
     if (user) getCompany();
   }, [user]);
+
+  useEffect(() => {
+    if (company) {
+      setLoading(false);
+    }
+  }, [company]);
 
   const getCompany = async () => {
     setLoading(true);
