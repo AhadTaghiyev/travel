@@ -111,7 +111,6 @@ const Detail = () => {
             </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {company.name}
-              ABC
             </Typography>
             <Typography gutterBottom align="right">
               Email: {company.email} | Tel: {company.phoneNumber}

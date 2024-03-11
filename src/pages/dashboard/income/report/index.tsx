@@ -137,7 +137,6 @@ export default function index() {
             </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {currentUser?.companyName}
-              ABC
             </Typography>
             <Typography gutterBottom align="right">
               Email: {currentUser?.companyEmail} | Tel:{" "}
