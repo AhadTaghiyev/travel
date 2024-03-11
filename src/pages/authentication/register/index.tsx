@@ -154,9 +154,9 @@ export default function Index() {
                 !!formik.errors.subscribeType && !!formik.touched.subscribeType
               }
               staticOptions={[
-                { label: "Aylıq - 120 USD", value: "0" },
-                { label: "Illik - 1200 USD", value: "1" },
-                { label: "Demo - 1 həftə", value: "2" },
+                { label: "Monthly - 120 USD", value: "0" },
+                { label: "Yearly - 1200 USD", value: "1" },
+                { label: "Demo - 14 day", value: "2" },
               ]}
               errorMessages={[formik.errors.subscribeType?.toString()]}
             />
