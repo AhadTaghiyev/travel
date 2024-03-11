@@ -10,11 +10,12 @@ import Button from "@mui/material/Button";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as Yup from "yup";
 
 import { userService } from "@/server/systemUserServer";
 import Navbar from "@/components/layout/navbar";
+import { UserContext } from "@/store/UserContext";
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string().required("Mütləqdir!"),
@@ -25,6 +26,7 @@ const cookies = new Cookies();
 
 export default function Index() {
   const navigate = useNavigate();
+  const { getUser } = useContext(UserContext);
 
   const formik = useFormik({
     initialValues: {
@@ -58,7 +60,7 @@ export default function Index() {
       cookies.set("refresh_token", res.refreshToken, {
         path: "/",
       });
-      // getUser();
+      getUser();
       if (res.role === "Admin") {
         navigate("/admin");
       } else {
@@ -71,83 +73,83 @@ export default function Index() {
   };
 
   return (
- <>
-    <Navbar />
-    <Container
-      maxWidth="sm"
-      sx={{ display: "flex", alignItems: "center", height: "100%" }}
-    >
-      <form onSubmit={formik.handleSubmit}>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Sign In
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 4 }}>
-          Welcome back! Please enter your details.
-        </Typography>
-        <Box>
-          <Typography variant="body2" sx={{ mb: 1, pl: 3 }}>
-            Username
+    <>
+      <Navbar />
+      <Container
+        maxWidth="sm"
+        sx={{ display: "flex", alignItems: "center", height: "100%" }}
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            Sign In
           </Typography>
-          <OutlinedInput
-            id="outlined-basic"
-            fullWidth
-            sx={{ mb: 3 }}
-            name="username"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.username}
-            error={
-              formik.touched.username && formik.errors.username ? true : false
-            }
-          />
-        </Box>
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="body2" sx={{ mb: 1, pl: 3 }}>
-            Password
+          <Typography variant="body1" sx={{ mb: 4 }}>
+            Welcome back! Please enter your details.
           </Typography>
-          <OutlinedInput
-            id="outlined-basic1"
+          <Box>
+            <Typography variant="body2" sx={{ mb: 1, pl: 3 }}>
+              Username
+            </Typography>
+            <OutlinedInput
+              id="outlined-basic"
+              fullWidth
+              sx={{ mb: 3 }}
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+              error={
+                formik.touched.username && formik.errors.username ? true : false
+              }
+            />
+          </Box>
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="body2" sx={{ mb: 1, pl: 3 }}>
+              Password
+            </Typography>
+            <OutlinedInput
+              id="outlined-basic1"
+              fullWidth
+              sx={{ mb: 2 }}
+              name="password"
+              type={showPassword ? "text" : "password"}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              error={
+                formik.touched.password && formik.errors.password ? true : false
+              }
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <Link
+              to="/auth/changePassword"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Typography variant="body2">Change password</Typography>
+            </Link>
+          </Box>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={isLoading}
             fullWidth
-            sx={{ mb: 2 }}
-            name="password"
-            type={showPassword ? "text" : "password"}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            error={
-              formik.touched.password && formik.errors.password ? true : false
-            }
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          <Link
-            to="/auth/changePassword"
-            style={{ textDecoration: "none", color: "black" }}
           >
-            <Typography variant="body2">Change password</Typography>
-          </Link>
-        </Box>
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isLoading}
-          fullWidth
-        >
-          {isLoading ? "Loading..." : "Login"}
-        </Button>
-      </form>
-      <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
-    </Container>
- </>
+            {isLoading ? "Loading..." : "Login"}
+          </Button>
+        </form>
+        <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
+      </Container>
+    </>
   );
 }
