@@ -135,7 +135,7 @@ const TourPackageForm = ({
                 "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
                 values.isCustomerPaid &&
                   !isEdit &&
-                  isView &&
+                  !isView &&
                   "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
               )}
             >
@@ -150,23 +150,20 @@ const TourPackageForm = ({
                   />
                 }
                 label={
-                  values.isCustomerPaid && !isEdit && isView
+                  values.isCustomerPaid && !isEdit && !isView
                     ? ""
                     : t("customerPayment")
                 }
               />
-              {values.isCustomerPaid && !isEdit && isView && (
+              {values.isCustomerPaid && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
                     <CustomAutocompleteSelect
-                      disabled={isView}
                       api="Payments/GetAll/1"
                       label={t("Ödəniş növü")}
                       value={values.paymentId ?? null}
                       optionLabel="type"
-                      change={(value) =>
-                        setFieldValue("paymentId", value ?? null)
-                      }
+                      change={(value) => setFieldValue("paymentId", value)}
                       hasErrorMessages={
                         !!errors.paymentId && !!touched.paymentId
                       }
@@ -175,7 +172,6 @@ const TourPackageForm = ({
                   </div>
                   <div className="w-full">
                     <CustomTextField
-                      disabled={isView}
                       label={t("Ödənilən məbləğ")}
                       value={values.paidAmount}
                       change={handleChange}
@@ -274,7 +270,6 @@ const TourPackageForm = ({
                     api="Suppliers/GetAll/1"
                     label={t("supplier")}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
-                     
                     value={tourPackage.supplierId ?? null}
                     optionLabel="name"
                     change={(value) => {
@@ -291,18 +286,18 @@ const TourPackageForm = ({
                       t(errors.tourPackages?.[index]?.supplierId?.toString()),
                     ]}
                   />
-                    {!isView && (
-                        <button
-                          type="button"
-                          disabled={isSubmitting}
-                          onClick={() => {
-                            onOpen("createSupplier");
-                          }}
-                          className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                        >
-                          <FaPlusSquare />
-                        </button>
-                      )}
+                  {!isView && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        onOpen("createSupplier");
+                      }}
+                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                    >
+                      <FaPlusSquare />
+                    </button>
+                  )}
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect

@@ -40,9 +40,9 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
   );
 
   return (
-    <Table>
+    <Table className="border-solid border border-black/20">
       <TableHeader>
-        <TableRow>
+        <TableRow className="border-solid border border-black/20">
           <TableHead>{t("Receipt Number")}</TableHead>
           <TableHead>{t("Invoice Number")}</TableHead>
           <TableHead>{t("Ödəniş növü")}</TableHead>

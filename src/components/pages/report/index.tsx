@@ -125,7 +125,7 @@ export default function Index({ headers, api }: IReportModel) {
               }}
             />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={9}>
             <Grid
               item
               xs={12}
@@ -177,21 +177,24 @@ export default function Index({ headers, api }: IReportModel) {
             </Typography>
           </Grid>
         </Grid>
-        <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
+        <Container maxWidth="xl" sx={{ mb: 4 }}>
           <div className="flex justify-between ">
             <div>
               <h3 className="text-xl font-bold mb-2">
                 {t("Müştəri məlumatları")}
               </h3>
               {customerProperties.map((item, index) => (
-                <div className="text-sm flex w-fit mb-1" key={index}>
-                  <p className="w-28 font-bold">{t(item.fieldName)}:</p>
+                <div
+                  className="text-sm flex w-fit mb-1 print:block"
+                  key={index}
+                >
+                  <p className="w-24 font-bold">{t(item.fieldName)}:</p>
                   <p>{data?.simpleTable?.[item.propertyName]}</p>
                 </div>
               ))}
             </div>
             {data.incomes && (
-              <div className="w-[500px] max-w-[50%] -mr-6 -mt-6">
+              <div className="print:w-[calc(100%-210px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
                 <MassIncomeTable currency={currency} incomes={data.incomes} />
               </div>
             )}
