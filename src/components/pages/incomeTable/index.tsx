@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Link } from "react-router-dom";
+import { formatDate } from "@/lib/utils";
 
 interface IIncomeTableProps {
   incomes: {
@@ -23,6 +24,7 @@ interface IIncomeTableProps {
     invoiceNo: string;
     description: string | null;
     type: string;
+    date: string;
     invoiceId: number;
   }[];
   currency: ICurrency;
@@ -48,6 +50,7 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
           <TableHead>{t("Ödəniş növü")}</TableHead>
           <TableHead>{t("paidamount")}</TableHead>
           <TableHead>{t("Description")}</TableHead>
+          <TableHead>{t("Date")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -73,6 +76,9 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
             <TableCell className="py-1.5 max-w-[150px] truncate">
               {income.description ?? t("No Description")}
             </TableCell>
+            <TableCell className="py-1.5 max-w-[150px] truncate">
+              {formatDate(income.date)}
+            </TableCell>
           </TableRow>
         ))}
         {incomes.length === 0 && (
@@ -85,7 +91,7 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell className="py-2" colSpan={4}>
+          <TableCell className="py-2" colSpan={5}>
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">
