@@ -3,7 +3,12 @@ import { formatDate } from "@/lib/utils";
 import { TFunction } from "i18next";
 
 export const getColumns = (t: TFunction): GridColDef[] => [
-  { field: "No", headerName: t("no"), flex: 0.2, headerClassName: "header-item" },
+  {
+    field: "No",
+    headerName: t("no"),
+    flex: 0.2,
+    headerClassName: "header-item",
+  },
   {
     field: "date",
     headerName: t("date"),
@@ -30,7 +35,7 @@ export const getColumns = (t: TFunction): GridColDef[] => [
   },
   {
     field: "rezervationNumber",
-    headerName: t( "Rezervasiya nömrəsi"),
+    headerName: t("Rezervasiya nömrəsi"),
     flex: 1,
     headerClassName: "header-item",
   },

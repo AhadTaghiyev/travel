@@ -8,6 +8,7 @@ export default function index() {
       <Report
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
+          { fieldName: t("Staff"), propertyName: "staff" },
           { fieldName: t("date"), propertyName: "date" },
           { fieldName: t("Service"), propertyName: "service" },
           { fieldName: t("Servis Adı"), propertyName: "serviceName" },
