@@ -149,7 +149,7 @@ export default function index() {
             className="text-xl font-bold mb-2"
             style={{ textAlign: "center" }}
           >
-            Receipt
+            {t("Invoice Receipt")} {/** TODO: translate */}
           </h1>
           <div className="flex justify-between ">
             <div>

@@ -42,7 +42,7 @@ const customerProperties = [
   },
 ];
 
-export default function Index({ headers, api }: IReportModel) {
+export default function Index({ headers, api, title }: IReportModel) {
   const [searchParams] = useSearchParams();
   const [currency, setCurrency] = useState<ICurrency>({
     name: "USD",
@@ -178,6 +178,14 @@ export default function Index({ headers, api }: IReportModel) {
           </Grid>
         </Grid>
         <Container maxWidth="xl" sx={{ mb: 4 }}>
+          {title && (
+            <h1
+              className="text-xl font-bold mb-6"
+              style={{ textAlign: "center" }}
+            >
+              {t(title)}
+            </h1>
+          )}
           <div className="flex justify-between ">
             <div>
               <h3 className="text-xl font-bold mb-2">

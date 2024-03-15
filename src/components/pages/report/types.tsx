@@ -1,6 +1,7 @@
 export interface IReportModel {
   headers: IReportTableHeader[];
   api: string;
+  title?: string;
 }
 
 export interface IReportTableHeader {

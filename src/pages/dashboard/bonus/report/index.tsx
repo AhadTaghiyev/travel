@@ -134,6 +134,12 @@ export default function index() {
           </Grid>
         </Grid>
         <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+          <h1
+            className="text-xl font-bold mb-6"
+            style={{ textAlign: "center" }}
+          >
+            {t("Incentive Invoice Receipt")} {/** TODO: translate */}
+          </h1>
           <Grid
             sx={{
               width: "100%",

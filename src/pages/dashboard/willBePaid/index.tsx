@@ -29,23 +29,23 @@ const tabs = [
     api: "/Reports/RefundReportDetail",
     columns: refundColumns,
   },
+  // {
+  //   id: 8,
+  //   title: "Maaş",
+  //   hideReport: false,
+  //   detailLink: "/panel/reports/salaries/",
+  //   api: "/Reports/SalaryReportDetail",
+  //   columns: salaryColumns,
+  // },
   {
     id: 3,
-    title: "Maaş",
-    hideReport: false,
-    detailLink: "/panel/reports/salaries/",
-    api: "/Reports/SalaryReportDetail",
-    columns: salaryColumns,
-  },
-  {
-    id: 4,
     title: "Credit",
     hideReport: true,
     api: "/Reports/CreditReport",
     columns: salaryColumns,
   },
   {
-    id: 5,
+    id: 4,
     title: "Xərc",
     hideReport: false,
     detailLink: "/panel/reports/expenditures/",
@@ -53,10 +53,17 @@ const tabs = [
     columns: expenditureColumns,
   },
   {
-    id: 6,
+    id: 5,
     title: "Advance Receipt",
     hideReport: true,
     api: "/Reports/AdvanceCollectsReport",
+    columns: advanceCollectsColumns,
+  },
+  {
+    id: 6,
+    title: "Others",
+    hideReport: true,
+    api: "/Reports/FounderReport",
     columns: advanceCollectsColumns,
   },
 ];
@@ -91,22 +98,25 @@ export default function Index() {
           </li>
         ))}
       </ul>
-      {tabs.map((tab) => (
-        <div className={tab.id !== activeTab.id && "hidden"} key={tab.id}>
-          <Table
-            hideEdit
-            hidePrint
-            hideDelete
-            api={tab.api}
-            hideFilter
-            root="/panel/willbepaid"
-            columns={tab.columns}
-            hideReport={tab.hideReport}
-            detailLink={tab.detailLink}
-            buttonText="Expenditure"
-          />
-        </div>
-      ))}
+      {tabs.map(
+        (tab) =>
+          tab.id === activeTab.id && (
+            <div key={tab.id}>
+              <Table
+                hideEdit
+                hidePrint
+                hideDelete
+                api={tab.api}
+                hideFilter
+                root="/panel/willbepaid"
+                columns={tab.columns}
+                hideReport={tab.hideReport}
+                detailLink={tab.detailLink}
+                buttonText="Expenditure"
+              />
+            </div>
+          )
+      )}
     </Container>
   );
 }

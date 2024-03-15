@@ -134,6 +134,27 @@ export const expenditureColumns: GridColDef[] = [
 export const advanceCollectsColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
+    field: "amount",
+    headerName: "Məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "note",
+    headerName: "Qeyd",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+];
+export const othersColumns: GridColDef[] = [
+  { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
+  {
     field: "ref",
     headerName: "Ref.",
     flex: 1,

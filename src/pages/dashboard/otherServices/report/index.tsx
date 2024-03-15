@@ -6,6 +6,7 @@ export default function index() {
   return (
     <div className="report-table">
       <Report
+        title="Other Service Invoice" // TODO: translate
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
           { fieldName: t("Staff"), propertyName: "staff" },

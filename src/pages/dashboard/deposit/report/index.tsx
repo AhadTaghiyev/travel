@@ -154,6 +154,12 @@ export default function index() {
           </Grid>
         </Grid>
         <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
+          <h1
+            className="text-xl font-bold mb-2"
+            style={{ textAlign: "center" }}
+          >
+            {t("Advance Invoice Receipt")} {/** TODO: translate */}
+          </h1>
           <div className="flex justify-between ">
             <div>
               <h3 className="text-xl font-bold mb-2">

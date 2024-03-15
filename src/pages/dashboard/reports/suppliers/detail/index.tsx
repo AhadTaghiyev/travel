@@ -1,4 +1,10 @@
-import { Button, Container, FormHelperText, Grid } from "@mui/material";
+import {
+  Button,
+  Container,
+  FormHelperText,
+  Grid,
+  InputLabel,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
 
@@ -6,7 +12,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -31,6 +36,7 @@ import { isNil } from "lodash";
 import CustomTextField from "@/components/custom/input";
 import * as Yup from "yup";
 import { CompanyContext } from "@/store/CompanyContext";
+import { textStyling } from "@/styles";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -123,10 +129,10 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
-  const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
-  const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
-  const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
+  // const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
+  // const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
+  // const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  // const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -223,6 +229,9 @@ const Detail = () => {
             </form>
           )}
         </Formik>
+        {data && data.length > 0 && (
+          <PayAction id={data[0].id} paymentTypeOptions={paymentTypes} />
+        )}
         <Grid
           sx={{
             width: "100%",
@@ -235,7 +244,6 @@ const Detail = () => {
                 {columns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
-                <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -249,16 +257,10 @@ const Detail = () => {
                           : row?.[column.name]}
                       </TableCell>
                     ))}
-                    <TableCell className="w-48 py-0">
-                      <PayAction
-                        paymentTypeOptions={paymentTypes}
-                        id={row.id}
-                      />
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
-            <TableFooter className="w-full">
+            {/* <TableFooter className="w-full">
               <TableRow className="w-full">
                 <TableCell className="py-2" colSpan={4}>
                   {t("Total Amount")}
@@ -267,9 +269,8 @@ const Detail = () => {
                 <TableCell className="py-2">{totalCredit}</TableCell>
                 <TableCell className="py-2">{totalBalance}</TableCell>
                 <TableCell className="py-2">{total}</TableCell>
-                <TableCell></TableCell>
               </TableRow>
-            </TableFooter>
+            </TableFooter> */}
           </Table>
         </Grid>
       </Container>
@@ -329,7 +330,14 @@ export const PayAction = ({
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="flex items-start gap-x-2">
-            <div className="w-32 mt-2">
+            <div className="w-52 ">
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ mb: 1 }}
+                style={textStyling}
+              >
+                {t("Payment Types")}
+              </InputLabel>
               <Select
                 onValueChange={(v) => setFieldValue("paymentId", v)}
                 defaultValue={String(values.paymentId)}
@@ -372,8 +380,20 @@ export const PayAction = ({
                 <div className="w-full h-5 " />
               )}
             </div>
-            <div className="pt-4 onlyPrint">{values.amount}</div>
+            <div className="pt-4 onlyPrint">
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ mb: 1 }}
+                style={textStyling}
+              >
+                {t("Məbləğ")}
+              </InputLabel>
+              {values.amount}
+            </div>
             <div className="w-28 removeFromPrint">
+              <InputLabel id="demo-simple-select-label" style={textStyling}>
+                {t("Məbləğ")}
+              </InputLabel>
               <CustomTextField
                 name="amount"
                 type="number"
@@ -388,7 +408,7 @@ export const PayAction = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="p-2 mt-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+              className="p-2 px-4 mt-6 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
             >
               <ClipLoader
                 size={14}
