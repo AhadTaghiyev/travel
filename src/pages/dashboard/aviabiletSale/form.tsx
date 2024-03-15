@@ -223,6 +223,7 @@ const AviabiletTicketForm = ({
                         const tickets = cloneDeep(values.planeTickets);
                         const clonedTicketPackage = cloneDeep(planeTicket);
                         clonedTicketPackage.key = shortid.generate();
+                        delete clonedTicketPackage.id;
                         tickets.splice(index + 1, 0, clonedTicketPackage);
                         setFieldValue("planeTickets", tickets);
                       }}
@@ -284,8 +285,8 @@ const AviabiletTicketForm = ({
                       t(errors.planeTickets?.[index]?.supplierId?.toString()),
                     ]}
                   />
-                  
-                      {!isView && (
+
+                  {!isView && (
                     <button
                       type="button"
                       disabled={isSubmitting}

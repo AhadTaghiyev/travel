@@ -1,6 +1,6 @@
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import {  FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import cloneDeep from "lodash/cloneDeep";
@@ -10,9 +10,7 @@ import { useModal } from "@/hooks/useModal";
 import { getTicketSchema } from "./schema";
 import { IInvoiceModel } from "./types";
 import { cn } from "@/lib/utils";
-import {
-  otherServicesInitialValues,
-} from "./create";
+import { otherServicesInitialValues } from "./create";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
@@ -222,6 +220,7 @@ const OtherServicesForm = ({
                         const tickets = cloneDeep(values.otherServices);
                         const clonedTicketPackage = cloneDeep(otherService);
                         clonedTicketPackage.key = shortid.generate();
+                        delete clonedTicketPackage.id;
                         tickets.splice(index + 1, 0, clonedTicketPackage);
                         setFieldValue("otherServices", tickets);
                       }}
@@ -275,7 +274,6 @@ const OtherServicesForm = ({
                       setFieldValue(`otherServices.${index}.supplierId`, value);
                     }}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
-                 
                     hasErrorMessages={
                       !!errors.otherServices?.[index]?.supplierId &&
                       !!touched.otherServices?.[index]?.supplierId
@@ -284,18 +282,18 @@ const OtherServicesForm = ({
                       t(errors.otherServices?.[index]?.supplierId?.toString()),
                     ]}
                   />
-                     {!isView && (
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          onOpen("createSupplier");
-                        }}
-                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                      >
-                        <FaPlusSquare />
-                      </button>
-                    )}
+                  {!isView && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        onOpen("createSupplier");
+                      }}
+                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                    >
+                      <FaPlusSquare />
+                    </button>
+                  )}
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect

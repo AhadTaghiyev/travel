@@ -16,6 +16,7 @@ export interface ICorporateTicketModel {
   fare: number;
   taxes: number;
   sellingPrice: number;
+  passanger: string;
   discount: number;
   commonPrice: number;
   supplierId: number;

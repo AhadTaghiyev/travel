@@ -233,6 +233,7 @@ const TourPackageForm = ({
                               individualTourPackage
                             );
                             clonedTourPackage.key = shortid.generate();
+                            delete clonedTourPackage.id;
                             tourPackages.splice(
                               index + 1,
                               0,

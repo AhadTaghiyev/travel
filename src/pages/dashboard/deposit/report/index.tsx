@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
+import { CompanyContext } from "@/store/CompanyContext";
 
 const customerProperties = [
   {

@@ -227,6 +227,7 @@ const CorperativeTicketForm = ({
                         const tickets = cloneDeep(values.corporativeTickets);
                         const clonedTicket = cloneDeep(corporativeTicket);
                         clonedTicket.key = shortid.generate();
+                        delete clonedTicket.id;
                         tickets.splice(index + 1, 0, clonedTicket);
                         setFieldValue("corporativeTickets", tickets);
                       }}
@@ -283,7 +284,6 @@ const CorperativeTicketForm = ({
                     label={t("supplier")}
                     value={corporativeTicket.supplierId ?? null}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
-                
                     optionLabel="name"
                     change={(value) => {
                       setFieldValue(
@@ -303,19 +303,18 @@ const CorperativeTicketForm = ({
                       ),
                     ]}
                   />
-                     {!isView && (
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          onOpen("createSupplier");
-                        }}
-                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                      >
-                        <FaPlusSquare />
-                      </button>
-                    )}
-                    
+                  {!isView && (
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => {
+                        onOpen("createSupplier");
+                      }}
+                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                    >
+                      <FaPlusSquare />
+                    </button>
+                  )}
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
@@ -331,7 +330,6 @@ const CorperativeTicketForm = ({
                       )
                     }
                     refetech={!!(isModalSuccess && type === "createAirway")}
-                    
                     hasErrorMessages={
                       !!errors.corporativeTickets?.[index]?.airWayId &&
                       !!touched.corporativeTickets?.[index]?.airWayId
@@ -386,7 +384,11 @@ const CorperativeTicketForm = ({
                       !!touched.corporativeTickets?.[index]?.passanger
                     }
                     errorMessages={[
-                      t(errors.corporativeTickets?.[index]?.passanger?.toString()),
+                      t(
+                        errors.corporativeTickets?.[
+                          index
+                        ]?.passanger?.toString()
+                      ),
                     ]}
                   />
                 </div>

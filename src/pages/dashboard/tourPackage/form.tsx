@@ -211,20 +211,6 @@ const TourPackageForm = ({
               >
                 {!isView && (
                   <div className="absolute right-0 top-2 flex gap-x-2">
-                    {/* <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        const packages = cloneDeep(values.tourPackages);
-                        const clonedTourPackage = cloneDeep(tourPackage);
-                        clonedTourPackage.key = shortid.generate();
-                        packages.splice(index + 1, 0, clonedTourPackage);
-                        setFieldValue("tourPackages", packages);
-                      }}
-                      className="px-2 py-1 text-sm bg-blue-600 text-white font-bold cursor-pointer z-20 hover:bg-blue-500 transition disabled:opacity-70"
-                    >
-                      {t("Copy")}
-                    </button> */}
                     {index !== 0 && (
                       <button
                         type="button"

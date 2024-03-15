@@ -28,6 +28,7 @@ export const corperativeTicketInitialValues: ICorporateTicketModel = {
   commonPrice: 0,
   supplierId: null,
   personalId: null,
+  passanger: "",
   airWayId: null,
   fare: 0,
   taxes: 0,
