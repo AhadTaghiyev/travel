@@ -1,11 +1,11 @@
 // @ts-nocheck
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
 import { InputBase, Divider } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ITableObject } from "./types";
 import { toast } from "sonner";
 import Dialog from "@mui/material/Dialog";
@@ -79,8 +79,15 @@ export default function Index({
   const [totalRows, setTotalRows] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
-  const [startDate, setStartDate] = useState(dayjs());
-  const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const defaultStartDate = dayjs(searchParams.get("startDate")).isValid()
+    ? dayjs(new Date(searchParams.get("startDate")))
+    : dayjs().startOf("year");
+  const defaultEndDate = dayjs(searchParams.get("endDate")).isValid()
+    ? dayjs(new Date(searchParams.get("endDate")))
+    : dayjs().endOf("year");
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
   const [filter, setFilter] = useState<string>(defaultFilterValue || "");
   const [open, setOpen] = useState(false);
   const idToDelete = useRef("");
@@ -139,7 +146,10 @@ export default function Index({
   const field = {
     field: "procedures",
     headerName: t("operations"),
-    flex: 1,
+    headerStyle: {
+      color: "#fff",
+    },
+    minWidth: 120,
     headerClassName: "header-item",
     renderCell: (params) => {
       let detailUrl = detailLink
@@ -308,6 +318,12 @@ export default function Index({
               hideError
               value={startDate}
               change={(data) => {
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.set(
+                  "startDate",
+                  (data ?? new Date()).toISOString()
+                );
+                setSearchParams(newSearchParams);
                 handleStartDateChange(data ?? new Date());
               }}
             />
@@ -317,6 +333,12 @@ export default function Index({
               hideError
               value={endDate}
               change={(data) => {
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.set(
+                  "endDate",
+                  (data ?? new Date()).toISOString()
+                );
+                setSearchParams(newSearchParams);
                 handleEndDateChange(data ?? new Date());
               }}
             />
