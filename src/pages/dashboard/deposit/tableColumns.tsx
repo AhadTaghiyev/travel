@@ -26,4 +26,10 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
+  {
+    field: "description",
+    headerName: "Description",
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];

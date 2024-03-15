@@ -34,7 +34,7 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
-    field: "passenger",
+    field: "passangerNames",
     headerName: t("passengerName"),
     flex: 1,
     headerClassName: "header-item",
