@@ -34,7 +34,7 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
-    field: "rezervationNumber",
+    field: "rezervationNumbers",
     headerName: t("Rezervasiya nömrəsi"),
     flex: 1,
     headerClassName: "header-item",

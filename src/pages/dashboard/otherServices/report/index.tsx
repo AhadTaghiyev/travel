@@ -13,12 +13,7 @@ export default function index() {
           { fieldName: t("Service"), propertyName: "service" },
           { fieldName: t("Servis Adı"), propertyName: "serviceName" },
           { fieldName: t("Description"), propertyName: "description" },
-          {
-            fieldName: t("Uçuş istiqaməti və tarix"),
-            propertyName: "invoiceDirection",
-          },
           { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
-          // {fieldName: "Ümumi qiymət", propertyName: "commonPrice"},
         ]}
         api="/OtherServices/GetDetailAsync"
       />
