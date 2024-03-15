@@ -50,7 +50,7 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
           <TableHead>{t("Ödəniş növü")}</TableHead>
           <TableHead>{t("paidamount")}</TableHead>
           <TableHead>{t("Description")}</TableHead>
-          <TableHead>{t("Date")}</TableHead>
+          <TableHead>{t("date")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
