@@ -174,7 +174,7 @@ export default function index() {
           >
             <MassIncomeTable
               currency={currency}
-              totalPrice={data.totals.totalPrice ?? 0}
+              totalPrice={data.totals?.totalPrice}
               incomes={data ? [data] : []}
             />
           </Grid>

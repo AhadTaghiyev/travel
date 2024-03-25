@@ -212,7 +212,7 @@ export default function Index({
                 <MassIncomeTable
                   currency={currency}
                   incomes={data.incomes}
-                  totalPrice={data.totals.totalPrice ?? 0}
+                  totalPrice={data.totals?.totalPrice}
                 />
               </div>
             )}
