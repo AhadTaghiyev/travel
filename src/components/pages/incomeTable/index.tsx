@@ -28,12 +28,17 @@ interface IIncomeTableProps {
     invoiceId: number;
   }[];
   currency: ICurrency;
+  totalPrice: number;
 }
 
-export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
+export function MassIncomeTable({
+  incomes,
+  currency,
+  totalPrice,
+}: IIncomeTableProps) {
   const { t } = useTranslation();
 
-  const total = useMemo(
+  const totalPaidAmount = useMemo(
     () =>
       incomes.reduce((acc, income) => {
         return acc + income.paidAmount;
@@ -42,22 +47,24 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
   );
 
   return (
-    <Table className="border-solid border border-black/20">
+    <Table className="border-solid border border-black/20 text-[11px]">
       <TableHeader>
         <TableRow className="border-solid border border-black/20">
-          <TableHead>{t("Receipt Number")}</TableHead>
-          <TableHead>{t("Invoice Number")}</TableHead>
-          <TableHead>{t("Ödəniş növü")}</TableHead>
-          <TableHead>{t("paidamount")}</TableHead>
-          <TableHead>{t("Description")}</TableHead>
-          <TableHead>{t("date")}</TableHead>
+          <TableHead className="px-2">{t("Receipt Number")}</TableHead>
+          <TableHead className="px-2">{t("Invoice Number")}</TableHead>
+          <TableHead className="px-2">{t("Ödəniş növü")}</TableHead>
+          <TableHead className="px-2">{t("paidamount")}</TableHead>
+          <TableHead className="px-2">{t("Description")}</TableHead>
+          <TableHead className="px-2">{t("date")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {incomes.map((income) => (
           <TableRow key={income.id}>
-            <TableCell className="font-medium py-1.5">{income.ref}</TableCell>
-            <TableCell className="font-medium py-1.5">
+            <TableCell className="font-medium py-1 px-2">
+              {income.ref}
+            </TableCell>
+            <TableCell className="font-medium py-1 px-2">
               {income.type ? (
                 <Link
                   to={`/panel/${income.type}/report?tickets=${income.invoiceId}`}
@@ -69,21 +76,21 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
                 income.invoiceNo
               )}
             </TableCell>
-            <TableCell className="py-1.5">{income.payment}</TableCell>
-            <TableCell className="py-1.5">
+            <TableCell className="py-1 px-2">{income.payment}</TableCell>
+            <TableCell className="py-1 px-2">
               {(income.paidAmount * currency.value).toFixed(2)} {currency.name}
             </TableCell>
-            <TableCell className="py-1.5 max-w-[150px] truncate">
+            <TableCell className="py-1 px-2 max-w-[150px] truncate">
               {income.description ?? t("No Description")}
             </TableCell>
-            <TableCell className="py-1.5 max-w-[150px] truncate">
+            <TableCell className="py-1 px-2 max-w-[150px] truncate">
               {formatDate(income.date)}
             </TableCell>
           </TableRow>
         ))}
         {incomes.length === 0 && (
           <TableRow>
-            <TableCell colSpan={4} className="text-center py-2">
+            <TableCell colSpan={6} className="text-center py-1.5 px-2">
               {t("Payment not found")}
             </TableCell>
           </TableRow>
@@ -91,11 +98,20 @@ export function MassIncomeTable({ incomes, currency }: IIncomeTableProps) {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell className="py-2" colSpan={5}>
+          <TableCell className="py-1.5 px-2" colSpan={5}>
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">
-            {(total * currency.value).toFixed(2)} {currency.name}
+            {(totalPaidAmount * currency.value).toFixed(2)} {currency.name}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="py-1.5 px-2" colSpan={5}>
+            {t("Total Remaining Amount")} {/* TODO: translate */}
+          </TableCell>
+          <TableCell className="text-right py-2">
+            {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}
+            {currency.name}
           </TableCell>
         </TableRow>
       </TableFooter>

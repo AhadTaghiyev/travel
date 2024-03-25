@@ -172,7 +172,11 @@ export default function index() {
             }}
             container
           >
-            <MassIncomeTable currency={currency} incomes={data ? [data] : []} />
+            <MassIncomeTable
+              currency={currency}
+              totalPrice={data.totals.totalPrice ?? 0}
+              incomes={data ? [data] : []}
+            />
           </Grid>
         </Container>
       </Grid>

@@ -2,6 +2,7 @@ export interface IReportModel {
   headers: IReportTableHeader[];
   api: string;
   title?: string;
+  showCreateButton?: boolean;
 }
 
 export interface IReportTableHeader {

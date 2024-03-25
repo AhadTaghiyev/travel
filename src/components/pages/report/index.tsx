@@ -42,7 +42,12 @@ const customerProperties = [
   },
 ];
 
-export default function Index({ headers, api, title }: IReportModel) {
+export default function Index({
+  headers,
+  api,
+  title,
+  showCreateButton,
+}: IReportModel) {
   const [searchParams] = useSearchParams();
   const [currency, setCurrency] = useState<ICurrency>({
     name: "USD",
@@ -132,7 +137,6 @@ export default function Index({ headers, api, title }: IReportModel) {
               sx={{ display: "flex", justifyContent: "end" }}
               className="removeFromPrint"
             >
-              {/* <Button variant="text" color='inherit' sx={{ml: 4, fontSize: '12px', lineHeight: '16px'}}><BsWhatsapp style={{marginRight: '8px'}}/> Whatsapp-a göndər</Button> */}
               <Button
                 variant="text"
                 color="inherit"
@@ -159,14 +163,16 @@ export default function Index({ headers, api, title }: IReportModel) {
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
 
-              <Button
-                onClick={(e) => navigate("/panel/aviabiletsale/new")}
-                variant="text"
-                color="inherit"
-                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-              >
-                {t("Aviabilet")}
-              </Button>
+              {showCreateButton && (
+                <Button
+                  onClick={(e) => navigate("/panel/aviabiletsale/new")}
+                  variant="text"
+                  color="inherit"
+                  sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
+                >
+                  {t("Aviabilet")}
+                </Button>
+              )}
             </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {currentUser?.companyName}
@@ -202,8 +208,12 @@ export default function Index({ headers, api, title }: IReportModel) {
               ))}
             </div>
             {data.incomes && (
-              <div className="print:w-[calc(100%-210px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
-                <MassIncomeTable currency={currency} incomes={data.incomes} />
+              <div className="print:w-[calc(100%-200px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
+                <MassIncomeTable
+                  currency={currency}
+                  incomes={data.incomes}
+                  totalPrice={data.totals.totalPrice ?? 0}
+                />
               </div>
             )}
           </div>

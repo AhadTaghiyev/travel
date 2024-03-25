@@ -6,6 +6,7 @@ export default function index() {
   return (
     <div className="report-table">
       <Report
+        showCreateButton
         title="Individual Tour Package Invoice"
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
