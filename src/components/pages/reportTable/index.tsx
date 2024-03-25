@@ -46,9 +46,9 @@ export default function Index({ headers, items, totals, currency }) {
                 sx={{
                   fontWeight: "bold",
                   borderLeft: "1px solid #e0e0e0",
-                  padding: "10px 12px",
                 }}
                 key={index}
+                className="!px-3 !py-2.5 print:!px-1"
               >
                 {elem.fieldName}
               </TableCell>
@@ -62,9 +62,10 @@ export default function Index({ headers, items, totals, currency }) {
               {headers.map((hElem, hKey) => (
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0", padding: "8px 12px" }}
+                  sx={{ borderLeft: "1px solid #e0e0e0" }}
                   align="left"
                   key={hKey}
+                  className="!px-3 !py-2 print:!px-1"
                 >
                   {hElem.propertyName === "invoiceDirection" ? (
                     elem.invoiceDriection?.map((iElem, ikey) => (
