@@ -39,7 +39,7 @@ const columns = [
   { label: "Debit", name: "debit" },
   { label: "Credit", name: "credit" },
   { label: "Balance", name: "balance" },
-  { label: "Total", name: "total" },
+  // { label: "Total", name: "total" },
 ];
 
 const Detail = () => {
@@ -252,7 +252,7 @@ const Detail = () => {
                 <TableCell className="py-2">{totalDebit}</TableCell>
                 <TableCell className="py-2">{totalCredit}</TableCell>
                 <TableCell className="py-2">{totalBalance}</TableCell>
-                <TableCell className="py-2">{total}</TableCell>
+                {/* <TableCell className="py-2">{total}</TableCell> */}
                 <TableCell className="py-2"></TableCell>
               </TableRow>
             </TableFooter>
