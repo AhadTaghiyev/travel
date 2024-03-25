@@ -105,17 +105,17 @@ export function MassIncomeTable({
             {(totalPaidAmount * currency.value).toFixed(2)} {currency.name}
           </TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell className="py-1.5 px-2" colSpan={5}>
-            {t("Total Remaining Amount")} {/* TODO: translate */}
-          </TableCell>
-          {totalPrice && (
+        {totalPrice && (
+          <TableRow>
+            <TableCell className="py-1.5 px-2" colSpan={5}>
+              {t("Total Remaining Amount")} {/* TODO: translate */}
+            </TableCell>
             <TableCell className="text-right py-2">
               {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}
               {currency.name}
             </TableCell>
-          )}
-        </TableRow>
+          </TableRow>
+        )}
       </TableFooter>
     </Table>
   );
