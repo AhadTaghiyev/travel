@@ -48,7 +48,8 @@ export default function Index() {
     if (res?.status === 200) {
       seIsLoading(false);
       toast.success("Registered successfully!");
-      window.open(res.data, "_blank");
+      // window.open(res.data, "_blank");
+      window.location.replace(res.data);
     } else {
       seIsLoading(false);
       toast.error("Something went wrong!");
