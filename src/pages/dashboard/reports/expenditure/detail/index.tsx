@@ -37,8 +37,8 @@ const columns = [
   { label: "Id", name: "id" },
   { label: "Ref.", name: "ref" },
   { label: "Debit", name: "debit" },
-  { label: "Credit", name: "credit" },
   { label: "Balance", name: "balance" },
+  { label: "Credit", name: "credit" },
   // { label: "Total", name: "total" },
 ];
 
