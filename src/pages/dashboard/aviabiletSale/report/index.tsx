@@ -6,11 +6,11 @@ export default function index() {
   return (
     <div className="report-table">
       <Report
-        title="B2C Air Ticket Invoice" // TODO: translate
+        title="B2C Air Ticket Invoice"
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
           { fieldName: t("Hava yolu"), propertyName: "airway" },
-          { fieldName: t("Staff"), propertyName: "staff" }, // TODO: translate
+          { fieldName: t("Staff"), propertyName: "staff" },
           { fieldName: t("Sərnişin adı"), propertyName: "passanger" },
           { fieldName: t("Bilet nömrəsi"), propertyName: "ticketNo" },
           {

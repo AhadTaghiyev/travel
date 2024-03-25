@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 
-// TODO: translate
 export const CompanySchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),

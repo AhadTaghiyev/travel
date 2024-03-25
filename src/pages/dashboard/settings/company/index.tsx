@@ -60,7 +60,7 @@ const Company = () => {
         if (response.status === 200) {
           getUser();
           getCompany();
-          toast.success(t("Company Updated")); // TODO: Translate
+          toast.success(t("Company Updated"));
         } else {
           toast.error(response.message);
         }

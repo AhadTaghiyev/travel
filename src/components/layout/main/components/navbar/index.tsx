@@ -54,12 +54,9 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   return (
     <AppBar
       color="default"
-      sx={{ right: "0px", position: "fixed", width: "80%" }}
+      sx={{ right: "0px", position: "fixed", width: "80%", bgcolor: "black" }}
     >
-      <Container
-        maxWidth="xl"
-        style={{ backgroundColor: "black", color: "white" }}
-      >
+      <Container maxWidth="xl" style={{ color: "white" }}>
         <Toolbar disableGutters>
           {!isAdmin ? (
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>

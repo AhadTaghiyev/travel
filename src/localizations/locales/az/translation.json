@@ -368,5 +368,27 @@
     "Logout":"Çıxış",
     "Personal seçilməlidir":"Personal seçilməlidir",
     "Category": "Kateqoriya",
-    "Supplier Payments": "Təchizatçı Ödənişləri"
+    "Supplier Payments": "Təchizatçı Ödənişləri",
+
+    "Profit Loss": "Mənfəət və Zərər",
+    "Company": "Şirkət",
+    "B2C Air Ticket Invoice": "B2C Aviabilet Fakturası",
+    "Staff": "İşçi",
+    "Incentive Invoice Receipt": "Bonus Faktura Qəbzi",
+    "B2B Air Ticket Invoice": "B2B Aviabilet Fakturası",
+    "Advance Invoice Receipt": "Depozit Faktura Qəbzi",
+    "Invoice Receipt": "Faktura Qəbzi",
+    "Individual Tour Package Invoice": "İndividual Tur Paket Fakturası",
+    "Debt From/To Founder Receipt": "Təsisçidən Təsisçiyə Borc Qəbzi",
+    "Other Service Invoice": "Digər Xidmət Fakturası",
+    "Company Updated": "Şirkət güncəlləndi",
+    "Name is required": "Ad tələb olunur",
+    "Email is required": "Email tələb olunur",
+    "Invalid email": "Yanlış email",
+    "Phone number is required": "Telefon nömrəsi tələb olunur",
+    "Adress is required": "Ünvan tələb olunur",
+    "Concurency is required": "Valyuta tələb olunur",
+    "Detail is required": "Detal tələb olunur",
+    "Image is required": "Şəkil tələb olunur",
+    "Tour Package Invoice": "Tur Paket Fakturası"
 }

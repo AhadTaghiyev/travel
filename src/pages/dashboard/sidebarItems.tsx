@@ -171,7 +171,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: BsFileEarmarkPerson,
-        text: "Profit Loss", // TODO: translate
+        text: "Profit Loss",
         link: "/panel/reports/profitLoss",
       },
       {
@@ -370,7 +370,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaServicestack,
-        text: "Company", // TODO: translate
+        text: "Company",
         link: "/panel/company",
       },
     ],

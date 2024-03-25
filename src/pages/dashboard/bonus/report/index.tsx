@@ -138,7 +138,7 @@ export default function index() {
             className="text-xl font-bold mb-6"
             style={{ textAlign: "center" }}
           >
-            {t("Incentive Invoice Receipt")} {/** TODO: translate */}
+            {t("Incentive Invoice Receipt")}
           </h1>
           <Grid
             sx={{
