@@ -29,14 +29,6 @@ const tabs = [
     api: "/Reports/RefundReportDetail",
     columns: refundColumns,
   },
-  // {
-  //   id: 8,
-  //   title: "Maaş",
-  //   hideReport: false,
-  //   detailLink: "/panel/reports/salaries/",
-  //   api: "/Reports/SalaryReportDetail",
-  //   columns: salaryColumns,
-  // },
   {
     id: 3,
     title: "Credit",
@@ -62,6 +54,20 @@ const tabs = [
   {
     id: 6,
     title: "Others",
+    hideReport: true,
+    api: "/Reports/FounderReport",
+    columns: advanceCollectsColumns,
+  },
+  {
+    id: 7,
+    title: "Maaş",
+    hideReport: true,
+    api: "/Reports/FounderReport",
+    columns: advanceCollectsColumns,
+  },
+  {
+    id: 8,
+    title: "To Founder", // TODO: translate
     hideReport: true,
     api: "/Reports/FounderReport",
     columns: advanceCollectsColumns,

@@ -43,7 +43,7 @@ export const navigationItems: INavigationItemType[] = [
   },
   {
     text: "Ödənişlər",
-    path: "/panel/willbepaid",
+    path: "/panel/reports/willbepaid",
     color: "#7A885A",
     Icon: FaMoneyBillWave,
     quantity: 1,

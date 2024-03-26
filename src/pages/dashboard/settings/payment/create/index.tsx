@@ -20,7 +20,7 @@ const NewPayment = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Payment Created"));
-            navigate(`/panel/payments`);
+            navigate(`/panel/payment`);
           } else {
             toast.error(response.message || t("Something went wrong"));
           }

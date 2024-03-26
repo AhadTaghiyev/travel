@@ -29,7 +29,7 @@ const UpdatePayment = () => {
     } else {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
-        navigate("/panel/payments");
+        navigate("/panel/payment");
       }, 1000);
     }
   }
@@ -41,7 +41,7 @@ const UpdatePayment = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Payment güncəlləndi"));
-            navigate("/panel/payments");
+            navigate("/panel/payment");
           } else {
             toast.error(response.message);
           }

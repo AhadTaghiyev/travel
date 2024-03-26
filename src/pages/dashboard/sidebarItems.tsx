@@ -105,7 +105,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: FaMoneyBillWave,
     text: "Ödənişlər",
-    link: "/panel/willbepaid",
+    link: "/panel/payments",
   },
   {
     icon: HiOutlineArrowsUpDown,
@@ -159,6 +159,11 @@ export const sidebarItems: SidebarItemType[] = [
     icon: BsCalculator,
     text: "Hesabatlar",
     children: [
+      {
+        icon: FaMoneyBillWave,
+        text: "Ödənişlər",
+        link: "/panel/reports/willbepaid",
+      },
       {
         icon: BsFileEarmarkPerson,
         text: "Reciveables",
@@ -336,7 +341,7 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: FaMoneyBill1Wave,
         text: "Ödənişlər",
-        link: "/panel/payments",
+        link: "/panel/payment",
       },
       {
         icon: FaExchangeAlt,

@@ -147,7 +147,9 @@ import WillBePaid from "../pages/dashboard/willBePaid";
 import NewWillBePaid from "../pages/dashboard/willBePaid/create";
 import UpdateWillBePaid from "../pages/dashboard/willBePaid/update";
 import DetailWillBePaid from "../pages/dashboard/willBePaid/report";
-
+//Payments
+import Payments from "../pages/dashboard/payments";
+import CreatePayment from "../pages/dashboard/payments/create";
 //documents
 import DocumentCreate from "../pages/dashboard/document/sendDocument";
 import DocumentsList from "../pages/dashboard/document/documentsList";
@@ -662,15 +664,15 @@ const router = createBrowserRouter([
       // Payments
       //================
       {
-        path: "/panel/payments",
+        path: "/panel/payment",
         element: <Payment />,
       },
       {
-        path: "/panel/payments/new",
+        path: "/panel/payment/new",
         element: <NewPayment />,
       },
       {
-        path: "/panel/payments/update/:id",
+        path: "/panel/payment/update/:id",
         element: <UpdatePayment />,
       },
 
@@ -771,20 +773,32 @@ const router = createBrowserRouter([
       // WillBePaid
       //=================
       {
-        path: "/panel/willbepaid",
+        path: "/panel/reports/willbepaid",
         element: <WillBePaid />,
       },
       {
-        path: "/panel/willbepaid/new",
+        path: "/panel/reports/willbepaid/new",
         element: <NewWillBePaid />,
       },
       {
-        path: "/panel/willbepaid/update/:id",
+        path: "/panel/reports/willbepaid/update/:id",
         element: <UpdateWillBePaid />,
       },
       {
-        path: "/panel/willbepaid/detail/:id",
+        path: "/panel/reports/willbepaid/detail/:id",
         element: <DetailWillBePaid />,
+      },
+
+      //=================
+      // WillBePaid
+      //=================
+      {
+        path: "/panel/payments",
+        element: <Payments />,
+      },
+      {
+        path: "/panel/payments/new",
+        element: <CreatePayment />,
       },
       //=================
       // Documents

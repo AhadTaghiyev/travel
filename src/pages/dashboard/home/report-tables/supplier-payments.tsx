@@ -107,7 +107,7 @@ const SupplierPaymentsReport = ({
             <TableRow className="hover:bg-transparent">
               <TableCell colSpan={8} className="text-center">
                 <Link
-                  to="/panel/willbepaid?tab=1"
+                  to="/panel/reports/willbepaid?tab=1"
                   className="text-blue-400 text-base hover:underline"
                 >
                   {t("See More")}

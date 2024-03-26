@@ -13,7 +13,7 @@ export default function Index() {
         api={"/Payments/GetAll"}
         buttonText="Payment"
         deleteApi="/Payments/Delete"
-        root="/panel/payments"
+        root="/panel/payment"
       />
     </Container>
   );
