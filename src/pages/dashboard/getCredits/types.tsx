@@ -1,5 +1,5 @@
 export interface IGetCreditModel {
-  from: string;
+  bankId: number;
   amount: number;
   date: Date;
 }

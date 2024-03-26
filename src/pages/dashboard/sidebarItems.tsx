@@ -7,7 +7,7 @@ import {
   BsCalculator,
   BsTicketDetailed,
   BsFillPeopleFill,
-  BsFileEarmarkPerson,
+  BsFileEarmarkPerson, 
 } from "react-icons/bs";
 import { BiSolidPlaneAlt, BiWalletAlt } from "react-icons/bi";
 import { MdOutlineAirplaneTicket, MdOutlinePersonPin } from "react-icons/md";
@@ -102,11 +102,7 @@ export const sidebarItems: SidebarItemType[] = [
     text: "Vəsait transferi",
     link: "/panel/paymentTransfers",
   },
-  {
-    icon: FaMoneyBillWave,
-    text: "Ödənişlər",
-    link: "/panel/willbepaid",
-  },
+ 
   {
     icon: HiOutlineArrowsUpDown,
     text: "Geri qaytarmalar",
@@ -159,6 +155,11 @@ export const sidebarItems: SidebarItemType[] = [
     icon: BsCalculator,
     text: "Hesabatlar",
     children: [
+      {
+        icon: FaMoneyBillWave,
+        text: "Ödənişlər",
+        link: "/panel/willbepaid",
+      },
       {
         icon: BsFileEarmarkPerson,
         text: "Reciveables",
@@ -322,6 +323,11 @@ export const sidebarItems: SidebarItemType[] = [
         icon: BiSolidPlaneAlt,
         text: "Hava yolları",
         link: "/panel/airways",
+      },
+      {
+        icon: BiSolidPlaneAlt,
+        text: "Bank",
+        link: "/panel/banks",
       },
       {
         icon: BsFileEarmarkPerson,

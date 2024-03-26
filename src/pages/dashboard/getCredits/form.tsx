@@ -7,6 +7,7 @@ import { IGetCreditModel } from "./types";
 
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomTextField from "@/components/custom/input";
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 
 type FormType = "Edit" | "Create" | "View";
 
@@ -57,16 +58,22 @@ const MassIncomeForm = ({
                 errorMessages={[t(errors.date?.toString())]}
               />
             </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Haradan")}
-                value={values.from}
-                change={handleChange}
-                name={`from`}
-                hasErrorMessages={!!errors.from && !!touched.from}
-                errorMessages={[t(errors.from?.toString())]}
-              />
-            </div>
+            <div className="w-full relative">
+                  <CustomAutocompleteSelect
+                    api="banks/GetAll/1"
+                    label={t("bank")}
+                    optionLabel="Bank"
+                    value={values.bankId ?? null}
+                    change={(value) =>
+                      setFieldValue(`bankId`, value)
+                    }
+                    disabled={isView}
+                    hasErrorMessages={!!errors.bankId && !!touched.bankId}
+                    errorMessages={[
+                      t(errors.bankId?.toString()),
+                    ]}
+                  />
+                </div>
             <div className="w-full">
               <CustomTextField
                 label={t("Məbləğ")}
