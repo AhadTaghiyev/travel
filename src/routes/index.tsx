@@ -79,6 +79,10 @@ import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
 import UpdateAirway from "../pages/dashboard/settings/airway/update";
 
+//Banl
+import Bank from "../pages/dashboard/settings/bank";
+import NewBank from "../pages/dashboard/settings/bank/create";
+import UpdateBank from "../pages/dashboard/settings/bank/update";
 //Korperativ bilet
 import CorperativeTicket from "../pages/dashboard/corperativeTicket";
 import NewCorperativeTicket from "../pages/dashboard/corperativeTicket/create";
@@ -594,6 +598,22 @@ const router = createBrowserRouter([
       {
         path: "/panel/airways/update/:id",
         element: <UpdateAirway />,
+      },
+
+          // ===============
+      // Bank
+      //================
+      {
+        path: "/panel/banks",
+        element: <Bank />,
+      },
+      {
+        path: "/panel/banks/new",
+        element: <NewBank />,
+      },
+      {
+        path: "/panel/banks/update/:id",
+        element: <UpdateBank />,
       },
       // ===============
       // Reoprts

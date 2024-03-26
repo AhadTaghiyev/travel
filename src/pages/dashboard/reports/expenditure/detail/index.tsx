@@ -36,9 +36,11 @@ import { CompanyContext } from "@/store/CompanyContext";
 const columns = [
   { label: "Id", name: "id" },
   { label: "Ref.", name: "ref" },
-  { label: "Debit", name: "debit" },
+  { label: "Name", name: "name" },
+  { label: "Amount", name: "credit" },
+  { label: "Paid", name: "debit" },
   { label: "Balance", name: "balance" },
-  { label: "Credit", name: "credit" },
+  { label: "Note", name: "note" },
   // { label: "Total", name: "total" },
 ];
 
@@ -119,7 +121,6 @@ const Detail = () => {
   const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
   const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
   const totalBalance = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
-  const total = data?.reduce((acc, item) => acc + item.total, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>

@@ -329,6 +329,11 @@ export const sidebarItems: SidebarItemType[] = [
         link: "/panel/airways",
       },
       {
+        icon: BiSolidPlaneAlt,
+        text: "Bank",
+        link: "/panel/banks",
+      },
+      {
         icon: BsFileEarmarkPerson,
         text: "Təchizatçı",
         link: "/panel/suppliers",
