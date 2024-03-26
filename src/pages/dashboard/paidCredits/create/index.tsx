@@ -50,6 +50,7 @@ const NewPaidCredit = () => {
         initialValues={{
           bankId: null,
           amount: 0,
+          paymentId: null,
           date: new Date(),
         }}
       />

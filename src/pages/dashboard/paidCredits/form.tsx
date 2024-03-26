@@ -61,13 +61,24 @@ const MassIncomeForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 api="banks/GetAll/1"
-                label={t("bank")}
+                label={t("bank")} // TODO: Translate
                 optionLabel="name"
                 value={values.bankId ?? null}
                 change={(value) => setFieldValue(`bankId`, value)}
                 disabled={isView}
                 hasErrorMessages={!!errors.bankId && !!touched.bankId}
                 errorMessages={[t(errors.bankId?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomAutocompleteSelect
+                api="Payments/GetAll/1"
+                label={t("Ödəniş növü")}
+                value={values.paymentId ?? null}
+                optionLabel="type"
+                change={(value) => setFieldValue("paymentId", value)}
+                hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
+                errorMessages={[t(errors.paymentId?.toString() ?? "")]}
               />
             </div>
             <div className="w-full">
