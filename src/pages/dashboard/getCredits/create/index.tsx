@@ -48,7 +48,7 @@ const NewGetCredit = () => {
         formType="Create"
         onSubmit={onSubmit}
         initialValues={{
-          from: "",
+          bankId: null,
           amount: 0,
           date: new Date(),
         }}

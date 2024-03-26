@@ -1,5 +1,5 @@
 export interface IPaidCreditModel {
-  to: string;
+  bankId: number;
   amount: number;
   date: Date;
 }

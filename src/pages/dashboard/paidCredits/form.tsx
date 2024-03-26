@@ -7,6 +7,7 @@ import { IPaidCreditModel } from "./types";
 
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomTextField from "@/components/custom/input";
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 
 type FormType = "Edit" | "Create" | "View";
 
@@ -57,14 +58,16 @@ const MassIncomeForm = ({
                 errorMessages={[t(errors.date?.toString())]}
               />
             </div>
-            <div className="w-full">
-              <CustomTextField
-                label={t("Haraya")}
-                value={values.to}
-                change={handleChange}
-                name={`to`}
-                hasErrorMessages={!!errors.to && !!touched.to}
-                errorMessages={[t(errors.to?.toString())]}
+            <div className="w-full relative">
+              <CustomAutocompleteSelect
+                api="banks/GetAll/1"
+                label={t("bank")}
+                optionLabel="name"
+                value={values.bankId ?? null}
+                change={(value) => setFieldValue(`bankId`, value)}
+                disabled={isView}
+                hasErrorMessages={!!errors.bankId && !!touched.bankId}
+                errorMessages={[t(errors.bankId?.toString())]}
               />
             </div>
             <div className="w-full">
