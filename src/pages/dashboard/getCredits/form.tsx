@@ -59,21 +59,17 @@ const MassIncomeForm = ({
               />
             </div>
             <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    api="banks/GetAll/1"
-                    label={t("bank")}
-                    optionLabel="Bank"
-                    value={values.bankId ?? null}
-                    change={(value) =>
-                      setFieldValue(`bankId`, value)
-                    }
-                    disabled={isView}
-                    hasErrorMessages={!!errors.bankId && !!touched.bankId}
-                    errorMessages={[
-                      t(errors.bankId?.toString()),
-                    ]}
-                  />
-                </div>
+              <CustomAutocompleteSelect
+                api="banks/GetAll/1"
+                label={t("bank")}
+                optionLabel="name"
+                value={values.bankId ?? null}
+                change={(value) => setFieldValue(`bankId`, value)}
+                disabled={isView}
+                hasErrorMessages={!!errors.bankId && !!touched.bankId}
+                errorMessages={[t(errors.bankId?.toString())]}
+              />
+            </div>
             <div className="w-full">
               <CustomTextField
                 label={t("Məbləğ")}
