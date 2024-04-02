@@ -5,29 +5,22 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IPaidCreditModel } from "../types";
+import { IInvoiceTextModel } from "../types";
 
-import PaidCreditForm from "../form";
+import InvoiceTextForm from "../form";
 
-const NewPaidCredit = () => {
+const NewInvoiceText = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    (
-      values: IPaidCreditModel,
-      { setSubmitting }: FormikHelpers<FormikValues>
-    ) => {
+    (values: IInvoiceTextModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const promise = apiService
-        .post(`/PaidCredits/Create`, values)
+        .post(`/InvoiceTexts/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Ödənilən kredit yaradıldı"));
-            navigate(`/panel/paidCredits`);
-            // TODO: Navigate to report page
-            // navigate(
-            //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
-            // );
+            toast.success(t("InvoiceText Created"));
+            navigate(`/panel/InvoiceTexts`);
           } else {
             toast.error(response.message || t("Something went wrong"));
           }
@@ -42,22 +35,17 @@ const NewPaidCredit = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Ödənilən Kredit Yarat")}
+        {t("Yeni InvoiceText Yarat")}
       </h1>
-      <PaidCreditForm
+      <InvoiceTextForm
         formType="Create"
         onSubmit={onSubmit}
         initialValues={{
-          getCreditId: null,
-          amount: 0,
-          percent:0,
-          paymentId: null,
-          date: new Date(),
-
+          text: "",
         }}
       />
     </div>
   );
 };
 
-export default NewPaidCredit;
+export default NewInvoiceText;

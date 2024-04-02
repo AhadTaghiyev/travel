@@ -60,14 +60,15 @@ const MassIncomeForm = ({
             </div>
             <div className="w-full relative">
               <CustomAutocompleteSelect
-                api="banks/GetAll/1"
-                label={t("bank")} // TODO: Translate
-                optionLabel="name"
-                value={values.bankId ?? null}
-                change={(value) => setFieldValue(`bankId`, value)}
+                api="GetCredits/GetAll/1"
+                label={t("Credit")} // TODO: Translate
+                optionLabel="id"
+                value={values.getCreditId ?? null}
+                change={(value) => setFieldValue(`getCreditId`, value)}
                 disabled={isView}
-                hasErrorMessages={!!errors.bankId && !!touched.bankId}
-                errorMessages={[t(errors.bankId?.toString())]}
+                hasErrorMessages={!!errors.getCreditId && !!touched.getCreditId}
+                errorMessages={[t(errors.getCreditId?.toString())]}
+                refName="LN-"
               />
             </div>
             <div className="w-full">
@@ -90,6 +91,17 @@ const MassIncomeForm = ({
                 name={`amount`}
                 hasErrorMessages={!!errors.amount && !!touched.amount}
                 errorMessages={[t(errors.amount?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Percent")}
+                value={values.percent}
+                change={handleChange}
+                type="number"
+                name={`percent`}
+                hasErrorMessages={!!errors.percent && !!touched.percent}
+                errorMessages={[t(errors.percent?.toString())]}
               />
             </div>
           </div>

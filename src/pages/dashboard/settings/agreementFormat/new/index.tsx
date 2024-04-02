@@ -24,14 +24,10 @@ const footer = {
     fontSize: '12px',
   };
 
-  interface IApiResponseObject {
-    data? : any,
-    status: number,
-    message?: string
-  }
+ 
 
-  async function saveData(obj: any): Promise<IApiResponseObject>{
-    const res = await apiService.post('AgreementFormat/CreateAgreementFormat', obj)
+  async function saveData(obj: any){
+    const res = await apiService.post('AgreementFormats/Create', obj)
     return res;
 }
 
@@ -63,8 +59,7 @@ const [name, setName] = useState('');
   return (
     <>
         <Container maxWidth="xl">
-            <h3 className="page-title">Müqavilə formatı</h3>
-            <Divider sx={{ mb: 3, mt: 3 }} />
+        
             <InputLabel
               id="demo-simple-select-label"
               sx={{ mb: 1 }}
@@ -83,7 +78,7 @@ const [name, setName] = useState('');
               size="small"
             />
             <Editor
-                apiKey='cxosxz3mjjtm962jl8swtdzg0wajvwc9dz9shyls0y7ltkna'
+                apiKey='emglxjwpj34s4n14w7kfzdvj9r5u9wk9ksbgqgn4s8e19wtw'
                 onInit={(evt, editor) => editorRef.current = editor}
                 init={{
                 height: 500,

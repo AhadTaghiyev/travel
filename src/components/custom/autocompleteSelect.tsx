@@ -34,6 +34,7 @@ interface ICustomAutocompleteSelectProps {
   staticOptions?: { value: string; label: string }[];
   errorMessages: string[];
   hasErrorMessages: boolean;
+  refName?:string;
 }
 
 export default function CustomAutocompleteSelect({
@@ -47,6 +48,7 @@ export default function CustomAutocompleteSelect({
   staticOptions,
   hasErrorMessages,
   disabled = false,
+  refName=""
 }: ICustomAutocompleteSelectProps) {
   const [options, setOptions] = useState(staticOptions ?? null);
   const [open, setOpen] = useState(false);
@@ -58,8 +60,8 @@ export default function CustomAutocompleteSelect({
 
     const data = res.data.items
       .map((x) => ({
-        label: x[optionLabel],
-        value: x.id,
+        label: refName+ x[optionLabel],
+        value:  x.id,
       }))
       .filter((item) => item.label && item.value);
 

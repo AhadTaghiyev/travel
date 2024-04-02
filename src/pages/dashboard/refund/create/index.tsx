@@ -18,7 +18,7 @@ const NewIncome = () => {
       const params = {
         paidToCustomer: values.paidToCustomer,
         amount: values.amount,
-        forfeit: values.amount - values.paidToCustomer,
+        forfeit: values.supplierAmount- values.paidToCustomer,
         invoiceId: values.invoiceId?.value ?? undefined,
         advancePaymentId: values.advancePaymentId?.value ?? undefined,
         date: values.date,
@@ -64,6 +64,7 @@ const NewIncome = () => {
           customerId: null,
           paidToCustomer: 0,
           advancePaymentId: null,
+          supplierAmount:0
         }}
       />
     </div>

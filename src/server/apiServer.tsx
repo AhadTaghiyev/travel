@@ -89,6 +89,16 @@ export const apiService = {
       return error.response;
     }
   },
+  patch: async function Patch(api: string, id: any): Promise<any> {
+    try {
+      const res = await Axios.patch(api + "/" + id);
+      if (res.status === 401)
+        window.location.pathname = `${BASE_URL}/auth/login`;
+      else return res;
+    } catch (error: any) {
+      return error.response;
+    }
+  },
   download: async function Download(api: string, name: string): Promise<any> {
     try {
       const token = localStorage.getItem("token"); // Replace "your_token_key" with the actual key you used to store the token

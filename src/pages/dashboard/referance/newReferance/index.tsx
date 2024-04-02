@@ -1,44 +1,21 @@
 // @ts-nocheck
-
 import Grid from "@mui/material/Grid";
 import {
-  Breadcrumbs,
   Container,
-  Divider,
-  MenuItem,
-  TextField,
-  Select,
   InputLabel,
-  FormHelperText,
+  TextField,
 } from "@mui/material";
 import { Formik } from "formik";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import { AiOutlineRight } from "react-icons/ai";
-import { Schema } from "../schema";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import dayjs from "dayjs";
 import { apiService } from "../../../../server/apiServer";
+import { Schema } from "../schema";
 
-const breadcrumbs = [
-  <Link key="1" to="/panel" className="pageLink link">
-    Ana səhifə
-  </Link>,
 
-  <Link
-    key="1"
-    to="/panel/managerFinancialTransactions"
-    className="currentPageLink link"
-  >
-    Yeni Referans yarat
-  </Link>,
-];
 const textStyling = {
   lineHeight: "16px",
   fontWeight: "400",
@@ -55,10 +32,10 @@ const footer = {
 };
 
 const initialValues = {
-  company: "",
   phone: "",
   city: "",
   email: "",
+  name:""
 };
 
 export default function CreatePopup() {
@@ -68,22 +45,8 @@ export default function CreatePopup() {
   // Get data from api
   // ======================
 
-  const [companies, setCompanies] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
 
-      try {
-        const companiesRes = await apiService.get("Company/GetAll");
-        setCompanies(companiesRes.data.data);
-      } catch (error) {
-        console.log("🚀 ~ file: index.tsx:123 ~ error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
 
   const navigate = useNavigate();
 
@@ -104,12 +67,12 @@ export default function CreatePopup() {
         onSubmit={async (values, { setErrors }) => {
           try {
             const res = await apiService.post(
-              `/referance/Createreferance`,
+              `/referances/create`,
               values
             );
             if (res?.status == 200) {
               toast.success("Referans uğurla yaradıldı!");
-              navigate("/panel");
+              navigate("/panel/referances");
             } else {
               let errors = res.data.errors;
               // convert to camelCase
@@ -134,60 +97,6 @@ export default function CreatePopup() {
                 spacing={4}
                 style={{ marginBottom: "70px", marginTop: "0px" }}
               >
-                <Grid item md={3}>
-                  {/* company Id */}
-                  <>
-                    <InputLabel
-                      id="demo-simple-select-label"
-                      sx={{ mb: 1 }}
-                      style={textStyling}
-                    >
-                      Şirkət
-                    </InputLabel>
-                    <TextField
-                      id="outlined-basic"
-                      placeholder="Yazın"
-                      variant="outlined"
-                      sx={{ width: "100%", mb: 3 }}
-                      size="small"
-                      style={textStyling}
-                      onChange={props.handleChange}
-                      name={`company`}
-                      value={props.values.city}
-                      error={!!props.errors && !!props.errors.city}
-                      helperText={!!props.errors && props.errors.city}
-                    />
-                    {props.errors && props.errors.toCompanyId && (
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors?.toCompanyId}
-                      </FormHelperText>
-                    )}
-                  </>
-
-                  {/* City */}
-                  <>
-                    <InputLabel
-                      id="demo-simple-select-label"
-                      sx={{ mb: 1 }}
-                      style={textStyling}
-                    >
-                      Şəhər
-                    </InputLabel>
-                    <TextField
-                      id="outlined-basic"
-                      placeholder="Yazın"
-                      variant="outlined"
-                      sx={{ width: "100%", mb: 3 }}
-                      size="small"
-                      style={textStyling}
-                      onChange={props.handleChange}
-                      name={`city`}
-                      value={props.values.city}
-                      error={!!props.errors && !!props.errors.city}
-                      helperText={!!props.errors && props.errors.city}
-                    />
-                  </>
-                </Grid>
                 <Grid item md={3}>
                   {/* Phone */}
                   <>
@@ -246,7 +155,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      Əlaqədar şəxs
+                      Şirkət
                     </InputLabel>
                     <TextField
                       id="outlined-basic"
@@ -256,10 +165,10 @@ export default function CreatePopup() {
                       size="small"
                       style={textStyling}
                       onChange={props.handleChange}
-                      name={`phone`}
-                      value={props.values.phone}
-                      error={!!props.errors && !!props.errors.phone}
-                      helperText={!!props.errors && props.errors.phone}
+                      name={`name`}
+                      value={props.values.name}
+                      error={!!props.errors && !!props.errors.name}
+                      helperText={!!props.errors && props.errors.name}
                     />
                   </>
 
@@ -279,12 +188,12 @@ export default function CreatePopup() {
                       sx={{ width: "100%", mb: 3 }}
                       size="small"
                       style={textStyling}
-                      type="email"
+                      type="text"
                       onChange={props.handleChange}
-                      name={`email`}
-                      value={props.values.email}
-                      error={!!props.errors && !!props.errors.email}
-                      helperText={!!props.errors && props.errors.email}
+                      name={`city`}
+                      value={props.values.city}
+                      error={!!props.errors && !!props.errors.city}
+                      helperText={!!props.errors && props.errors.city}
                     />
                   </>
                 </Grid>

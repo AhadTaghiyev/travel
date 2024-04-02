@@ -46,7 +46,7 @@ export default function Index() {
   const [currentAgreementFormat, setCurrentAgreementFormat] = useState(null);
 
   const getAgreementFormats = async ()=> {
-    const res = await apiService.get('AgreementFormat/GetAll/1');
+    const res = await apiService.get('AgreementFormats/GetAll/1');
         if(res.status === 200){
           setAgreementFormats(res.data.items);
         }else{
@@ -56,7 +56,7 @@ export default function Index() {
 
   const handleSave = async () => {
     try{
-      const res = await apiService.post('Agreement/CreateAgreement', {name: name, text: editorRef.current.getContent()});
+      const res = await apiService.post('Agreements/Create', {name: name, text: editorRef.current.getContent()});
       if (res?.status == 200) {
         toast.success('Uğurla yaradıldı!');
         navigate('/panel/agreements');
@@ -70,7 +70,6 @@ export default function Index() {
   return (
     <>
       <Container maxWidth="xl">
-        <PageTitle title='Müqavilə' breadcrumbs={[homeBreadCrumb, agreementBreadCrumb, newAgreementBreadCrumb]}/>
         <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
@@ -107,7 +106,7 @@ export default function Index() {
           size="small"
         />
         <Editor
-          apiKey='cxosxz3mjjtm962jl8swtdzg0wajvwc9dz9shyls0y7ltkna'
+          apiKey='emglxjwpj34s4n14w7kfzdvj9r5u9wk9ksbgqgn4s8e19wtw'
           initialValue={currentAgreementFormat?.text}
           onInit={(evt, editor) => editorRef.current = editor}
           init={{

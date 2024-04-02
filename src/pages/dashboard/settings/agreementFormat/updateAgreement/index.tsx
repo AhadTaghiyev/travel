@@ -48,8 +48,8 @@ export default function Index() {
   useEffect(() => {
     const fetchData = async () => {
 
-      const agreementFormatFromApi = await apiService.get(`AgreementFormat/GetById/${id}`);
-      setagreementFormat(agreementFormatFromApi.data.data);
+      const agreementFormatFromApi = await apiService.get(`AgreementFormats/Get/${id}`);
+      setagreementFormat(agreementFormatFromApi.data);
     };
 
     fetchData();
@@ -58,16 +58,13 @@ export default function Index() {
 
   return (
     <>
-      <Container maxWidth="xl">
-        <PageTitle title='Müqavilə' breadcrumbs={[homeBreadCrumb, agreementBreadCrumb, updateAgreementBreadCrumb]}/>
-      </Container>
       <Formik
         initialValues={agreementFormat}
         enableReinitialize={true}
         onSubmit={async (values, { setErrors }) => {
           try {
             const res = await apiService.put(
-              `/AgreementFormat/UpdateAgreementFormat/${id}`,
+              `/AgreementFormats/Update/${id}`,
               {...values, text: editorRef.current.getContent()}
             );
             if (res?.status == 200) {
@@ -123,7 +120,7 @@ export default function Index() {
                     Müqavilə
                   </InputLabel>
                   <Editor
-                    apiKey='cxosxz3mjjtm962jl8swtdzg0wajvwc9dz9shyls0y7ltkna'
+                    apiKey='emglxjwpj34s4n14w7kfzdvj9r5u9wk9ksbgqgn4s8e19wtw'
                     initialValue={props.values.text}
                     onInit={(evt, editor) => editorRef.current = editor}
                     onChange={()=> props.handleChange({name: "text", value: editorRef.current.getContent()})}

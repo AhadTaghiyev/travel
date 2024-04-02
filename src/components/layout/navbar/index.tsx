@@ -24,18 +24,18 @@ const Navbar = () => {
       label: t("Contact Us"),
       to: "/#landing-contact-section",
     },
-    // {
-    //   label:  t("Blog"),
-    //   to: "#",
-    // },
+    {
+      label:  t("Blog"),
+      to: "#",
+    },
     {
       label: t("Pricing"),
       to: "/#landing-pricing-section",
     },
-    // {
-    //   label: t("Faq"),
-    //   to: "/#landing-faq-section",
-    // },
+    {
+      label: t("Faq"),
+      to: "/#landing-faq-section",
+    },
   ];
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);

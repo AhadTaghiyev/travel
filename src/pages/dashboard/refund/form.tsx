@@ -200,6 +200,21 @@ const RefundForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
+                    label={t("supplier")}
+                    value={values.supplierAmount}
+                    change={handleChange}
+                    type="number"
+                    name={`supplierAmount`}
+                    hasErrorMessages={
+                      !!errors.supplierAmount && !!touched.supplierAmount
+                    }
+                    errorMessages={[t(errors.supplierAmount?.toString())]}
+                  />
+                </div>
+
+             
+                <div className="w-full">
+                  <CustomTextField
                     label={t("Qaytarılan məbləğ")}
                     value={values.paidToCustomer}
                     change={handleChange}
@@ -215,12 +230,13 @@ const RefundForm = ({
                   <CustomTextField
                     disabled
                     label={t("Cərimə")}
-                    value={Math.max(values.amount - values.paidToCustomer, 0)}
+                    value={Math.max(values.supplierAmount- values.paidToCustomer, 0)}
                     change={() => 0}
                     type="number"
                     name={``}
                   />
                 </div>
+             
                 <div className="w-full h-full">
                   <CustomDateTimePicker
                     label={t("date")}

@@ -8,7 +8,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        hideReport
+        // hideReport
         columns={columns(t)}
         api={"/PaidCredits/GetAll"}
         buttonText="Ödənilən Kredit"

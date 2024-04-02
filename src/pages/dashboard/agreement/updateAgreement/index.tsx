@@ -45,8 +45,10 @@ export default function Index() {
   useEffect(()=> {
     const fetchData = async () => {
 
-      const agreementFromApi = await apiService.get(`Agreement/GetById/${id}`);
-      
+      const agreementFromApi = await apiService.get(`Agreements/Get/${id}`);
+      setName(agreementFromApi?.data?.name)
+      setCurrentAgreementFormat(agreementFromApi?.data)
+
     };
 
     fetchData();
@@ -63,7 +65,7 @@ export default function Index() {
 
   const handleSave = async () => {
     try{
-      const res = await apiService.put(`Agreement/UpdateAgreement.${id}`, {name: name, text: editorRef.current.getContent()});
+      const res = await apiService.put(`Agreements/Update/${id}`, {name: name, text: editorRef.current.getContent()});
       if (res?.status == 200) {
         toast.success('Uğurla yenilendi!');
         navigate('/panel/agreements');
@@ -77,15 +79,15 @@ export default function Index() {
   return (
     <>
       <Container maxWidth="xl">
-        <PageTitle title='Müqavilə' breadcrumbs={[homeBreadCrumb, agreementBreadCrumb, newAgreementBreadCrumb]}/>
+        {/* <PageTitle title='Müqavilə' breadcrumbs={[homeBreadCrumb, agreementBreadCrumb, newAgreementBreadCrumb]}/>
         <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
           style={textStyling}
         >
           Müqavilə formatı
-        </InputLabel>
-        <Autocomplete
+        </InputLabel> */}
+        {/* <Autocomplete
             disablePortal
             id="combo-box-demo"
             onChange={(event, value)=> setCurrentAgreementFormat(value)}
@@ -96,7 +98,7 @@ export default function Index() {
             getOptionLabel={(option) => option.name}
             size="small"
             renderInput={(params) => <TextField {...params} label=""/>}
-        />
+        /> */}
         <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
@@ -109,12 +111,14 @@ export default function Index() {
           variant="outlined"
           sx={{ width: '50%', mb: 3 }}
           name={'name'}
+          value={name}
           style={textStyling}
+         
           onChange={(e)=>setName(e.target.value)}
           size="small"
         />
         <Editor
-          apiKey='cxosxz3mjjtm962jl8swtdzg0wajvwc9dz9shyls0y7ltkna'
+          apiKey='emglxjwpj34s4n14w7kfzdvj9r5u9wk9ksbgqgn4s8e19wtw'
           initialValue={currentAgreementFormat?.text}
           onInit={(evt, editor) => editorRef.current = editor}
           init={{

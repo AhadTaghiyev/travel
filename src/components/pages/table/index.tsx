@@ -17,7 +17,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { FaPrint } from "react-icons/fa";
-import { BsEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
+import { BsCheckAll, BsEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
 import { GridPagination } from "@mui/x-data-grid";
 import MuiPagination from "@mui/material/Pagination";
@@ -65,6 +65,8 @@ export default function Index({
   exportLink,
   detailLink,
   filterOptions,
+  hideStatus=true,
+  statusApi,
   onCreateClick,
   addDateToReport,
   defaultFilterValue,
@@ -80,6 +82,7 @@ export default function Index({
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const [itemStatus, setItemStatus] = useState(null);
   const defaultStartDate = dayjs(searchParams.get("startDate")).isValid()
     ? dayjs(new Date(searchParams.get("startDate")))
     : dayjs().startOf("year");
@@ -105,6 +108,15 @@ export default function Index({
     try {
       const res = await apiService.delete(deleteApi!, id);
       if (res.status === 200) setRows(rows.filter((x: any) => x.id !== id));
+    } catch {
+      console.error;
+    }
+  }
+
+  async function changeItem(id: string): Promise<any> {
+    try {
+      const res = await apiService.patch(statusApi!, id);
+      setItemStatus(res)
     } catch {
       console.error;
     }
@@ -196,6 +208,14 @@ export default function Index({
               className="hover:opacity-70 transition"
             />
           )}
+            {!hideStatus && (
+            <BsCheckAll
+              onClick={() => {
+                changeItem(params.row.id)
+              }}
+              className="hover:opacity-70 transition"
+            />
+          )}
         </div>
       );
     },
@@ -230,7 +250,7 @@ export default function Index({
     };
 
     fetchData();
-  }, [paginationModel.page, startDate, endDate, search, filter]);
+  }, [paginationModel.page, startDate, endDate, search, filter,itemStatus]);
 
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">

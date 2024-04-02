@@ -1,31 +1,26 @@
 // @ts-nocheck
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { BsCurrencyExchange } from "react-icons/bs";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { AiOutlineMail } from "react-icons/ai";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { FiDownload } from "react-icons/fi";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { format } from "date-fns";
-import { toast } from "sonner";
-
-import { UserContext } from "@/store/UserContext";
-import { apiService } from "@/server/apiServer";
-import { ICurrency, IReportModel } from "./types";
-
-import Loading from "@/components/custom/loading";
-import { MassIncomeTable } from "../incomeTable";
+import { AiOutlineMail } from "react-icons/ai";
 import { useModal } from "@/hooks/useModal";
-import ReportTable from "../reportTable";
+import { useContext, useEffect, useState } from "react";
 
+import { ICurrency } from "@/components/pages/report/types";
+
+import { BsCurrencyExchange } from "react-icons/bs";
+import { FiDownload } from "react-icons/fi";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { apiService } from "@/server/apiServer";
+import { toast } from "sonner";
+import Loading from "@/components/custom/loading";
+import { UserContext } from "@/store/UserContext";
+import { MassIncomeTable } from "@/components/pages/incomeTable";
 import { CompanyContext } from "@/store/CompanyContext";
+import { PaidCreditTable } from "@/components/pages/paidCreditTable";
 
 const customerProperties = [
   {
-    fieldName: "Invoice Tarixi",
+    fieldName: "Qəbz Tarixi", // TODO: translate
     propertyName: "date",
   },
   {
@@ -42,35 +37,33 @@ const customerProperties = [
   },
 ];
 
-export default function Index({
-  headers,
-  api,
-  title,
-  showCreateButton,
-}: IReportModel) {
+export default function index() {
+  const { user: currentUser } = useContext(UserContext);
+  const { loading: companyLoading, company } = useContext(CompanyContext);
+  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
+  const [data, setData] = useState();
+  const { t } = useTranslation();
+  const { onOpen } = useModal();
+  const navigate = useNavigate();
   const [currency, setCurrency] = useState<ICurrency>({
     name: "USD",
     value: 1,
   });
-  const [loading, setLoading] = useState(true);
-  const [invoiceText, setInvoiceText] = useState('');
-  const { loading: companyLoading, company } = useContext(CompanyContext);
-  const [data, setData] = useState();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { onOpen } = useModal();
-
-  const { user: currentUser } = useContext(UserContext);
 
   useEffect(() => {
     getData();
   }, []);
 
+  const onCurrencyChange = (values: ICurrency) => {
+    setCurrency(values);
+  };
+
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-    const res = await apiService.get(`${api}/${id}`);
+   
+    const res = await apiService.get(`/paidcredits/get/${id}`);
 
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
@@ -81,32 +74,9 @@ export default function Index({
     }
     const { data } = res;
 
-    setData({
-      simpleTable: {
-        ...data.customer,
-        date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
-      },
-      totals: {
-        totalSellingPrice: data.totalSellingPrice,
-        totalPrice: data.totalPrice,
-        totalDiscountPrice: data.totalDiscountPrice,
-      },
-      items: data.items,
-      incomes: data.massIncomes,
-    });
-
-     const invoiceTextRes=await apiService.get('/InvoiceTexts/get')
-       setInvoiceText(invoiceTextRes?.data?.text)
+    setData(data);
     setLoading(false);
   }
-
-  const onCurrencyChange = (values: ICurrency) => {
-    setCurrency(values);
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   if (loading || companyLoading) {
     return <Loading />;
@@ -134,7 +104,7 @@ export default function Index({
               }}
             />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={5}>
             <Grid
               item
               xs={12}
@@ -159,32 +129,13 @@ export default function Index({
                 {t("Send mail")}
               </Button>
               <Button
-                onClick={handlePrint}
+                onClick={window.print}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
-              <Button
-                  onClick={(e) => navigate("/panel/agreements/new")}
-                  variant="text"
-                  color="inherit"
-                  sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-                >
-                  {t("Contract")}
-                </Button>
-
-              {showCreateButton && (
-                <Button
-                  onClick={(e) => navigate("/panel/aviabiletsale/new")}
-                  variant="text"
-                  color="inherit"
-                  sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-                >
-                  {t("Aviabilet")}
-                </Button>
-              )}
             </Grid>
             <Typography variant="h4" gutterBottom align="right">
               {currentUser?.companyName}
@@ -195,40 +146,26 @@ export default function Index({
             </Typography>
           </Grid>
         </Grid>
-        <Container maxWidth="xl" sx={{ mb: 4 }}>
-          {title && (
-            <h1
-              className="text-xl font-bold mb-6"
-              style={{ textAlign: "center" }}
-            >
-              {t(title)}
-            </h1>
-          )}
-          <div className="flex justify-between ">
+        <Container maxWidth="xl" sx={{ mb: 2, mt: 2 }}>
+          <h1
+            className="text-xl font-bold mb-2"
+            style={{ textAlign: "center" }}
+          >
+            {t("Invoice Loan Paid")}
+          </h1>
+          {/* <div className="flex justify-between ">
             <div>
               <h3 className="text-xl font-bold mb-2">
                 {t("Müştəri məlumatları")}
               </h3>
               {customerProperties.map((item, index) => (
-                <div
-                  className="text-sm flex w-fit mb-1 print:block"
-                  key={index}
-                >
-                  <p className="w-24 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.simpleTable?.[item.propertyName]}</p>
+                <div className="text-sm flex w-fit mb-1" key={index}>
+                  <p className="w-28 font-bold">{t(item.fieldName)}:</p>
+                  <p>{data?.customer?.[item.propertyName]}</p>
                 </div>
               ))}
             </div>
-            {data.incomes && (
-              <div className="print:w-[calc(100%-200px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
-                <MassIncomeTable
-                  currency={currency}
-                  incomes={data.incomes}
-                  totalPrice={data.totals?.totalPrice}
-                />
-              </div>
-            )}
-          </div>
+          </div> */}
         </Container>
         <Container maxWidth="xl" style={{ paddingRight: 0 }}>
           <Grid
@@ -237,16 +174,14 @@ export default function Index({
             }}
             container
           >
-            <ReportTable
-              headers={headers}
+            <PaidCreditTable
               currency={currency}
-              items={data?.items}
-              totals={data.totals}
+              totalPrice={data.totals?.totalPrice}
+              incomes={data ? [data] : []}
             />
           </Grid>
         </Container>
       </Grid>
-      <h1>{invoiceText}</h1>
     </Container>
   );
 }

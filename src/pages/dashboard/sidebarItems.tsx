@@ -27,10 +27,10 @@ import {
   HiOutlineArrowPathRoundedSquare,
   HiOutlineArrowsUpDown,
 } from "react-icons/hi2";
-import { FaMoneyBillWave, FaFileImport, FaExchangeAlt } from "react-icons/fa";
+import { FaMoneyBillWave, FaExchangeAlt } from "react-icons/fa";
 import { LuDivideCircle } from "react-icons/lu";
 import { PiWalletLight, PiHandshake } from "react-icons/pi";
-import { AiOutlineFolderOpen, AiFillMail } from "react-icons/ai";
+import { AiOutlineFolderOpen } from "react-icons/ai";
 import { IoFastFood, IoSettingsOutline } from "react-icons/io5";
 
 export const sidebarItems: SidebarItemType[] = [
@@ -293,27 +293,27 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
 
-  {
-    icon: AiFillMail,
-    text: "Email",
-    link: "/panel/email/send",
-  },
-  {
-    icon: FaFileImport,
-    text: "Sənədlər",
-    children: [
-      {
-        icon: FaFileImport,
-        text: "Bütün sənədlər",
-        link: "/panel/documents",
-      },
-      {
-        icon: FaFileImport,
-        text: "Göndər",
-        link: "/panel/documents/send",
-      },
-    ],
-  },
+  // {
+  //   icon: AiFillMail,
+  //   text: "Email",
+  //   link: "/panel/email/send",
+  // },
+  // {
+  //   icon: FaFileImport,
+  //   text: "Sənədlər",
+  //   children: [
+  //     {
+  //       icon: FaFileImport,
+  //       text: "Bütün sənədlər",
+  //       link: "/panel/documents",
+  //     },
+  //     {
+  //       icon: FaFileImport,
+  //       text: "Göndər",
+  //       link: "/panel/documents/send",
+  //     },
+  //   ],
+  // },
   {
     icon: IoSettingsOutline,
     text: "Sazlamalar",
@@ -377,6 +377,16 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaServicestack,
         text: "Müqavilə formatı",
         link: "/panel/agreementFormats",
+      },
+      // {
+      //   icon: FaServicestack,
+      //   text: "Valyuta",
+      //   link: "/panel/agreementFormats",
+      // },
+      {
+        icon: FaServicestack,
+        text: "InvoiceTexts",
+        link: "/panel/invoiceTexts",
       },
       {
         icon: FaServicestack,

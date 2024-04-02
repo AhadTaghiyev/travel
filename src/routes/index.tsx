@@ -79,6 +79,11 @@ import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
 import UpdateAirway from "../pages/dashboard/settings/airway/update";
 
+
+//Airway
+import InvoiceText from "../pages/dashboard/settings/invoiceText";
+import NewInvoiceText from "../pages/dashboard/settings/invoiceText/create";
+import UpdateInvoiceText from "../pages/dashboard/settings/invoiceText/update";
 //Banl
 import Bank from "../pages/dashboard/settings/bank";
 import NewBank from "../pages/dashboard/settings/bank/create";
@@ -93,11 +98,12 @@ import ReportCorperativeTicket from "../pages/dashboard/corperativeTicket/report
 import GetCredit from "../pages/dashboard/getCredits";
 import NewGetCredit from "../pages/dashboard/getCredits/create";
 import UpdateGetCredit from "../pages/dashboard/getCredits/update";
-
+import InvoiceGetCredit from "../pages/dashboard/getCredits/report";
 // PaidCredits
 import PaidCredit from "../pages/dashboard/paidCredits";
 import NewPaidCredit from "../pages/dashboard/paidCredits/create";
 import UpdatePaidCredit from "../pages/dashboard/paidCredits/update";
+import InvoicePaidCredit from "../pages/dashboard/paidCredits/report";
 
 //Tur Paketleri
 import TourPackage from "../pages/dashboard/tourPackage";
@@ -549,6 +555,11 @@ const router = createBrowserRouter([
         path: "/panel/getCredits/update/:id",
         element: <UpdateGetCredit />,
       },
+      {
+        path: "/panel/getCredits/report",
+        element: <InvoiceGetCredit />,
+      },
+      
       // {
       //   path: "/panel/getCredits/report",
       //   element: <ReportGetCredit />,
@@ -568,7 +579,11 @@ const router = createBrowserRouter([
         path: "/panel/PaidCredits/update/:id",
         element: <UpdatePaidCredit />,
       },
-
+      {
+        path: "/panel/PaidCredits/report",
+        element: <InvoicePaidCredit />,
+      },
+      
       // ===============
       // Employees
       //================
@@ -598,6 +613,21 @@ const router = createBrowserRouter([
       {
         path: "/panel/airways/update/:id",
         element: <UpdateAirway />,
+      },
+       // ===============
+      // Airway
+      //================
+      {
+        path: "/panel/invoiceTexts",
+        element: <InvoiceText />,
+      },
+      {
+        path: "/panel/invoiceTexts/new",
+        element: <NewInvoiceText />,
+      },
+      {
+        path: "/panel/invoiceTexts/update/:id",
+        element: <UpdateInvoiceText />,
       },
 
           // ===============

@@ -1,6 +1,7 @@
 export interface IPaidCreditModel {
-  bankId: number;
+  getCreditId: number;
   amount: number;
+  percent: number;
   paymentId: string;
   date: Date;
 }
