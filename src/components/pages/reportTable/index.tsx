@@ -81,6 +81,11 @@ export default function Index({ headers, items, totals, currency }) {
                         ? formatDate(
                             getNestedProperty(elem, hElem.propertyName)
                           )
+                        : hElem.propertyName.toLowerCase().includes("price")
+                        ? `${(
+                            getNestedProperty(elem, hElem.propertyName) *
+                            currency.value
+                          ).toFixed(2)} ${currency.name}`
                         : getNestedProperty(elem, hElem.propertyName)}
                     </span>
                   )}

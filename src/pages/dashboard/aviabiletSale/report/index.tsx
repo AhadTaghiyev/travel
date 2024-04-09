@@ -22,10 +22,6 @@ export default function index() {
         ]}
         api="/PlaneTickets/GetDetailAsync"
       />
-
-
-
-
     </div>
   );
 }
