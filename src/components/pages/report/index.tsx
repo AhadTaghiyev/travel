@@ -22,6 +22,7 @@ import { useModal } from "@/hooks/useModal";
 import ReportTable from "../reportTable";
 
 import { CompanyContext } from "@/store/CompanyContext";
+import { formatDate } from "@/lib/utils";
 
 const customerProperties = [
   {

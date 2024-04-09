@@ -168,7 +168,11 @@ export default function index() {
               {customerProperties.map((item, index) => (
                 <div className="text-sm flex w-fit mb-1" key={index}>
                   <p className="w-28 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.customer?.[item.propertyName]}</p>
+                  <p>
+                    {item.propertyName === "date"
+                      ? formatDate(data?.customer?.[item.propertyName])
+                      : data?.customer?.[item.propertyName]}
+                  </p>
                 </div>
               ))}
             </div>
