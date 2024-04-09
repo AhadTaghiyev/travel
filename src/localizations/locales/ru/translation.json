@@ -393,5 +393,8 @@
     "Məzənnə sıfırla": "Сбросить валюту",
     "Total Remaining Amount": "Общая оставшаяся сумма",
     "Qəbz Tarixi": "Дата чека",
-    "To Founder": "К основателю"
+    "To Founder": "К основателю",
+    "Bəli": "Да",
+    "Xeyr": "Нет",
+    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "После удаления восстановление невозможно"
 }

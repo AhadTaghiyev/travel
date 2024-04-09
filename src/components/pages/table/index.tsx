@@ -17,7 +17,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { FaPrint } from "react-icons/fa";
-import { BsCheckAll, BsEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
+import {
+  BsCheckAll,
+  BsEyeFill,
+  BsFillTrashFill,
+  BsPencilFill,
+} from "react-icons/bs";
 
 import { GridPagination } from "@mui/x-data-grid";
 import MuiPagination from "@mui/material/Pagination";
@@ -65,7 +70,7 @@ export default function Index({
   exportLink,
   detailLink,
   filterOptions,
-  hideStatus=true,
+  hideStatus = true,
   statusApi,
   onCreateClick,
   addDateToReport,
@@ -116,7 +121,7 @@ export default function Index({
   async function changeItem(id: string): Promise<any> {
     try {
       const res = await apiService.patch(statusApi!, id);
-      setItemStatus(res)
+      setItemStatus(res);
     } catch {
       console.error;
     }
@@ -208,10 +213,10 @@ export default function Index({
               className="hover:opacity-70 transition"
             />
           )}
-            {!hideStatus && (
+          {!hideStatus && (
             <BsCheckAll
               onClick={() => {
-                changeItem(params.row.id)
+                changeItem(params.row.id);
               }}
               className="hover:opacity-70 transition"
             />
@@ -250,7 +255,7 @@ export default function Index({
     };
 
     fetchData();
-  }, [paginationModel.page, startDate, endDate, search, filter,itemStatus]);
+  }, [paginationModel.page, startDate, endDate, search, filter, itemStatus]);
 
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
@@ -472,7 +477,7 @@ export default function Index({
         <DialogTitle id="alert-dialog-title">{"Əminsiniz?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Silindikdən sonra qeri qaytarmaq mümkün deyil
+            {t("Silindikdən sonra qeri qaytarmaq mümkün deyil")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -484,7 +489,7 @@ export default function Index({
             }}
             autoFocus
           >
-            Bəli
+            {t("Bəli")}
           </Button>
         </DialogActions>
       </Dialog>

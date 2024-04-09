@@ -393,5 +393,8 @@
     "Məzənnə sıfırla": "Reset Currency",
     "Total Remaining Amount": "Total Remaining Amount",
     "Qəbz Tarixi": "Invoice Date",
-    "To Founder": "To Founder"
+    "To Founder": "To Founder",
+    "Bəli": "Yes",
+    "Xeyr": "No",
+    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "It is not possible to return after deletion"
 }
