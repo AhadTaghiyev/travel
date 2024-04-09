@@ -390,5 +390,8 @@
     "Detail is required": "Detail is required",
     "Image is required": "Image is required",
     "Tour Package Invoice": "Tour Package Invoice",
-    "Məzənnə sıfırla": "Reset Currency"
+    "Məzənnə sıfırla": "Reset Currency",
+    "Total Remaining Amount": "Total Remaining Amount",
+    "Qəbz Tarixi": "Invoice Date",
+    "To Founder": "To Founder"
 }

@@ -19,7 +19,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 
 const customerProperties = [
   {
-    fieldName: "Qəbz Tarixi", // TODO: translate
+    fieldName: "Qəbz Tarixi",
     propertyName: "date",
   },
   {

@@ -61,7 +61,7 @@ const MassIncomeForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 api="GetCredits/GetAll/1"
-                label={t("Credit")} // TODO: Translate
+                label={t("Credit")}
                 optionLabel="id"
                 value={values.getCreditId ?? null}
                 change={(value) => setFieldValue(`getCreditId`, value)}

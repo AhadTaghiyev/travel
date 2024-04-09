@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-
 const tabs = [
   {
     id: 1,
@@ -39,7 +38,7 @@ const tabs = [
     hideReport: false,
     api: "/PaidCredits/GetAll",
     editLink: "/panel/paidCredits",
-    detailLink:"/panel/paidCredits/report?tickets=",
+    detailLink: "/panel/paidCredits/report?tickets=",
     columns: creditColumns,
   },
   {
@@ -58,12 +57,12 @@ const tabs = [
     hideReport: false,
     api: "/PaySalarys/GetAll",
     editLink: "/panel/salaryToBePaid",
-    detailLink:"/panel/salaryToBePaid/report?tickets=",
+    detailLink: "/panel/salaryToBePaid/report?tickets=",
     columns: salaryColumns,
   },
   {
     id: 8,
-    title: "To Founder", // TODO: translate
+    title: "To Founder",
     hideReport: false,
     api: "/Reports/FounderReport",
     detailLink: "/panel/managerFinancialTransactions/report/?tickets=",
@@ -88,7 +87,7 @@ export default function Index() {
   //       const response = await apiService.get("/Reports/TotalWillbePaid")
   //       // settotals(response?.data)
   //     } catch (error) {
-        
+
   //     }
   //   }
 

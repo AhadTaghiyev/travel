@@ -108,7 +108,7 @@ export function MassIncomeTable({
         {totalPrice && (
           <TableRow>
             <TableCell className="py-1.5 px-2" colSpan={5}>
-              {t("Total Remaining Amount")} {/* TODO: translate */}
+              {t("Total Remaining Amount")}
             </TableCell>
             <TableCell className="text-right py-2">
               {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}

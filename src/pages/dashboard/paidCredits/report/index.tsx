@@ -14,28 +14,8 @@ import { apiService } from "@/server/apiServer";
 import { toast } from "sonner";
 import Loading from "@/components/custom/loading";
 import { UserContext } from "@/store/UserContext";
-import { MassIncomeTable } from "@/components/pages/incomeTable";
 import { CompanyContext } from "@/store/CompanyContext";
 import { PaidCreditTable } from "@/components/pages/paidCreditTable";
-
-const customerProperties = [
-  {
-    fieldName: "Qəbz Tarixi", // TODO: translate
-    propertyName: "date",
-  },
-  {
-    fieldName: "Ad",
-    propertyName: "fullName",
-  },
-  {
-    fieldName: "Telefon",
-    propertyName: "phoneNumber",
-  },
-  {
-    fieldName: "Email",
-    propertyName: "email",
-  },
-];
 
 export default function index() {
   const { user: currentUser } = useContext(UserContext);
@@ -62,7 +42,7 @@ export default function index() {
   async function getData() {
     setLoading(true);
     const id = searchParams.get("tickets");
-   
+
     const res = await apiService.get(`/paidcredits/get/${id}`);
 
     if (res.status !== 200) {
@@ -153,19 +133,6 @@ export default function index() {
           >
             {t("Invoice Loan Paid")}
           </h1>
-          {/* <div className="flex justify-between ">
-            <div>
-              <h3 className="text-xl font-bold mb-2">
-                {t("Müştəri məlumatları")}
-              </h3>
-              {customerProperties.map((item, index) => (
-                <div className="text-sm flex w-fit mb-1" key={index}>
-                  <p className="w-28 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.customer?.[item.propertyName]}</p>
-                </div>
-              ))}
-            </div>
-          </div> */}
         </Container>
         <Container maxWidth="xl" style={{ paddingRight: 0 }}>
           <Grid
