@@ -54,7 +54,7 @@ export default function Index({
     value: 1,
   });
   const [loading, setLoading] = useState(true);
-  const [invoiceText, setInvoiceText] = useState('');
+  const [invoiceText, setInvoiceText] = useState("");
   const { loading: companyLoading, company } = useContext(CompanyContext);
   const [data, setData] = useState();
   const { t } = useTranslation();
@@ -95,8 +95,8 @@ export default function Index({
       incomes: data.massIncomes,
     });
 
-     const invoiceTextRes=await apiService.get('/InvoiceTexts/get')
-       setInvoiceText(invoiceTextRes?.data?.text)
+    const invoiceTextRes = await apiService.get("/InvoiceTexts/get");
+    setInvoiceText(invoiceTextRes?.data?.text);
     setLoading(false);
   }
 
@@ -141,6 +141,17 @@ export default function Index({
               sx={{ display: "flex", justifyContent: "end" }}
               className="removeFromPrint"
             >
+              {(currency.value !== 1 || currency.name !== "USD") && (
+                <Button
+                  variant="text"
+                  color="inherit"
+                  sx={{ fontSize: "12px", lineHeight: "16px" }}
+                  onClick={() => setCurrency({ name: "USD", value: 1 })}
+                >
+                  <BsCurrencyExchange style={{ marginRight: "8px" }} />
+                  {t("Məzənnə sıfırla")}
+                </Button>
+              )}
               <Button
                 variant="text"
                 color="inherit"
@@ -150,6 +161,7 @@ export default function Index({
                 <BsCurrencyExchange style={{ marginRight: "8px" }} />
                 {t("Məzənnə dəyişdir")}
               </Button>
+
               <Button
                 variant="text"
                 color="inherit"
@@ -167,13 +179,13 @@ export default function Index({
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
               <Button
-                  onClick={(e) => navigate("/panel/agreements/new")}
-                  variant="text"
-                  color="inherit"
-                  sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-                >
-                  {t("Contract")}
-                </Button>
+                onClick={(e) => navigate("/panel/agreements/new")}
+                variant="text"
+                color="inherit"
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
+              >
+                {t("Contract")}
+              </Button>
 
               {showCreateButton && (
                 <Button
