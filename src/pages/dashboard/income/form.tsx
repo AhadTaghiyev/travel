@@ -17,10 +17,10 @@ import { Input } from "@/components/ui/input";
 import { FaLink } from "react-icons/fa6";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
-  { label: t("Aviabilet"), value: "aviabiletSale" },
-  { label: t("Corporative Ticket"), value: "cooperativeTicket" },
+  { label: t("Aviabilet satışı"), value: "aviabiletSale" },
+  { label: t("Korperativ satış"), value: "cooperativeTicket" },
   { label: t("Individual Tur paket"), value: "individualTourPackage" },
-  { label: t("Tur paket"), value: "tourPackage" },
+  { label: t("İndividual tur satışı"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
 ];
 
