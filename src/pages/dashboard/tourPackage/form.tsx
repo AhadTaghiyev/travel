@@ -85,6 +85,7 @@ const TourPackageForm = ({
                 disabled={isView}
                 label={t("date")}
                 value={values.date}
+                toDate={new Date()}
                 change={(data) => {
                   setFieldValue("date", data ?? new Date());
                 }}

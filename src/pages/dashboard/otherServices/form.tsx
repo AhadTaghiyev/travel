@@ -89,6 +89,7 @@ const OtherServicesForm = ({
                 change={(data) => {
                   setFieldValue("date", data ?? new Date());
                 }}
+                toDate={new Date()}
                 disabled={isView}
                 hasErrorMessages={!!errors.date && !!touched.date}
                 errorMessages={[t(errors.date?.toString())]}

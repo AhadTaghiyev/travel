@@ -24,11 +24,13 @@ interface ICustomDateTimePickerModel {
   change: (value: Date) => void;
   hasErrorMessages: boolean;
   errorMessages: string[];
+  toDate?: Date;
 }
 
 export default function CustomDateTimePicker({
   label,
   value,
+  toDate,
   change,
   hideError,
   errorMessages,
@@ -68,6 +70,7 @@ export default function CustomDateTimePicker({
         <PopoverContent className="w-auto p-0">
           <Calendar
             mode="single"
+            toDate={toDate}
             selected={value}
             onSelect={(value) => {
               change(value);
