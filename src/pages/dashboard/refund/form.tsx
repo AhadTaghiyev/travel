@@ -30,6 +30,7 @@ type IItem = {
   no: string;
   id: number;
   amount: number;
+  paidAmount: number;
 };
 
 type FormType = "Edit" | "Create";
@@ -56,7 +57,6 @@ const RefundForm = ({
   const getOptions = (options: IItem[]) => {
     setInvoiceItems(options);
   };
-
   return (
     <Formik
       onSubmit={onSubmit}
@@ -148,7 +148,11 @@ const RefundForm = ({
                     const amount = invoiceItems.find(
                       (i) => i.id === +option.value
                     ).amount;
+                    const paidAmount = invoiceItems.find(
+                      (i) => i.id === +option.value
+                    ).paidAmount;
                     setFieldValue("amount", amount ?? 0);
+                    setFieldValue("paidAmount", paidAmount ?? 0);
                   }}
                   getOptions={getOptions}
                   hasErrorMessages={!!errors.invoiceId && !!touched.invoiceId}
@@ -185,6 +189,18 @@ const RefundForm = ({
                     change={handleChange}
                     hasErrorMessages={!!errors.amount && !!touched.amount}
                     errorMessages={[t(errors.amount?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    name="paidAmount"
+                    type="text"
+                    label={t("Ödənilən Məbləğ")}
+                    value={values.paidAmount}
+                    change={handleChange}
+                    hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
+                    errorMessages={[t(errors.paidAmount?.toString())]}
                   />
                 </div>
                 <div className="w-full">
@@ -230,7 +246,7 @@ const RefundForm = ({
                   <CustomTextField
                     disabled
                     label={t("Cərimə")}
-                    value={Math.max(values.supplierAmount- values.paidToCustomer, 0)}
+                    value={Math.max(values.paidAmount- values.supplierAmount- values.paidToCustomer)}
                     change={() => 0}
                     type="number"
                     name={``}

@@ -27,10 +27,10 @@ import {
   HiOutlineArrowPathRoundedSquare,
   HiOutlineArrowsUpDown,
 } from "react-icons/hi2";
-import { FaMoneyBillWave, FaExchangeAlt } from "react-icons/fa";
+import { FaMoneyBillWave, FaExchangeAlt, FaFileImport } from "react-icons/fa";
 import { LuDivideCircle } from "react-icons/lu";
 import { PiWalletLight, PiHandshake } from "react-icons/pi";
-import { AiOutlineFolderOpen } from "react-icons/ai";
+import { AiFillMail, AiOutlineFolderOpen } from "react-icons/ai";
 import { IoFastFood, IoSettingsOutline } from "react-icons/io5";
 
 export const sidebarItems: SidebarItemType[] = [
@@ -84,6 +84,11 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaServicestack,
         text: "Advance Receipt",
         link: "/panel/deposit",
+      },
+      {
+        icon: FaServicestack,
+        text: "Customer Payment",
+        link: "/panel/CustomerPayments",
       },
       {
         icon: FaServicestack,
@@ -293,27 +298,27 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
 
-  // {
-  //   icon: AiFillMail,
-  //   text: "Email",
-  //   link: "/panel/email/send",
-  // },
-  // {
-  //   icon: FaFileImport,
-  //   text: "Sənədlər",
-  //   children: [
-  //     {
-  //       icon: FaFileImport,
-  //       text: "Bütün sənədlər",
-  //       link: "/panel/documents",
-  //     },
-  //     {
-  //       icon: FaFileImport,
-  //       text: "Göndər",
-  //       link: "/panel/documents/send",
-  //     },
-  //   ],
-  // },
+  {
+    icon: AiFillMail,
+    text: "Email",
+    link: "/panel/email/send",
+  },
+  {
+    icon: FaFileImport,
+    text: "Sənədlər",
+    children: [
+      {
+        icon: FaFileImport,
+        text: "Bütün sənədlər",
+        link: "/panel/documents",
+      },
+      {
+        icon: FaFileImport,
+        text: "Göndər",
+        link: "/panel/documents/send",
+      },
+    ],
+  },
   {
     icon: IoSettingsOutline,
     text: "Sazlamalar",

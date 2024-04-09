@@ -7,7 +7,6 @@ import AboutSection from "./_components/about";
 import OtherServicesSection from "./_components/other-services";
 import PricingSection from "./_components/pricing";
 import GetInTouchSection from "./_components/get-in-touch";
-import FeedbacksSection from "./_components/feedbacks";
 import FaqSection from "./_components/faq";
 import FooterSection from "./_components/footer";
 import { useContext, useEffect } from "react";
@@ -35,7 +34,7 @@ const Home = () => {
       <OtherServicesSection />
       <PricingSection />
       <GetInTouchSection />
-      <FeedbacksSection />
+      {/* <FeedbacksSection /> */}
       <FaqSection />
       <FooterSection />
     </div>

@@ -1,29 +1,29 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { apiService } from "@/server/apiServer";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-const questions = [
-  {
-    question: "How can I us app?",
-    answer:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-  {
-    question: "How can I us app?",
-    answer:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-  {
-    question: "How can I us app?",
-    answer:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-  {
-    question: "How can I us app?",
-    answer:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-];
+
 const FaqSection = () => {
+  const { t } = useTranslation();
+  const[datas,setDatas]=useState([])
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.get(
+          `/Question/getall/1`
+        );
+        
+        setDatas(response?.data?.items)
+        console.log(response?.data?.items) 
+      
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
   const [activeQuestion, setActiveQuestion] = useState(null);
   return (
     <div
@@ -38,7 +38,7 @@ const FaqSection = () => {
       </p>
 
       <div className="flex flex-col gap-y-3 mt-9">
-        {questions.map((q, i) => (
+        {datas.map((q, i) => (
           <div
             key={i}
             className="flex flex-col py-3 px-6 bg-white rounded cursor-pointer hover:!shadow-sm"
@@ -47,14 +47,22 @@ const FaqSection = () => {
               boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
             }}
           >
-            <h1 className="font-semibold">{q.question}</h1>
+            <h1 className="font-semibold">  {t("culture") == "en"
+                  ? q.titleEn
+                  : t("culture") == "ru"
+                  ? q.titleRu
+                  : q.titleAz}</h1>
             <p
               className={cn(
                 "py-0 duration-200 h-0 overflow-hidden",
                 activeQuestion === i && "py-5 h-fit"
               )}
             >
-              {q.answer}
+                      {t("culture") == "en"
+                  ? q.descEn
+                  : t("culture") == "ru"
+                  ? q.descRu
+                  : q.descAz}
             </p>
           </div>
         ))}

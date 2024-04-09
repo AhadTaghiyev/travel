@@ -70,10 +70,38 @@ import SoftwareUpdate from "../pages/admin/software/update";
 import FeatureAdmin from "../pages/admin/feature";
 import FeatureCreate from "../pages/admin/feature/create";
 import FeatureUpdate from "../pages/admin/feature/update";
-
+//About
 import AboutAdmin from "../pages/admin/about";
 import AboutCreate from "../pages/admin/about/create";
 import AboutUpdate from "../pages/admin/about/update";
+
+//About
+import OtherServiceSiteAdmin from "../pages/admin/otherServiceSite";
+import OtherServiceSiteCreate from "../pages/admin/otherServiceSite/create";
+import OtherServiceSiteUpdate from "../pages/admin/otherServiceSite/update";
+
+//Partner
+import PartnerAdmin from "../pages/admin/partner";
+import PartnerCreate from "../pages/admin/partner/create";
+import PartnerUpdate from "../pages/admin/partner/update";
+
+
+//Faq
+import QuestionAdmin from "../pages/admin/question";
+import QuestionCreate from "../pages/admin/question/create";
+import QuestionUpdate from "../pages/admin/question/update";
+
+//Blog
+import BlogAdmin from "../pages/admin/blog";
+import BlogCreate from "../pages/admin/blog/create";
+import BlogUpdate from "../pages/admin/blog/update";
+
+//company
+import CompanyAdmin from "../pages/admin/company";
+
+//company
+import TransactionAdmin from "../pages/admin/transaction";
+import ReferanceAdmin from "../pages/admin/referances";
 //Airway
 import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
@@ -140,6 +168,13 @@ import Deposit from "../pages/dashboard/deposit";
 import NewDeposit from "../pages/dashboard/deposit/create";
 import UpdateDeposit from "../pages/dashboard/deposit/update";
 import DetailDeposit from "../pages/dashboard/deposit/report";
+
+import CustomerPayment from "../pages/dashboard/customerPayment";
+import NewCustomerPayment from "../pages/dashboard/customerPayment/create";
+import UpdateCustomerPayment from "../pages/dashboard/customerPayment/update";
+import DetailCustomerPayment from "../pages/dashboard/customerPayment/report";
+
+
 //Individual Tur Paketleri
 import IndividualTourPackage from "../pages/dashboard/individualTourPackage";
 import NewIndividualTourPackage from "../pages/dashboard/individualTourPackage/create";
@@ -159,7 +194,8 @@ import UpdateWillBePaid from "../pages/dashboard/willBePaid/update";
 import DetailWillBePaid from "../pages/dashboard/willBePaid/report";
 //Payments
 import Payments from "../pages/dashboard/payments";
-import CreatePayment from "../pages/dashboard/payments/create";
+// import CreatePayment from "../pages/dashboard/payments/create";
+import UpdatePay from "../pages/dashboard/payments/update";
 //documents
 import DocumentCreate from "../pages/dashboard/document/sendDocument";
 import DocumentsList from "../pages/dashboard/document/documentsList";
@@ -186,6 +222,7 @@ import UpdateFee from "../pages/dashboard/settings/fee/update";
 import SalaryToBePaid from "../pages/dashboard/salaryToBePaid";
 import NewSalaryToBePaid from "../pages/dashboard/salaryToBePaid/create";
 import UpdateSalaryToBePaid from "../pages/dashboard/salaryToBePaid/update";
+import SalaryToBePaidDetailReport from "../pages/dashboard/salaryToBePaid/report";
 
 import PaymentDetailReport from "../pages/dashboard/paymenDetailReport/detail";
 
@@ -221,6 +258,7 @@ import SalariesReportDetail from "../pages/dashboard/reports/salaries/detail";
 
 import ExpendituresReport from "../pages/dashboard/reports/expenditure";
 import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/detail";
+import ExpendutureInvoice from "../pages/dashboard/payments/expendutureInvoice"
 
 import DeadlineReport from "../pages/dashboard/reports/deadline";
 import FlightTicketsReport from "../pages/dashboard/reports/flightTickets";
@@ -324,6 +362,71 @@ const router = createBrowserRouter([
         path: "/admin/Abouts/new",
         element: <AboutCreate />,
       },
+      {
+        path: "/admin/OtherServiceSites",
+        element: <OtherServiceSiteAdmin />,
+      },
+      {
+        path: "/admin/OtherServiceSites/update/:id",
+        element: <OtherServiceSiteUpdate />,
+      },
+      {
+        path: "/admin/OtherServiceSites/new",
+        element: <OtherServiceSiteCreate />,
+      },
+      {
+        path: "/admin/Partners",
+        element: <PartnerAdmin />,
+      },
+      {
+        path: "/admin/Partners/update/:id",
+        element: <PartnerUpdate />,
+      },
+      {
+        path: "/admin/Partners/new",
+        element: <PartnerCreate />,
+      },
+      {
+        path: "/admin/Questions",
+        element: <QuestionAdmin />,
+      },
+      {
+        path: "/admin/Questions/update/:id",
+        element: <QuestionUpdate />,
+      },
+      {
+        path: "/admin/Questions/new",
+        element: <QuestionCreate />,
+      },
+      {
+        path: "/admin/Blogs",
+        element: <BlogAdmin />,
+      },
+      {
+        path: "/admin/Blogs/update/:id",
+        element: <BlogUpdate />,
+      },
+      {
+        path: "/admin/Blogs/new",
+        element: <BlogCreate />,
+      },
+      {
+        path: "/admin/Companys",
+        element: <CompanyAdmin />,
+      },
+      {
+        path: "/admin/Transactions",
+        element: <TransactionAdmin />,
+      },
+      {
+        path: "/admin/Referances",
+        element: <ReferanceAdmin />,
+      },
+      
+      
+      
+      
+      
     ],
   },
   {
@@ -679,6 +782,28 @@ const router = createBrowserRouter([
         path: "/panel/deposit/report",
         element: <DetailDeposit />,
       },
+         // ===============
+      // CustomerPayment
+      //================
+      {
+        path: "/panel/CustomerPayments",
+        element: <CustomerPayment />,
+      },
+      {
+        path: "/panel/customerPayments/new",
+        element: <NewCustomerPayment />,
+      },
+      {
+        path: "/panel/CustomerPayments/update/:id",
+        element: <UpdateCustomerPayment />,
+      },
+      {
+        path: "/panel/CustomerPayments/report",
+        element: <DetailCustomerPayment />,
+      },
+
+
+      
 
       // ===============
       // Suplier
@@ -846,10 +971,15 @@ const router = createBrowserRouter([
         path: "/panel/payments",
         element: <Payments />,
       },
+      // {
+      //   path: "/panel/payments/new",
+      //   element: <CreatePayment />,
+      // },
       {
-        path: "/panel/payments/new",
-        element: <CreatePayment />,
+        path: "/panel/payments/update/:id",
+        element: <UpdatePay />,
       },
+   
       //=================
       // Documents
       //=================
@@ -919,6 +1049,11 @@ const router = createBrowserRouter([
         path: "/panel/salaryToBePaid",
         element: <SalaryToBePaid />,
       },
+      {
+        path: "/panel/salaryToBePaid/report",
+        element: <SalaryToBePaidDetailReport/>,
+      },
+      
       {
         path: "/panel/salaryToBePaid/new",
         element: <NewSalaryToBePaid />,
@@ -1017,6 +1152,10 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/expenditures/:id",
         element: <ExpendituresReportDetail />,
+      },
+      {
+        path: "/panel/invoices/expenditures/:id",
+        element: <ExpendutureInvoice/>,
       },
       {
         path: "/panel/reports/deadlines",

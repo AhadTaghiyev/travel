@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IWillBePaid } from "../types";
+import { IPay } from "../types";
 
 import Loading from "@/components/custom/loading";
 import IncomeForm from "../form";
 
-const UpdateIncome = () => {
-  const [income, setIncome] = useState<IWillBePaid>();
+const UpdatePay = () => {
+  const [income, setIncome] = useState<IPay>();
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const UpdateIncome = () => {
   }, []);
 
   async function getIncomeInfo(id: string) {
-    const response = await apiService.get(`/MassIncomes/Get/${id}`);
+    const response = await apiService.get(`/WillBePaids/GetPay/${id}`);
     if (response.status === 200) {
       setIncome(response.data);
       setLoading(false);
@@ -35,29 +35,28 @@ const UpdateIncome = () => {
   }
 
   const onSubmit = useCallback(
-    (values: IWillBePaid, { setSubmitting }: FormikHelpers<FormikValues>) => {
+    (values: IPay, { setSubmitting }: FormikHelpers<FormikValues>) => {
       console.log(values, setSubmitting);
 
-      // const params = {
-      //   id,
-      //   paymentId: values.paymentId,
-      //   paidAmount: values.paidAmount,
-      //   invoiceIds: values.invoiceIds,
-      // };
-      // const promise = apiService
-      //   .put(`/MassIncomes/Update/${id}`, params)
-      //   .then((response) => {
-      //     if (response.status === 200) {
-      //       toast.success(t("Income updated"));
-      //       navigate("/panel/income");
-      //     } else {
-      //       toast.error(response.message);
-      //     }
-      //   })
-      //   .finally(() => setSubmitting(false));
-      // toast.promise(promise, {
-      //   loading: t("Loading..."),
-      // });
+      const params = {
+        id,
+        paymentId: values.paymentId,
+        paidAmount: values.amount,
+      };
+      const promise = apiService
+        .put(`/WillBePaids/EditPay/${id}?amount=${params.paidAmount}&paymentId=${params.paymentId}`, params)
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(t("Income updated"));
+            navigate("/panel/income");
+          } else {
+            toast.error(response.message);
+          }
+        })
+        .finally(() => setSubmitting(false));
+      toast.promise(promise, {
+        loading: t("Loading..."),
+      });
     },
     [id]
   );
@@ -65,7 +64,7 @@ const UpdateIncome = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Mədaxil güncəlləməsi")}
+        {t("Payment güncəlləməsi")}
       </h1>
       {loading && <Loading />}
       {!loading && income && (
@@ -79,4 +78,4 @@ const UpdateIncome = () => {
   );
 };
 
-export default UpdateIncome;
+export default UpdatePay;

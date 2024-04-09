@@ -1,35 +1,29 @@
-import TransferImage from "@/assets/icons/transfer.png";
-import AgreementImage from "@/assets/icons/agreement.png";
-import ConfirmationImage from "@/assets/icons/confirmation.png";
-import LikeImage from "@/assets/icons/like.png";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { apiService } from "@/server/apiServer";
 
-const data = [
-  {
-    image: TransferImage,
-    title: "Easy-to-Use Dashboard",
-    description:
-      "From the dashboard, you can understand Cash in Hand, Cash in Bank, Recipient List, Supplier Bible List, Passenger Details, and Customer Passport Validity in the next few days.",
-  },
-  {
-    image: AgreementImage,
-    title: "Report generation",
-    description:
-      "You can easily get cash book reports, profit reports, customer details, supplier details, and other reports for the day. Staff Productivity and Family Report can be generated hassle-free.",
-  },
-  {
-    image: ConfirmationImage,
-    title: "Branch Sorting Facility",
-    description: "Easy to manage multiple branches in single admin",
-  },
-  {
-    image: LikeImage,
-    title: "Add-ons available",
-    description:
-      "Tour Plus, UMRA Plus, VISA Plus, Money transfer accounting, E-service accounting, SMS and Whatsapp integration",
-  },
-];
+
 
 const OtherServicesSection = () => {
+
+
+  const { t } = useTranslation();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.get(`/otherServiceSite/getall/1`);
+  
+        setData(response?.data?.items);
+     
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
   return (
     <div className="landing-container py-16">
       <h1 className="text-[#1c2940] text-2xl xl:text-5xl xl:leading-[60px] text-center">
@@ -51,8 +45,20 @@ const OtherServicesSection = () => {
             <div className="w-fit px-6 py-[22px] text-[#1c2940] bg-[rgba(89,193,255,0.10)] rounded">
               <img src={feature.image} alt={`Feature ${feature.title}`} />
             </div>
-            <h2 className="text-base mt-6 mb-4 font-bold">{feature.title}</h2>
-            <p className="text-xs">{feature.description}</p>
+            <h2 className="text-base mt-6 mb-4 font-bold">
+                {t("culture") == "en"
+                  ? feature.titleEn
+                  : t("culture") == "ru"
+                  ? feature.titleRu
+                  : feature.titleAz}
+              </h2>
+              <p className="text-xs">
+                {t("culture") == "en"
+                  ? feature.descEn
+                  : t("culture") == "ru"
+                  ? feature.descRu
+                  : feature.descAz}
+              </p>
           </div>
         ))}
       </div>

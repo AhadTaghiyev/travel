@@ -57,6 +57,7 @@ const NewIncome = () => {
         initialValues={{
           type: null,
           amount: 0,
+          paidAmount: 0,
           forfeit: 0,
           invoiceId: null,
           paymentId: null,

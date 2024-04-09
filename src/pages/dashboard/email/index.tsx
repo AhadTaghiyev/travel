@@ -32,7 +32,8 @@ const footer = {
 const initialValues : IEmailModel = {
     body: '',
     attachments: [],
-    subject: ''
+    subject: '',
+    toEmail:''
 }
 
 export default function index() {
@@ -76,6 +77,41 @@ export default function index() {
                                 spacing={4}
                                 style={{ marginBottom: "70px" }}
                             >
+
+<Grid item md={3}>
+                                    <InputLabel
+                                        id="demo-simple-select-label"
+                                        sx={{ mb: 1 }}
+                                        style={textStyling}
+                                    >
+                                        Email
+                                    </InputLabel>
+                                    <TextField
+                                        multiline
+                                        id="outlined-basic"
+                                        variant="outlined"
+                                        sx={{ width: "100%", mb: 1 }}
+                                        name={"toEmail"}
+                                        value={props.values.toEmail}
+                                        style={textStyling}
+                                        onChange={props.handleChange}
+                                        size="small"
+                                    />
+                                    {props.errors && props.touched.toEmail && (
+                                        <>
+                                            <FormHelperText
+                                                sx={{ color: "red" }}
+                                            >
+                                                {props.errors.toEmail}
+                                            </FormHelperText>
+                                            <FormHelperText
+                                                sx={{ color: "red" }}
+                                            >
+                                                {props.errors.toEmail}
+                                            </FormHelperText>
+                                        </>
+                                    )}
+                                </Grid>
                                 <Grid item md={3}>
                                     <InputLabel
                                         id="demo-simple-select-label"

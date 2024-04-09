@@ -1,6 +1,4 @@
-export interface IWillBePaid {
-  feeId: string;
-  totalAmount: number;
-  date: Date;
-  note: string;
+export interface IPay {
+ amount:number,
+ paymentId:number
 }

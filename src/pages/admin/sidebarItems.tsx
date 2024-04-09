@@ -20,4 +20,40 @@ export const sidebarItems : SidebarItemType[] = [
         text: 'Feature',
         link: '/admin/features'
     },
+    {
+        icon: BsFillPeopleFill,
+        text: 'OtherService',
+        link: '/admin/OtherServicesites'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Partner',
+        link: '/admin/Partners'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Faq',
+        link: '/admin/Questions'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Blog',
+        link: '/admin/Blogs'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'company',
+        link: '/admin/companys'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Transaction',
+        link: '/admin/Transactions'
+    },
+    {
+        icon: BsFillPeopleFill,
+        text: 'Referances',
+        link: '/admin/Referances'
+    },
+    
 ]

@@ -5,26 +5,27 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IWillBePaid } from "../types";
+import { IPartnerModel } from "../types";
 
-import MassIncomeForm from "../form";
+import Partner from "../form";
 
-const NewIncome = () => {
+const NewPartner = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    (values: IWillBePaid, { setSubmitting }: FormikHelpers<FormikValues>) => {
+    (values: IPartnerModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const formData = new FormData();
+      // formData.append("imageFile", values.image);
+      if (values.image && values.image instanceof File) {
+        formData.append("imageFile", values.image);
+      }
       const promise = apiService
-        .post(`/WillBePaids/Create`, values)
+        .postForm(`Partner/Create`, formData)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Mədaxil yaradıldı"));
-            navigate(`/panel/reports/willbepaid`);
-            // TODO: Navigate to report page
-            // navigate(
-            //   `/panel/IndividualTourPackage/report?tickets=${response.data}`
-            // );
+            toast.success(t("Partner Created"));
+            navigate(`/admin/Partners`);
           } else {
             toast.error(response.message || t("Something went wrong"));
           }
@@ -39,20 +40,17 @@ const NewIncome = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {"Expenditure" + t(" Create")}
+        {t("Yeni Partner Yarat")}
       </h1>
-      <MassIncomeForm
+      <Partner
         formType="Create"
         onSubmit={onSubmit}
         initialValues={{
-          date: new Date(),
-          feeId: null,
-          note: "",
-          totalAmount: 0,
+          image: null,
         }}
       />
     </div>
   );
 };
 
-export default NewIncome;
+export default NewPartner;

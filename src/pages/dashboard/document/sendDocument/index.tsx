@@ -1,3 +1,4 @@
+// @ts-nocheck
 import PageTitle from "../../../../components/pages/pageTitle";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -42,20 +43,7 @@ const initialValues : IDocumentModel = {
 export default function index() {
 
     const navigate = useNavigate();
-    const [companies, setCompanies] = useState([]);
 
-    useEffect(()=> {
-        const fetchData = async () => {
-            try {
-                const res = await apiService.get(`/Company/GetCompanies/1`);
-                res.status === 200 ? setCompanies(res.data.items) : console.error;
-            } catch {
-                console.error;
-            }
-        };
-
-        fetchData();
-    }, [])
 
 
   return (
@@ -102,28 +90,18 @@ export default function index() {
                                     >
                                         Şirkət
                                     </InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        name={'recivedCompanyId'}
-                                        onChange={props.handleChange}
-                                        value={props.values.recivedCompanyId}
+                                    <TextField
+                                        multiline
+                                        id="outlined-basic"
+                                        variant="outlined"
                                         sx={{ width: "100%", mb: 1 }}
+                                        name={"recivedCompanyId"}
+                                        value={props.values.recivedCompanyId}
                                         style={textStyling}
+                                        onChange={props.handleChange}
                                         size="small"
-                                    >
-                                        {companies?.map(
-                                            (company: any, index: number) => (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={company.id}
-                                                    style={textStyling}
-                                                >
-                                                    {company.name}
-                                                </MenuItem>
-                                            )
-                                        )}
-                                    </Select>
+                                    />
+                                    
                                 </Grid>
                                 <Grid item xs={12}>
                                     <InputLabel

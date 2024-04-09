@@ -3,18 +3,17 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { WillBePaidSchema } from "./schema";
-import { IWillBePaid } from "./types";
+import { IPay } from "./types";
 
 import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomTextField from "@/components/custom/input";
-import CustomDateTimePicker from "@/components/custom/datePicker";
 
 type FormType = "Edit" | "Create" | "View";
 
 interface IWillBePaidProps {
   formType: FormType;
-  initialValues: IWillBePaid;
-  onSubmit: (values: IWillBePaid, helpers: FormikHelpers<FormikValues>) => void;
+  initialValues: IPay;
+  onSubmit: (values: IPay, helpers: FormikHelpers<FormikValues>) => void;
 }
 
 const WillBePaid = ({
@@ -46,51 +45,28 @@ const WillBePaid = ({
             <div className="w-full">
               <CustomAutocompleteSelect
                 disabled={isView}
-                api="Fees/GetAll/1"
-                label={t("Xərc")}
-                value={values.feeId ?? null}
-                optionLabel="name"
-                change={(value) => setFieldValue("feeId", value ?? null)}
-                hasErrorMessages={!!errors.feeId && !!touched.feeId}
-                errorMessages={[t(errors.feeId?.toString() ?? "")]}
+                api="Payments/GetAll/1"
+                label={t("Payment")}
+                value={values.paymentId ?? null}
+                optionLabel="type"
+                change={(value) => setFieldValue("paymentId", value ?? null)}
+                hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
+                errorMessages={[t(errors.paymentId?.toString() ?? "")]}
               />
             </div>
             <div className="w-full">
               <CustomTextField
                 label={t("Məbləğ")}
-                value={values.totalAmount}
+                value={values.amount}
                 change={handleChange}
                 type="number"
-                name={`totalAmount`}
+                name={`amount`}
                 disabled={isView}
-                hasErrorMessages={!!errors.totalAmount && !!touched.totalAmount}
-                errorMessages={[t(errors.totalAmount?.toString())]}
+                hasErrorMessages={!!errors.amount && !!touched.amount}
+                errorMessages={[t(errors.amount?.toString())]}
               />
             </div>
-            <div className="w-full h-full">
-              <CustomDateTimePicker
-                disabled={isView}
-                label={t("date")}
-                value={values.date}
-                change={(data) => {
-                  setFieldValue("date", data ?? new Date());
-                }}
-                hasErrorMessages={!!errors.date && !!touched.date}
-                errorMessages={[t(errors.date?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                disabled={isView}
-                name="note"
-                type="text"
-                label={t("Qeyd")}
-                value={values.note}
-                change={handleChange}
-                hasErrorMessages={!!errors.note && !!touched.note}
-                errorMessages={[t(errors.note?.toString())]}
-              />
-            </div>
+     
           </div>
           <div className="w-full flex gap-x-6 justify-end mb-6">
             <button

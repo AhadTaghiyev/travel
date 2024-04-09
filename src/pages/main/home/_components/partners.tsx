@@ -1,103 +1,44 @@
-import Partner1 from "@/assets/partners/1.png";
-import Partner2 from "@/assets/partners/2.png";
-import Partner3 from "@/assets/partners/3.png";
-import Partner4 from "@/assets/partners/4.png";
-import Partner5 from "@/assets/partners/5.png";
-import Partner6 from "@/assets/partners/6.png";
-import { useMemo, useState } from "react";
+import { apiService } from "@/server/apiServer";
+import { useEffect, useMemo, useState } from "react";
 
-const partners = [
-  {
-    logo: Partner1,
-    url: "#",
-  },
-  {
-    logo: Partner2,
-    url: "#",
-  },
-  {
-    logo: Partner3,
-    url: "#",
-  },
-  {
-    logo: Partner4,
-    url: "#",
-  },
-  {
-    logo: Partner5,
-    url: "#",
-  },
-  {
-    logo: Partner6,
-    url: "#",
-  },
-  {
-    logo: Partner1,
-    url: "#",
-  },
-  {
-    logo: Partner2,
-    url: "#",
-  },
-  {
-    logo: Partner3,
-    url: "#",
-  },
-  {
-    logo: Partner4,
-    url: "#",
-  },
-  {
-    logo: Partner5,
-    url: "#",
-  },
-  {
-    logo: Partner6,
-    url: "#",
-  },
-  {
-    logo: Partner1,
-    url: "#",
-  },
-  {
-    logo: Partner2,
-    url: "#",
-  },
-  {
-    logo: Partner3,
-    url: "#",
-  },
-  {
-    logo: Partner4,
-    url: "#",
-  },
-  {
-    logo: Partner5,
-    url: "#",
-  },
-  {
-    logo: Partner6,
-    url: "#",
-  },
-];
+
+
+
 
 const PartnersSection = () => {
+const [data, setData] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await apiService.get(`/Partner/getall/1`);
+
+      setData(response?.data?.items);
+   
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
   const [showAll, setShowAll] = useState(false);
 
   const visiblePartners = useMemo(
-    () => partners.slice(0, showAll ? partners.length : 6),
+    () => data?.slice(0, showAll ? data?.length : 6),
     [showAll]
   );
+
 
   return (
     <div className="relative landing-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 border-y border-solid border-[#EBEDF0] py-[40px] gap-y-4 md:gap-y-8 lg:gap-y-16">
       {visiblePartners.map((partner, index) => (
+
         <a
           key={index}
-          href={partner.url}
+          href={partner.image}
           className="flex justify-center items-center p-4"
         >
-          <img src={partner.logo} alt="Partner" />
+          <img src={partner.image} alt="Partner" />
         </a>
       ))}
       <button
