@@ -4,7 +4,7 @@ import { Textarea } from "../ui/textarea"; // Burada Textarea bileşenine uygun 
 
 import { useTranslation } from "react-i18next";
 
-interface ICustomTextFieldModel {
+interface ICustomTextAreaFieldModel {
   label: string;
   value: string | number;
   change: (value: any) => void;
@@ -14,7 +14,7 @@ interface ICustomTextFieldModel {
   disabled?: boolean;
 }
 
-export default function CustomTextField({
+export default function CustomTextAreaField({
   label,
   name,
   change,
@@ -22,7 +22,7 @@ export default function CustomTextField({
   errorMessages,
   value,
   disabled,
-}: ICustomTextFieldModel) {
+}: ICustomTextAreaFieldModel) {
   const { t } = useTranslation();
 
   return (
