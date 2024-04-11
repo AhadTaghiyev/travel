@@ -60,7 +60,7 @@ const MassIncomeForm = ({
             </div>
             <div className="w-full relative">
               <CustomAutocompleteSelect
-                api="GetCredits/GetAll/1"
+                api="GetCredits/GetAll"
                 label={t("Credit")}
                 optionLabel="id"
                 value={values.getCreditId ?? null}

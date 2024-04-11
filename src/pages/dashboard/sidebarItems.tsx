@@ -97,10 +97,23 @@ export const sidebarItems: SidebarItemType[] = [
       },
     ],
   },
+
+
   {
     icon: FaArrowsLeftRightToLine,
-    text: "Təsisçidən təsisçiyə",
-    link: "/panel/managerFinancialTransactions",
+    text: "From/To Founder",
+    children: [
+      {
+        icon: FaArrowsLeftRightToLine,
+        text: "Təsisçidən təsisçiyə",
+        link: "/panel/managerFinancialTransactions",
+      },
+      {
+        icon: FaFileImport,
+        text: "Payment",//TODO: Translate
+        link: "/panel/managerFinancialTransactionsPayment",
+      },
+    ],
   },
   {
     icon: HiOutlineArrowPathRoundedSquare,
