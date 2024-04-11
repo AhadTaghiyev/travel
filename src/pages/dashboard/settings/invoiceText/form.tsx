@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { InvoiceTextSchema } from "./schema";
 import { IInvoiceTextModel } from "./types";
 
-import CustomTextField from "@/components/custom/input";
+import CustomTextAreaField from "@/components/custom/textArea";
 
 type FormType = "Edit" | "Create" | "View";
 
@@ -38,9 +38,9 @@ const InvoiceText = ({ initialValues, onSubmit }: IInvoiceTextProps) => {
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            <div className="w-full">
-              <CustomTextField
-                label={t("text")}
+            <div className="w-full sm:col-span-2  md:col-span-3">
+              <CustomTextAreaField
+                label={t("Text")}
                 value={values.name}
                 change={handleChange}
                 name={`text`}
