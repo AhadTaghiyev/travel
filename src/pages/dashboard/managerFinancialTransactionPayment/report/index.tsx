@@ -51,7 +51,7 @@ export default function index() {
     setLoading(true);
     const id = searchParams.get("tickets");
     const res = await apiService.get(
-      `/ManagerFinancialTransactions/GetDetail/${id}`
+      `/ManagerFinancialTransactionPayments/GetDetail/${id}`
     );
 
     if (res.status !== 200) {

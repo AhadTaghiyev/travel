@@ -59,6 +59,7 @@ import UpdateService from "../pages/dashboard/settings/service/update";
 //Services
 import Email from "../pages/dashboard/settings/email";
 import NewEmail from "../pages/dashboard/settings/email/create";
+import UpdateEmail from "../pages/dashboard/settings/email/update";
 
 // Referance
 import NewReferance from "../pages/dashboard/referance/newReferance";
@@ -237,6 +238,12 @@ import Transaction from "../pages/dashboard/managerFinancialTransaction";
 import NewTransaction from "../pages/dashboard/managerFinancialTransaction/create";
 import UpdateTransaction from "../pages/dashboard/managerFinancialTransaction/update";
 import TransactionReport from "../pages/dashboard/managerFinancialTransaction/report";
+
+// ManagerFinancialTransactionPayments
+import TransactionPayment from "../pages/dashboard/managerFinancialTransactionPayment";
+import NewTransactionPayment from "../pages/dashboard/managerFinancialTransactionPayment/create";
+import UpdateTransactionPayment from "../pages/dashboard/managerFinancialTransactionPayment/update";
+import TransactionPaymentReport from "../pages/dashboard/managerFinancialTransactionPayment/report";
 
 // MoneyTransfers
 import MoneyTransfer from "../pages/dashboard/moneyTransfer";
@@ -916,7 +923,10 @@ const router = createBrowserRouter([
         path: "/panel/email/new",
         element: <NewEmail />,
       },
-
+      {
+        path: "/panel/email/update/:id",
+        element: <UpdateEmail />,
+      },
       //=================
       // Agreements
       //=================
@@ -1104,6 +1114,23 @@ const router = createBrowserRouter([
       {
         path: "/panel/managerFinancialTransactions/report",
         element: <TransactionReport />,
+      },
+      // ManagerFinancialTransactionPayments
+      {
+        path: "/panel/managerFinancialTransactionPayments",
+        element: <TransactionPayment />,
+      },
+      {
+        path: "/panel/managerFinancialTransactionPayments/new",
+        element: <NewTransactionPayment />,
+      },
+      {
+        path: "/panel/managerFinancialTransactionPayments/update/:id",
+        element: <UpdateTransactionPayment />,
+      },
+      {
+        path: "/panel/managerFinancialTransactionPayments/report",
+        element: <TransactionPaymentReport />,
       },
       // MoneyTransfers
       {

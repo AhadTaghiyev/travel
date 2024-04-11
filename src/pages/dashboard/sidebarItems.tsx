@@ -98,7 +98,6 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
 
-
   {
     icon: FaArrowsLeftRightToLine,
     text: "From/To Founder",
@@ -110,8 +109,8 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaFileImport,
-        text: "Payment",//TODO: Translate
-        link: "/panel/managerFinancialTransactionsPayment",
+        text: "Payment", //TODO: Translate
+        link: "/panel/managerFinancialTransactionPayments",
       },
     ],
   },

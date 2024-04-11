@@ -9,12 +9,11 @@ export default function Index() {
     <Container maxWidth="xl">
       <Table
         hideReport
-        hideEdit
-        hideDelete
         columns={columns(t)}
         api={"/EmailSettings/GetAll"}
         buttonText="Email"
         root="/panel/email"
+        deleteApi="/EmailSettings/Delete"
       />
     </Container>
   );

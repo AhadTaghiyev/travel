@@ -23,9 +23,11 @@ const NewBank = () => {
             navigate(`/panel/Email`);
           } else {
             toast.error(
-              response.message ||
-                response.data?.message ||
-                t("Something went wrong")
+              t(
+                response.message ||
+                  response.data?.message ||
+                  "Something went wrong"
+              )
             );
           }
         })
