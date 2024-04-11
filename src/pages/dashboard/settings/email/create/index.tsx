@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { apiService } from "@/server/apiServer";
-import { IBankModel } from "../types";
+import { IEmailModel } from "../types";
 
 import BankForm from "../form";
 
@@ -14,7 +14,7 @@ const NewBank = () => {
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    (values: IBankModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+    (values: IEmailModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const promise = apiService
         .post(`/EmailSettings/Create`, values)
         .then((response) => {
