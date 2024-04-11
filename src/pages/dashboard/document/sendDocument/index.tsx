@@ -91,7 +91,7 @@ export default function index() {
                     errorMessages={[t(errors.file?.toString())]}
                   />
                 </div>
-                <div className="w-full col-span-1 sm:col-span-2 md:col-span-3">
+                <div className="w-full col-span-1 sm:col-span-2 md:col-span-4">
                   <CustomTextAreaField
                     label={t("Mətn")} // TODO: translate
                     value={values.text}
