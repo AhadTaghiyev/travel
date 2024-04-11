@@ -10,7 +10,7 @@ export interface ITableObject {
   hideEdit?: boolean;
   hideDelete?: boolean;
   hideReport?: boolean;
-  hideStatus?:boolean
+  hideStatus?: boolean;
   deleteApi?: string;
   statusApi?: string;
   addDateToReport?: boolean;
@@ -23,4 +23,5 @@ export interface ITableObject {
     label: string;
     value: string;
   }[];
+  totalProps?: string[];
 }

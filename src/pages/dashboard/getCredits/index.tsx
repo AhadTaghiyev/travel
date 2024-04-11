@@ -13,6 +13,7 @@ export default function Index() {
         buttonText="Alınan Kredit"
         deleteApi="/GetCredits/Delete"
         root="/panel/getCredits"
+        totalProps={["amount", "restOfAmount"]}
       />
     </Container>
   );

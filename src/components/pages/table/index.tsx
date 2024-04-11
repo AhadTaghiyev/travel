@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
 import { InputBase, Divider } from "@mui/material";
@@ -75,6 +75,7 @@ export default function Index({
   onCreateClick,
   addDateToReport,
   defaultFilterValue,
+  totalProps,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({
@@ -169,6 +170,7 @@ export default function Index({
     minWidth: 120,
     headerClassName: "header-item",
     renderCell: (params) => {
+      if (params.row.id === "total") return null;
       let detailUrl = detailLink
         ? detailLink + params.row.id
         : `${root}/report?tickets=${params.row.id}`;
@@ -256,6 +258,27 @@ export default function Index({
 
     fetchData();
   }, [paginationModel.page, startDate, endDate, search, filter, itemStatus]);
+
+  const totalRow = useMemo(() => {
+    if (!totalProps || !rows || totalProps?.length === 0 || rows?.length === 0)
+      return null;
+    const row = { id: "total", No: "Total" };
+    totalProps?.forEach((prop) => {
+      row[prop] = rows.reduce((acc, row) => acc + row[prop], 0);
+    });
+    return row;
+  }, [rows, totalProps]);
+
+  const tableRows = useMemo(() => {
+    const arr = rows?.map((row, index: number) => ({
+      No: index + 1,
+      ...row,
+    }));
+    if (arr.length > 0 && totalRow) {
+      arr.push(totalRow);
+    }
+    return arr;
+  });
 
   return (
     <Grid container spacing={1} className="items-center w-full gap-2 pt-1">
@@ -395,10 +418,7 @@ export default function Index({
               field,
             ]}
             paginationMode="server"
-            rows={rows?.map((row, index: number) => ({
-              No: index + 1,
-              ...row,
-            }))}
+            rows={tableRows}
             pageSizeOptions={[10, 50, 100]}
             disableRowSelectionOnClick={true}
             sx={{
