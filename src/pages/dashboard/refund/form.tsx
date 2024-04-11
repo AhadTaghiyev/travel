@@ -18,13 +18,17 @@ import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
 
 const getTypeOptions = (t: TFunction<"translation", undefined>) => [
-  { label: t("Aviabilet"), value: "aviabiletSale" },
-  { label: t("Corporative Ticket"), value: "cooperativeTicket" },
-  { label: t("Tur paket"), value: "tourPackage" },
+  { label: t("Aviabilet satışı"), value: "aviabiletSale" },
+  { label: t("Korperativ satış"), value: "cooperativeTicket" },
   { label: t("Individual Tur paket"), value: "individualTourPackage" },
+  { label: t("İndividual tur satışı"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
+  
   { label: t("Depozit"), value: "deposit" },
+  
 ];
+
+
 
 type IItem = {
   no: string;
@@ -196,14 +200,14 @@ const RefundForm = ({
                     disabled
                     name="paidAmount"
                     type="text"
-                    label={t("Ödənilən Məbləğ")}
+                    label={t("Ödənilən məbləğ")}
                     value={values.paidAmount}
                     change={handleChange}
                     hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
                     errorMessages={[t(errors.paidAmount?.toString())]}
                   />
                 </div>
-                <div className="w-full">
+                {/* <div className="w-full">
                   <CustomAutocompleteSelect
                     api="Payments/GetAll/1"
                     label={t("Ödəniş növü")}
@@ -213,10 +217,10 @@ const RefundForm = ({
                     hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
                     errorMessages={[t(errors.paymentId?.toString() ?? "")]}
                   />
-                </div>
+                </div> */}
                 <div className="w-full">
                   <CustomTextField
-                    label={t("supplier")}
+                    label={t("Refund from Supplier")}
                     value={values.supplierAmount}
                     change={handleChange}
                     type="number"

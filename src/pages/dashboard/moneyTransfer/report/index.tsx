@@ -134,6 +134,12 @@ export default function index() {
           </Grid>
         </Grid>
         <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+        <h1
+            className="text-xl font-bold mb-2"
+            style={{ textAlign: "center" }}
+          >
+            {t("Found Transfer Receipt")}
+          </h1>
           <Grid
             sx={{
               width: "100%",
@@ -143,6 +149,7 @@ export default function index() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>{t("Ref.")}</TableHead>
                   <TableHead>{t("Haradan")}</TableHead>
                   <TableHead>{t("Haraya")}</TableHead>
                   <TableHead>{t("Məbləğ")}</TableHead>
@@ -153,6 +160,7 @@ export default function index() {
               <TableBody>
                 {data && (
                   <TableRow key={data.id}>
+                    <TableCell className="py-1.5">{data.ref}</TableCell>
                     <TableCell className="py-1.5">{data.fromPayment}</TableCell>
                     <TableCell className="py-1.5">{data.toPayment}</TableCell>
                     <TableCell className="py-1.5">

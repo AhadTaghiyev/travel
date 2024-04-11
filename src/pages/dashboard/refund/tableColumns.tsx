@@ -12,8 +12,20 @@ export const columns: GridColDef[] = [
     },
   },
   {
+    field: "customer",
+    headerName: "Customer",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "amount",
     headerName: "Ödənilən məbləğ",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "supplierAmount",
+    headerName: "Supplier Amount",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -23,18 +35,14 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
+  
   {
     field: "forfeit",
-    headerName: "Cərimə",
+    headerName: "Charge",
     flex: 1,
     headerClassName: "header-item",
   },
-  {
-    field: "payment",
-    headerName: "Ödəniş",
-    flex: 1,
-    headerClassName: "header-item",
-  },
+
   {
     field: "date",
     headerName: "Tarix",

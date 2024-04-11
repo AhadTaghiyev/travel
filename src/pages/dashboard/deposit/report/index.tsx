@@ -188,6 +188,7 @@ export default function index() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>{t("Ref.")}</TableHead>
                   <TableHead>{t("Ödəniş növü")}</TableHead>
                   <TableHead>{t("paidamount")}</TableHead>
                   <TableHead>{t("Description")}</TableHead>
@@ -198,6 +199,7 @@ export default function index() {
                 {data && (
                   <TableRow key={data.id}>
                     <TableCell className="py-1.5">{data.payment}</TableCell>
+                    <TableCell className="py-1.5">{data.ref}</TableCell>
                     <TableCell className="py-1.5">
                       {(data.amount * currency.value).toFixed(2)}{" "}
                       {currency.name}

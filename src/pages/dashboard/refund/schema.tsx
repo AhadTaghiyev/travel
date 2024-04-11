@@ -24,7 +24,7 @@ export const RefundSchema = Yup.object().shape(
         .required("Məbləğ daxil edilməlidir")
         .max(amount, "Qaytarılan məbləğ qiymətdən çox ola bilməz");
     }),
-    paymentId: Yup.string().required("Ödəniş növü seçilməlidir"),
+    // paymentId: Yup.string().required("Ödəniş növü seçilməlidir"),
   },
   [["advancePaymentId", "invoiceId"]]
 );
