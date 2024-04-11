@@ -399,5 +399,21 @@
     "To Founder": "К основателю",
     "Bəli": "Да",
     "Xeyr": "Нет",
-    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "После удаления восстановление невозможно"
+    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "После удаления восстановление невозможно",
+    "Şirkət daxil edilməlidir": "Необходимо указать компанию",
+    "File daxil edilməlidir": "Необходимо указать файл",
+    "Mətn daxil edilməlidir": "Необходимо указать текст",
+    "Send Document": "Отправить документ",
+    "Mətn": "Текст",
+    "Email daxil edilməlidir": "Необходимо указать адрес электронной почты",
+    "Subject daxil edilməlidir": "Необходимо указать тему",
+    "Send Email": "Отправить Email",
+    "Subject": "Тема",
+    "Attachments": "Вложения",
+    "Body": "Текст сообщения",
+    "Found Transfer": "Найден перевод",
+    "Secret key is required": "Требуется секретный ключ",
+    "Email Created": "Email создан",
+    "Email already exsists": "Email уже существует",
+    "Yeni Email Yarat": "Создать новый Email"
 }

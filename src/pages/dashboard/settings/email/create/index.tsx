@@ -19,8 +19,7 @@ const NewBank = () => {
         .post(`/EmailSettings/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Email Created")); // TODO: translate
-            // TODO: translate -> Email already exsists
+            toast.success(t("Email Created"));
             navigate(`/panel/Email`);
           } else {
             toast.error(
@@ -40,7 +39,7 @@ const NewBank = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Yeni Email Yarat")} {/* TODO: translate */}
+        {t("Yeni Email Yarat")}
       </h1>
       <BankForm
         formType="Create"

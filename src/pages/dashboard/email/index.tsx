@@ -15,8 +15,8 @@ const initialValues: IEmailModel = {
   toEmail: "",
 };
 const sendEmailFormSchema = Yup.object().shape({
-  toEmail: Yup.string().required("Email daxil edilməlidir"), // TODO: translate
-  subject: Yup.string().required("Subject daxil edilməlidir"), // TODO: translate
+  toEmail: Yup.string().required("Email daxil edilməlidir"),
+  subject: Yup.string().required("Subject daxil edilməlidir"),
 });
 
 export default function index() {
@@ -51,7 +51,7 @@ export default function index() {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Send Email")} {/** TODO: translate */}
+        {t("Send Email")}
       </h1>
       <Formik
         onSubmit={onSubmit}
@@ -85,7 +85,7 @@ export default function index() {
                 <CustomTextField
                   name="subject"
                   type="text"
-                  label={t("Subject")} // TODO: translate
+                  label={t("Subject")}
                   value={values.subject}
                   change={handleChange}
                   hasErrorMessages={!!errors.subject && !!touched.subject}
@@ -96,7 +96,7 @@ export default function index() {
                 <CustomTextField
                   name="attachments"
                   type="file"
-                  label={t("Attachments")} // TODO: translate
+                  label={t("Attachments")}
                   value={undefined}
                   change={(e) => {
                     setFieldValue("attachments", e.target.files[0]);
@@ -109,7 +109,7 @@ export default function index() {
               </div>
               <div className="w-full col-span-1 sm:col-span-2 md:col-span-3">
                 <CustomTextAreaField
-                  label={t("Body")} // TODO: translate
+                  label={t("Body")}
                   value={values.body}
                   change={handleChange}
                   name="body"

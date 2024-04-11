@@ -134,11 +134,11 @@ export default function index() {
           </Grid>
         </Grid>
         <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
-        <h1
+          <h1
             className="text-xl font-bold mb-2"
             style={{ textAlign: "center" }}
           >
-            {t("Found Transfer Receipt")}
+            {t("Found Transfer")}
           </h1>
           <Grid
             sx={{

@@ -10,9 +10,9 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 const sendDocumentFormSchema = Yup.object().shape({
-  recivedCompanyId: Yup.string().required("Şirkət daxil edilməlidir"), // TODO: translate
-  file: Yup.string().required("File daxil edilməlidir"), // TODO: translate
-  text: Yup.string().required("Mətn daxil edilməlidir"), // TODO: translate
+  recivedCompanyId: Yup.string().required("Şirkət daxil edilməlidir"),
+  file: Yup.string().required("File daxil edilməlidir"),
+  text: Yup.string().required("Mətn daxil edilməlidir"),
 });
 
 const initialValues: IDocumentModel = {
@@ -47,7 +47,7 @@ export default function index() {
     <>
       <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
         <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-          {t("Send Document")} {/** TODO: translate */}
+          {t("Send Document")}
         </h1>
         <Formik
           onSubmit={onSubmit}
@@ -93,7 +93,7 @@ export default function index() {
                 </div>
                 <div className="w-full col-span-1 sm:col-span-2 md:col-span-4">
                   <CustomTextAreaField
-                    label={t("Mətn")} // TODO: translate
+                    label={t("Mətn")}
                     value={values.text}
                     change={handleChange}
                     name="text"

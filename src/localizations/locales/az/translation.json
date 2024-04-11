@@ -400,5 +400,21 @@
     "To Founder": "Təsisçiyə",
     "Bəli": "Bəli",
     "Xeyr": "Xeyr",
-    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "Silindikdən sonra qeri qaytarmaq mümkün deyil"
+    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "Silindikdən sonra qeri qaytarmaq mümkün deyil",
+    "Şirkət daxil edilməlidir": "Şirkət daxil edilməlidir",
+    "File daxil edilməlidir": "Fayl daxil edilməlidir",
+    "Mətn daxil edilməlidir": "Mətn daxil edilməlidir",
+    "Send Document": "Sənəd göndər",
+    "Mətn": "Mətn",
+    "Email daxil edilməlidir": "Email daxil edilməlidir",
+    "Subject daxil edilməlidir": "Mövzu daxil edilməlidir",
+    "Send Email": "Email göndər",
+    "Subject": "Mövzu",
+    "Attachments": "Əlavələr",
+    "Body": "Məzmun",
+    "Found Transfer": "Vəsait Transferi",
+    "Secret key is required": "Gizli açar daxil edilməlidir",
+    "Email Created": "Email yaradıldı",
+    "Email already exsists": "Email artıq mövcuddur",
+    "Yeni Email Yarat": "Yeni Email Yarat"
 }

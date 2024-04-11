@@ -399,5 +399,21 @@
     "To Founder": "To Founder",
     "Bəli": "Yes",
     "Xeyr": "No",
-    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "It is not possible to return after deletion"
+    "Silindikdən sonra qeri qaytarmaq mümkün deyil": "It is not possible to return after deletion",
+    "Şirkət daxil edilməlidir": "Company must be entered",
+    "File daxil edilməlidir": "File must be entered",
+    "Mətn daxil edilməlidir": "Text must be entered",
+    "Send Document": "Send Document",
+    "Mətn": "Text",
+    "Email daxil edilməlidir": "Email must be entered",
+    "Subject daxil edilməlidir": "Subject must be entered",
+    "Send Email": "Send Email",
+    "Subject": "Subject",
+    "Attachments": "Attachments",
+    "Body": "Body",
+    "Found Transfer": "Found Transfer",
+    "Secret key is required": "Secret key is required",
+    "Email Created": "Email Created",
+    "Email already exsists": "Email already exists",
+    "Yeni Email Yarat": "Create New Email"
 }
