@@ -25,7 +25,10 @@ export default function index() {
 
   const onSubmit = async (values) => {
     const formData = new FormData();
-    formData.append("toEmail", values.toEmail);
+    const emails = values.toEmail.replaceAll(" ", "").split(",");
+    emails.forEach((email) => {
+      formData.append("toEmail", email);
+    });
     formData.append("subject", values.subject);
     formData.append("body", values.body);
     formData.append("attachments", values.attachments);
@@ -71,6 +74,7 @@ export default function index() {
                   name="toEmail"
                   type="text"
                   label={t("Email")}
+                  placeholder="test@mail.com, test2@mail.com..."
                   value={values.toEmail}
                   change={handleChange}
                   hasErrorMessages={!!errors.toEmail && !!touched.toEmail}
