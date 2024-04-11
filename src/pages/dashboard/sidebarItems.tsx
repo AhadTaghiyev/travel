@@ -398,6 +398,11 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Company",
         link: "/panel/company",
       },
+      {
+        icon: FaServicestack,
+        text: "Email",
+        link: "/panel/email",
+      },
     ],
   },
 ];

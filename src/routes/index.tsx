@@ -56,6 +56,9 @@ import UpdateTour from "../pages/dashboard/settings/tour/update";
 import Service from "../pages/dashboard/settings/service";
 import NewService from "../pages/dashboard/settings/service/create";
 import UpdateService from "../pages/dashboard/settings/service/update";
+//Services
+import Email from "../pages/dashboard/settings/email";
+import NewEmail from "../pages/dashboard/settings/email/create";
 
 // Referance
 import NewReferance from "../pages/dashboard/referance/newReferance";
@@ -85,7 +88,6 @@ import PartnerAdmin from "../pages/admin/partner";
 import PartnerCreate from "../pages/admin/partner/create";
 import PartnerUpdate from "../pages/admin/partner/update";
 
-
 //Faq
 import QuestionAdmin from "../pages/admin/question";
 import QuestionCreate from "../pages/admin/question/create";
@@ -106,7 +108,6 @@ import ReferanceAdmin from "../pages/admin/referances";
 import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
 import UpdateAirway from "../pages/dashboard/settings/airway/update";
-
 
 //Airway
 import InvoiceText from "../pages/dashboard/settings/invoiceText";
@@ -173,7 +174,6 @@ import CustomerPayment from "../pages/dashboard/customerPayment";
 import NewCustomerPayment from "../pages/dashboard/customerPayment/create";
 import UpdateCustomerPayment from "../pages/dashboard/customerPayment/update";
 import DetailCustomerPayment from "../pages/dashboard/customerPayment/report";
-
 
 //Individual Tur Paketleri
 import IndividualTourPackage from "../pages/dashboard/individualTourPackage";
@@ -258,7 +258,7 @@ import SalariesReportDetail from "../pages/dashboard/reports/salaries/detail";
 
 import ExpendituresReport from "../pages/dashboard/reports/expenditure";
 import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/detail";
-import ExpendutureInvoice from "../pages/dashboard/payments/expendutureInvoice"
+import ExpendutureInvoice from "../pages/dashboard/payments/expendutureInvoice";
 
 import DeadlineReport from "../pages/dashboard/reports/deadline";
 import FlightTicketsReport from "../pages/dashboard/reports/flightTickets";
@@ -422,11 +422,6 @@ const router = createBrowserRouter([
         path: "/admin/Referances",
         element: <ReferanceAdmin />,
       },
-      
-      
-      
-      
-      
     ],
   },
   {
@@ -662,7 +657,7 @@ const router = createBrowserRouter([
         path: "/panel/getCredits/report",
         element: <InvoiceGetCredit />,
       },
-      
+
       // {
       //   path: "/panel/getCredits/report",
       //   element: <ReportGetCredit />,
@@ -686,7 +681,7 @@ const router = createBrowserRouter([
         path: "/panel/PaidCredits/report",
         element: <InvoicePaidCredit />,
       },
-      
+
       // ===============
       // Employees
       //================
@@ -717,7 +712,7 @@ const router = createBrowserRouter([
         path: "/panel/airways/update/:id",
         element: <UpdateAirway />,
       },
-       // ===============
+      // ===============
       // Airway
       //================
       {
@@ -733,7 +728,7 @@ const router = createBrowserRouter([
         element: <UpdateInvoiceText />,
       },
 
-          // ===============
+      // ===============
       // Bank
       //================
       {
@@ -782,7 +777,7 @@ const router = createBrowserRouter([
         path: "/panel/deposit/report",
         element: <DetailDeposit />,
       },
-         // ===============
+      // ===============
       // CustomerPayment
       //================
       {
@@ -801,9 +796,6 @@ const router = createBrowserRouter([
         path: "/panel/CustomerPayments/report",
         element: <DetailCustomerPayment />,
       },
-
-
-      
 
       // ===============
       // Suplier
@@ -914,6 +906,18 @@ const router = createBrowserRouter([
       },
 
       //=================
+      // Email
+      //=================
+      {
+        path: "/panel/email",
+        element: <Email />,
+      },
+      {
+        path: "/panel/email/new",
+        element: <NewEmail />,
+      },
+
+      //=================
       // Agreements
       //=================
       {
@@ -979,7 +983,7 @@ const router = createBrowserRouter([
         path: "/panel/payments/update/:id",
         element: <UpdatePay />,
       },
-   
+
       //=================
       // Documents
       //=================
@@ -1051,9 +1055,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/salaryToBePaid/report",
-        element: <SalaryToBePaidDetailReport/>,
+        element: <SalaryToBePaidDetailReport />,
       },
-      
+
       {
         path: "/panel/salaryToBePaid/new",
         element: <NewSalaryToBePaid />,
@@ -1155,7 +1159,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/invoices/expenditures/:id",
-        element: <ExpendutureInvoice/>,
+        element: <ExpendutureInvoice />,
       },
       {
         path: "/panel/reports/deadlines",
