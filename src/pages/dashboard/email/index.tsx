@@ -1,58 +1,47 @@
 import { useNavigate } from "react-router-dom";
-import { Formik, Form } from "formik";
-import {
-  Container,
-  Grid,
-  InputLabel,
-  Button,
-  TextField,
-  FormHelperText,
-} from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import { apiService } from "../../../server/apiServer";
-import { MuiFileInput } from "mui-file-input";
+import { Formik } from "formik";
 import { IEmailModel } from "./types";
 import { useTranslation } from "react-i18next";
 import CustomTextField from "@/components/custom/input";
-
-const textStyling = {
-  lineHeight: "16px",
-  fontWeight: "400",
-  fontSize: "12px",
-};
-
-const footer = {
-  borderRadius: "2px",
-  background: "#F8F9FB",
-  display: "flex",
-  justifyContent: "end",
-  // width: '100%',
-  padding: "12px 60px",
-};
+import CustomTextAreaField from "@/components/custom/textArea";
+import * as Yup from "yup";
+import { toast } from "sonner";
+import { apiService } from "@/server/apiServer";
 
 const initialValues: IEmailModel = {
   body: "",
-  attachments: [],
+  attachments: null,
   subject: "",
   toEmail: "",
 };
+const sendEmailFormSchema = Yup.object().shape({
+  toEmail: Yup.string().required("Email daxil edilməlidir"), // TODO: translate
+  subject: Yup.string().required("Subject daxil edilməlidir"), // TODO: translate
+});
 
 export default function index() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const onSubmit = async (values, { setErrors }) => {
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("toEmail", values.toEmail);
+    formData.append("subject", values.subject);
+    formData.append("body", values.body);
+    formData.append("attachments", values.attachments);
     try {
-      const res = await apiService.postForm(`Email/SendMailToPersons`, values);
+      const res = await apiService.postForm(
+        `Email/SendMailToPersons`,
+        formData
+      );
       if (res?.status == 200) {
         toast.success("Uğurla yaradıldı!");
         navigate("/panel/documents");
       } else {
-        console.log(res);
-        setErrors(res.data.errors);
+        toast.error(t("Something went wrong"));
       }
     } catch (err) {
-      toast.error("Xəta baş verdi");
+      toast.error(t("Something went wrong"));
     }
   };
 
@@ -64,7 +53,7 @@ export default function index() {
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}
-        // validationSchema={OtherServiceSiteSchema}
+        validationSchema={sendEmailFormSchema}
       >
         {({
           values,
@@ -104,181 +93,45 @@ export default function index() {
                   name="attachments"
                   type="file"
                   label={t("Attachments")} // TODO: translate
-                  value={values.attachments}
-                  change={handleChange}
+                  value={undefined}
+                  change={(e) => {
+                    setFieldValue("attachments", e.target.files[0]);
+                  }}
                   hasErrorMessages={
                     !!errors.attachments && !!touched.attachments
                   }
                   errorMessages={[t(errors.attachments?.toString())]}
                 />
               </div>
+              <div className="w-full col-span-1 sm:col-span-2 md:col-span-3">
+                <CustomTextAreaField
+                  label={t("Body")} // TODO: translate
+                  value={values.body}
+                  change={handleChange}
+                  name="body"
+                />
+              </div>
+            </div>
+            <div className="w-full flex gap-x-6 justify-end mb-6">
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={() => navigate("/panel")}
+                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("goBack")}
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+              >
+                {t("confirm")}
+              </button>
             </div>
           </form>
         )}
       </Formik>
-
-      <Formik
-        initialValues={initialValues}
-        onSubmit={async (values, { setErrors }) => {
-          try {
-            const res = await apiService.postForm(
-              `Email/SendMailToPersons`,
-              values
-            );
-            if (res?.status == 200) {
-              toast.success("Uğurla yaradıldı!");
-              navigate("/panel/documents");
-            } else {
-              console.log(res);
-              setErrors(res.data.errors);
-            }
-          } catch (err) {
-            toast.error("Xəta baş verdi");
-          }
-        }}
-        render={(props) => (
-          <Form>
-            <Container maxWidth="xl">
-              <Grid container spacing={4} style={{ marginBottom: "70px" }}>
-                <Grid item md={3}>
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    sx={{ mb: 1 }}
-                    style={textStyling}
-                  >
-                    Email
-                  </InputLabel>
-                  <TextField
-                    multiline
-                    id="outlined-basic"
-                    variant="outlined"
-                    sx={{ width: "100%", mb: 1 }}
-                    name={"toEmail"}
-                    value={props.values.toEmail}
-                    style={textStyling}
-                    onChange={props.handleChange}
-                    size="small"
-                  />
-                  {props.errors && props.touched.toEmail && (
-                    <>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.toEmail}
-                      </FormHelperText>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.toEmail}
-                      </FormHelperText>
-                    </>
-                  )}
-                </Grid>
-                <Grid item md={3}>
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    sx={{ mb: 1 }}
-                    style={textStyling}
-                  >
-                    Subject
-                  </InputLabel>
-                  <TextField
-                    multiline
-                    id="outlined-basic"
-                    variant="outlined"
-                    sx={{ width: "100%", mb: 1 }}
-                    name={"subject"}
-                    value={props.values.subject}
-                    style={textStyling}
-                    onChange={props.handleChange}
-                    size="small"
-                  />
-                  {props.errors && props.touched.subject && (
-                    <>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.subject}
-                      </FormHelperText>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.subject}
-                      </FormHelperText>
-                    </>
-                  )}
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    sx={{ mb: 1 }}
-                    style={textStyling}
-                  >
-                    Attachments
-                  </InputLabel>
-                  <MuiFileInput
-                    name="file"
-                    value={
-                      props.values.attachments![
-                        props.values.attachments!.length - 1
-                      ]
-                    }
-                    onChange={(newValue) => {
-                      const event = {
-                        target: {
-                          name: `attachments`,
-                          value: [...props.values.attachments!, newValue],
-                        },
-                      };
-                      props.handleChange(event);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    sx={{ mb: 1 }}
-                    style={textStyling}
-                  >
-                    Body
-                  </InputLabel>
-                  <TextField
-                    multiline
-                    maxRows={5}
-                    minRows={5}
-                    id="outlined-basic"
-                    variant="outlined"
-                    sx={{ width: "100%", mb: 1 }}
-                    name={"body"}
-                    value={props.values.body}
-                    style={textStyling}
-                    onChange={props.handleChange}
-                    size="small"
-                  />
-                  {props.errors && props.touched.body && (
-                    <>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.body}
-                      </FormHelperText>
-                      <FormHelperText sx={{ color: "red" }}>
-                        {props.errors.body}
-                      </FormHelperText>
-                    </>
-                  )}
-                </Grid>
-              </Grid>
-            </Container>
-            <footer style={footer}>
-              <div>
-                <Button
-                  variant="contained"
-                  color="inherit"
-                  sx={{ mr: 2 }}
-                  onClick={() => navigate(-1)}
-                >
-                  Geri qayıt
-                </Button>
-                <Button variant="contained" type="submit">
-                  Təsdiqlə
-                </Button>
-              </div>
-            </footer>
-          </Form>
-        )}
-      />
-      <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
     </div>
   );
 }

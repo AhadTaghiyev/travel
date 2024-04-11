@@ -158,7 +158,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                 <Avatar
                   variant="square"
                   alt={userName}
-                  src="/static/images/avatar/2.jpg"
+                  // src="/static/images/avatar/2.jpg"
                 />
               </IconButton>
             </Box>
