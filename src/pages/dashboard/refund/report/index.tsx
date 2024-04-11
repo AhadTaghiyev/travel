@@ -26,10 +26,10 @@ import { formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const customerProperties = [
-  {
-    fieldName: "Invoice Tarixi",
-    propertyName: "date",
-  },
+  // {
+  //   fieldName: "Invoice Tarixi",
+  //   propertyName: "date",
+  // },
   {
     fieldName: "Ad",
     propertyName: "fullName",
@@ -179,20 +179,21 @@ export default function index() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead>{t("Ref")}</TableHead>
                     <TableHead>{t("Məhsul nömrəsi")}</TableHead>
-                    <TableHead>{t("Ödəniş növü")}</TableHead>
                     <TableHead>{t("Ödənilən məbləğ")}</TableHead>
                     <TableHead>{t("Qaytarılan məbləğ")}</TableHead>
-                    <TableHead>{t("Cərimə")}</TableHead>
                     <TableHead>{t("date")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
+                  <TableCell className="font-medium py-1.5">
+                      RF-{data.id}
+                    </TableCell>
                     <TableCell className="font-medium py-1.5">
                       {data.invoiceNo || data.advancePaymentNo}
                     </TableCell>
-                    <TableCell className="py-1.5">{data.payment}</TableCell>
                     <TableCell className="py-1.5">
                       {(data.amount * currency.value).toFixed(2)}{" "}
                       {currency.name}
@@ -201,10 +202,7 @@ export default function index() {
                       {(data.paidToCustomer * currency.value).toFixed(2)}{" "}
                       {currency.name}
                     </TableCell>
-                    <TableCell className="py-1.5">
-                      {(data.forfeit * currency.value).toFixed(2)}{" "}
-                      {currency.name}
-                    </TableCell>
+            
                     <TableCell className="py-1.5 max-w-[150px] truncate">
                       {formatDate(data.date)}
                     </TableCell>

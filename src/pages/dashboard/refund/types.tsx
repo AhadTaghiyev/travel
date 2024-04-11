@@ -11,7 +11,7 @@ export interface IRefundModel {
   customerId?: string;
   invoiceId?: { label: string; value: string } | null;
   advancePaymentId?: { label: string; value: string } | null;
-  paymentId?: string;
+  // paymentId?: string;
   amount?: number;
   paidAmount?: number;
   supplierAmount?: number;
