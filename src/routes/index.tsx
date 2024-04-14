@@ -266,6 +266,8 @@ import SalariesReportDetail from "../pages/dashboard/reports/salaries/detail";
 import ExpendituresReport from "../pages/dashboard/reports/expenditure";
 import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/detail";
 import ExpendutureInvoice from "../pages/dashboard/payments/expendutureInvoice";
+import RefundPaymentInvoice from "../pages/dashboard/payments/refundPaymentInvoice";
+import SupplierPaymentInvoice from "../pages/dashboard/payments/supplierPaymentInvoice";
 
 import DeadlineReport from "../pages/dashboard/reports/deadline";
 import FlightTicketsReport from "../pages/dashboard/reports/flightTickets";
@@ -1188,6 +1190,16 @@ const router = createBrowserRouter([
         path: "/panel/invoices/expenditures/:id",
         element: <ExpendutureInvoice />,
       },
+      {
+        path: "/panel/invoices/refundpayments/:id",
+        element: <RefundPaymentInvoice />,
+      },
+      {
+        path: "/panel/invoices/supplierpayemnts/:id",
+        element: <SupplierPaymentInvoice />,
+      },
+      
+      
       {
         path: "/panel/reports/deadlines",
         element: <DeadlineReport />,

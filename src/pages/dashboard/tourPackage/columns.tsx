@@ -28,12 +28,12 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
   },
-  {
-    field: "rezervationNumber",
-    headerName: t( "Rezervasiya nömrəsi"),
-    flex: 1,
-    headerClassName: "header-item",
-  },
+  // {
+  //   field: "rezervationNumber",
+  //   headerName: t( "Rezervasiya nömrəsi"),
+  //   flex: 1,
+  //   headerClassName: "header-item",
+  // },
   {
     field: "tourName",
     headerName: t("Tur Adı"),
@@ -55,15 +55,15 @@ export const getColumns = (t: TFunction): GridColDef[] => [
       return value.map((item) => formatDate(item)).join(", ");
     },
   },
-  {
-    field: "returnDate",
-    headerName: t("Dönüş tarixi"),
-    flex: 1,
-    headerClassName: "header-item",
-    renderCell: ({ value }) => {
-      return value.map((item) => formatDate(item)).join(", ");
-    },
-  },
+  // {
+  //   field: "returnDate",
+  //   headerName: t("Dönüş tarixi"),
+  //   flex: 1,
+  //   headerClassName: "header-item",
+  //   renderCell: ({ value }) => {
+  //     return value.map((item) => formatDate(item)).join(", ");
+  //   },
+  // },
   {
     field: "totalAmount",
     headerName: t("commonPrice"),
@@ -87,5 +87,14 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     headerName: t("personal"),
     flex: 1,
     headerClassName: "header-item",
+  },
+  {
+    field: "refundStatus",
+    headerName: t("Status"),
+    flex: 1,
+    headerClassName: "header-item",
+    cellClassName: (params) =>
+      params.value ? "refund-true" : "refund-false", 
+    valueGetter: (params) => (params.value ? "Refunded" : "Not Refunded"),
   },
 ];

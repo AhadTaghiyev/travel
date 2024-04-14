@@ -93,4 +93,13 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
   },
+  {
+    field: "refundStatus",
+    headerName: t("Status"),
+    flex: 1,
+    headerClassName: "header-item",
+    cellClassName: (params) =>
+      params.value ? "refund-true" : "refund-false", 
+    valueGetter: (params) => (params.value ? "Refunded" : "Not Refunded"),
+  },
 ];

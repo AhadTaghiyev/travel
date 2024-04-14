@@ -18,18 +18,18 @@ const tabs = [
     id: 1,
     title: "Təchizatçı",
     hideReport: false,
-    detailLink: "/panel/reports/suppliers/",
-    editLink: "/panel/reports/suppliers/",
-    api: "/Reports/SupplierReport",
+    detailLink: "/panel/invoices/supplierpayemnts/",
+    editLink: "/panel/payments",
+    api: "/Reports/SupplierReportDetailAll",
     columns: supplierColumns,
   },
   {
     id: 2,
     title: "Refund",
     hideReport: false,
-    detailLink: "/panel/reports/refunds/",
-    editLink: "/panel/reports/suppliers/",
-    api: "/Reports/RefundReportDetail",
+    detailLink: "/panel/invoices/refundpayments/",
+    editLink: "/panel/payments",
+    api: "/Reports/RefundPaymentDetail",
     columns: refundColumns,
   },
   {
@@ -64,9 +64,9 @@ const tabs = [
     id: 8,
     title: "To Founder",
     hideReport: false,
-    api: "/Reports/FounderReport",
-    detailLink: "/panel/managerFinancialTransactions/report/?tickets=",
-    editLink: "/Panel/ManagerFinancialTransactions",
+    api: "/ManagerFinancialTransactionPayments/GetAllV2",
+    detailLink: "/panel/managerFinancialTransactionPayments/report?tickets=",
+    editLink: "/panel/paymentTransfers",
     columns: advanceCollectsColumns,
   },
 ];
@@ -122,6 +122,7 @@ export default function Index() {
             <div key={tab.id}>
               <Table
                 hidePrint
+                hideCreate
                 hideDelete
                 api={tab.api}
                 hideFilter

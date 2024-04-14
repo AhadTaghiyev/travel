@@ -4,14 +4,33 @@ export const supplierColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
 
   {
-    field: "name",
-    headerName: "Ad",
+    field: "ref",
+    headerName: "Ref.",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+
+  {
+    field: "supplier",
+    headerName: "Supplier",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "balance",
-    headerName: "Balans",
+    field: "debit",
+    headerName: "Amount",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "details",
+    headerName: "Detail.",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "date",
+    headerName: "Date",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -37,7 +56,7 @@ export const refundColumns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
-    field: "refundableAmount",
+    field: "amount",
     headerName: "Məbləğ",
     flex: 1,
     headerClassName: "header-item",
