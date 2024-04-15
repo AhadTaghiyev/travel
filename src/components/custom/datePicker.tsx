@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { textStyling } from "../../styles";
 import { locales } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -59,9 +59,13 @@ export default function CustomDateTimePicker({
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {value ? (
-              format(new Date(value), "dd MMMM yyyy", {
-                locale: locales[language],
-              })
+              formatDate(
+                typeof value === "object" ? value.toISOString() : String(value),
+                "dd MMMM yyyy",
+                {
+                  locale: locales[language],
+                }
+              )
             ) : (
               <span>{t("Pick a date")}</span>
             )}

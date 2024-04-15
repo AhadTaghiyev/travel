@@ -178,7 +178,9 @@ const Detail = () => {
             <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
               <h3 className="text-lg font-bold">Particulars</h3>
               <p className="text-sm">
-                {`${formatDate(date[0])} to ${formatDate(date[1])}`}
+                {`${formatDate(date[0].toISOString())} to ${formatDate(
+                  date[1].toISOString()
+                )}`}
               </p>
             </div>
             <div className="px-4 py-6">
@@ -243,7 +245,9 @@ const Detail = () => {
             <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
               <h3 className="text-lg font-bold">Particulars</h3>
               <p className="text-sm">
-                {`${formatDate(date[0])} to ${formatDate(date[1])}`}
+                {`${formatDate(date[0].toISOString())} to ${formatDate(
+                  date[1].toISOString()
+                )}`}
               </p>
             </div>
             <div className="px-4 py-6">

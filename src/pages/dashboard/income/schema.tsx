@@ -4,6 +4,7 @@ export const MassIncomeSchema = Yup.object().shape({
   ticketType: Yup.string().required("Bilet növü seçilməlidir"),
   customerId: Yup.string().required("Müştəri seçilməlidir"),
   personalId: Yup.string().required("Personal seçilməlidir"),
+  date: Yup.date().required(),
   debt: Yup.number().min(0),
   invoiceIds: Yup.array().min(1, "Faktura seçilməlidir"),
   paidAmount: Yup.number()
@@ -16,6 +17,7 @@ export const MassIncomeSchema = Yup.object().shape({
 });
 
 export const MassIncomeEditSchema = Yup.object().shape({
+  date: Yup.date().required(),
   paidAmount: Yup.number()
     .required("Məbləğ daxil edilməlidir")
     .when("debt", ([debt]) => {

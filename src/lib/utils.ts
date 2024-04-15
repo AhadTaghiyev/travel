@@ -6,10 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatDate = (dateString: string, dateFormat = "dd/MM/yyyy") => {
+export const formatDate = (dateString: string, dateFormat?, options?) => {
   const parts = dateString.split(/[^0-9]/) as any;
   const date = new Date(
     Date.UTC(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5])
   );
-  return format(date, dateFormat);
+  return format(date, dateFormat ?? "dd/MM/yyyy", options);
 };

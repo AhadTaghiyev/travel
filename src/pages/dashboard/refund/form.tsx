@@ -23,12 +23,9 @@ const getTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Individual Tur paket"), value: "individualTourPackage" },
   { label: t("İndividual tur satışı"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
-  
+
   { label: t("Depozit"), value: "deposit" },
-  
 ];
-
-
 
 type IItem = {
   no: string;
@@ -203,7 +200,9 @@ const RefundForm = ({
                     label={t("Ödənilən məbləğ")}
                     value={values.paidAmount}
                     change={handleChange}
-                    hasErrorMessages={!!errors.paidAmount && !!touched.paidAmount}
+                    hasErrorMessages={
+                      !!errors.paidAmount && !!touched.paidAmount
+                    }
                     errorMessages={[t(errors.paidAmount?.toString())]}
                   />
                 </div>
@@ -232,7 +231,6 @@ const RefundForm = ({
                   />
                 </div>
 
-             
                 <div className="w-full">
                   <CustomTextField
                     label={t("Qaytarılan məbləğ")}
@@ -250,17 +248,22 @@ const RefundForm = ({
                   <CustomTextField
                     disabled
                     label={t("Cərimə")}
-                    value={Math.max(values.paidAmount- values.supplierAmount- values.paidToCustomer)}
+                    value={Math.max(
+                      values.paidAmount -
+                        values.supplierAmount -
+                        values.paidToCustomer
+                    )}
                     change={() => 0}
                     type="number"
                     name={``}
                   />
                 </div>
-             
+
                 <div className="w-full h-full">
                   <CustomDateTimePicker
                     label={t("date")}
                     value={values.date}
+                    toDate={new Date()}
                     change={(data) => {
                       setFieldValue("date", data ?? new Date());
                     }}
