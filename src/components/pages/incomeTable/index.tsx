@@ -91,7 +91,7 @@ export function MassIncomeTable({
         ))}
         {incomes.length === 0 && (
           <TableRow>
-            <TableCell colSpan={5} className="text-center py-1.5 px-2">
+            <TableCell colSpan={6} className="text-center py-1.5 px-2">
               {t("Payment not found")}
             </TableCell>
           </TableRow>
@@ -99,24 +99,24 @@ export function MassIncomeTable({
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell className="py-1.5 px-2" colSpan={4}>
+          <TableCell className="py-1.5 px-2" colSpan={5}>
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">
             {(totalPaidAmount * currency.value).toFixed(2)} {currency.name}
           </TableCell>
         </TableRow>
-        {totalPrice && (
+        {totalPrice ? (
           <TableRow>
-            <TableCell className="py-1.5 px-2" colSpan={4}>
+            <TableCell className="py-1.5 px-2" colSpan={5}>
               {t("Total Remaining Amount")}
             </TableCell>
             <TableCell className="text-right py-2">
-              {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}
+              {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}
               {currency.name}
             </TableCell>
           </TableRow>
-        )}
+        ) : null}
       </TableFooter>
     </Table>
   );

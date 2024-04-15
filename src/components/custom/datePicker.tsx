@@ -73,6 +73,7 @@ export default function CustomDateTimePicker({
             toDate={toDate}
             selected={value}
             onSelect={(value) => {
+              console.log(value);
               change(value);
               setIsOpen(false);
             }}

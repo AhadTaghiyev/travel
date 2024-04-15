@@ -85,7 +85,7 @@ export default function Index({
     setData({
       simpleTable: {
         ...data.customer,
-        date: data.date && format(new Date(data.date), "dd-MM-yyyy HH:MM"),
+        date: data.date,
       },
       totals: {
         totalSellingPrice: data.totalSellingPrice,
@@ -228,7 +228,14 @@ export default function Index({
                   key={index}
                 >
                   <p className="w-24 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.simpleTable?.[item.propertyName]}</p>
+                  <p>
+                    {item.propertyName === "date"
+                      ? formatDate(
+                          data?.simpleTable?.[item.propertyName],
+                          "dd-MM-yyyy HH:mm"
+                        )
+                      : data?.simpleTable?.[item.propertyName]}
+                  </p>
                 </div>
               ))}
             </div>
