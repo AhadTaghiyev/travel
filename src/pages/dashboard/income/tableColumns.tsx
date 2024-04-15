@@ -33,6 +33,12 @@ export const columns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
+    field: "balance",
+    headerName: "Balance",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "payment",
     headerName: "Ödənişlər",
     flex: 1,

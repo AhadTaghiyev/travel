@@ -10,6 +10,7 @@ export default function index() {
         headers={[
           { fieldName: t("Invoice"), propertyName: "invoiceNo" },
           { fieldName: t("Staff"), propertyName: "staff" },
+          { fieldName: t("Passanger"), propertyName: "passanger" },
           { fieldName: t("Hava yolu"), propertyName: "airway" },
           { fieldName: t("Bilet nömrəsi"), propertyName: "ticketNo" },
           {

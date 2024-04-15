@@ -20,6 +20,7 @@ interface IIncomeTableProps {
     id: number;
     payment: string;
     paidAmount: number;
+    balance: number;
     ref: string;
     invoiceNo: string;
     description: string | null;
@@ -54,6 +55,7 @@ export function MassIncomeTable({
           <TableHead className="px-2">{t("Invoice Number")}</TableHead>
           <TableHead className="px-2">{t("Ödəniş növü")}</TableHead>
           <TableHead className="px-2">{t("paidamount")}</TableHead>
+          <TableHead className="px-2">{t("Balance")}</TableHead>
           <TableHead className="px-2">{t("Description")}</TableHead>
         </TableRow>
       </TableHeader>
@@ -78,6 +80,9 @@ export function MassIncomeTable({
             <TableCell className="py-1 px-2">{income.payment}</TableCell>
             <TableCell className="py-1 px-2">
               {(income.paidAmount * currency.value).toFixed(2)} {currency.name}
+            </TableCell>
+            <TableCell className="py-1 px-2">
+              {(income.balance * currency.value).toFixed(2)} {currency.name}
             </TableCell>
             <TableCell className="py-1 px-2 max-w-[150px] truncate">
               {income.description ?? t("No Description")}

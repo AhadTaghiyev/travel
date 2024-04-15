@@ -15,6 +15,7 @@ export default function Index() {
         detailLink="/panel/reports/customers/"
         api={"/Reports/ReciveAblesReport"}
         root="/panel/reports/customers"
+        
       />
     </Container>
   );
