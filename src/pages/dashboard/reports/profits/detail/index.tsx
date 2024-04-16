@@ -136,6 +136,13 @@ const Detail = () => {
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+        <div className="flex justify-center items-center mb-4">
+          <div>
+            <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+              {t("Profit Report")}
+            </h1>
+          </div>
+        </div>
         <Formik
           onSubmit={onSubmit}
           initialValues={{

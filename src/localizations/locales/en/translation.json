@@ -5,6 +5,7 @@
     "Təsisçidən təsisçiyə": "Debt From/To Founder",
     "Vəsait transferi": "Fund transfer",
     "Ödənişlər": "Payments",
+    "Ödəniləcək": "Payables",
     "Geri qaytarmalar": "Refunds",
     "Kreditlər/Borclar": "Credits/ Debts",
     "Depositlər": "Deposits",
@@ -302,7 +303,7 @@
     "Sector": "Sector",
     "Travel Dates": "Travel Dates",
     "Yaxın uçuşlar": "Upcoming Flights",
-    "Payment Types": "Payment Types",
+    "Payment Types": "Payment Methods",
     "Count": "Count",
     "Debit": "Debit",
     "Credit": "Credit",
@@ -344,7 +345,6 @@
     "WillBePaid Yarat": "Create Will Be Paid",
     "Profits": "Profits",
     "Financal Status": "Financial Status",
-    "Ödəniş növləri": "Payment types",
     "JAN": "JAN",
     "DEC": "DEC",
     "Referance": "Referance",
@@ -416,5 +416,6 @@
     "Secret key is required": "Secret key is required",
     "Email Created": "Email Created",
     "Email already exsists": "Email already exists",
-    "Yeni Email Yarat": "Create New Email"
+    "Yeni Email Yarat": "Create New Email",
+    "Profit Report": "Profit Report"
 }

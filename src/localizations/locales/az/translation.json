@@ -5,6 +5,7 @@
     "From/To Founder": "Təsisçidən təsisçiyə",
     "Vəsait transferi": "Vəsait transferi",
     "Ödənişlər": "Ödənişlər",
+    "Ödəniləcək": "Kreditor Borcları",
     "Geri qaytarmalar": "Geri qaytarmalar",
     "Kreditlər/Borclar": "Kreditlər/ Borclar",
     "Depositlər": "Depositlər",
@@ -339,12 +340,11 @@
     "Transfer güncəlləndi": "Transfer güncəlləndi",
     "Transfer güncəlləməsi": "Transfer güncəlləməsi",
     "WillBePaid": "Ödəniləcək",
-    "Geri qaytarma": "Geri qaytarma",
+    "Geri qaytarma": "Geri Qaytarma",
     "Xərc": "Xərc",
     "WillBePaid Yarat": "Ödəniləcək Yarat",
-    "Profits": "Mənfəətlər",
+    "Profits": "Gəlir",
     "Financal Status": "Maliyyə Vəziyyəti",
-    "Ödəniş növləri": "Ödəniş növləri",
     "JAN": "YAN",
     "DEC": "DEK",
     "Referance": "Referans",
@@ -373,8 +373,7 @@
     "Personal seçilməlidir":"Personal seçilməlidir",
     "Category": "Kateqoriya",
     "Supplier Payments": "Təchizatçı Ödənişləri",
-
-    "Profit Loss": "Mənfəət və Zərər",
+    "Profit Loss": "Gəlir və Zərər",
     "Company": "Şirkət",
     "B2C Air Ticket Invoice": "B2C Aviabilet Fakturası",
     "Staff": "İşçi",
@@ -417,5 +416,6 @@
     "Secret key is required": "Gizli açar daxil edilməlidir",
     "Email Created": "Email yaradıldı",
     "Email already exsists": "Email artıq mövcuddur",
-    "Yeni Email Yarat": "Yeni Email Yarat"
+    "Yeni Email Yarat": "Yeni Email Yarat",
+    "Profit Report": "Gəlir Hesabatı"
 }

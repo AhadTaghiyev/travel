@@ -647,91 +647,101 @@ const TourPackageForm = ({
                         errorMessages={[t(errors.returnDate?.toString())]}
                       />
                     </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        disabled={isView || !isFirst}
-                        label={t("purchasePrice")}
-                        value={
-                          values.individualTourPackages[index].purchasePrice
-                        }
-                        change={handleChange}
-                        type="number"
-                        name={`individualTourPackages.${index}.purchasePrice`}
-                        hasErrorMessages={
-                          !!errors.individualTourPackages?.[index]
-                            ?.purchasePrice &&
-                          !!touched.individualTourPackages?.[index]
-                            ?.purchasePrice
-                        }
-                        errorMessages={[
-                          t(
-                            errors.individualTourPackages?.[
-                              index
-                            ]?.purchasePrice?.toString()
-                          ),
-                        ]}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        disabled={isView || !isFirst}
-                        label={t("salePrice")}
-                        value={
-                          values.individualTourPackages[index].sellingPrice
-                        }
-                        change={handleChange}
-                        type="number"
-                        name={`individualTourPackages.${index}.sellingPrice`}
-                        hasErrorMessages={
-                          !!errors.individualTourPackages?.[index]
-                            ?.sellingPrice &&
-                          !!touched.individualTourPackages?.[index]
-                            ?.sellingPrice
-                        }
-                        errorMessages={[
-                          t(
-                            errors.individualTourPackages?.[
-                              index
-                            ]?.sellingPrice?.toString()
-                          ),
-                        ]}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        disabled={isView || !isFirst}
-                        label={t("discount")}
-                        value={values.individualTourPackages[index].discount}
-                        change={handleChange}
-                        type="number"
-                        name={`individualTourPackages.${index}.discount`}
-                        hasErrorMessages={
-                          !!errors.individualTourPackages?.[index]?.discount &&
-                          !!touched.individualTourPackages?.[index]?.discount
-                        }
-                        errorMessages={[
-                          t(
-                            errors.individualTourPackages?.[
-                              index
-                            ]?.discount?.toString()
-                          ),
-                        ]}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        disabled
-                        label={t("totalSalePrice")}
-                        value={
-                          values.individualTourPackages[index].sellingPrice -
-                          values.individualTourPackages[index].discount
-                        }
-                        change={handleChange}
-                        type="number"
-                        name={``}
-                        placeholder="Avtomatik"
-                      />
-                    </div>
+                    {isFirst && (
+                      <>
+                        <div className="w-full">
+                          <CustomTextField
+                            disabled={isView || !isFirst}
+                            label={t("purchasePrice")}
+                            value={
+                              values.individualTourPackages[index].purchasePrice
+                            }
+                            change={handleChange}
+                            type="number"
+                            name={`individualTourPackages.${index}.purchasePrice`}
+                            hasErrorMessages={
+                              !!errors.individualTourPackages?.[index]
+                                ?.purchasePrice &&
+                              !!touched.individualTourPackages?.[index]
+                                ?.purchasePrice
+                            }
+                            errorMessages={[
+                              t(
+                                errors.individualTourPackages?.[
+                                  index
+                                ]?.purchasePrice?.toString()
+                              ),
+                            ]}
+                          />
+                        </div>
+                        <div className="w-full">
+                          <CustomTextField
+                            disabled={isView || !isFirst}
+                            label={t("salePrice")}
+                            value={
+                              values.individualTourPackages[index].sellingPrice
+                            }
+                            change={handleChange}
+                            type="number"
+                            name={`individualTourPackages.${index}.sellingPrice`}
+                            hasErrorMessages={
+                              !!errors.individualTourPackages?.[index]
+                                ?.sellingPrice &&
+                              !!touched.individualTourPackages?.[index]
+                                ?.sellingPrice
+                            }
+                            errorMessages={[
+                              t(
+                                errors.individualTourPackages?.[
+                                  index
+                                ]?.sellingPrice?.toString()
+                              ),
+                            ]}
+                          />
+                        </div>
+                        <div className="w-full">
+                          <CustomTextField
+                            disabled={isView || !isFirst}
+                            label={t("discount")}
+                            value={
+                              values.individualTourPackages[index].discount
+                            }
+                            change={handleChange}
+                            type="number"
+                            name={`individualTourPackages.${index}.discount`}
+                            hasErrorMessages={
+                              !!errors.individualTourPackages?.[index]
+                                ?.discount &&
+                              !!touched.individualTourPackages?.[index]
+                                ?.discount
+                            }
+                            errorMessages={[
+                              t(
+                                errors.individualTourPackages?.[
+                                  index
+                                ]?.discount?.toString()
+                              ),
+                            ]}
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <CustomTextField
+                            disabled
+                            label={t("totalSalePrice")}
+                            value={
+                              values.individualTourPackages[index]
+                                .sellingPrice -
+                              values.individualTourPackages[index].discount
+                            }
+                            change={handleChange}
+                            type="number"
+                            name={``}
+                            placeholder="Avtomatik"
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
                 );
               }

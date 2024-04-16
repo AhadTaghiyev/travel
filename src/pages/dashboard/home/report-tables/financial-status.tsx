@@ -88,16 +88,10 @@ const FinancialStatusReport = () => {
               </TableCell>
             </TableRow>
             <TableRow className="w-full">
-              <TableCell
-                className="py-1.5 border-b border-solid border-black"
-                colSpan={2}
-              >
+              <TableCell className="py-1.5 border-b border-solid " colSpan={2}>
                 {t("Payables")}
               </TableCell>
-              <TableCell
-                className="py-1.5 border-b border-solid border-black"
-                colSpan={2}
-              >
+              <TableCell className="py-1.5 border-b border-solid " colSpan={2}>
                 {data.willBePaids}
               </TableCell>
             </TableRow>

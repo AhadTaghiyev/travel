@@ -55,7 +55,7 @@ const NearestFlightsReport = () => {
 
   return (
     <div className="bg-white shadow-md w-full py-4 px-2 border border-solid border-gray-300 rounded-md">
-      <h3 className="text-lg pl-1 pb-1 font-bold border-b border-solid border-gray-200">
+      <h3 className="text-2xl pl-1 pb-1 font-bold border-b border-solid border-gray-200">
         {t("Yaxın uçuşlar")}
       </h3>
       <div className="max-h-[280px] overflow-auto ">
