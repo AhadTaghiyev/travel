@@ -37,6 +37,7 @@ const Detail = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<
     {
+      type: string;
       id: string;
       name: string;
       buyingPrice: number;
@@ -93,7 +94,7 @@ const Detail = () => {
     data?.reduce((acc, item) => acc + item.buyingPrice, 0) || 0;
   const totalSellingPrice =
     data?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
-
+  const title = data[0].type;
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
@@ -139,7 +140,7 @@ const Detail = () => {
         <div className="flex justify-center items-center mb-4">
           <div>
             <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
-              {t("Profit Report")}
+              {t(title)}
             </h1>
           </div>
         </div>
