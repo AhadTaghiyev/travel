@@ -15,6 +15,7 @@ import CustomTextField from "@/components/custom/input";
 import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
 import { FaLink } from "react-icons/fa6";
+import CustomDateTimePicker from "@/components/custom/datePicker";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Aviabilet satışı"), value: "aviabiletSale" },
@@ -226,6 +227,18 @@ const MassIncomeForm = ({
                     errorMessages={[t(errors.description?.toString())]}
                   />
                 </div>
+                <div className="w-full h-full">
+              <CustomDateTimePicker
+                label={t("date")}
+                value={values.date}
+                toDate={new Date()}
+                change={(data) => {
+                  setFieldValue("date", data ?? new Date());
+                }}
+                hasErrorMessages={!!errors.date && !!touched.date}
+                errorMessages={[t(errors.date?.toString())]}
+              />
+            </div>
               </>
             )}
           </div>
