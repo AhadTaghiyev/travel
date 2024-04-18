@@ -162,7 +162,11 @@ export default function index() {
               {customerProperties.map((item, index) => (
                 <div className="text-sm flex w-fit mb-1" key={index}>
                   <p className="w-28 font-bold">{t(item.fieldName)}:</p>
-                  <p>{data?.customer?.[item.propertyName]}</p>
+                  <p>
+                    {item.propertyName === "date"
+                      ? formatDate(data?.customer?.[item.propertyName])
+                      : data?.customer?.[item.propertyName]}
+                  </p>
                 </div>
               ))}
             </div>
@@ -188,7 +192,7 @@ export default function index() {
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                  <TableCell className="font-medium py-1.5">
+                    <TableCell className="font-medium py-1.5">
                       RF-{data.id}
                     </TableCell>
                     <TableCell className="font-medium py-1.5">
@@ -202,7 +206,7 @@ export default function index() {
                       {(data.paidToCustomer * currency.value).toFixed(2)}{" "}
                       {currency.name}
                     </TableCell>
-            
+
                     <TableCell className="py-1.5 max-w-[150px] truncate">
                       {formatDate(data.date)}
                     </TableCell>

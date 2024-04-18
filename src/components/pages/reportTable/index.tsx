@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils";
 import {
   TableContainer,
   Table,
@@ -21,14 +22,6 @@ function getNestedProperty(obj, path: string) {
     }
   }
   return current;
-}
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date?.toLocaleDateString("tr-TR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
 }
 
 export default function Index({ headers, items, totals, currency }) {

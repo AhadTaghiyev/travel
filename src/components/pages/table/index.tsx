@@ -15,7 +15,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 //icons
 import { AiOutlineSearch } from "react-icons/ai";
-import { FiDownload } from "react-icons/fi";
+import { FiDownload, FiPrinter } from "react-icons/fi";
 import { FaPrint } from "react-icons/fa";
 import {
   BsCheckAll,
@@ -55,6 +55,9 @@ const headerStyle = {
   px: 2,
 };
 
+const handlePrint = () => {
+  window.print();
+};
 export default function Index({
   columns,
   api,
@@ -391,7 +394,7 @@ export default function Index({
               }}
             />
           </Grid>
-          <Grid item>
+          <Grid item className="removeFromPrint">
             <Button
               onClick={handleDownload}
               variant="outlined"
@@ -401,6 +404,18 @@ export default function Index({
             >
               <FiDownload style={{ marginRight: "6px" }} />
               {t("Export")}
+            </Button>
+          </Grid>
+          <Grid item className="removeFromPrint">
+            <Button
+              onClick={handlePrint}
+              variant="outlined"
+              sx={headerStyle}
+              style={{ fontSize: "9px" }}
+              color="inherit"
+            >
+              <FiPrinter style={{ marginRight: "6px" }} />
+              {t("Print")}
             </Button>
           </Grid>
         </>

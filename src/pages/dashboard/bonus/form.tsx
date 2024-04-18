@@ -73,6 +73,7 @@ const MassIncomeForm = ({
               <CustomDateTimePicker
                 disabled={isView}
                 label={t("date")}
+                toDate={new Date()}
                 value={values.date}
                 change={(data) => {
                   setFieldValue("date", data ?? new Date());

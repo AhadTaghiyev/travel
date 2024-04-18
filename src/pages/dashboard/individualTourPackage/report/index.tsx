@@ -18,7 +18,6 @@ export default function index() {
           { fieldName: t("Böyüklərin sayı"), propertyName: "adultsCount" },
           { fieldName: t("Gediş tarixi"), propertyName: "dateOfDeparture" },
           { fieldName: t("Dönüş tarixi"), propertyName: "returnDate" },
-          { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
         ]}
         api="/IndividualTourPackages/GetDetailAsync"
       />

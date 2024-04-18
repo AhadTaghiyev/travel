@@ -107,9 +107,6 @@ export default function Index() {
             <Table className="border border-solid border-gray-300">
               <TableHeader className="border-b border-solid border-black/60">
                 <TableRow className="w-full">
-                  {/* {columns.map((column) => (
-                    <TableHead key={column.name}>{t(column.label)}</TableHead>
-                  ))} */}
                   <TableHead key={"payment-type"}>{t("Ödəniş növü")}</TableHead>
                   <TableHead key={"amount"}></TableHead>
                   <TableHead></TableHead>
@@ -126,36 +123,26 @@ export default function Index() {
                   ))}
               </TableBody>
               <TableFooter className="w-full">
-                <TableRow className="w-full">
-                  <TableCell className="" colSpan={1}>
-                    {t("Reciveables")}
-                  </TableCell>
-                  <TableCell className="" colSpan={2}>
-                    {data.willBeGet}
-                  </TableCell>
+                <TableRow className="w-full bg-white">
+                  <TableCell colSpan={1}>{t("Reciveables")}</TableCell>
+                  <TableCell colSpan={1}>{data.willBeGet}</TableCell>
+                  <TableCell colSpan={1}></TableCell>
                 </TableRow>
-                <TableRow className="w-full">
-                  <TableCell
-                    className=" border-b border-solid border-black"
-                    colSpan={2}
-                  >
+                <TableRow className="w-full bg-white">
+                  <TableCell className="border-b border-solid" colSpan={1}>
                     {t("Payables")}
                   </TableCell>
-                  <TableCell
-                    className=" border-b border-solid border-black"
-                    colSpan={2}
-                  >
+                  <TableCell colSpan={1}></TableCell>
+                  <TableCell className="border-b border-solid" colSpan={2}>
                     {data.willBePaids}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="" colSpan={1}>
+                  <TableCell colSpan={1}>
                     {t("Current Financal Status")}
                   </TableCell>
-
-                  <TableCell className="" colSpan={2}>
-                    {totalAmount}
-                  </TableCell>
+                  <TableCell colSpan={1}>{totalAmount}</TableCell>
+                  <TableCell colSpan={1}></TableCell>
                 </TableRow>
               </TableFooter>
             </Table>

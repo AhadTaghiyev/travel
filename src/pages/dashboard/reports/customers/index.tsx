@@ -12,10 +12,10 @@ export default function Index() {
         hidePrint
         hideFilter
         columns={columns}
+        totalProps={["debt"]}
         detailLink="/panel/reports/customers/"
         api={"/Reports/ReciveAblesReport"}
         root="/panel/reports/customers"
-        
       />
     </Container>
   );

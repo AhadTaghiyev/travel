@@ -51,6 +51,7 @@ const NewIncome = () => {
         formType="Create"
         onSubmit={onSubmit}
         initialValues={{
+          date: new Date(),
           debt: 0,
           personalId: null,
           paidAmount: 0,

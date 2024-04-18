@@ -26,7 +26,7 @@ export default function index() {
 
   const years = useMemo(() => {
     const years = [];
-    for (let i = currentYear; i >= new Date(0).getFullYear(); i--) {
+    for (let i = currentYear; i >= new Date(2023, 0, 1, 0).getFullYear(); i--) {
       years.push(i);
     }
     return years;

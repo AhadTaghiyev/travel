@@ -178,7 +178,7 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: FaMoneyBillWave,
-        text: "Ödənişlər",
+        text: "Ödəniləcək",
         link: "/panel/reports/willbepaid",
       },
       {
@@ -203,7 +203,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaMoneyBill1Wave,
-        text: "Ödəniş növləri",
+        text: "Payment Types",
         link: "/panel/reports/paymentTypes",
       },
       {

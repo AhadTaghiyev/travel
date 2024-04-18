@@ -7,6 +7,7 @@ export type TicketType =
 
 export interface IIncomeModel {
   ticketType?: TicketType;
+  date: Date;
   customerId?: string;
   invoiceIds?: string[];
   personalId: string;

@@ -5,6 +5,7 @@
     "From/To Founder": "От основателя к основателю",
     "Vəsait transferi": "Перевод средств",
     "Ödənişlər": "Платежи",
+    "Ödəniləcək": "Кредиторская Задолженность",
     "Geri qaytarmalar": "Возвраты",
     "Kreditlər/Borclar": "Кредиты/ Долги",
     "Depositlər": "Депозиты",
@@ -192,7 +193,7 @@
     "balance": "Баланс",
     "Bonus": "Incentive",
     "Bonus yaradıldı": "Бонус создан",
-    "Depozit Yarat": "Advance Receipt",
+    "Depozit Yarat": "Создать депозит",
     "Bonus updated": "Бонус обновлен",
     "Depozit güncəlləməsi": "Обновление депозита",
     "Deposit": "Advance Receipt",
@@ -344,7 +345,6 @@
     "WillBePaid Yarat": "Создать будущий платеж",
     "Profits": "Прибыль",
     "Financal Status": "Финансовый статус",
-    "Ödəniş növləri": "Типы оплаты",
     "JAN": "ЯНВ",
     "DEC": "ДЕК",
     "Referance": "Реферанс",
@@ -373,7 +373,7 @@
     "Personal seçilməlidir":"Персонал необходимо подбирать",
     "Category": "Категория",
     "Supplier Payments": "Платежи поставщикам",
-    "Profit Loss": "Прибыль и убыток",
+    "Profit Loss": "Доходы и Расходы",
     "Company": "Компания",
     "B2C Air Ticket Invoice": "Счет на авиабилет B2C",
     "Staff": "Персонал",
@@ -416,5 +416,6 @@
     "Secret key is required": "Требуется секретный ключ",
     "Email Created": "Email создан",
     "Email already exsists": "Email уже существует",
-    "Yeni Email Yarat": "Создать новый Email"
+    "Yeni Email Yarat": "Создать новый Email",
+    "Profit Report": "Отчет О Прибыли"
 }

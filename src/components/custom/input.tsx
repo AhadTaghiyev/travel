@@ -43,6 +43,7 @@ export default function CustomTextField({
         value={value}
         onChange={change}
         disabled={disabled}
+        className={type === "file" && "cursor-pointer"}
         title="Test"
         placeholder={t(placeholder ?? "Type here...")}
         onWheel={(e) => e.currentTarget.blur()}
