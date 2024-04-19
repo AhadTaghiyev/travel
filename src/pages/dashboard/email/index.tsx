@@ -31,7 +31,9 @@ export default function index() {
     });
     formData.append("subject", values.subject);
     formData.append("body", values.body);
-    formData.append("attachments", values.attachments);
+    values.attachments.forEach((attachment) => {
+      formData.append("attachments", attachment);
+    });
     try {
       const res = await apiService.postForm(
         `Email/SendMailToPersons`,
@@ -98,6 +100,7 @@ export default function index() {
                   type="file"
                   label={t("Attachments")}
                   value={undefined}
+                  
                   change={(e) => {
                     setFieldValue("attachments", e.target.files[0]);
                   }}
