@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import { IEmailModel } from "./types";
 import { useTranslation } from "react-i18next";
 import CustomTextField from "@/components/custom/input";
-import CustomTextAreaField from "@/components/custom/textArea";
 import * as Yup from "yup";
 import { toast } from "sonner";
 import { apiService } from "@/server/apiServer";

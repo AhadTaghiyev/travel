@@ -8,22 +8,23 @@ import { IBlogModel } from "./types";
 
 import CustomTextField from "@/components/custom/input";
 import CustomTextAreaField from "@/components/custom/textArea";
+import { InputLabel } from "@mui/material";
+import { textStyling } from "@/styles";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 type FormType = "Edit" | "Create" | "View";
 
 interface IBlogProps {
   formType: FormType;
   initialValues: IBlogModel;
-  onSubmit: (
-    values: IBlogModel,
-    helpers: FormikHelpers<FormikValues>
-  ) => void;
+  onSubmit: (values: IBlogModel, helpers: FormikHelpers<FormikValues>) => void;
 }
 
 const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  console.log(initialValues)
+  console.log(initialValues);
   return (
     <Formik
       onSubmit={onSubmit}
@@ -37,101 +38,122 @@ const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
         handleChange,
         handleSubmit,
         isSubmitting,
-        setFieldValue
+        setFieldValue,
       }) => (
         <form onSubmit={handleSubmit} className="pt-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-        
-          <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
+            <div className="w-full">
+              <CustomTextField
+                label={t("title (English)")}
+                value={values.titleEn}
+                change={handleChange}
+                name="titleEn"
+                hasErrorMessages={!!errors.name && !!touched.name}
+                errorMessages={[t(errors.name?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("title (Russian)")}
+                value={values.titleRu}
+                change={handleChange}
+                name="titleRu"
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("title (Azerbaijani)")}
+                value={values.titleAz}
+                change={handleChange}
+                name="titleAz"
+              />
+            </div>
 
-            <CustomTextField
-              label={t("title (English)")}
-              value={values.titleEn}
-              change={handleChange}
-              name="titleEn"
-              hasErrorMessages={!!errors.name && !!touched.name}
-              errorMessages={[t(errors.name?.toString())]}
-            />
+            <div className="w-full">
+              <label htmlFor="image">{t("Image")}</label>
+              <input
+                id="image"
+                name="image"
+                type="file"
+                onChange={(event) => {
+                  const file = event.currentTarget.files[0];
+
+                  setFieldValue("image", file); // Dosyayı setFieldValue ile ekliyoruz
+                }}
+              />
+              {/* Hata mesajı varsa göster */}
+              {errors.image && touched.image && <div>{errors.image}</div>}
+            </div>
           </div>
-          <div className="w-full">
-            <CustomTextField
-              label={t("title (Russian)")}
-              value={values.titleRu}
-              change={handleChange}
-              name="titleRu"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
+            <div className="w-full col-span-2 mb-2">
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ mb: 1 }}
+                style={textStyling}
+              >
+                {t("description (English)")}
+              </InputLabel>
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onChange={(_, editor) => {
+                  setFieldValue("descEn", editor.getData());
+                }}
+              />
+            </div>
+            <div className="w-full col-span-2 mb-2">
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ mb: 1 }}
+                style={textStyling}
+              >
+                {t("description (Russian)")}
+              </InputLabel>
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onChange={(_, editor) => {
+                  setFieldValue("descRu", editor.getData());
+                }}
+              />
+            </div>
+            <div className="w-full col-span-2 mb-6">
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ mb: 1 }}
+                style={textStyling}
+              >
+                {t("description (Azerbaijani)")}
+              </InputLabel>
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onChange={(_, editor) => {
+                  setFieldValue("descAz", editor.getData());
+                }}
+              />
+            </div>
           </div>
-          <div className="w-full">
-            <CustomTextField
-              label={t("title (Azerbaijani)")}
-              value={values.titleAz}
-              change={handleChange}
-              name="titleAz"
-            />
+
+          <div className="w-full flex gap-x-6 justify-end mb-6">
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => navigate("/admin/Blogs")}
+              className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+            >
+              {t("goBack")}
+            </button>
+            <button
+              type="submit"
+              // disabled={isSubmitting}
+              className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+            >
+              {t("confirm")}
+            </button>
           </div>
-       
-          <div className="w-full">
-            <label htmlFor="image">{t('Image')}</label>
-            <input
-              id="image"
-              name="image"
-              type="file"
-              onChange={(event) => {
-                const file = event.currentTarget.files[0];
-             
-                setFieldValue('image', file); // Dosyayı setFieldValue ile ekliyoruz
-              }}
-            />
-            {/* Hata mesajı varsa göster */}
-            {errors.image && touched.image && <div>{errors.image}</div>}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-        <div className="w-full">
-            <CustomTextAreaField
-              label={t("description (English)")}
-              value={values.descEn}
-              change={handleChange}
-              name="descEn"
-            />
-          </div>
-          <div className="w-full">
-            <CustomTextAreaField
-              label={t("description (Russian)")}
-              value={values.descRu}
-              change={handleChange}
-              name="descRu"
-            />
-          </div>
-          <div className="w-full">
-            <CustomTextAreaField
-              label={t("description (Azerbaijani)")}
-              value={values.descAz}
-              change={handleChange}
-              name="descAz"
-            />
-          </div>
-        </div>
-      
-        <div className="w-full flex gap-x-6 justify-end mb-6">
-          <button
-            type="button"
-            disabled={isSubmitting}
-            onClick={() => navigate("/admin/Blogs")}
-            className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-          >
-            {t("goBack")}
-          </button>
-          <button
-            type="submit"
-            // disabled={isSubmitting}
-            className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-          >
-            {t("confirm")}
-          </button>
-        </div>
-      </form>
-      
+        </form>
       )}
     </Formik>
   );
