@@ -153,8 +153,8 @@ export const advanceCollectsColumns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
-    field: "name",
-    headerName: "CustomerName",
+    field: "service",
+    headerName: "Service Name",
     flex: 1,
     headerClassName: "header-item",
   },

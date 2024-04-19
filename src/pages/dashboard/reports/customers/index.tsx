@@ -10,7 +10,7 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
-        hideFilter
+        // hideFilter
         columns={columns}
         totalProps={["debt"]}
         detailLink="/panel/reports/customers/"

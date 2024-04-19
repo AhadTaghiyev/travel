@@ -21,6 +21,7 @@ export default function Index() {
         hideEdit
         hidePrint
         columns={columns}
+        totalProps={["purchasePrice","sellingPrice","segment"]}
         api={"/Reports/FlightTicketsReport"}
         root="/panel/reports/flightTickets"
       />

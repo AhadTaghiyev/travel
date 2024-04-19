@@ -39,4 +39,16 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
       </div>
     ),
   },
+  {
+    field: "subscribeType",
+    headerName: "SubscribeType",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "subScribestatus",
+    headerName: "SubScribestatus",
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];

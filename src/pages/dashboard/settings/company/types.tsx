@@ -6,4 +6,5 @@ export interface ICompany {
   detail: string;
   image: string;
   concurency: string;
+  id: number;
 }

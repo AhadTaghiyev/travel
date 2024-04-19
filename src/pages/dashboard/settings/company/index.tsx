@@ -13,6 +13,7 @@ import { textStyling } from "@/styles";
 import { UserContext } from "@/store/UserContext";
 import { CompanyContext } from "@/store/CompanyContext";
 
+
 const Company = () => {
   const [companyData, setCompanyData] = useState<ICompany>();
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,6 @@ const Company = () => {
   async function getData() {
     setLoading(true);
     const res = await apiService.get(`/Company`);
-
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
@@ -86,6 +86,7 @@ const Company = () => {
           concurency: companyData?.concurency,
           detail: companyData?.detail,
           formFile: companyData?.image,
+          id:companyData?.id
         }}
         validationSchema={CompanySchema}
       >
@@ -100,6 +101,16 @@ const Company = () => {
         }) => (
           <form onSubmit={handleSubmit} className="pt-4 ">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
+
+            <div className="w-full">
+                <CustomTextField
+                  label={t("Id")}
+                  value={values.id}
+                  change={handleChange}
+                  name={`id`}
+                  disabled
+                />
+              </div>
               <div className="w-full">
                 <CustomTextField
                   label={t("Ad")}
@@ -120,6 +131,7 @@ const Company = () => {
                   errorMessages={[t(errors.email?.toString())]}
                 />
               </div>
+          
               <div className="w-full">
                 <CustomTextField
                   label={t("Phone Number")}

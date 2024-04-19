@@ -21,6 +21,7 @@ export default function Index() {
         hidePrint
         addDateToReport
         columns={columns}
+        totalProps={["balance"]}
         detailLink="/panel/reports/suppliers/"
         api={"/Reports/SupplierReport"}
         root="/panel/reports/suppliers"

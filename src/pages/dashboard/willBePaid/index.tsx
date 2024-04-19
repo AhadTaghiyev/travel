@@ -51,16 +51,18 @@ const tabs = [
   {
     id: 5,
     title: "Advance Receipt",
-    hideReport: true,
+    hideReport: false,
     api: "/Reports/AdvanceCollectsReport",
+    detailLink:"/panel/deposit/report?tickets=",
     columns: advanceCollectsColumns,
   },
   {
     id: 6,
     title: "Others",
-    hideReport: true,
+    hideReport: false,
     api: "/Reports/FounderReport",
     columns: advanceCollectsColumns,
+    detailLink:"/panel/managerFinancialTransactions/report?tickets="
   },
 ];
 const handlePrint = () => {

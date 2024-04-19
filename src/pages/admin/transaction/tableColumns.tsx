@@ -28,5 +28,16 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
     headerName: "Payment Status",
     flex: 1,
     headerClassName: "header-item",
+    renderCell: (params) => (
+      <div className={`${params.value ? "text-green-500" : "text-red-500"}`}>
+        {params.value ? "Paid" : "Not Paid"}
+      </div>
+    ),
+  },
+  {
+    field: "createdAt",
+    headerName: "Date",
+    flex: 1,
+    headerClassName: "header-item",
   },
 ];

@@ -163,7 +163,7 @@ export default function index() {
                 {data && (
                   <TableRow key={data.id}>
                     <TableCell className="py-1.5">
-                      {data.status === "1" ? "Mədaxil" : "Məxaric"}
+                      {data.status == "1" ? "Mədaxil" : "Məxaric"}
                     </TableCell>
                     <TableCell className="py-1.5">{data.ref}</TableCell>
                     <TableCell className="py-1.5">{data.payment}</TableCell>

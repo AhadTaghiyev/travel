@@ -250,6 +250,7 @@ export default function Index({
           return newItem;
         });
         setRows(formattedData);
+        console.log(formattedData);
         setTotalRows(response?.data?.totalItems);
         setTotalPages(response?.data?.totalPages);
         setLoading(false);
