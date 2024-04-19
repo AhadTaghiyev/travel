@@ -142,7 +142,7 @@ const Detail = () => {
             <h1 className="text-3xl mb-2 text-center font-semibold text-gray-900 dark:text-gray-100">
               {t("Profit Report")}
             </h1>
-            <h1 className="text-3xl text-center font-semibold text-gray-900 dark:text-gray-100">
+            <h1 className="text-xl text-center font-semibold text-gray-900/80 dark:text-gray-100">
               {t(title)}
             </h1>
           </div>
