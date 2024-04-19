@@ -23,19 +23,9 @@ const footer = {
 
 export default function Index() {
   const navigate = useNavigate();
-  const [agreementFormats, setAgreementFormats] = useState([]);
   const [name, setName] = useState("");
   const [text, setText] = useState("");
-  const [currentAgreementFormat, setCurrentAgreementFormat] = useState(null);
 
-  const getAgreementFormats = async () => {
-    const res = await apiService.get("AgreementFormats/GetAll/1");
-    if (res.status === 200) {
-      setAgreementFormats(res.data.items);
-    } else {
-      console.error(res);
-    }
-  };
 
   const handleSave = async () => {
     try {

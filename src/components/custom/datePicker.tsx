@@ -1,7 +1,6 @@
 import { InputLabel, FormHelperText } from "@mui/material";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { format } from "date-fns";
 import { useState } from "react";
 
 import { textStyling } from "../../styles";
