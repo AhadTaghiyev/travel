@@ -15,5 +15,4 @@ export interface IIncomeModel {
   paymentId?: string;
   paidAmount?: number;
   description?: string;
-  date?: Date;
 }
