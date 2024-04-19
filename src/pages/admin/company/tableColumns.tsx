@@ -33,5 +33,10 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
     headerName: "Subscribe Status",
     flex: 1,
     headerClassName: "header-item",
+    renderCell: (params) => (
+      <div className={`${params.value ? "text-green-500" : "text-red-500"}`}>
+        {params.value ? "active" : "inactive"}
+      </div>
+    ),
   },
 ];
