@@ -49,12 +49,8 @@ export default function index() {
   const getCompanyName = async (companyId: string) => {
     try {
       const res = await apiService.get(`/Company/GetById/${companyId}`);
-      console.log(res);
-
       if (res?.status == 200) {
         setCompanyName(res.data.data.name);
-      } else {
-        setCompanyName("Company Not Found"); // TODO: translate
       }
     } catch (err) {
       console.log("err", err);
