@@ -21,7 +21,7 @@ const NewIncome = () => {
         personalId: values.personalId,
         paidAmount: values.paidAmount,
         description: values.description,
-        date:values.date
+        date: values.date,
       };
 
       const promise = apiService
@@ -59,7 +59,6 @@ const NewIncome = () => {
           invoiceIds: [],
           customerId: null,
           ticketType: null,
-          date:null
         }}
       />
     </div>

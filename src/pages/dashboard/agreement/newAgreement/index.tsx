@@ -1,11 +1,10 @@
-// @ts-nocheck
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Container, InputLabel, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../server/apiServer";
-import Autocomplete from "@mui/material/Autocomplete";
-import { Editor } from "@tinymce/tinymce-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const textStyling = {
   lineHeight: "16px",
@@ -24,11 +23,9 @@ const footer = {
 
 export default function Index() {
   const navigate = useNavigate();
-
-  const editorRef = useRef(null);
-
   const [agreementFormats, setAgreementFormats] = useState([]);
   const [name, setName] = useState("");
+  const [text, setText] = useState("");
   const [currentAgreementFormat, setCurrentAgreementFormat] = useState(null);
 
   const getAgreementFormats = async () => {
@@ -43,8 +40,8 @@ export default function Index() {
   const handleSave = async () => {
     try {
       const res = await apiService.post("Agreements/Create", {
-        name: name,
-        text: editorRef.current.getContent(),
+        name,
+        text,
       });
       if (res?.status == 200) {
         toast.success("Uğurla yaradıldı!");
@@ -59,7 +56,7 @@ export default function Index() {
   return (
     <>
       <Container maxWidth="xl">
-        <InputLabel
+        {/* <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
           style={textStyling}
@@ -69,7 +66,7 @@ export default function Index() {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          onChange={(event, value) => setCurrentAgreementFormat(value)}
+          onChange={(_, value) => setCurrentAgreementFormat(value)}
           onOpen={() => getAgreementFormats()}
           options={agreementFormats}
           style={textStyling}
@@ -77,7 +74,7 @@ export default function Index() {
           getOptionLabel={(option) => option.name}
           size="small"
           renderInput={(params) => <TextField {...params} label="" />}
-        />
+        /> */}
         <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
@@ -94,42 +91,25 @@ export default function Index() {
           onChange={(e) => setName(e.target.value)}
           size="small"
         />
-        <Editor
-          apiKey="ows56ugyfwkmx9qarju0k2ygovl2zyuq5byax7cs5th0cwed"
-          initialValue={currentAgreementFormat?.text}
-          onInit={(evt, editor) => (editorRef.current = editor)}
-          init={{
-            height: 500,
-            menubar: false,
-            plugins: [
-              "advlist",
-              "autolink",
-              "lists",
-              "link",
-              "image",
-              "charmap",
-              "preview",
-              "anchor",
-              "searchreplace",
-              "visualblocks",
-              "code",
-              "fullscreen",
-              "insertdatetime",
-              "media",
-              "table",
-              "code",
-              "help",
-              "wordcount",
-            ],
-            toolbar:
-              "undo redo | blocks | " +
-              "bold italic forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent | " +
-              "removeformat | help",
-            content_style:
-              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-          }}
-        />
+        <div className="w-[50%] mb-6">
+          <CKEditor
+            editor={ClassicEditor}
+            data=""
+            onReady={() => {
+              // You can store the "editor" and use when it is needed.
+              // console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(_, editor) => {
+              setText(editor.getData());
+            }}
+            onBlur={() => {
+              // console.log("Blur.", editor);
+            }}
+            onFocus={() => {
+              // console.log("Focus.", editor);
+            }}
+          />
+        </div>
       </Container>
       <footer style={footer}>
         <div>
