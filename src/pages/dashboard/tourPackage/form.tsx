@@ -525,28 +525,44 @@ const TourPackageForm = ({
                   <CustomDateTimePicker
                     disabled={isView}
                     label={t("Gediş tarixi")}
-                    value={values.dateOfDeparture}
+                    value={values.tourPackages[index].dateOfDeparture}
                     change={(data) => {
-                      setFieldValue("dateOfDeparture", data ?? new Date());
+                      setFieldValue(
+                        `tourPackages.${index}.dateOfDeparture`,
+                        data ?? new Date()
+                      );
                     }}
                     hasErrorMessages={
-                      !!errors.dateOfDeparture && !!touched.dateOfDeparture
+                      !!errors.tourPackages?.[index]?.dateOfDeparture &&
+                      !!touched.tourPackages?.[index]?.dateOfDeparture
                     }
-                    errorMessages={[t(errors.dateOfDeparture?.toString())]}
+                    errorMessages={[
+                      t(
+                        errors.tourPackages?.[
+                          index
+                        ]?.dateOfDeparture?.toString()
+                      ),
+                    ]}
                   />
                 </div>
                 <div className="w-full h-full">
                   <CustomDateTimePicker
                     disabled={isView}
                     label={t("Dönüş tarixi")}
-                    value={values.returnDate}
+                    value={values.tourPackages[index].returnDate}
                     change={(data) => {
-                      setFieldValue("returnDate", data ?? new Date());
+                      setFieldValue(
+                        `tourPackages.${index}.returnDate`,
+                        data ?? new Date()
+                      );
                     }}
                     hasErrorMessages={
-                      !!errors.returnDate && !!touched.returnDate
+                      !!errors.tourPackages?.[index]?.returnDate &&
+                      !!touched.tourPackages?.[index]?.returnDate
                     }
-                    errorMessages={[t(errors.returnDate?.toString())]}
+                    errorMessages={[
+                      t(errors.tourPackages?.[index]?.returnDate?.toString()),
+                    ]}
                   />
                 </div>
                 <div className="w-full">

@@ -623,28 +623,53 @@ const TourPackageForm = ({
                       <CustomDateTimePicker
                         disabled={isView}
                         label={t("Gediş tarixi")}
-                        value={values.dateOfDeparture}
+                        value={
+                          values.individualTourPackages[index].dateOfDeparture
+                        }
                         change={(data) => {
-                          setFieldValue("dateOfDeparture", data ?? new Date());
+                          setFieldValue(
+                            `individualTourPackages.${index}.dateOfDeparture`,
+                            data ?? new Date()
+                          );
                         }}
                         hasErrorMessages={
-                          !!errors.dateOfDeparture && !!touched.dateOfDeparture
+                          !!errors.individualTourPackages?.[index]
+                            ?.dateOfDeparture &&
+                          !!touched.individualTourPackages?.[index]
+                            ?.dateOfDeparture
                         }
-                        errorMessages={[t(errors.dateOfDeparture?.toString())]}
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.dateOfDeparture?.toString()
+                          ),
+                        ]}
                       />
                     </div>
                     <div className="w-full h-full">
                       <CustomDateTimePicker
                         disabled={isView}
                         label={t("Dönüş tarixi")}
-                        value={values.returnDate}
+                        value={values.individualTourPackages[index].returnDate}
                         change={(data) => {
-                          setFieldValue("returnDate", data ?? new Date());
+                          setFieldValue(
+                            `individualTourPackages.${index}.returnDate`,
+                            data ?? new Date()
+                          );
                         }}
                         hasErrorMessages={
-                          !!errors.returnDate && !!touched.returnDate
+                          !!errors.individualTourPackages?.[index]
+                            ?.returnDate &&
+                          !!touched.individualTourPackages?.[index]?.returnDate
                         }
-                        errorMessages={[t(errors.returnDate?.toString())]}
+                        errorMessages={[
+                          t(
+                            errors.individualTourPackages?.[
+                              index
+                            ]?.returnDate?.toString()
+                          ),
+                        ]}
                       />
                     </div>
                     {isFirst && (
