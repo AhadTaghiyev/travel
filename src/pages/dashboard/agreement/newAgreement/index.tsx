@@ -95,18 +95,8 @@ export default function Index() {
           <CKEditor
             editor={ClassicEditor}
             data=""
-            onReady={() => {
-              // You can store the "editor" and use when it is needed.
-              // console.log("Editor is ready to use!", editor);
-            }}
             onChange={(_, editor) => {
               setText(editor.getData());
-            }}
-            onBlur={() => {
-              // console.log("Blur.", editor);
-            }}
-            onFocus={() => {
-              // console.log("Focus.", editor);
             }}
           />
         </div>

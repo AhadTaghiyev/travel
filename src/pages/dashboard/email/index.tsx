@@ -7,6 +7,10 @@ import CustomTextAreaField from "@/components/custom/textArea";
 import * as Yup from "yup";
 import { toast } from "sonner";
 import { apiService } from "@/server/apiServer";
+import { textStyling } from "@/styles";
+import { InputLabel } from "@mui/material";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const initialValues: IEmailModel = {
   body: "",
@@ -31,9 +35,10 @@ export default function index() {
     });
     formData.append("subject", values.subject);
     formData.append("body", values.body);
-    values.attachments.forEach((attachment) => {
-      formData.append("attachments", attachment);
-    });
+    if (values.attachments)
+      Object.keys(values.attachments).forEach((key) => {
+        formData.append("attachments", values.attachments[key]);
+      });
     try {
       const res = await apiService.postForm(
         `Email/SendMailToPersons`,
@@ -98,11 +103,11 @@ export default function index() {
                 <CustomTextField
                   name="attachments"
                   type="file"
+                  multiple
                   label={t("Attachments")}
                   value={undefined}
-                  
                   change={(e) => {
-                    setFieldValue("attachments", e.target.files[0]);
+                    setFieldValue("attachments", e.target.files);
                   }}
                   hasErrorMessages={
                     !!errors.attachments && !!touched.attachments
@@ -111,15 +116,23 @@ export default function index() {
                 />
               </div>
               <div className="w-full col-span-1 sm:col-span-2 md:col-span-3">
-                <CustomTextAreaField
-                  label={t("Body")}
-                  value={values.body}
-                  change={handleChange}
-                  name="body"
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ mb: 1 }}
+                  style={textStyling}
+                >
+                  {t("Body")}
+                </InputLabel>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data=""
+                  onChange={(_, editor) => {
+                    setFieldValue("body", editor.getData());
+                  }}
                 />
               </div>
             </div>
-            <div className="w-full flex gap-x-6 justify-end mb-6">
+            <div className="w-full flex gap-x-6 justify-end my-6">
               <button
                 type="button"
                 disabled={isSubmitting}

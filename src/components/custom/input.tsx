@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 interface ICustomTextFieldModel {
   label: string;
+  multiple?: boolean;
   value: string | number;
   change: (value: any) => void;
   hasErrorMessages?: boolean;
@@ -19,6 +20,7 @@ export default function CustomTextField({
   label,
   name,
   change,
+  multiple,
   hasErrorMessages,
   errorMessages,
   value,
@@ -38,6 +40,7 @@ export default function CustomTextField({
         {label}
       </InputLabel>
       <Input
+        multiple={multiple}
         name={name}
         type={type}
         value={value}
