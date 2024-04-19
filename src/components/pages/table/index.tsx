@@ -250,7 +250,6 @@ export default function Index({
           return newItem;
         });
         setRows(formattedData);
-        console.log(formattedData);
         setTotalRows(response?.data?.totalItems);
         setTotalPages(response?.data?.totalPages);
         setLoading(false);
@@ -459,6 +458,7 @@ export default function Index({
                 borderRight: 0,
                 borderTop: 0,
                 borderColor: "#e0e0e0",
+                overflow: "visible!important",
               },
               "& .MuiDataGrid-cell:last-child": {
                 borderRight: 0,

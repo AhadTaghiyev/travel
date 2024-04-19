@@ -32,9 +32,12 @@ export default function index() {
     const formData = new FormData();
     formData.append("recivedCompanyId", values.recivedCompanyId);
     formData.append("text", values.text);
-    formData.append("file", values.file);
+    if (values.file)
+      Object.keys(values.file).forEach((key) => {
+        formData.append("file", values.file[key]);
+      });
     try {
-      const res = await apiService.postForm(`/Document/Send`, values);
+      const res = await apiService.postForm(`/Document/Send`, formData);
       if (res?.status == 200) {
         toast.success("Uğurla yaradıldı!");
         navigate("/panel/documents");
@@ -112,10 +115,11 @@ export default function index() {
                   <CustomTextField
                     name="file"
                     type="file"
+                    multiple
                     label={t("Attachments")}
                     value={undefined}
                     change={(e) => {
-                      setFieldValue("file", e.target.files[0]);
+                      setFieldValue("file", e.target.files);
                     }}
                     hasErrorMessages={!!errors.file && !!touched.file}
                     errorMessages={[t(errors.file?.toString())]}

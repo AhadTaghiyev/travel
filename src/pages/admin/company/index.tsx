@@ -7,13 +7,16 @@ export default function Index() {
   const { t } = useTranslation();
   return (
     <Container maxWidth="xl">
+      <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
+        {t("Companys")} {/* TODO: translate */}
+      </h1>
       <Table
-        hideReport
         columns={columns(t)}
         api={"/Company"}
         buttonText="Company"
         deleteApi="/Company/delete"
         root="/admin/Companys"
+        detailLink="/admin/companyTransactions/"
         hideCreate
         hideDelete
         hideEdit

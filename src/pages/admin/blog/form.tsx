@@ -7,7 +7,6 @@ import { BlogSchema } from "./schema";
 import { IBlogModel } from "./types";
 
 import CustomTextField from "@/components/custom/input";
-import CustomTextAreaField from "@/components/custom/textArea";
 import { InputLabel } from "@mui/material";
 import { textStyling } from "@/styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -63,6 +62,32 @@ const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
             <div className="w-full">
               <CustomTextField
                 label={t("title (Azerbaijani)")}
+                value={values.titleAz}
+                change={handleChange}
+                name="titleAz"
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("link (English)")}
+                value={values.titleEn}
+                change={handleChange}
+                name="titleEn"
+                hasErrorMessages={!!errors.name && !!touched.name}
+                errorMessages={[t(errors.name?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("link (Russian)")}
+                value={values.titleRu}
+                change={handleChange}
+                name="titleRu"
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("link (Azerbaijani)")}
                 value={values.titleAz}
                 change={handleChange}
                 name="titleAz"

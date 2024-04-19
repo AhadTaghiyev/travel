@@ -89,9 +89,13 @@ export const apiService = {
       return error.response;
     }
   },
-  patch: async function Patch(api: string, id: any): Promise<any> {
+  patch: async function Patch(
+    api: string,
+    id: any,
+    queryParam = ""
+  ): Promise<any> {
     try {
-      const res = await Axios.patch(api + "/" + id);
+      const res = await Axios.patch(api + "/" + id + queryParam);
       if (res.status === 401)
         window.location.pathname = `${BASE_URL}/auth/login`;
       else return res;

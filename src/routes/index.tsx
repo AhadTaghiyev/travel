@@ -102,6 +102,9 @@ import BlogUpdate from "../pages/admin/blog/update";
 //company
 import CompanyAdmin from "../pages/admin/company";
 
+// Company Transactions
+import CompanyTransactions from "../pages/admin/company-transactions";
+
 //company
 import TransactionAdmin from "../pages/admin/transaction";
 import ReferanceAdmin from "../pages/admin/referances";
@@ -424,6 +427,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/Companys",
         element: <CompanyAdmin />,
+      },
+      {
+        path: "/admin/companyTransactions/:id",
+        element: <CompanyTransactions />,
       },
       {
         path: "/admin/Transactions",
