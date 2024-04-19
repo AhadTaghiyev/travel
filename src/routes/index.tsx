@@ -287,6 +287,8 @@ import CustomerProfitsDetail from "../pages/dashboard/reports/customersProfit/de
 import PersonalsReport from "../pages/dashboard/reports/personal";
 import PersonalsDetail from "../pages/dashboard/reports/personal/detail";
 
+import DayBookReport from "../pages/dashboard/reports/dayBook";
+
 import NearestFlights from "../pages/dashboard/reports/nearestFlights";
 import Profit from "../pages/dashboard/reports/profit";
 import ProfitLoss from "../pages/dashboard/reports/profitLoss";
@@ -1198,8 +1200,7 @@ const router = createBrowserRouter([
         path: "/panel/invoices/supplierpayemnts/:id",
         element: <SupplierPaymentInvoice />,
       },
-      
-      
+
       {
         path: "/panel/reports/deadlines",
         element: <DeadlineReport />,
@@ -1264,6 +1265,10 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/profitLoss",
         element: <ProfitLoss />,
+      },
+      {
+        path: "/panel/reports/dayBook",
+        element: <DayBookReport />,
       },
       {
         path: "/panel/company",

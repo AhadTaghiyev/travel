@@ -243,70 +243,11 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Fees",
         link: "/panel/reports/expenditures",
       },
-
-      // {
-      //     icon: MdOutlineAirplaneTicket,
-      //     text: 'Invoice',
-      //     children: [
-      //             {
-      //                 icon: MdOutlineAirplaneTicket,
-      //                 text: 'Aviabilet satışı',
-      //                 link: '/panel/aviabiletsale'
-      //             },
-      //             {
-      //                 icon: BsTicketDetailed,
-      //                 text: 'Korperativ satış',
-      //                 link: '/panel/cooperativeTicket'
-      //             },
-      //             {
-      //                 icon: HiOutlineTicket,
-      //                 text: 'Tur paket satışı',
-      //                 link: '/panel/tourPackage'
-      //             },
-      //             {
-      //                 icon: BsTicket,
-      //                 text: 'İndividual tur satışı',
-      //                 link: '/panel/individualTourPackage'
-      //             },
-      //             {
-      //                 icon: HiOutlineDotsCircleHorizontal,
-      //                 text: 'Digər xidmətlər',
-      //                 link: '/panel/otherService'
-      //             },
-      //         ]
-      // },
-
-      // {
-      //     icon: BsCalculator,
-      //     text: 'İnvoice borcları',
-      //     link: '/panel/willBeGet'
-      // },
-      // {
-      //     icon: BsCalculator,
-      //     text: 'Kredit hesabatları',
-      //     link: '/panel/reportCredit'
-      // },
-      // {
-      //     icon: BsCalculator,
-      //     text: 'Gündəlik hesabat',
-      //     link: '/panel/dailyInvoice'
-      // },
-      // {
-      //     icon: BsCalculator,
-      //     text: 'Ümumi invoice qazanc',
-      //     link: '/panel/totalInvoiceRevenue'
-      // },
-      // {
-      //     icon: BsCalculator,
-      //     text: 'Müştəri depozitləri',
-      //     link: '/panel/customerDeposits'
-      // },
-
-      // {
-      //     icon: BsCalculator,
-      //     text: 'Ödənilən maaşlar',
-      //     link: '/panel/paidSalary'
-      // },
+      {
+        icon: FaMoneyBill1Wave,
+        text: "Day Book Report" /* TODO: translate */,
+        link: "/panel/reports/dayBook",
+      },
     ],
   },
 
