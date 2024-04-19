@@ -8,6 +8,8 @@ import CustomTextField from "@/components/custom/input";
 import CustomTextAreaField from "@/components/custom/textArea";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
+import { debounce } from "lodash";
+import { useState } from "react";
 
 const sendDocumentFormSchema = Yup.object().shape({
   recivedCompanyId: Yup.string().required("Şirkət daxil edilməlidir"),
@@ -23,6 +25,7 @@ const initialValues: IDocumentModel = {
 
 export default function index() {
   const navigate = useNavigate();
+  const [companyName, setCompanyName] = useState("");
   const { t } = useTranslation();
 
   const onSubmit = async (values) => {
@@ -42,6 +45,23 @@ export default function index() {
       toast.error(t("Something went wrong"));
     }
   };
+
+  const getCompanyName = async (companyId: string) => {
+    try {
+      const res = await apiService.get(`/Company/GetById/${companyId}`);
+      console.log(res);
+
+      if (res?.status == 200) {
+        setCompanyName(res.data.data.name);
+      } else {
+        setCompanyName("Company Not Found"); // TODO: translate
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  const debounceGetCompany = debounce(getCompanyName, 800);
 
   return (
     <>
@@ -69,13 +89,27 @@ export default function index() {
                   <CustomTextField
                     name="recivedCompanyId"
                     type="text"
-                    label={t("Şirkət")}
+                    label={t("Şirkət ID")} // TODO: Translate
                     value={values.recivedCompanyId}
-                    change={handleChange}
+                    change={(e) => {
+                      setCompanyName("");
+                      debounceGetCompany(e.target.value);
+                      handleChange(e);
+                    }}
                     hasErrorMessages={
                       !!errors.recivedCompanyId && !!touched.recivedCompanyId
                     }
                     errorMessages={[t(errors.recivedCompanyId?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    name="companyName"
+                    type="text"
+                    label={t("Şirkət")}
+                    value={companyName}
+                    change={() => 0}
                   />
                 </div>
                 <div className="w-full">
