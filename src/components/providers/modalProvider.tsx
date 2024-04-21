@@ -7,6 +7,7 @@ import { CreateAirwayModal } from "@/components/modals/createAirway";
 import { CreateDiningModal } from "@/components/modals/createDining";
 import { CreateTourModal } from "@/components/modals/createTour";
 import { CreateServiceModal } from "../modals/createService";
+import { SendMailModal } from "../modals/sendMail";
 
 export const ModalProvider = () => {
   return (
@@ -20,6 +21,7 @@ export const ModalProvider = () => {
       <CreateDiningModal />
       <CreateAirwayModal />
       <CreateTourModal />
+      <SendMailModal />
     </>
   );
 };

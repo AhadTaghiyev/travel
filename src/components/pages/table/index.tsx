@@ -79,6 +79,7 @@ export default function Index({
   addDateToReport,
   defaultFilterValue,
   totalProps,
+  showOverflow,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({
@@ -458,7 +459,7 @@ export default function Index({
                 borderRight: 0,
                 borderTop: 0,
                 borderColor: "#e0e0e0",
-                overflow: "visible!important",
+                overflow: `${showOverflow ? "visible" : "hidden"} !important`,
               },
               "& .MuiDataGrid-cell:last-child": {
                 borderRight: 0,

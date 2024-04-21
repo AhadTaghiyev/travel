@@ -23,9 +23,9 @@ import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
-  // { label: "Id", name: "id" },
   { label: "Date", name: "date", type: "date" },
   { label: "Beneficeary.", name: "detail" },
+  { label: "Payment.", name: "payment" },
   { label: "Service.", name: "service" },
   { label: "Debit.", name: "debit" },
   { label: "Credit.", name: "credit" },

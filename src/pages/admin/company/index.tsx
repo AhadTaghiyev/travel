@@ -23,6 +23,7 @@ export default function Index() {
         hideFilter
         hidePrint
         hideStatus
+        showOverflow
       />
     </Container>
   );
