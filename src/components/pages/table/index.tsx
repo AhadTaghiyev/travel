@@ -90,6 +90,7 @@ export default function Index({
   const [rows, setRows] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [totals, setTotals] = useState();
   const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [itemStatus, setItemStatus] = useState(null);
@@ -241,7 +242,9 @@ export default function Index({
             paginationModel.page + 1
           }?starDate=${startDate}&endDate=${endDate}&search=${search}&type=${filter}`
         );
-        const formattedData = response?.data?.items.map((item) => {
+        if (!response?.data) return;
+        const { items, totalItems, totalPages, ...rest } = response.data;
+        const formattedData = items.map((item) => {
           const newItem = { ...item };
 
           if (newItem.date) {
@@ -251,8 +254,9 @@ export default function Index({
           return newItem;
         });
         setRows(formattedData);
-        setTotalRows(response?.data?.totalItems);
-        setTotalPages(response?.data?.totalPages);
+        setTotalRows(totalItems);
+        setTotalPages(totalPages);
+        setTotals({ ...rest });
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -267,8 +271,11 @@ export default function Index({
     if (!totalProps || !rows || totalProps?.length === 0 || rows?.length === 0)
       return null;
     const row = { id: "total", No: "Total" };
+
     totalProps?.forEach((prop) => {
-      row[prop] = rows.reduce((acc, row) => acc + row[prop], 0);
+      row[prop] =
+        totals[`total${prop.toLowerCase()}`] ||
+        rows.reduce((acc, row) => acc + row[prop], 0);
     });
     return row;
   }, [rows, totalProps]);

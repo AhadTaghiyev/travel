@@ -26,6 +26,7 @@ const columns = [
   { label: "Id", name: "id" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
+  { label: "customer", name: "customer" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
   { label: "Note.", name: "note" },
   { label: "Reciveables.", name: "amount" },
@@ -117,6 +118,11 @@ const Detail = () => {
           </Grid>
         </Grid>
       </Grid>
+      <div className="flex justify-center items-center">
+        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+          {t("Reciveables")}
+        </h1>
+      </div>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
         <Formik
           onSubmit={onSubmit}
