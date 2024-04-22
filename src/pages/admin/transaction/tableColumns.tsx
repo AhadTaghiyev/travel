@@ -6,7 +6,7 @@ import { TFunction } from "i18next";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
+export const columns: (t: TFunction) => GridColDef[] = () => [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "id",
