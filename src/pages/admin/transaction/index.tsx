@@ -19,6 +19,7 @@ export default function Index() {
         hideEdit
         hidePrint
         hideStatus
+        showOverflow
       />
     </Container>
   );

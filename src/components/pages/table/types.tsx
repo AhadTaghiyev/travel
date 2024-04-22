@@ -13,6 +13,7 @@ export interface ITableObject {
   hideStatus?: boolean;
   deleteApi?: string;
   statusApi?: string;
+  showOverflow?: boolean;
   addDateToReport?: boolean;
   root: string;
   buttonText?: string;

@@ -23,6 +23,7 @@ export default function Index() {
         columns={columns}
         api={"/Reports/DeadlindeReport"}
         root="/panel/reports/suppliers"
+        totalProps={["amount"]}
       />
     </Container>
   );
