@@ -14,7 +14,6 @@ import { useContext, useState } from "react";
 import * as Yup from "yup";
 
 import { userService } from "@/server/systemUserServer";
-import Navbar from "@/components/layout/navbar";
 import { UserContext } from "@/store/UserContext";
 
 const LoginSchema = Yup.object().shape({

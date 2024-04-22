@@ -8,7 +8,7 @@ export default function Index() {
       <Table
         columns={columns}
         api={"/ManagerFinancialTransactionPayments/GetAll"}
-        buttonText="Təsisçidən təsisçiyə Ödəniş" // TODO: Translate
+        buttonText="Təsisçidən təsisçiyə Ödəniş"
         deleteApi="/ManagerFinancialTransactionPayments/Delete"
         root="/panel/managerFinancialTransactionPayments"
       />

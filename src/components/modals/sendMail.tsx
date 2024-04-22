@@ -11,7 +11,7 @@ import { Modal } from "@/components/custom/modal";
 
 export const SendMailSchema = Yup.object().shape({
   toEmail: Yup.string()
-    .email("Email doğru formatda deyil") // TODO: translate
+    .email("Email doğru formatda deyil")
     .required("Email daxil edilməlidir"),
 });
 
@@ -59,7 +59,7 @@ export const SendMailModal = () => {
       .postForm(`Email/SendMailToPersons`, formData)
       .then((response) => {
         if (response.status === 200) {
-          toast.success(t("Email uğurla göndərildi")); // TODO: translate
+          toast.success(t("Email uğurla göndərildi"));
           setModalSuccess();
           onClose();
         } else {
@@ -75,7 +75,6 @@ export const SendMailModal = () => {
 
   return (
     <Modal title={t("Send Mail")} onModalClose={onClose}>
-      {/* TODO: trasnlate */}
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}
