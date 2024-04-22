@@ -74,7 +74,6 @@ export default function Index() {
 
   return (
     <>
-      <Navbar />
       <Container
         maxWidth="sm"
         sx={{ display: "flex", alignItems: "center", height: "100%" }}
