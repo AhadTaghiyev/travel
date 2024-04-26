@@ -1,5 +1,4 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { Link } from "@mui/material";
 import { BiSolidFileBlank } from "react-icons/bi";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -62,10 +61,25 @@ export const columns: GridColDef[] = [
     minWidth: 100,
     maxWidth: 100,
     renderCell: (params: any) => {
+      const handleDownload = () => {
+        fetch(params.row.filePath)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", params.row.filePath.split("/").pop());
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+          })
+          .catch((error) => console.error("Dosya indirme hatası:", error));
+      };
+
       return (
-        <Link href={params.row.filePath} target="_blank">
+        <button onClick={handleDownload}>
           <BiSolidFileBlank />
-        </Link>
+        </button>
       );
     },
   },

@@ -67,7 +67,7 @@ const TransactionForm = ({
               <CustomAutocompleteSelect
                 disabled={isView}
                 api="ManagerFinancialTransactions/GetAll"
-                label={t("Transaction")} // TODO: translate
+                label={t("Transaction")}
                 value={values.managerFinancialTransactionId ?? null}
                 optionLabel="ref"
                 change={(value) =>

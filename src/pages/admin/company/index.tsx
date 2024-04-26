@@ -8,7 +8,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Companys")} {/* TODO: translate */}
+        {t("Companys")}
       </h1>
       <Table
         columns={columns(t)}

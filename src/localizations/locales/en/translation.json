@@ -417,5 +417,19 @@
     "Email Created": "Email Created",
     "Email already exsists": "Email already exists",
     "Yeni Email Yarat": "Create New Email",
-    "Profit Report": "Profit Report"
+    "Profit Report": "Profit Report",
+    "Email doğru formatda deyil": "Email is not in correct format",
+    "Email uğurla göndərildi": "Email sent successfully",
+    "Send Mail": "Send Mail",
+    "Companys": "Companies",
+    "Company Transactions": "Company Transactions",
+    "Day Book Report": "Day Book Report",
+    "Customer Payment Invoice Receipt": "Customer Payment Invoice Receipt",
+    "Şirkət ID": "Company ID",
+    "Transaction": "Transaction",
+    "Təsisçidən təsisçiyə Ödəniş": "Payment from Founder to Founder",
+    "Transaction seçilməlidir": "Transaction must be selected",
+    "Email güncəlləndi": "Email updated",
+    "Email güncəlləməsi": "Email update",
+    "Expenditure Create": "Create Expenditure"
 }

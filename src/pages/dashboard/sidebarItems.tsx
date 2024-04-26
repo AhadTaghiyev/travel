@@ -109,7 +109,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaFileImport,
-        text: "Payment", //TODO: Translate
+        text: "Payment",
         link: "/panel/managerFinancialTransactionPayments",
       },
     ],
@@ -245,7 +245,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaMoneyBill1Wave,
-        text: "Day Book Report" /* TODO: translate */,
+        text: "Day Book Report",
         link: "/panel/reports/dayBook",
       },
     ],

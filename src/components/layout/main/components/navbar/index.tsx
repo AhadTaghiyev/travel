@@ -89,24 +89,6 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   RU
                 </button>
               </div>
-              <div className="flex items-center gap-x-4">
-                {pages.map((page) => (
-                  <Link
-                    to="/panel"
-                    key={page}
-                    style={{
-                      color: "white",
-                      display: "block",
-                      fontSize: "12px",
-                      fontWeight: "400",
-                      lineHeight: "16px",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t(page)}
-                  </Link>
-                ))}
-              </div>
             </Box>
           ) : (
             <Box sx={{ flexGrow: 1 }}></Box>

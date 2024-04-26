@@ -88,7 +88,7 @@ export default function index() {
                   <CustomTextField
                     name="recivedCompanyId"
                     type="text"
-                    label={t("Şirkət ID")} // TODO: Translate
+                    label={t("Şirkət ID")}
                     value={values.recivedCompanyId}
                     change={(e) => {
                       setCompanyName("");

@@ -8,15 +8,30 @@ export default function Index() {
   return (
     <div style={{ height: "100vh", position: "relative" }}>
       <Navbar />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="w-full h-16" />
+      <div
+        style={{
+          display: "flex",
+          minHeight: "calc(100vh - 128px)",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="items-center"
+      >
         <Container maxWidth="xl">
           <Outlet />
         </Container>
         <img
           src={authImg}
-          style={{ height: "100vh", width: "50%", zIndex: "-1" }}
+          className="hidden md:block"
+          style={{
+            minHeight: "calc(100vh - 128px)",
+            width: "50%",
+            zIndex: "-1",
+          }}
         />
       </div>
+      <div className="w-full h-16" />
       <Footer />
     </div>
   );

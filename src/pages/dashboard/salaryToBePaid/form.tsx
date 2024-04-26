@@ -97,6 +97,16 @@ const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
             </div>
             <div className="w-full">
               <CustomTextField
+                disabled
+                label={t("Total Amount")}
+                value={values.salary + values.extraSalary + values.bonus}
+                change={() => 0}
+                type="number"
+                name={``}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
                 name="note"
                 type="text"
                 label={t("Qeyd")}
