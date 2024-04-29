@@ -36,7 +36,7 @@ const Navbar = () => {
     },
     {
       label: t("Blog"),
-      to: "#",
+      to: "/blogs",
     },
     {
       label: t("Pricing"),
@@ -53,12 +53,12 @@ const Navbar = () => {
   };
   return (
     <div
-      className="sticky top-0 F8F9FB] z-50"
+      className="sticky top-0 z-50"
       style={{
         backdropFilter: "blur(15px)",
       }}
     >
-      <div className=" landing-container pt-[14px] pb-2.5 flex justify-between items-center border-b border-solid border-[rgba(28,41,64,0.06)]">
+      <div className="landing-container pt-[14px] pb-2.5 flex justify-between items-center border-b border-solid border-[rgba(28,41,64,0.06)]">
         <Link to="/" className="text-2xl font-bold">
           <img src={LogoImg} alt="Travacco Logo" />
         </Link>

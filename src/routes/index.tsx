@@ -101,6 +101,7 @@ import BlogUpdate from "../pages/admin/blog/update";
 
 //Blogs
 import Blogs from "@/pages/main/blogs";
+import Blog from "@/pages/main/blog";
 
 //company
 import CompanyAdmin from "../pages/admin/company";
@@ -319,6 +320,11 @@ const router = createBrowserRouter([
   {
     path: "/blogs",
     element: <Blogs />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/blogs/:id",
+    element: <Blog />,
     errorElement: <Error />,
   },
   {
