@@ -10,7 +10,7 @@ export default function Index() {
       <Table
         columns={columns(t)}
         api={"/PaySalarys/GetAll"}
-        buttonText="Ödəniləcək maaş"
+        buttonText="Maaş Ödə"
         deleteApi="/PaySalarys/Delete"
         root="/panel/salaryToBePaid"
       />

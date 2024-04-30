@@ -48,13 +48,55 @@ const Personal = ({ initialValues, onSubmit }: IPersonalProps) => {
                 errorMessages={[t(errors.fullName?.toString())]}
               />
             </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Email")}
+                value={values.email}
+                change={handleChange}
+                name={`email`}
+                hasErrorMessages={!!errors.email && !!touched.email}
+                errorMessages={[t(errors.email?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Telefon")}
+                value={values.phone}
+                change={handleChange}
+                type="number"
+                name={`phone`}
+                hasErrorMessages={!!errors.phone && !!touched.phone}
+                errorMessages={[t(errors.phone?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Vəzifə")}
+                value={values.position}
+                change={handleChange}
+                name={`position`}
+                hasErrorMessages={!!errors.position && !!touched.position}
+                errorMessages={[t(errors.position?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Maaş")}
+                value={values.salary}
+                change={handleChange}
+                type="number"
+                name={`salary`}
+                hasErrorMessages={!!errors.salary && !!touched.salary}
+                errorMessages={[t(errors.salary?.toString())]}
+              />
+            </div>
           </div>
 
           <div className="w-full flex gap-x-6 justify-end mb-6">
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => navigate("/panel/personals")}
+              onClick={() => navigate(-1)}
               className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
             >
               {t("goBack")}

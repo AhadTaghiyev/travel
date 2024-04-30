@@ -45,6 +45,10 @@ const NewPersonal = () => {
         onSubmit={onSubmit}
         initialValues={{
           fullName: "",
+          phone: "",
+          email: "",
+          position: "",
+          salary: 0,
         }}
       />
     </div>

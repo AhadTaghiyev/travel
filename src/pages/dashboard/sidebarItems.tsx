@@ -71,6 +71,7 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
 
+
   {
     icon: HiDownload,
     text: "Mədaxil",
@@ -97,39 +98,43 @@ export const sidebarItems: SidebarItemType[] = [
       },
     ],
   },
-
   {
-    icon: FaArrowsLeftRightToLine,
-    text: "From/To Founder",
+    icon: FaMoneyBillWave,
+    text: "Transactions",//Todo: Translate
     children: [
       {
         icon: FaArrowsLeftRightToLine,
-        text: "Təsisçidən təsisçiyə",
-        link: "/panel/managerFinancialTransactions",
+        text: "From/To Founder",
+        children: [
+          {
+            icon: FaArrowsLeftRightToLine,
+            text: "Təsisçidən təsisçiyə",
+            link: "/panel/managerFinancialTransactions",
+          },
+          {
+            icon: FaFileImport,
+            text: "Payment",
+            link: "/panel/managerFinancialTransactionPayments",
+          },
+        ],
       },
       {
-        icon: FaFileImport,
-        text: "Payment",
-        link: "/panel/managerFinancialTransactionPayments",
+        icon: HiOutlineArrowPathRoundedSquare,
+        text: "Vəsait transferi",
+        link: "/panel/paymentTransfers",
       },
-    ],
-  },
-  {
-    icon: HiOutlineArrowPathRoundedSquare,
-    text: "Vəsait transferi",
-    link: "/panel/paymentTransfers",
-  },
+       
   {
     icon: FaMoneyBillWave,
     text: "Ödənişlər",
     link: "/panel/payments",
   },
+
   {
     icon: HiOutlineArrowsUpDown,
     text: "Geri qaytarmalar",
     link: "/panel/refunds",
   },
-
   {
     icon: LuDivideCircle,
     text: "Kreditlər/Borclar",
@@ -146,6 +151,10 @@ export const sidebarItems: SidebarItemType[] = [
       },
     ],
   },
+    ],
+  },
+
+
   {
     icon: PiHandshake,
     text: "İnsan resursları",
@@ -153,11 +162,11 @@ export const sidebarItems: SidebarItemType[] = [
       {
         icon: PiHandshake,
         text: "İşçilər",
-        link: "/panel/employees",
+        link: "/panel/personals",
       },
       {
         icon: PiHandshake,
-        text: "Ödəniləcək maaş",
+        text: "Maaş Ödə",
         link: "/panel/salaryToBePaid",
       },
     ],

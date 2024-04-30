@@ -2,99 +2,108 @@ import { INavigationItemType } from "../../../components/pages/home/navigationIt
 
 // icons
 import { MdOutlineAirplaneTicket } from "react-icons/md";
-import { HiDownload } from "react-icons/hi";
-import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2";
+import { HiDownload, HiOutlineDotsCircleHorizontal, HiOutlineTicket } from "react-icons/hi";
 import {
-  FaArrowsLeftRightToLine,
   FaMoneyBillWave,
   FaFileImport,
 } from "react-icons/fa6";
-import { BsArrowDownUp, BsCalculator } from "react-icons/bs";
-import { LuDivideCircle } from "react-icons/lu";
-import { PiWalletLight, PiHandshake } from "react-icons/pi";
+import { BsArrowDownUp, BsTicket, BsTicketDetailed } from "react-icons/bs";
+
 import { AiOutlineFolderOpen } from "react-icons/ai";
 
 export const navigationItems: INavigationItemType[] = [
   {
-    text: "Yeni aviabilet",
+    text: "Aviabilet satışı",
     path: "/panel/aviabiletsale/new",
     color: "#655F59",
     Icon: MdOutlineAirplaneTicket,
     quantity: 1,
   },
   {
-    text: "Mədaxil",
-    path: "/panel/income",
+    text: "Korperativ satış",
+    path: "/panel/cooperativeTicket/new",
     color: "#B1B2A1",
-    Icon: HiDownload,
+    Icon: BsTicketDetailed,
     quantity: 1,
   },
   {
-    text: "Təsisçidən təsisçiyə",
-    path: "/panel/managerFinancialTransactions",
+    text: "Tur paket satışı",
+    path: "/panel/tourPackage/new",
     color: "#C5A253",
-    Icon: FaArrowsLeftRightToLine,
+    Icon: HiOutlineTicket,
   },
   {
-    text: "Vəsait transferi",
-    path: "/panel/paymentTransfers",
+    text: "İndividual tur satışı",
+    path: "/panel/individualTourPackage/new",
     color: "#6E7972",
-    Icon: HiOutlineArrowPathRoundedSquare,
+    Icon: BsTicket,
   },
+  {
+    text: "Other services",
+    path: "/panel/otherService/new",
+    color: "#7A885A",
+    Icon: HiOutlineDotsCircleHorizontal,
+    quantity: 1,
+  },
+  {
+    text: "Mədaxil",
+    path: "/panel/income",
+    // color: "#B1B2A1",
+    color: "#655F59",
+    Icon: HiDownload,
+    quantity: 1,
+  },
+
+
   {
     text: "Ödənişlər",
+    path: "/panel/payments",
+    // color: "#7A885A",
+    color: "#B1B2A1",
+    Icon: FaMoneyBillWave,
+    quantity: 1,
+  },
+  {
+    text: "Payables",
     path: "/panel/reports/willbepaid",
-    color: "#7A885A",
+    // color: "#7A885A",
+    color: "#C5A253",
+    Icon: FaMoneyBillWave,
+    quantity: 1,
+  },
+  {
+    text: "Reciveables",
+    path: "/panel/reports/willbepaid",
+    // color: "#7A885A",
+    color: "#6E7972",
     Icon: FaMoneyBillWave,
     quantity: 1,
   },
   {
     text: "Geri qaytarmalar",
     path: "/panel/refunds",
-    color: "#655F59",
+    // color: "#655F59",
+    color: "#7A885A",
     Icon: BsArrowDownUp,
     quantity: 1,
   },
-  {
-    text: "Kreditlər/Borclar",
-    path: "/panel/getCredits",
-    color: "#B1B2A1",
-    Icon: LuDivideCircle,
-    quantity: 1,
-  },
-  {
-    text: "Depositlər",
-    path: "/panel/deposit",
-    color: "#C5A253",
-    Icon: PiWalletLight,
-    quantity: 1,
-  },
-  {
-    text: "İnsan resursları",
-    path: "/panel/employees",
-    color: "#6E7972",
-    Icon: PiHandshake,
-    quantity: 1,
-  },
+
   {
     text: "Müqavilə",
     path: "/panel/agreements",
-    color: "#7A885A",
+    // color: "#7A885A",
+    color: "#655F59",
+    
     Icon: AiOutlineFolderOpen,
     quantity: 1,
   },
   {
     text: "Sənəd göndərmək",
     path: "/panel/documents/send",
-    color: "#655F59",
+    // color: "#655F59",
+    color: "#B1B2A1",
     Icon: FaFileImport,
     quantity: 1,
   },
-  {
-    text: "Hesabatlar",
-    path: "/",
-    color: "#B1B2A1",
-    Icon: BsCalculator,
-    quantity: 1,
-  },
+
 ];

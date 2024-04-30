@@ -11,7 +11,7 @@ export const columns = (t: TFunction): GridColDef[] => [
   },
   {
     field: "invoiceNo",
-    headerName: "Inv. Ref.",
+    headerName: t("Inv. Ref."),
     flex: 1,
     headerClassName: "header-item",
   },
