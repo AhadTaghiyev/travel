@@ -21,7 +21,6 @@ interface IDeadlineReportProps {
 }
 
 const columns = [
-  { label: "Id", name: "id" },
   { label: "Ref.", name: "ref", className: "min-w-14" },
   { label: "Beneficiery", name: "beneficiery" },
   { label: "Deadline", name: "dueDate", type: "date" },
@@ -71,6 +70,7 @@ const DeadlineReport = ({ selectedYear }: IDeadlineReportProps) => {
         <Table className="mt-2 text-xs">
           <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
+              <TableHead>{t("no")}</TableHead>
               {columns.map((column) => (
                 <TableHead key={column.name}>{t(column.label)}</TableHead>
               ))}
@@ -78,11 +78,12 @@ const DeadlineReport = ({ selectedYear }: IDeadlineReportProps) => {
           </TableHeader>
           <TableBody>
             {data &&
-              data.map((row) => (
+              data.map((row, index) => (
                 <TableRow
                   key={row.id}
                   className="bg-[#CF08080F] border-b border-solid border-gray-100"
                 >
+                  <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => (
                     <TableCell
                       key={column.name}

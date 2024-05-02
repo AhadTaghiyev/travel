@@ -20,7 +20,6 @@ interface ISupplierPaymentsReportProps {
 }
 
 const columns = [
-  { label: "Id", name: "id" },
   { label: "Ad", name: "name" },
   { label: "balance", name: "balance" },
 ];
@@ -71,6 +70,7 @@ const SupplierPaymentsReport = ({
         <Table className="mt-2 text-xs">
           <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
+              <TableHead>{t("no")}</TableHead>
               {columns.map((column) => (
                 <TableHead key={column.name}>{t(column.label)}</TableHead>
               ))}
@@ -78,8 +78,9 @@ const SupplierPaymentsReport = ({
           </TableHeader>
           <TableBody>
             {data &&
-              data.map((row) => (
+              data.map((row, index) => (
                 <TableRow key={row.id}>
+                  <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => (
                     <TableCell key={column.name} className={"py-1.5"}>
                       {row?.[column.name]}

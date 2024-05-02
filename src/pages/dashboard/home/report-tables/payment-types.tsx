@@ -21,7 +21,6 @@ interface IPaymentTypesProps {
 }
 
 const columns = [
-  { label: "Id", name: "id" },
   { label: "Ad", name: "name" },
   { label: "Məbləğ", name: "amount" },
 ];
@@ -69,6 +68,7 @@ const PaymentTypes = ({ selectedYear }: IPaymentTypesProps) => {
         <Table className="mt-2 text-xs">
           <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
+              <TableHead>{t("no")}</TableHead>
               {columns.map((column) => (
                 <TableHead key={column.name}>{t(column.label)}</TableHead>
               ))}
@@ -76,11 +76,12 @@ const PaymentTypes = ({ selectedYear }: IPaymentTypesProps) => {
           </TableHeader>
           <TableBody>
             {data &&
-              data.map((row) => (
+              data.map((row, index) => (
                 <TableRow
                   key={row.id}
                   className="border-b border-solid border-gray-100"
                 >
+                  <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => (
                     <TableCell key={column.name} className={cn("py-1.5")}>
                       {row?.[column.name]}

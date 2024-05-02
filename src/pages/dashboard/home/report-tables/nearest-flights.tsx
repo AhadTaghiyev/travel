@@ -62,6 +62,7 @@ const NearestFlightsReport = () => {
         <Table className="mt-2 text-xs ">
           <TableHeader className="sticky top-0 rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
+              <TableHead>{t("no")}</TableHead>
               {columns.map((column) => (
                 <TableHead key={column.name}>{t(column.label)}</TableHead>
               ))}
@@ -69,8 +70,9 @@ const NearestFlightsReport = () => {
           </TableHeader>
           <TableBody className="">
             {data &&
-              data.map((row) => (
+              data.map((row, index) => (
                 <TableRow className="bg-[#CF08080F] " key={row.id}>
+                  <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => (
                     <TableCell
                       key={column.name}

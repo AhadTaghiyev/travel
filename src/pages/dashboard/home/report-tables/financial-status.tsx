@@ -83,14 +83,22 @@ const FinancialStatusReport = () => {
               <TableCell className="py-1.5" colSpan={1}>
                 {t("Reciveables")}
               </TableCell>
-              <TableCell className="py-1.5" colSpan={2}>
+              <TableCell className="py-1.5" colSpan={1}>
                 {data.willBeGet}
               </TableCell>
+              <TableCell
+                className="py-1.5 border-b border-solid "
+                colSpan={1}
+              />
             </TableRow>
             <TableRow className="w-full">
-              <TableCell className="py-1.5 border-b border-solid " colSpan={2}>
+              <TableCell className="py-1.5 border-b border-solid " colSpan={1}>
                 {t("Payables")}
               </TableCell>
+              <TableCell
+                className="py-1.5 border-b border-solid "
+                colSpan={1}
+              />
               <TableCell className="py-1.5 border-b border-solid " colSpan={2}>
                 {data.willBePaids}
               </TableCell>
@@ -100,9 +108,13 @@ const FinancialStatusReport = () => {
                 {t("Current Financal Status")}
               </TableCell>
 
-              <TableCell className="py-1.5" colSpan={2}>
+              <TableCell className="py-1.5" colSpan={1}>
                 {totalAmount}
               </TableCell>
+              <TableCell
+                className="py-1.5 border-b border-solid "
+                colSpan={1}
+              />
             </TableRow>
           </TableFooter>
         </Table>
