@@ -56,8 +56,8 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     >
       <Container maxWidth="xl" style={{ color: "white" }}>
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            {!isAdmin && (
+          {!isAdmin && (
+            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
               <div className="flex gap-x-2 mr-6">
                 <button
                   className={cn(
@@ -87,21 +87,21 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   RU
                 </button>
               </div>
-            )}
-            <div
-              className={cn(
-                "p-3 rounded text-xs",
-                currentUser.expireDate < 0
-                  ? "text-[#AF2323] bg-[#F4BBBB]"
-                  : "text-[#292929] bg-[#88c0e9]"
-              )}
-            >
-              {currentUser.expireDate < 0
-                ? "Expired"
-                : `Expire date ${currentUser.expireDate} days`}
-            </div>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
+              <div
+                className={cn(
+                  "p-3 rounded text-xs",
+                  currentUser.expireDate < 0
+                    ? "text-[#AF2323] bg-[#F4BBBB]"
+                    : "text-[#292929] bg-[#88c0e9]"
+                )}
+              >
+                {currentUser.expireDate < 0
+                  ? "Expired"
+                  : `Expire date ${currentUser.expireDate} days`}
+              </div>
+            </Box>
+          )}
+          <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box sx={{ marginRight: "12px" }}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>

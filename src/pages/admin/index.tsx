@@ -21,7 +21,7 @@ export default function Index() {
     <>
       <Sidebar items={sidebarItems} color="#24272b" />
       <div id="forPadding" className="main">
-        <Navbar />
+        <Navbar isAdmin />
         <div style={{ paddingTop: "80px" }}>
           <Outlet />
         </div>
