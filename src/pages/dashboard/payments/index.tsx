@@ -125,7 +125,8 @@ export default function Index() {
                 hideCreate
                 hideDelete
                 api={tab.api}
-                hideFilter
+                // hideFilter
+            
                 root={tab.editLink}
                 columns={tab.columns}
                 hideReport={tab.hideReport}

@@ -134,27 +134,28 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Ödənilən Kredit",
         link: "/panel/paidCredits",
       },
+      {
+        icon: FaArrowsLeftRightToLine,
+        text: "From/To Founder",
+        children: [
+          {
+            icon: FaArrowsLeftRightToLine,
+            text: "Təsisçidən təsisçiyə",
+            link: "/panel/managerFinancialTransactions",
+          },
+          {
+            icon: FaFileImport,
+            text: "Payment",
+            link: "/panel/managerFinancialTransactionPayments",
+          },
+        ],
+      },
     ],
   },
     ],
   },
 
-  {
-    icon: FaArrowsLeftRightToLine,
-    text: "From/To Founder",
-    children: [
-      {
-        icon: FaArrowsLeftRightToLine,
-        text: "Təsisçidən təsisçiyə",
-        link: "/panel/managerFinancialTransactions",
-      },
-      {
-        icon: FaFileImport,
-        text: "Payment",
-        link: "/panel/managerFinancialTransactionPayments",
-      },
-    ],
-  },
+
 
 
   {

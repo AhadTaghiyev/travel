@@ -90,7 +90,7 @@ const Detail = () => {
         >
           <Grid item xs={3}>
             <img
-              src={company.image}
+              src={company?.image}
               style={{
                 width: 400,
                 height: 200,
@@ -217,7 +217,7 @@ const Detail = () => {
                             >
                               {value}
                             </a> // URL'yi link olarak kullan
-                          ) : column.type === "date" ? (
+                          ) : column.type === "date"&& value!='' ? (
                             formatDate(value)
                           ) : (
                             value
