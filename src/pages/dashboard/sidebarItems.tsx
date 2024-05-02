@@ -99,42 +99,20 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
   {
-    icon: FaMoneyBillWave,
-    text: "Transactions",//Todo: Translate
+    icon: FaArrowsLeftRightToLine,
+    text: "From/To Founder",
     children: [
       {
         icon: FaArrowsLeftRightToLine,
-        text: "From/To Founder",
-        children: [
-          {
-            icon: FaArrowsLeftRightToLine,
-            text: "Təsisçidən təsisçiyə",
-            link: "/panel/managerFinancialTransactions",
-          },
-          {
-            icon: FaFileImport,
-            text: "Payment",
-            link: "/panel/managerFinancialTransactionPayments",
-          },
-        ],
+        text: "Təsisçidən təsisçiyə",
+        link: "/panel/managerFinancialTransactions",
       },
-     
       {
-        icon: HiOutlineArrowPathRoundedSquare,
-        text: "Vəsait transferi",
-        link: "/panel/paymentTransfers",
+        icon: FaFileImport,
+        text: "Payment",
+        link: "/panel/managerFinancialTransactionPayments",
       },
-       
-  {
-    icon: FaMoneyBillWave,
-    text: "Ödənişlər",
-    link: "/panel/payments",
-  },
-
-  {
-    icon: HiOutlineArrowsUpDown,
-    text: "Geri qaytarmalar",
-    link: "/panel/refunds",
+    ],
   },
   {
     icon: LuDivideCircle,
@@ -153,6 +131,30 @@ export const sidebarItems: SidebarItemType[] = [
     
     ],
   },
+  {
+    icon: FaMoneyBillWave,
+    text: "Transactions",//Todo: Translate
+    children: [
+    
+     
+      {
+        icon: HiOutlineArrowPathRoundedSquare,
+        text: "Vəsait transferi",
+        link: "/panel/paymentTransfers",
+      },
+       
+  {
+    icon: FaMoneyBillWave,
+    text: "Ödənişlər",
+    link: "/panel/payments",
+  },
+
+  {
+    icon: HiOutlineArrowsUpDown,
+    text: "Geri qaytarmalar",
+    link: "/panel/refunds",
+  },
+
     ],
   },
 
