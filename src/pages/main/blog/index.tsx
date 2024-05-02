@@ -72,9 +72,12 @@ const Blog = () => {
             <h1 className="text-4xl font-bold">
               {blog[`title${capitalize(language)}`]}
             </h1>
-            <p className="mt-6 text-sm">
-              {blog[`desc${capitalize(language)}`]}
-            </p>
+            <p
+              className="mt-6 text-sm"
+              dangerouslySetInnerHTML={{
+                __html: blog[`desc${capitalize(language)}`],
+              }}
+            ></p>
           </div>
         </div>
       )}

@@ -10,4 +10,11 @@ export const BlogSchema = Yup.object().shape({
   descEn: Yup.string().required("Açıqlama (İngiliscə) daxil edilməlidir"),
   descRu: Yup.string().required("Описание (на русском) должно быть введено"),
   descAz: Yup.string().required("Açıqlama (Azərbaycanca) daxil edilməlidir"),
+  miniDescEn: Yup.string().required("Açıqlama (İngiliscə) daxil edilməlidir"),
+  miniDescRu: Yup.string().required(
+    "Описание (на русском) должно быть введено"
+  ),
+  miniDescAz: Yup.string().required(
+    "Açıqlama (Azərbaycanca) daxil edilməlidir"
+  ),
 });

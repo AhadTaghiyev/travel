@@ -11,6 +11,11 @@ import { InputLabel } from "@mui/material";
 import { textStyling } from "@/styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  UploadAdapter,
+  FileLoader,
+} from "@ckeditor/ckeditor5-upload/src/filerepository";
+import { apiService } from "@/server/apiServer";
 
 type FormType = "Edit" | "Create" | "View";
 
@@ -20,10 +25,44 @@ interface IBlogProps {
   onSubmit: (values: IBlogModel, helpers: FormikHelpers<FormikValues>) => void;
 }
 
+function uploadAdapter(loader: FileLoader): UploadAdapter {
+  return {
+    upload: () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const file = await loader.file;
+          const formData = new FormData();
+          formData.append("ImageFile", file);
+          const response = await apiService.postForm(
+            `/Blog/UploadImage`,
+            formData
+          );
+          if (response.status === 200) {
+            return resolve({
+              default: response.data.imagePath,
+            });
+          }
+          reject("Upload failed");
+        } catch (error) {
+          reject("Upload failed");
+        }
+      });
+    },
+    abort: () => {
+      console.log("Upload aborted");
+    },
+  };
+}
+
+function uploadPlugin(editor: Editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return uploadAdapter(loader);
+  };
+}
+
 const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  console.log(initialValues);
   return (
     <Formik
       onSubmit={onSubmit}
@@ -70,9 +109,9 @@ const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
             <div className="w-full">
               <CustomTextField
                 label={t("link (English)")}
-                value={values.titleEn}
+                value={values.linkEn}
                 change={handleChange}
-                name="titleEn"
+                name="linkEn"
                 hasErrorMessages={!!errors.name && !!touched.name}
                 errorMessages={[t(errors.name?.toString())]}
               />
@@ -80,22 +119,50 @@ const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
             <div className="w-full">
               <CustomTextField
                 label={t("link (Russian)")}
-                value={values.titleRu}
+                value={values.linkRu}
                 change={handleChange}
-                name="titleRu"
+                name="linkRu"
               />
             </div>
             <div className="w-full">
               <CustomTextField
                 label={t("link (Azerbaijani)")}
-                value={values.titleAz}
+                value={values.linkAz}
                 change={handleChange}
-                name="titleAz"
+                name="linkAz"
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Mini Description (English)")} // TODO: Translate
+                value={values.miniDescEn}
+                change={handleChange}
+                name="miniDescEn"
+                hasErrorMessages={!!errors.name && !!touched.name}
+                errorMessages={[t(errors.name?.toString())]}
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Mini Description (Russian)")}
+                value={values.miniDescRu}
+                change={handleChange}
+                name="miniDescRu"
+              />
+            </div>
+            <div className="w-full">
+              <CustomTextField
+                label={t("Mini Description (Azerbaijani)")}
+                value={values.miniDescAz}
+                change={handleChange}
+                name="miniDescAz"
               />
             </div>
 
             <div className="w-full">
-              <label htmlFor="image">{t("Image")}</label>
+              <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                {t("Image")}
+              </InputLabel>
               <input
                 id="image"
                 name="image"
@@ -107,53 +174,54 @@ const Blog = ({ initialValues, onSubmit }: IBlogProps) => {
                 }}
               />
               {/* Hata mesajı varsa göster */}
-              {errors.image && touched.image && <div>{errors.image}</div>}
+              {errors.image && touched.image ? (
+                <div>{errors.image}</div>
+              ) : (
+                <div className="h-5" />
+              )}
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full col-span-2 mb-2">
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ mb: 1 }}
-                style={textStyling}
-              >
-                {t("description (English)")}
+              <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                {t("Description (English)")}
               </InputLabel>
               <CKEditor
+                config={{
+                  extraPlugins: [uploadPlugin],
+                }}
                 editor={ClassicEditor}
-                data=""
+                data={values.descEn}
                 onChange={(_, editor) => {
                   setFieldValue("descEn", editor.getData());
                 }}
               />
             </div>
             <div className="w-full col-span-2 mb-2">
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ mb: 1 }}
-                style={textStyling}
-              >
-                {t("description (Russian)")}
+              <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                {t("Description (Russian)")}
               </InputLabel>
               <CKEditor
+                config={{
+                  extraPlugins: [uploadPlugin],
+                }}
                 editor={ClassicEditor}
-                data=""
+                data={values.descRu}
                 onChange={(_, editor) => {
                   setFieldValue("descRu", editor.getData());
                 }}
               />
             </div>
             <div className="w-full col-span-2 mb-6">
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ mb: 1 }}
-                style={textStyling}
-              >
-                {t("description (Azerbaijani)")}
+              <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                {t("Description (Azerbaijani)")}
               </InputLabel>
               <CKEditor
+                config={{
+                  extraPlugins: [uploadPlugin],
+                }}
                 editor={ClassicEditor}
-                data=""
+                data={values.descAz}
                 onChange={(_, editor) => {
                   setFieldValue("descAz", editor.getData());
                 }}

@@ -8,5 +8,8 @@ export interface IBlogModel {
   descEn: string | null;
   descRu: string | null;
   descAz: string | null;
+  miniDescEn: string | null;
+  miniDescRu: string | null;
+  miniDescAz: string | null;
   image: any | null;
 }

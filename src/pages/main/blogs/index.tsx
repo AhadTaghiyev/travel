@@ -17,7 +17,7 @@ const Blogs = () => {
     t,
     i18n: { language },
   } = useTranslation();
-console.log(info)
+  console.log(info);
   const getData = (page = 1) => {
     apiService.get(`/Blog/GetAll/${page}`).then((res) => {
       if (res.status !== 200) {
@@ -90,7 +90,7 @@ console.log(info)
                       {blog[`title${capitalize(language)}`]}
                     </h2>
                     <p className="line-clamp-3">
-                      {blog[`desc${capitalize(language)}`]}
+                      {blog[`miniDesc${capitalize(language)}`]}
                     </p>
                     <Link
                       to={`/blogs/${blog.id}`}
