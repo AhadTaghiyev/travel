@@ -194,13 +194,18 @@ const TourPackageForm = ({
                     <CustomTextField
                       disabled
                       label={t("Qalıq məbləğ")}
-                      value={Math.max(
-                        values.individualTourPackages.reduce(
-                          (acc, cur) => acc + cur.sellingPrice - cur.discount,
-                          0
-                        ) - values.paidAmount,
-                        0
-                      )}
+                      // value={Math.max(
+                      //   values.individualTourPackages.reduce(
+                      //     (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                      //     0
+                      //   ) - values.paidAmount,
+                      //   0
+                      // )}
+                      value={
+                        values.individualTourPackages[0]
+                          .sellingPrice -
+                        values.individualTourPackages[0].discount
+                      }
                       change={() => 0}
                       type="number"
                       name={``}

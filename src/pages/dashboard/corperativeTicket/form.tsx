@@ -199,11 +199,15 @@ const CorperativeTicketForm = ({
                       label={t("Qalıq məbləğ")}
                       value={Math.max(
                         values.corporativeTickets.reduce(
-                          (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                          (acc, cur) => acc + cur.sellingPrice-((cur.fare * cur.discount)/100),
                           0
                         ) - values.paidAmount,
                         0
                       )}
+                      // values.corporativeTickets[index].sellingPrice -
+                      // (values.corporativeTickets[index].fare *
+                      //   values.corporativeTickets[index].discount) /
+                      //   100
                       change={() => 0}
                       type="number"
                       name=""
@@ -395,6 +399,23 @@ const CorperativeTicketForm = ({
                 </div>
                 <div className="w-full">
                   <CustomTextField
+                    label={t("segmentCount")}
+                    value={values.corporativeTickets[index].segmentCount}
+                    change={handleChange}
+                    type="number"
+                    disabled={isView}
+                    name={`planeTickets.${index}.segmentCount`}
+                    hasErrorMessages={
+                      !!errors.corporativeTickets?.[index]?.segmentCount &&
+                      !!touched.corporativeTickets?.[index]?.segmentCount
+                    }
+                    errorMessages={[
+                      t(errors.corporativeTickets?.[index]?.segmentCount?.toString()),
+                    ]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
                     disabled={isView}
                     label={t("fare")}
                     value={values.corporativeTickets[index].fare}
@@ -427,6 +448,7 @@ const CorperativeTicketForm = ({
                     ]}
                   />
                 </div>
+              
                 <div className="w-full">
                   <CustomTextField
                     disabled

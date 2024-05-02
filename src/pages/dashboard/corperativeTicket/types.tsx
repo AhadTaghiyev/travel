@@ -13,6 +13,7 @@ export interface IInvoiceModel {
 export interface ICorporateTicketModel {
   ticketNo: string;
   purchasePrice: number;
+  segmentCount: number;
   fare: number;
   taxes: number;
   sellingPrice: number;

@@ -104,7 +104,7 @@ const Company = () => {
 
             <div className="w-full">
                 <CustomTextField
-                  label={t("Id")}
+                  label={t("ID")}
                   value={values.id}
                   change={handleChange}
                   name={`id`}
@@ -156,7 +156,7 @@ const Company = () => {
               </div>
               <div className="w-full">
                 <CustomTextField
-                  label={t("Concurency")}
+                  label={t("Currency")}
                   value={values.concurency}
                   change={handleChange}
                   name={`concurency`}
@@ -206,7 +206,7 @@ const Company = () => {
             {values.formFile && (
               <div className="w-full">
                 <h1 className="text-xl font-bold tracking-wider">
-                  Company Image
+                  {t("Company Image")}
                 </h1>
                 <img
                   src={

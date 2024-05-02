@@ -3,9 +3,7 @@ import * as Yup from "yup";
 const TourPackageSchema = Yup.object().shape({
   otelName: Yup.string().required("Otel adı daxil edilməlidir"),
   roomName: Yup.string().required("Otaq adı daxil edilməlidir"),
-  rezervationNumber: Yup.string().required(
-    "Rezervasiya nömrəsi daxil edilməlidir"
-  ),
+  rezervationNumber: Yup.string().optional(),
   childrenCount: Yup.number()
     .required("Uşaq sayı daxil edilməlidir")
     .min(0, "Uşaq sayı mənfi ola bilməz"),

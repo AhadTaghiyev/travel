@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button, Container, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
@@ -29,6 +30,7 @@ const columns = [
   { label: "Service.", name: "service" },
   { label: "Debit.", name: "debit" },
   { label: "Credit.", name: "credit" },
+  { label: "Balance.",name:"balance"},
 ];
 
 const Detail = () => {
@@ -82,6 +84,7 @@ const Detail = () => {
 
   const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
   const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
+  let totalBalance=0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -125,6 +128,14 @@ const Detail = () => {
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+      <div className="flex justify-center items-center mb-4">
+          <div>
+            <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+              {`${t("Payment Methods Report")}`} 
+              {/* TODO Translate */}
+            </h1>
+          </div>
+        </div>
         <Formik
           onSubmit={onSubmit}
           initialValues={{
@@ -193,11 +204,25 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((row) => (
+           { data.sort((a , b) => new Date(a.date) - new Date(b.date)).map((row) => (
+                
+                
                 <TableRow key={row.id}>
-                  {columns.map((column) => {
-                    const value = String(row[column.name]).toLowerCase();
+                   <h1 style={{display:"none"}}>
 
+                   {  
+                  totalBalance+=row["debit"]
+           
+                  
+                  }
+                  {
+                           totalBalance-=row["credit"]
+                  }
+                   </h1>
+                  {columns.map((column) => {
+                    
+                    const value = String(row[column.name]).toLowerCase();
+                  
                     let url = "";
                     if (value.startsWith("pl")) {
                       url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
@@ -223,7 +248,10 @@ const Detail = () => {
                             </a> // URL'yi link olarak kullan
                           ) : column.type === "date" ? (
                             formatDate(value)
-                          ) : (
+                          ) :  column.name === "balance" ? (
+                            totalBalance
+                          ):
+                          (
                             value
                           ) // Diğer durumlarda değeri normal metin olarak göster
                         }
@@ -238,8 +266,10 @@ const Detail = () => {
                 <TableCell className="py-2" colSpan={3}>
                   {t("Total Amount")}
                 </TableCell>
+                <TableCell className="py-2"></TableCell>
                 <TableCell className="py-2">{totalDebit}</TableCell>
                 <TableCell className="py-2">{totalCredit}</TableCell>
+                <TableCell className="py-2">{totalDebit-totalCredit}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

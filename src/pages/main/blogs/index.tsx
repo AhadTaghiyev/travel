@@ -17,7 +17,7 @@ const Blogs = () => {
     t,
     i18n: { language },
   } = useTranslation();
-
+console.log(info)
   const getData = (page = 1) => {
     apiService.get(`/Blog/GetAll/${page}`).then((res) => {
       if (res.status !== 200) {

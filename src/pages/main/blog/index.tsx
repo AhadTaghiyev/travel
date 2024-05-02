@@ -1,7 +1,7 @@
 import Navbar from "@/components/layout/navbar";
-import { cn, formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import BlankImage from "@/assets/blank-image.png";
+// import BlankImage from "@/assets/blank-image.png";
 import { apiService } from "@/server/apiServer";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

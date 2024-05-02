@@ -24,6 +24,7 @@ export const corperativeTicketInitialValues: ICorporateTicketModel = {
   ticketNo: "",
   purchasePrice: 0,
   sellingPrice: 0,
+  segmentCount: 0,
   discount: 0,
   commonPrice: 0,
   supplierId: null,

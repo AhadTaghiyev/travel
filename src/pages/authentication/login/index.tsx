@@ -54,7 +54,7 @@ export default function Index() {
     const res = await userService.login(username, password);
     if (res?.statusCode === 200) {
       localStorage.setItem("token", res.accessToken);
-      localStorage.setItem("role", res.role);
+      localStorage.setItem("role", username);
       localStorage.setItem("username", username);
       cookies.set("refresh_token", res.refreshToken, {
         path: "/",
