@@ -19,7 +19,7 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
-        // hideFilter
+        hideStartDate
         columns={columns}
         totalProps={["debt"]}
         detailLink="/panel/reports/customers/"

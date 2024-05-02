@@ -6,6 +6,7 @@ export interface ITableObject {
   onCreateClick?: () => void;
   hidePrint?: boolean;
   hideFilter?: boolean;
+  hideStartDate?: boolean;
   hideCreate?: boolean;
   hideEdit?: boolean;
   hideDelete?: boolean;

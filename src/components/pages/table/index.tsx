@@ -73,6 +73,7 @@ export default function Index({
   exportLink,
   detailLink,
   filterOptions,
+  hideStartDate,
   hideStatus = true,
   statusApi,
   onCreateClick,
@@ -372,21 +373,23 @@ export default function Index({
       )}
       {!hideFilter && (
         <>
-          <Grid item md={2} className="min-w-[200px] flex items-center">
-            <CustomDateTimePicker
-              hideError
-              value={startDate}
-              change={(data) => {
-                const newSearchParams = new URLSearchParams(searchParams);
-                newSearchParams.set(
-                  "startDate",
-                  (data ?? new Date()).toISOString()
-                );
-                setSearchParams(newSearchParams);
-                handleStartDateChange(data ?? new Date());
-              }}
-            />
-          </Grid>
+          {!hideStartDate && (
+            <Grid item md={2} className="min-w-[200px] flex items-center">
+              <CustomDateTimePicker
+                hideError
+                value={startDate}
+                change={(data) => {
+                  const newSearchParams = new URLSearchParams(searchParams);
+                  newSearchParams.set(
+                    "startDate",
+                    (data ?? new Date()).toISOString()
+                  );
+                  setSearchParams(newSearchParams);
+                  handleStartDateChange(data ?? new Date());
+                }}
+              />
+            </Grid>
+          )}
           <Grid item md={2} className="min-w-[200px] flex items-center">
             <CustomDateTimePicker
               hideError
