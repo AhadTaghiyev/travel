@@ -9,7 +9,6 @@ export const columns: GridColDef[] = [
     renderCell(params) {
       if (params.row.id === "total")
         return <span className="font-bold">Total</span>;
-      return <span>{params.row.id}</span>;
     },
   },
   {
