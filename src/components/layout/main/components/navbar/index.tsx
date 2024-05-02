@@ -1,21 +1,18 @@
-// @ts-nocheck
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import { AiOutlineDown } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import { Menu, MenuItem, Typography } from "@mui/material";
 import { userService } from "../../../../../server/systemUserServer";
 import { BiLogOut } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { cn } from "@/lib/utils";
-
-const pages = ["FAQ", "Haqqımızda", "Bizimlə əlaqə"];
+import { UserContext } from "@/store/UserContext";
 
 interface NavbarProp {
   isAdmin?: boolean | null;
@@ -26,6 +23,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     i18n: { language },
     t,
   } = useTranslation();
+  const { user: currentUser } = useContext(UserContext);
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -58,9 +56,9 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     >
       <Container maxWidth="xl" style={{ color: "white" }}>
         <Toolbar disableGutters>
-          {!isAdmin ? (
-            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-              <div className="flex gap-x-2 mr-10">
+          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+            {!isAdmin && (
+              <div className="flex gap-x-2 mr-6">
                 <button
                   className={cn(
                     "px-1",
@@ -89,10 +87,20 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   RU
                 </button>
               </div>
-            </Box>
-          ) : (
-            <Box sx={{ flexGrow: 1 }}></Box>
-          )}
+            )}
+            <div
+              className={cn(
+                "p-3 rounded text-xs",
+                currentUser.expireDate < 0
+                  ? "text-[#AF2323] bg-[#F4BBBB]"
+                  : "text-[#292929] bg-[#88c0e9]"
+              )}
+            >
+              {currentUser.expireDate < 0
+                ? "Expired"
+                : `Expire date ${currentUser.expireDate} days`}
+            </div>
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box sx={{ marginRight: "12px" }}>
