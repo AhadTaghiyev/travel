@@ -56,13 +56,21 @@ export default function index() {
   const { onOpen } = useModal();
   const navigate = useNavigate();
   const [currency, setCurrency] = useState<ICurrency>({
-    name: "USD",
+    name: company?.concurency ?? "USD",
     value: 1,
   });
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (company?.concurency)
+      setCurrency({
+        name: company?.concurency,
+        value: 1,
+      });
+  }, [company?.concurency]);
 
   const onCurrencyChange = (values: ICurrency) => {
     setCurrency(values);

@@ -51,13 +51,13 @@ export default function Index({
 }: IReportModel) {
   const [searchParams] = useSearchParams();
   const { onOpen } = useModal();
+  const { loading: companyLoading, company } = useContext(CompanyContext);
   const [currency, setCurrency] = useState<ICurrency>({
-    name: "USD",
+    name: company?.concurency ?? "USD",
     value: 1,
   });
   const [loading, setLoading] = useState(true);
   const [invoiceText, setInvoiceText] = useState("");
-  const { loading: companyLoading, company } = useContext(CompanyContext);
   const [data, setData] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -67,6 +67,14 @@ export default function Index({
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (company?.concurency)
+      setCurrency({
+        name: company?.concurency,
+        value: 1,
+      });
+  }, [company?.concurency]);
 
   async function getData() {
     setLoading(true);
@@ -158,12 +166,18 @@ export default function Index({
                   sx={{ display: "flex", justifyContent: "end" }}
                   className="removeFromPrint"
                 >
-                  {(currency.value !== 1 || currency.name !== "USD") && (
+                  {(currency.value !== 1 ||
+                    currency.name !== (company?.concurency ?? "USD")) && (
                     <Button
                       variant="text"
                       color="inherit"
                       sx={{ fontSize: "12px", lineHeight: "16px" }}
-                      onClick={() => setCurrency({ name: "USD", value: 1 })}
+                      onClick={() =>
+                        setCurrency({
+                          name: company?.concurency ?? "USD",
+                          value: 1,
+                        })
+                      }
                     >
                       <BsCurrencyExchange style={{ marginRight: "8px" }} />
                       {t("Məzənnə sıfırla")}

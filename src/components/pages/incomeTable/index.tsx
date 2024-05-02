@@ -112,7 +112,7 @@ export function MassIncomeTable({
               {t("Total Remaining Amount")}
             </TableCell>
             <TableCell className="text-right py-2">
-              {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}
+              {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}
               {currency.name}
             </TableCell>
           </TableRow>

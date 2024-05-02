@@ -53,24 +53,31 @@ export default function index() {
   const { onOpen } = useModal();
   const navigate = useNavigate();
   const [currency, setCurrency] = useState<ICurrency>({
-    name: "USD",
+    name: company?.concurency ?? "USD",
     value: 1,
   });
-    const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (company?.concurency)
+      setCurrency({
+        name: company?.concurency,
+        value: 1,
+      });
+  }, [company?.concurency]);
 
   const onCurrencyChange = (values: ICurrency) => {
     setCurrency(values);
   };
 
-
   async function getData() {
     setLoading(false);
 
     const res = await apiService.get(`/Reports/SupplierReportDetailById/${id}`);
-      console.log(res)
+    console.log(res);
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
       setTimeout(() => {
@@ -180,13 +187,12 @@ export default function index() {
                       {data.supplier}
                     </TableCell>
                     <TableCell className="py-1.5">
-                      {(data.debit * currency.value).toFixed(2)}{" "}
-                      {currency.name}
+                      {(data.debit * currency.value).toFixed(2)} {currency.name}
                     </TableCell>
                     <TableCell className="font-medium py-1.5">
                       {data.details}
                     </TableCell>
-                
+
                     <TableCell className="py-1.5 max-w-[150px] truncate">
                       {formatDate(data.date)}
                     </TableCell>
