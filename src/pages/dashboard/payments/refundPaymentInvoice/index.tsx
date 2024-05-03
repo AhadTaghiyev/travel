@@ -77,7 +77,6 @@ export default function index() {
     setLoading(false);
 
     const res = await apiService.get(`/Reports/RefundPaymentDetailById/${id}`);
-    console.log(res);
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
       setTimeout(() => {

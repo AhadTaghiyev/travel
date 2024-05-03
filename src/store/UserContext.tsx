@@ -5,6 +5,7 @@ export const UserContext = createContext<{
   user?: any;
   loading?: boolean;
   getUser?: () => Promise<void>;
+  removeUser?: () => void;
 }>({});
 
 export const UserProvider = ({ children }: any) => {
@@ -14,6 +15,7 @@ export const UserProvider = ({ children }: any) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) getUser();
+    else setLoading(false);
   }, [window]);
 
   const getUser = async () => {
@@ -27,11 +29,18 @@ export const UserProvider = ({ children }: any) => {
     setLoading(false);
   };
 
+  const removeUser = () => {
+    setUser(undefined);
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+  };
+
   const values = {
     user,
     loading,
     getUser,
     setUser,
+    removeUser,
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

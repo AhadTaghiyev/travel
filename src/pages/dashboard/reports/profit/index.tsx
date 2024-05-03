@@ -35,15 +35,12 @@ export default function Index() {
   //         // totalReceiveAblePayableResultPromise,
   //         financalStatusReportResultPromise,
   //       ]);
-  //       console.log(totalReceiveAblePayableResult)
   //     // setData(totalReceiveAblePayableResult.data);
   //     setPayments(financalStatusReportResultPromise.data);
   //     setLoading(false);
   //   };
   //   fetchData();
   // }, []);
-
-  // console.log(payments)
 
   // if (loading) {
   //   return <Loading />;

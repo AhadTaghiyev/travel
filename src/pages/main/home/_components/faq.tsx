@@ -3,25 +3,20 @@ import { apiService } from "@/server/apiServer";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-
 const FaqSection = () => {
   const { t } = useTranslation();
-  const[datas,setDatas]=useState([])
-  useEffect( () => {
+  const [datas, setDatas] = useState([]);
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiService.get(
-          `/Question/getall/1`
-        );
-        
-        setDatas(response?.data?.items)
-        console.log(response?.data?.items) 
-      
+        const response = await apiService.get(`/Question/getall/1`);
+
+        setDatas(response?.data?.items);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
   }, []);
   const [activeQuestion, setActiveQuestion] = useState(null);
@@ -47,22 +42,25 @@ const FaqSection = () => {
               boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
             }}
           >
-            <h1 className="font-semibold">  {t("culture") == "en"
-                  ? q.titleEn
-                  : t("culture") == "ru"
-                  ? q.titleRu
-                  : q.titleAz}</h1>
+            <h1 className="font-semibold">
+              {" "}
+              {t("culture") == "en"
+                ? q.titleEn
+                : t("culture") == "ru"
+                ? q.titleRu
+                : q.titleAz}
+            </h1>
             <p
               className={cn(
                 "py-0 duration-200 h-0 overflow-hidden",
                 activeQuestion === i && "py-5 h-fit"
               )}
             >
-                      {t("culture") == "en"
-                  ? q.descEn
-                  : t("culture") == "ru"
-                  ? q.descRu
-                  : q.descAz}
+              {t("culture") == "en"
+                ? q.descEn
+                : t("culture") == "ru"
+                ? q.descRu
+                : q.descAz}
             </p>
           </div>
         ))}

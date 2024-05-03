@@ -12,21 +12,18 @@ import { capitalize } from "lodash";
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [info, setInfo] = useState({});
   const {
     t,
     i18n: { language },
   } = useTranslation();
-  console.log(info);
   const getData = (page = 1) => {
     apiService.get(`/Blog/GetAll/${page}`).then((res) => {
       if (res.status !== 200) {
         toast.error(t("Something went wrong"));
         return;
       }
-      const { items, ...info } = res.data;
+      const { items } = res.data;
       setBlogs(items);
-      setInfo(info);
       setLoading(false);
     });
   };

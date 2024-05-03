@@ -23,14 +23,14 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     i18n: { language },
     t,
   } = useTranslation();
-  const { user: currentUser } = useContext(UserContext);
+  const { user: currentUser, removeUser } = useContext(UserContext);
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
     localStorage.setItem("language", language);
   };
-  const role = localStorage.getItem("role");
-  const userName = localStorage.getItem("username");
+  const companyName = currentUser.companyName;
+  const userName = currentUser.userName;
 
   // ========================
   // Get User values
@@ -47,6 +47,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
 
   const handleLogout = () => {
     userService.logout();
+    removeUser();
     navigate("/auth/login");
   };
   return (
@@ -141,7 +142,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                     lineHeight: "16px",
                   }}
                 >
-                  {role}
+                  {companyName}
                 </p>
               </Box>
               <IconButton onClick={handleClick} sx={{ p: 0 }}>

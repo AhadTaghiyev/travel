@@ -17,7 +17,6 @@ export default function index() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("location", location.pathname);
     if (user && user.expireDate < 0 && location.pathname !== "/panel") {
       navigate("/panel");
     }

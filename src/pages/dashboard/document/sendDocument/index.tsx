@@ -56,7 +56,7 @@ export default function index() {
         setCompanyName(res.data.data.name);
       }
     } catch (err) {
-      console.log("err", err);
+      console.error("err", err);
     }
   };
 

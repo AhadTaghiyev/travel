@@ -36,15 +36,16 @@ const UpdatePay = () => {
 
   const onSubmit = useCallback(
     (values: IPay, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      console.log(values, setSubmitting);
-
       const params = {
         id,
         paymentId: values.paymentId,
         paidAmount: values.amount,
       };
       const promise = apiService
-        .put(`/WillBePaids/EditPay/${id}?amount=${params.paidAmount}&paymentId=${params.paymentId}`, params)
+        .put(
+          `/WillBePaids/EditPay/${id}?amount=${params.paidAmount}&paymentId=${params.paymentId}`,
+          params
+        )
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Income updated"));

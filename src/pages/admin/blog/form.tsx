@@ -49,7 +49,7 @@ function uploadAdapter(loader: FileLoader): UploadAdapter {
       });
     },
     abort: () => {
-      console.log("Upload aborted");
+      console.error("Upload aborted");
     },
   };
 }
