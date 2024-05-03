@@ -9,12 +9,13 @@ export default function Index() {
     <Container maxWidth="xl" className="bg-white py-8">
       <h1 className="mb-8 font-bold text-3xl">{t("Yaxın uçuşlar")}</h1>
       <Table
-        hideFilter
+        // hideFilter
         hideDelete
         hideCreate
         hideEdit
-        hidePrint
+        hideStatus
         hideReport
+        hidePrint
         columns={columns}
         detailLink="/panel/reports/NearestTravelReport/"
         api={"/Reports/NearestTravelReport"}

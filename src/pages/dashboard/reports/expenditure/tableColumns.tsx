@@ -22,14 +22,14 @@ export const columns: GridColDef[] = [
   },
   {
     field: "debit",
-    headerName: "Debit",
+    headerName: "Balance",
     flex: 1,
     headerClassName: "header-item",
   },
-  {
-    field: "credit",
-    headerName: "Credit",
-    flex: 1,
-    headerClassName: "header-item",
-  },
+  // {
+  //   field: "credit",
+  //   headerName: "Credit",
+  //   flex: 1,
+  //   headerClassName: "header-item",
+  // },
 ];

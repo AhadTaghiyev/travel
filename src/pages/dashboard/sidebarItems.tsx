@@ -311,11 +311,11 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Təchizatçı",
         link: "/panel/suppliers",
       },
-      {
-        icon: FaPeopleGroup,
-        text: "Personal",
-        link: "/panel/personals",
-      },
+      // {
+      //   icon: FaPeopleGroup,
+      //   text: "Personal",
+      //   link: "/panel/personals",
+      // },
       {
         icon: FaMoneyBill1Wave,
         text: "Ödənişlər",

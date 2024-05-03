@@ -228,6 +228,7 @@ const Detail = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
+              <TableHead key={"No"}>{t("No")}</TableHead>
                 {columns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
@@ -236,8 +237,11 @@ const Detail = () => {
             </TableHeader>
             <TableBody>
               {data &&
-                data.map((row) => (
+                data.map((row,index) => (
                   <TableRow key={row.id}>
+                      <TableCell key={"No"} className="py-1.5">
+                        {index}
+                      </TableCell>
                     {columns.map((column) => (
                       <TableCell key={column.name} className="py-1.5">
                         {row?.[column.name]}
@@ -257,11 +261,13 @@ const Detail = () => {
                 <TableCell className="py-2" colSpan={2}>
                   {t("Total Amount")}
                 </TableCell>
-                <TableCell className="py-2">{totalDebit}</TableCell>
+                <TableCell className="py-2"></TableCell>
                 <TableCell className="py-2">{totalCredit}</TableCell>
+                <TableCell className="py-2">{totalDebit}</TableCell>
                 <TableCell className="py-2">{totalBalance}</TableCell>
                 {/* <TableCell className="py-2">{total}</TableCell> */}
                 <TableCell className="py-2"></TableCell>
+              
               </TableRow>
             </TableFooter>
           </Table>

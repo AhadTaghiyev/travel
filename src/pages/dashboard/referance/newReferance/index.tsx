@@ -14,7 +14,7 @@ import { Form, Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { apiService } from "../../../../server/apiServer";
 import { Schema } from "../schema";
-
+import { useTranslation } from "react-i18next";
 
 const textStyling = {
   lineHeight: "16px",
@@ -49,7 +49,7 @@ export default function CreatePopup() {
 
 
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   if (isLoading) {
     return (
       <CircularProgress
@@ -105,7 +105,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      Telefon
+              {t("Phone Number")}
                     </InputLabel>
                     <TextField
                       id="outlined-basic"
@@ -129,7 +129,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      Email
+               {  t("Email")}
                     </InputLabel>
                     <TextField
                       id="outlined-basic"
@@ -155,7 +155,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      Şirkət
+                      {t("Company")}
                     </InputLabel>
                     <TextField
                       id="outlined-basic"
@@ -179,7 +179,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      Note
+                      {t("explanation")}
                     </InputLabel>
                     <TextField
                       id="outlined-basic"

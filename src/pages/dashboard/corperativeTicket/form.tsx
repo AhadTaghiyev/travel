@@ -404,7 +404,7 @@ const CorperativeTicketForm = ({
                     change={handleChange}
                     type="number"
                     disabled={isView}
-                    name={`planeTickets.${index}.segmentCount`}
+                    name={`corporativeTickets.${index}.segmentCount`}
                     hasErrorMessages={
                       !!errors.corporativeTickets?.[index]?.segmentCount &&
                       !!touched.corporativeTickets?.[index]?.segmentCount
