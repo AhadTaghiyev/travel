@@ -78,7 +78,6 @@ export default function index() {
     const res = await apiService.get(
       `/Reports/ExpenditureAllReportDetailById/${id}`
     );
-    console.log(res);
     if (res.status !== 200) {
       toast.error(t("Something went wrong"));
       setTimeout(() => {

@@ -10,10 +10,15 @@ export default function Index() {
   const { user: currentUser, loading } = useContext(UserContext);
 
   useEffect(() => {
+    console.log("geldi", currentUser);
+    console.log("geldi", currentUser?.role !== "Admin");
+    console.log("geldi", loading);
+
     if ((!currentUser || currentUser?.role !== "Admin") && !loading) {
       navigate("/auth/login");
     }
-  }, [currentUser]);
+  }, [currentUser, loading]);
+  console.log("loading", loading);
 
   if (currentUser?.role !== "Admin") return null;
 

@@ -72,8 +72,6 @@ export default function Index() {
   const { id } = useParams();
   const [tickets, setTicket] = useState([]);
 
-  console.log(id);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -99,11 +97,6 @@ export default function Index() {
 
     fetchData();
   }, [id]);
-
-  // useEffect(() => {
-  //   console.log(tickets);
-
-  // }, [tickets]);
 
   return (
     <Container maxWidth="xl" sx={{ mb: 5 }}>

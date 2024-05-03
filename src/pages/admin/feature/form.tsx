@@ -21,7 +21,6 @@ interface IFeatureProps {
 const Feature = ({ initialValues, onSubmit }: IFeatureProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  console.log(initialValues);
   return (
     <Formik
       onSubmit={onSubmit}

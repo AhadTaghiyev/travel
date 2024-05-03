@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import { Paper, Button } from "@mui/material";
 import { InputBase, Divider } from "@mui/material";
@@ -31,7 +31,7 @@ import { apiService } from "../../../server/apiServer";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { SERVER_BASE_URL } from "@/constants";
+import { ROLES, SERVER_BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import {
@@ -42,6 +42,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { isNil } from "lodash";
+import { UserContext } from "@/store/UserContext";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -83,6 +84,11 @@ export default function Index({
   showOverflow,
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
+  if (user?.role !== ROLES.LEADER) {
+    hideEdit = true;
+    hideDelete = true;
+  }
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 10,
     page: 0,
