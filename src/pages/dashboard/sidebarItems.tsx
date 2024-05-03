@@ -71,7 +71,6 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
 
-
   {
     icon: HiDownload,
     text: "Mədaxil",
@@ -101,6 +100,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: FaArrowsLeftRightToLine,
     text: "From/To Founder",
+    onlyManagement: true,
     children: [
       {
         icon: FaArrowsLeftRightToLine,
@@ -117,6 +117,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: LuDivideCircle,
     text: "Kreditlər/Borclar",
+    onlyManagement: true,
     children: [
       {
         icon: PiWalletLight,
@@ -128,42 +129,36 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Ödənilən Kredit",
         link: "/panel/paidCredits",
       },
-    
     ],
   },
   {
     icon: FaMoneyBillWave,
-    text: "Transactions",//Todo: Translate
+    text: "Transactions", //Todo: Translate
     children: [
-    
-     
       {
         icon: HiOutlineArrowPathRoundedSquare,
         text: "Vəsait transferi",
         link: "/panel/paymentTransfers",
       },
-       
-  {
-    icon: FaMoneyBillWave,
-    text: "Ödənişlər",
-    link: "/panel/payments",
-  },
 
-  {
-    icon: HiOutlineArrowsUpDown,
-    text: "Geri qaytarmalar",
-    link: "/panel/refunds",
-  },
+      {
+        icon: FaMoneyBillWave,
+        text: "Ödənişlər",
+        link: "/panel/payments",
+      },
 
+      {
+        icon: HiOutlineArrowsUpDown,
+        text: "Geri qaytarmalar",
+        link: "/panel/refunds",
+      },
     ],
   },
-
-
-
 
   {
     icon: PiHandshake,
     text: "İnsan resursları",
+    onlyManagement: true,
     children: [
       {
         icon: PiHandshake,
@@ -190,6 +185,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: BsCalculator,
     text: "Hesabatlar",
+    onlyManagement: true,
     children: [
       {
         icon: FaMoneyBillWave,
@@ -290,6 +286,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: IoSettingsOutline,
     text: "Sazlamalar",
+    onlyManagement: true,
     children: [
       {
         icon: BsFillPeopleFill,

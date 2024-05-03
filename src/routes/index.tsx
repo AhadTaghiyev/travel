@@ -300,6 +300,7 @@ import NearestFlights from "../pages/dashboard/reports/nearestFlights";
 import Profit from "../pages/dashboard/reports/profit";
 import ProfitLoss from "../pages/dashboard/reports/profitLoss";
 import CompanySettings from "../pages/dashboard/settings/company";
+import { LeaderOnly, ManagementOnly } from "./guards";
 
 const router = createBrowserRouter([
   {
@@ -485,7 +486,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/aviabiletsale/update/:id",
-        element: <UpdateAviaticket />,
+        element: (
+          <LeaderOnly>
+            <UpdateAviaticket />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/aviabiletsale/report",
@@ -510,7 +515,11 @@ const router = createBrowserRouter([
 
       {
         path: "/panel/cooperativeTicket/update/:id",
-        element: <UpdateCorperativeTicket />,
+        element: (
+          <LeaderOnly>
+            <UpdateCorperativeTicket />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/cooperativeTicket/view/:id",
@@ -539,7 +548,11 @@ const router = createBrowserRouter([
 
       {
         path: "/panel/tourPackage/update/:id",
-        element: <UpdateTourPackage />,
+        element: (
+          <LeaderOnly>
+            <UpdateTourPackage />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/tourPackage/view/:id",
@@ -555,7 +568,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/individualTourPackage/update/:id",
-        element: <UpdateIndividualTourPackage />,
+        element: (
+          <LeaderOnly>
+            <UpdateIndividualTourPackage />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/individualTourPackage/view/:id",
@@ -577,7 +594,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/tourPackage/update/:id",
-        element: <UpdateAviaticket />,
+        element: (
+          <LeaderOnly>
+            <UpdateAviaticket />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/tourPackage/report",
@@ -619,7 +640,11 @@ const router = createBrowserRouter([
 
       {
         path: "/panel/otherService/update/:id",
-        element: <UpdateOtherService />,
+        element: (
+          <LeaderOnly>
+            <UpdateOtherService />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/otherService/report",
@@ -660,34 +685,62 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/customers",
-        element: <Customers />,
+        element: (
+          <ManagementOnly>
+            <Customers />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/customers/new",
-        element: <NewCustomer />,
+        element: (
+          <ManagementOnly>
+            <NewCustomer />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/customers/update/:id",
-        element: <UpdateCustomer />,
+        element: (
+          <LeaderOnly>
+            <UpdateCustomer />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // GetCredits
       //================
       {
         path: "/panel/getCredits",
-        element: <GetCredit />,
+        element: (
+          <ManagementOnly>
+            <GetCredit />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/getCredits/new",
-        element: <NewGetCredit />,
+        element: (
+          <ManagementOnly>
+            <NewGetCredit />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/getCredits/update/:id",
-        element: <UpdateGetCredit />,
+        element: (
+          <LeaderOnly>
+            <UpdateGetCredit />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/getCredits/report",
-        element: <InvoiceGetCredit />,
+        element: (
+          <ManagementOnly>
+            <InvoiceGetCredit />
+          </ManagementOnly>
+        ),
       },
 
       // {
@@ -699,19 +752,35 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/PaidCredits",
-        element: <PaidCredit />,
+        element: (
+          <ManagementOnly>
+            <PaidCredit />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/PaidCredits/new",
-        element: <NewPaidCredit />,
+        element: (
+          <ManagementOnly>
+            <NewPaidCredit />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/PaidCredits/update/:id",
-        element: <UpdatePaidCredit />,
+        element: (
+          <LeaderOnly>
+            <UpdatePaidCredit />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/PaidCredits/report",
-        element: <InvoicePaidCredit />,
+        element: (
+          <ManagementOnly>
+            <InvoicePaidCredit />
+          </ManagementOnly>
+        ),
       },
 
       // ===============
@@ -727,37 +796,65 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/employees/update/:id",
-        element: <UpdateEmployee />,
+        element: (
+          <LeaderOnly>
+            <UpdateEmployee />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // Airway
       //================
       {
         path: "/panel/airways",
-        element: <Airway />,
+        element: (
+          <ManagementOnly>
+            <Airway />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/airways/new",
-        element: <NewAirway />,
+        element: (
+          <ManagementOnly>
+            <NewAirway />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/airways/update/:id",
-        element: <UpdateAirway />,
+        element: (
+          <LeaderOnly>
+            <UpdateAirway />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // Airway
       //================
       {
         path: "/panel/invoiceTexts",
-        element: <InvoiceText />,
+        element: (
+          <ManagementOnly>
+            <InvoiceText />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/invoiceTexts/new",
-        element: <NewInvoiceText />,
+        element: (
+          <ManagementOnly>
+            <NewInvoiceText />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/invoiceTexts/update/:id",
-        element: <UpdateInvoiceText />,
+        element: (
+          <LeaderOnly>
+            <UpdateInvoiceText />
+          </LeaderOnly>
+        ),
       },
 
       // ===============
@@ -765,15 +862,27 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/banks",
-        element: <Bank />,
+        element: (
+          <ManagementOnly>
+            <Bank />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/banks/new",
-        element: <NewBank />,
+        element: (
+          <ManagementOnly>
+            <NewBank />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/banks/update/:id",
-        element: <UpdateBank />,
+        element: (
+          <LeaderOnly>
+            <UpdateBank />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // Reoprts
@@ -803,7 +912,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/deposit/update/:id",
-        element: <UpdateDeposit />,
+        element: (
+          <LeaderOnly>
+            <UpdateDeposit />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/deposit/report",
@@ -822,7 +935,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/CustomerPayments/update/:id",
-        element: <UpdateCustomerPayment />,
+        element: (
+          <LeaderOnly>
+            <UpdateCustomerPayment />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/CustomerPayments/report",
@@ -834,45 +951,81 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/suppliers",
-        element: <Supplier />,
+        element: (
+          <ManagementOnly>
+            <Supplier />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/suppliers/new",
-        element: <NewSupplier />,
+        element: (
+          <ManagementOnly>
+            <NewSupplier />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/suppliers/update/:id",
-        element: <UpdateSupplier />,
+        element: (
+          <LeaderOnly>
+            <UpdateSupplier />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // Personal
       //================
       {
         path: "/panel/personals",
-        element: <Personal />,
+        element: (
+          <ManagementOnly>
+            <Personal />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/personals/new",
-        element: <NewPersonal />,
+        element: (
+          <ManagementOnly>
+            <NewPersonal />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/personals/update/:id",
-        element: <UpdatePersonal />,
+        element: (
+          <LeaderOnly>
+            <UpdatePersonal />
+          </LeaderOnly>
+        ),
       },
       // ===============
       // Payments
       //================
       {
         path: "/panel/payment",
-        element: <Payment />,
+        element: (
+          <ManagementOnly>
+            <Payment />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/payment/new",
-        element: <NewPayment />,
+        element: (
+          <ManagementOnly>
+            <NewPayment />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/payment/update/:id",
-        element: <UpdatePayment />,
+        element: (
+          <LeaderOnly>
+            <UpdatePayment />
+          </LeaderOnly>
+        ),
       },
 
       // ===============
@@ -880,15 +1033,27 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/transfers",
-        element: <Transfer />,
+        element: (
+          <ManagementOnly>
+            <Transfer />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/transfers/new",
-        element: <NewTranfser />,
+        element: (
+          <ManagementOnly>
+            <NewTranfser />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/transfers/update/:id",
-        element: <UpdateTransfer />,
+        element: (
+          <LeaderOnly>
+            <UpdateTransfer />
+          </LeaderOnly>
+        ),
       },
 
       // ===============
@@ -896,45 +1061,81 @@ const router = createBrowserRouter([
       //================
       {
         path: "/panel/meals",
-        element: <Meal />,
+        element: (
+          <ManagementOnly>
+            <Meal />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/meals/new",
-        element: <NewMeal />,
+        element: (
+          <ManagementOnly>
+            <NewMeal />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/meals/update/:id",
-        element: <UpdateMeal />,
+        element: (
+          <LeaderOnly>
+            <UpdateMeal />
+          </LeaderOnly>
+        ),
       },
       //=================
       // Tours
       //=================
       {
         path: "/panel/tours",
-        element: <Tour />,
+        element: (
+          <ManagementOnly>
+            <Tour />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/tours/new",
-        element: <NewTour />,
+        element: (
+          <ManagementOnly>
+            <NewTour />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/tours/update/:id",
-        element: <UpdateTour />,
+        element: (
+          <LeaderOnly>
+            <UpdateTour />
+          </LeaderOnly>
+        ),
       },
       //=================
       // Service Managers
       //=================
       {
         path: "/panel/services",
-        element: <Service />,
+        element: (
+          <ManagementOnly>
+            <Service />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/services/new",
-        element: <NewService />,
+        element: (
+          <ManagementOnly>
+            <NewService />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/services/update/:id",
-        element: <UpdateService />,
+        element: (
+          <LeaderOnly>
+            <UpdateService />
+          </LeaderOnly>
+        ),
       },
 
       //=================
@@ -942,15 +1143,27 @@ const router = createBrowserRouter([
       //=================
       {
         path: "/panel/email",
-        element: <Email />,
+        element: (
+          <ManagementOnly>
+            <Email />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/email/new",
-        element: <NewEmail />,
+        element: (
+          <ManagementOnly>
+            <NewEmail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/email/update/:id",
-        element: <UpdateEmail />,
+        element: (
+          <LeaderOnly>
+            <UpdateEmail />
+          </LeaderOnly>
+        ),
       },
       //=================
       // Agreements
@@ -965,7 +1178,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/agreements/update/:id",
-        element: <UpdateAgreement />,
+        element: (
+          <LeaderOnly>
+            <UpdateAgreement />
+          </LeaderOnly>
+        ),
       },
       //=================
       // AgreementFormat
@@ -980,7 +1197,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/agreementFormats/update/:id",
-        element: <UpdateAgreementFormat />,
+        element: (
+          <LeaderOnly>
+            <UpdateAgreementFormat />
+          </LeaderOnly>
+        ),
       },
 
       //=================
@@ -988,19 +1209,35 @@ const router = createBrowserRouter([
       //=================
       {
         path: "/panel/reports/willbepaid",
-        element: <WillBePaid />,
+        element: (
+          <ManagementOnly>
+            <WillBePaid />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/willbepaid/new",
-        element: <NewWillBePaid />,
+        element: (
+          <ManagementOnly>
+            <NewWillBePaid />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/willbepaid/update/:id",
-        element: <UpdateWillBePaid />,
+        element: (
+          <LeaderOnly>
+            <UpdateWillBePaid />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/reports/willbepaid/detail/:id",
-        element: <DetailWillBePaid />,
+        element: (
+          <ManagementOnly>
+            <DetailWillBePaid />
+          </ManagementOnly>
+        ),
       },
 
       //=================
@@ -1016,7 +1253,11 @@ const router = createBrowserRouter([
       // },
       {
         path: "/panel/payments/update/:id",
-        element: <UpdatePay />,
+        element: (
+          <LeaderOnly>
+            <UpdatePay />
+          </LeaderOnly>
+        ),
       },
 
       //=================
@@ -1074,32 +1315,60 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/fees",
-        element: <Fee />,
+        element: (
+          <ManagementOnly>
+            <Fee />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/fees/new",
-        element: <NewFee />,
+        element: (
+          <ManagementOnly>
+            <NewFee />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/fees/update/:id",
-        element: <UpdateFee />,
+        element: (
+          <LeaderOnly>
+            <UpdateFee />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/salaryToBePaid",
-        element: <SalaryToBePaid />,
+        element: (
+          <ManagementOnly>
+            <SalaryToBePaid />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/salaryToBePaid/report",
-        element: <SalaryToBePaidDetailReport />,
+        element: (
+          <ManagementOnly>
+            <SalaryToBePaidDetailReport />
+          </ManagementOnly>
+        ),
       },
 
       {
         path: "/panel/salaryToBePaid/new",
-        element: <NewSalaryToBePaid />,
+        element: (
+          <ManagementOnly>
+            <NewSalaryToBePaid />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/salaryToBepaid/update/:id",
-        element: <UpdateSalaryToBePaid />,
+        element: (
+          <LeaderOnly>
+            <UpdateSalaryToBePaid />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/payments/report/:id",
@@ -1117,7 +1386,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/bonus/update/:id",
-        element: <UpdateBonus />,
+        element: (
+          <LeaderOnly>
+            <UpdateBonus />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/bonus/report",
@@ -1126,36 +1399,68 @@ const router = createBrowserRouter([
       // ManagerFinancialTransactions
       {
         path: "/panel/managerFinancialTransactions",
-        element: <Transaction />,
+        element: (
+          <ManagementOnly>
+            <Transaction />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactions/new",
-        element: <NewTransaction />,
+        element: (
+          <ManagementOnly>
+            <NewTransaction />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactions/update/:id",
-        element: <UpdateTransaction />,
+        element: (
+          <LeaderOnly>
+            <UpdateTransaction />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactions/report",
-        element: <TransactionReport />,
+        element: (
+          <ManagementOnly>
+            <TransactionReport />
+          </ManagementOnly>
+        ),
       },
       // ManagerFinancialTransactionPayments
       {
         path: "/panel/managerFinancialTransactionPayments",
-        element: <TransactionPayment />,
+        element: (
+          <ManagementOnly>
+            <TransactionPayment />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactionPayments/new",
-        element: <NewTransactionPayment />,
+        element: (
+          <ManagementOnly>
+            <NewTransactionPayment />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactionPayments/update/:id",
-        element: <UpdateTransactionPayment />,
+        element: (
+          <LeaderOnly>
+            <UpdateTransactionPayment />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/managerFinancialTransactionPayments/report",
-        element: <TransactionPaymentReport />,
+        element: (
+          <ManagementOnly>
+            <TransactionPaymentReport />
+          </ManagementOnly>
+        ),
       },
       // MoneyTransfers
       {
@@ -1168,7 +1473,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/paymentTransfers/update/:id",
-        element: <UpdateMoneyTransfer />,
+        element: (
+          <LeaderOnly>
+            <UpdateMoneyTransfer />
+          </LeaderOnly>
+        ),
       },
       {
         path: "/panel/paymentTransfers/report",
@@ -1177,37 +1486,69 @@ const router = createBrowserRouter([
 
       {
         path: "/panel/agreementFormats",
-        element: <AgreementFormat />,
+        element: (
+          <ManagementOnly>
+            <AgreementFormat />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/agreementFormats/new",
-        element: <NewAgreementFormat />,
+        element: (
+          <ManagementOnly>
+            <NewAgreementFormat />
+          </ManagementOnly>
+        ),
       },
 
       //reports
       {
         path: "/panel/reports/suppliers",
-        element: <SuppliersReport />,
+        element: (
+          <ManagementOnly>
+            <SuppliersReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/suppliers/:id",
-        element: <SuppliersReportDetail />,
+        element: (
+          <ManagementOnly>
+            <SuppliersReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/refunds/:id",
-        element: <RefundsReportDetail />,
+        element: (
+          <ManagementOnly>
+            <RefundsReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/salaries/:id",
-        element: <SalariesReportDetail />,
+        element: (
+          <ManagementOnly>
+            <SalariesReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/expenditures",
-        element: <ExpendituresReport />,
+        element: (
+          <ManagementOnly>
+            <ExpendituresReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/expenditures/:id",
-        element: <ExpendituresReportDetail />,
+        element: (
+          <ManagementOnly>
+            <ExpendituresReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/invoices/expenditures/:id",
@@ -1224,155 +1565,150 @@ const router = createBrowserRouter([
 
       {
         path: "/panel/reports/deadlines",
-        element: <DeadlineReport />,
+        element: (
+          <ManagementOnly>
+            <DeadlineReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/flightTickets",
-        element: <FlightTicketsReport />,
+        element: (
+          <ManagementOnly>
+            <FlightTicketsReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/customers",
-        element: <CustomersReport />,
+        element: (
+          <ManagementOnly>
+            <CustomersReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/customers/:id",
-        element: <CustomersReportDetail />,
+        element: (
+          <ManagementOnly>
+            <CustomersReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/profits",
-        element: <ProfitsReport />,
+        element: (
+          <ManagementOnly>
+            <ProfitsReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/profits/:id",
-        element: <ProfitsReportDetail />,
+        element: (
+          <ManagementOnly>
+            <ProfitsReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/finaceStatus",
-        element: <FinancesReport />,
+        element: (
+          <ManagementOnly>
+            <FinancesReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/paymentTypes",
-        element: <PaymentsReport />,
+        element: (
+          <ManagementOnly>
+            <PaymentsReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/paymentTypes/:id",
-        element: <PaymentReportDetail />,
+        element: (
+          <ManagementOnly>
+            <PaymentReportDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/customerprofit",
-        element: <CustomerProfitsReport />,
+        element: (
+          <ManagementOnly>
+            <CustomerProfitsReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/customerprofit/:id",
-        element: <CustomerProfitsDetail />,
+        element: (
+          <ManagementOnly>
+            <CustomerProfitsDetail />
+          </ManagementOnly>
+        ),
       },
 
       {
         path: "/panel/reports/personals",
-        element: <PersonalsReport />,
+        element: (
+          <ManagementOnly>
+            <PersonalsReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/personals/:id",
-        element: <PersonalsDetail />,
+        element: (
+          <ManagementOnly>
+            <PersonalsDetail />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/nearestFlights",
-        element: <NearestFlights />,
+        element: (
+          <ManagementOnly>
+            <NearestFlights />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/profit",
-        element: <Profit />,
+        element: (
+          <ManagementOnly>
+            <Profit />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/profitLoss",
-        element: <ProfitLoss />,
+        element: (
+          <ManagementOnly>
+            <ProfitLoss />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/reports/dayBook",
-        element: <DayBookReport />,
+        element: (
+          <ManagementOnly>
+            <DayBookReport />
+          </ManagementOnly>
+        ),
       },
       {
         path: "/panel/company",
-        element: <CompanySettings />,
+        element: (
+          <ManagementOnly>
+            <CompanySettings />
+          </ManagementOnly>
+        ),
       },
-      // {
-      //   path: "/panel/reports/planeTicket",
-      //   element: <PlaneTicketReport />,
-      // },
-      // {
-      //   path: "/panel/reports/corperative",
-      //   element: <CorporateReport />,
-      // },
-      // {
-      //   path: "/panel/reports/tourPackage",
-      //   element: <TourPackageReport />,
-      // },
-      // {
-      //   path: "/panel/reports/individualTourPackage",
-      //   element: <IndividualTourPackageReport />,
-      // },
-      // {
-      //   path: "/panel/reports/otherServices",
-      //   element: <OtherServiceReport />,
-      // },
-      // {
-      //   path: "/panel/reports/masincome",
-      //   element: <MasIncomeReport />,
-      // },
-      // {
-      //   path: "/panel/reports/willbepaids",
-      //   element: <WillBePaidReport />,
-      // },
-      // {
-      //   path: "/panel/reports/debt",
-      //   element: <DebtReport />,
-      // },
-      // {
-      //   path: "/panel/reports/getcredit",
-      //   element: <GetCreditReport />,
-      // },
-      // {
-      //   path: "/panel/reports/paidcredit",
-      //   element: <PaidCreditReport />,
-      // },
-      // {
-      //   path: "/panel/reports/paidsalary",
-      //   element: <PaidSalaryReport />,
-      // },
-      // {
-      //   path: "/panel/reports/customer",
-      //   element: <CustomerReport />,
-      // },
-
-      // {
-      //   path: "/panel/reports/customer/:id",
-      //   element: <CustomerReportDetail />,
-      // },
-      // {
-      //   path: "/panel/reports/personal",
-      //   element: <PersonalReport />,
-      // },
-      // {
-      //   path: "/panel/reports/personal/:id",
-      //   element: <PersonalReportDetail />,
-      // },
-      // {
-      //   path: "/panel/reports/fee",
-      //   element: <FeeReports />,
-      // },
-      // {
-      //   path: "/panel/reports/feeDetails/:id",
-      //   element: <FeeReportsDetails />,
-      // },
-      // {
-      //   path: "/panel/reports/nearestFlights",
-      //   element: <NearestFlightReport />,
-      // },
     ],
-  },
-  {
-    path: "admin",
-    children: [],
   },
 ]);
 
