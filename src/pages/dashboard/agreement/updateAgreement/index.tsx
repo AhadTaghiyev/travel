@@ -1,10 +1,14 @@
-// @ts-nocheck
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, InputLabel, Button, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../server/apiServer";
-import { Editor } from "@tinymce/tinymce-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  UploadAdapter,
+  FileLoader,
+} from "@ckeditor/ckeditor5-upload/src/filerepository";
 
 const textStyling = {
   lineHeight: "16px",
@@ -21,15 +25,48 @@ const footer = {
   padding: "12px 60px",
 };
 
+function uploadAdapter(loader: FileLoader): UploadAdapter {
+  return {
+    upload: () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const file = await loader.file;
+          const formData = new FormData();
+          formData.append("ImageFile", file);
+          const response = await apiService.postForm(
+            `/Blog/UploadImage`,
+            formData
+          );
+          if (response.status === 200) {
+            return resolve({
+              default: response.data.imagePath,
+            });
+          }
+          reject("Upload failed");
+        } catch (error) {
+          reject("Upload failed");
+        }
+      });
+    },
+    abort: () => {
+      console.error("Upload aborted");
+    },
+  };
+}
+
+function uploadPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return uploadAdapter(loader);
+  };
+}
+
 export default function Index() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const editorRef = useRef(null);
-
-  const [agreementFormats, setAgreementFormats] = useState([]);
   const [name, setName] = useState("");
   const [currentAgreementFormat, setCurrentAgreementFormat] = useState(null);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,20 +78,11 @@ export default function Index() {
     fetchData();
   }, []);
 
-  const getAgreementFormats = async () => {
-    const res = await apiService.get("AgreementFormat/GetAll/1");
-    if (res.status === 200) {
-      setAgreementFormats(res.data.items);
-    } else {
-      console.error(res);
-    }
-  };
-
   const handleSave = async () => {
     try {
       const res = await apiService.put(`Agreements/Update/${id}`, {
-        name: name,
-        text: editorRef.current.getContent(),
+        name,
+        text,
       });
       if (res?.status == 200) {
         toast.success("Uğurla yenilendi!");
@@ -86,42 +114,19 @@ export default function Index() {
           onChange={(e) => setName(e.target.value)}
           size="small"
         />
-        <Editor
-          apiKey="ows56ugyfwkmx9qarju0k2ygovl2zyuq5byax7cs5th0cwed"
-          initialValue={currentAgreementFormat?.text}
-          onInit={(evt, editor) => (editorRef.current = editor)}
-          init={{
-            height: 500,
-            menubar: false,
-            plugins: [
-              "advlist",
-              "autolink",
-              "lists",
-              "link",
-              "image",
-              "charmap",
-              "preview",
-              "anchor",
-              "searchreplace",
-              "visualblocks",
-              "code",
-              "fullscreen",
-              "insertdatetime",
-              "media",
-              "table",
-              "code",
-              "help",
-              "wordcount",
-            ],
-            toolbar:
-              "undo redo | blocks | " +
-              "bold italic forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent | " +
-              "removeformat | help",
-            content_style:
-              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-          }}
-        />
+
+        <div className="w-[50%] mb-6">
+          <CKEditor
+            config={{
+              extraPlugins: [uploadPlugin],
+            }}
+            editor={ClassicEditor}
+            data={currentAgreementFormat?.text}
+            onChange={(_, editor) => {
+              setText(editor.getData());
+            }}
+          />
+        </div>
       </Container>
       <footer style={footer}>
         <div>

@@ -1,10 +1,20 @@
 import { useState } from "react";
-import { Container, InputLabel, Button, TextField, Autocomplete } from "@mui/material";
+import {
+  Container,
+  InputLabel,
+  Button,
+  TextField,
+  Autocomplete,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../server/apiServer";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  UploadAdapter,
+  FileLoader,
+} from "@ckeditor/ckeditor5-upload/src/filerepository";
 import { useTranslation } from "react-i18next";
 
 const textStyling = {
@@ -22,6 +32,41 @@ const footer = {
   padding: "12px 60px",
 };
 
+function uploadAdapter(loader: FileLoader): UploadAdapter {
+  return {
+    upload: () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const file = await loader.file;
+          const formData = new FormData();
+          formData.append("ImageFile", file);
+          const response = await apiService.postForm(
+            `/Blog/UploadImage`,
+            formData
+          );
+          if (response.status === 200) {
+            return resolve({
+              default: response.data.imagePath,
+            });
+          }
+          reject("Upload failed");
+        } catch (error) {
+          reject("Upload failed");
+        }
+      });
+    },
+    abort: () => {
+      console.error("Upload aborted");
+    },
+  };
+}
+
+function uploadPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return uploadAdapter(loader);
+  };
+}
+
 export default function Index() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -37,11 +82,11 @@ export default function Index() {
       console.error(res);
     }
   };
-  const handlechange=(data)=>{
-    setName(data.name)
-    setCurrentAgreementFormat(data)
-  }
-  
+  const handlechange = (data) => {
+    setName(data.name);
+    setCurrentAgreementFormat(data);
+  };
+
   const handleSave = async () => {
     try {
       const res = await apiService.post("Agreements/Create", {
@@ -60,14 +105,13 @@ export default function Index() {
   };
   return (
     <>
-
       <Container maxWidth="xl">
         <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
           style={textStyling}
         >
-        {t("Müqavilə formatı")}
+          {t("Müqavilə formatı")}
         </InputLabel>
         <Autocomplete
           disablePortal
@@ -81,24 +125,11 @@ export default function Index() {
           size="small"
           renderInput={(params) => <TextField {...params} label="" />}
         />
-        {/* <InputLabel
-          id="demo-simple-select-label"
-          sx={{ mb: 1 }}
-          style={textStyling}
-        >
-          Müqavilə adı
-        </InputLabel>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          sx={{ width: "50%", mb: 3 }}
-          name={"name"}
-          style={textStyling}
-          onChange={(e) => setName(e.target.value)}
-          size="small"
-        /> */}
         <div className="w-[50%] mb-6">
           <CKEditor
+            config={{
+              extraPlugins: [uploadPlugin],
+            }}
             editor={ClassicEditor}
             data={currentAgreementFormat?.text}
             onChange={(_, editor) => {

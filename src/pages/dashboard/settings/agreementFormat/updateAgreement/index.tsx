@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import {
   Container,
@@ -13,13 +12,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../../server/apiServer";
 import { IAgreementFormatModel } from "../types";
-import PageTitle from "../../../../../components/pages/pageTitle";
-import { Editor } from "@tinymce/tinymce-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {
-  agreementBreadCrumb,
-  homeBreadCrumb,
-  updateAgreementBreadCrumb,
-} from "../../../../../routes/breadcrumbs";
+  UploadAdapter,
+  FileLoader,
+} from "@ckeditor/ckeditor5-upload/src/filerepository";
 
 const textStyling = {
   lineHeight: "16px",
@@ -41,13 +39,48 @@ const initialValues: IAgreementFormatModel = {
   text: "",
 };
 
+function uploadAdapter(loader: FileLoader): UploadAdapter {
+  return {
+    upload: () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const file = await loader.file;
+          const formData = new FormData();
+          formData.append("ImageFile", file);
+          const response = await apiService.postForm(
+            `/Blog/UploadImage`,
+            formData
+          );
+          if (response.status === 200) {
+            return resolve({
+              default: response.data.imagePath,
+            });
+          }
+          reject("Upload failed");
+        } catch (error) {
+          reject("Upload failed");
+        }
+      });
+    },
+    abort: () => {
+      console.error("Upload aborted");
+    },
+  };
+}
+
+function uploadPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return uploadAdapter(loader);
+  };
+}
+
 export default function Index() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const editorRef = useRef(null);
 
   const [agreementFormat, setagreementFormat] = useState(initialValues);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +102,7 @@ export default function Index() {
           try {
             const res = await apiService.put(`/AgreementFormats/Update/${id}`, {
               ...values,
-              text: editorRef.current.getContent(),
+              text,
             });
             if (res?.status == 200) {
               toast.success("Uğurla yaradıldı!");
@@ -84,7 +117,11 @@ export default function Index() {
         render={(props) => (
           <Form>
             <Container maxWidth="xl">
-              <Grid container spacing={4} style={{ marginBottom: "70px" }}>
+              <Grid
+                container
+                spacing={4}
+                style={{ marginTop: 0, marginBottom: "70px" }}
+              >
                 <Grid item md={3}>
                   <InputLabel
                     id="demo-simple-select-label"
@@ -122,48 +159,19 @@ export default function Index() {
                   >
                     Müqavilə
                   </InputLabel>
-                  <Editor
-                    apiKey="ows56ugyfwkmx9qarju0k2ygovl2zyuq5byax7cs5th0cwed"
-                    initialValue={props.values.text}
-                    onInit={(evt, editor) => (editorRef.current = editor)}
-                    onChange={() =>
-                      props.handleChange({
-                        name: "text",
-                        value: editorRef.current.getContent(),
-                      })
-                    }
-                    init={{
-                      height: 500,
-                      menubar: false,
-                      plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "code",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
-                        "code",
-                        "help",
-                        "wordcount",
-                      ],
-                      toolbar:
-                        "undo redo | blocks | " +
-                        "bold italic forecolor | alignleft aligncenter " +
-                        "alignright alignjustify | bullist numlist outdent indent | " +
-                        "removeformat | help",
-                      content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                    }}
-                  />
+
+                  <div className="w-[50%] mb-6">
+                    <CKEditor
+                      config={{
+                        extraPlugins: [uploadPlugin],
+                      }}
+                      editor={ClassicEditor}
+                      data={props.values.text}
+                      onChange={(_, editor) => {
+                        setText(editor.getData());
+                      }}
+                    />
+                  </div>
 
                   {props.errors && props.touched.text && (
                     <>

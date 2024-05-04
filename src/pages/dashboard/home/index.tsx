@@ -20,12 +20,16 @@ import SupplierPaymentsReport from "./report-tables/supplier-payments";
 import FinancialStatusReport from "./report-tables/financial-status";
 import { UserContext } from "@/store/UserContext";
 import { Link } from "react-router-dom";
+import { ROLES } from "@/constants";
 
 export default function index() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
+
+  const isManagerUser =
+    user?.role === ROLES.LEADER || user?.role === ROLES.ACCOUNTANT;
 
   const years = useMemo(() => {
     const years = [];
@@ -35,7 +39,7 @@ export default function index() {
     return years;
   }, []);
 
-  if (user.expireDate< 0) {
+  if (user.expireDate < 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] ">
         <svg
@@ -102,10 +106,12 @@ export default function index() {
       <div className="mt-6 mb-10">
         <h1 className="text-2xl font-bold mb-4">{t("Reports")}</h1>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-          <ReciveablesReport selectedYear={selectedYear} />
-          <SupplierPaymentsReport selectedYear={selectedYear} />
-          <PaymentTypes selectedYear={selectedYear} />
-          <FinancialStatusReport />
+          {isManagerUser && <ReciveablesReport selectedYear={selectedYear} />}
+          {isManagerUser && (
+            <SupplierPaymentsReport selectedYear={selectedYear} />
+          )}
+          {isManagerUser && <PaymentTypes selectedYear={selectedYear} />}
+          {isManagerUser && <FinancialStatusReport />}
           <DeadlineReport selectedYear={selectedYear} />
           <NearestFlightsReport />
         </div>

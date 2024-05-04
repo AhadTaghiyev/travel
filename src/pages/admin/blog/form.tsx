@@ -54,7 +54,7 @@ function uploadAdapter(loader: FileLoader): UploadAdapter {
   };
 }
 
-function uploadPlugin(editor: Editor) {
+function uploadPlugin(editor) {
   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
     return uploadAdapter(loader);
   };

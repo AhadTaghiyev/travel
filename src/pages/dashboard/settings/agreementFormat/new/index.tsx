@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import {  useState } from "react";
+import { useState } from "react";
 import "draft-js/dist/Draft.css";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,11 @@ import { apiService } from "../../../../../server/apiServer";
 import { ToastContainer, toast } from "react-toastify";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  UploadAdapter,
+  FileLoader,
+} from "@ckeditor/ckeditor5-upload/src/filerepository";
+
 const footer = {
   borderRadius: "2px",
   background: "#F8F9FB",
@@ -27,28 +32,62 @@ async function saveData(obj: any) {
   return res;
 }
 
+function uploadAdapter(loader: FileLoader): UploadAdapter {
+  return {
+    upload: () => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const file = await loader.file;
+          const formData = new FormData();
+          formData.append("ImageFile", file);
+          const response = await apiService.postForm(
+            `/Blog/UploadImage`,
+            formData
+          );
+          if (response.status === 200) {
+            return resolve({
+              default: response.data.imagePath,
+            });
+          }
+          reject("Upload failed");
+        } catch (error) {
+          reject("Upload failed");
+        }
+      });
+    },
+    abort: () => {
+      console.error("Upload aborted");
+    },
+  };
+}
+
+function uploadPlugin(editor) {
+  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+    return uploadAdapter(loader);
+  };
+}
+
 export default function Index() {
   const navigate = useNavigate();
-
 
   const [name, setName] = useState("");
   const [text, setText] = useState("");
 
   const handleSave = async () => {
-      try {
-        const res = await saveData({
-          name: name,
-          text: text,
-        });
-        if (res.status === 200) {
-          toast.success("Uğurla yaradıldı!");
-          navigate("/panel/agreementFormats");
-        } else {
-          toast.error("Xəta baş verdi!");
-        }
-      } catch (err) {
-        console.error(err);
+    try {
+      const res = await saveData({
+        name: name,
+        text: text,
+      });
+      if (res.status === 200) {
+        toast.success("Uğurla yaradıldı!");
+        navigate("/panel/agreementFormats");
+      } else {
+        toast.error("Xəta baş verdi!");
       }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -71,44 +110,12 @@ export default function Index() {
           onChange={(e) => setName(e.target.value)}
           size="small"
         />
-        {/* <Editor
-          apiKey="ows56ugyfwkmx9qarju0k2ygovl2zyuq5byax7cs5th0cwed"
-          onInit={(evt, editor) => (editorRef.current = editor)}
-          init={{
-            height: 500,
-            menubar: false,
-            plugins: [
-              "advlist",
-              "autolink",
-              "lists",
-              "link",
-              "image",
-              "charmap",
-              "preview",
-              "anchor",
-              "searchreplace",
-              "visualblocks",
-              "code",
-              "fullscreen",
-              "insertdatetime",
-              "media",
-              "table",
-              "code",
-              "help",
-              "wordcount",
-            ],
-            toolbar:
-              "undo redo | blocks | " +
-              "bold italic forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent | " +
-              "removeformat | help",
-            content_style:
-              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-          }}
-        /> */}
 
-<div className="w-[50%] mb-6">
+        <div className="w-[50%] mb-6">
           <CKEditor
+            config={{
+              extraPlugins: [uploadPlugin],
+            }}
             editor={ClassicEditor}
             data={""}
             onChange={(_, editor) => {
