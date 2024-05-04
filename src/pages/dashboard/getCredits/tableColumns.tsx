@@ -23,7 +23,7 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
   },
   {
     field: "restOfAmount",
-    headerName: t("restOfAmount"),
+    headerName: t("balance"),
     flex: 1,
     headerClassName: "header-item",
   },

@@ -98,7 +98,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
               >
                 {currentUser.expireDate < 0
                   ? "Expired"
-                  : `Expire date ${currentUser.expireDate} days`}
+                  : `Expiry date: ${currentUser.expireDate.toFixed("0")} days`}
               </div>
             </Box>
           )}

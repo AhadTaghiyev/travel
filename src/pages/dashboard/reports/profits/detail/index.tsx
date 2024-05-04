@@ -23,12 +23,11 @@ import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
-  { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
-  { label: "Ref.", name: "ref" },
-  { label: "BuyingPrice.", name: "buyingPrice" },
-  { label: "SellingPrice.", name: "sellingPrice" },
-  { label: "ProfiT.", name: "profiy" },
+  { label: "date", name: "date", type: "date" },
+  { label: "Ref", name: "ref" },
+  { label: "salePrice", name: "buyingPrice" },
+  { label: "SellingPrice", name: "sellingPrice" },
+  { label: "Profits", name: "profiy" },
 ];
 
 const Detail = () => {
@@ -259,7 +258,7 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={3}>
+                <TableCell className="py-2" colSpan={2}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalBuyingPrice}</TableCell>

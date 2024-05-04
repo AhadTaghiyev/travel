@@ -24,13 +24,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "salePrice",
-    headerName: "Sale Price",
+    headerName: "salePrice",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "profit",
-    headerName: "Profit",
+    headerName: "Profits",
     flex: 1,
     headerClassName: "header-item",
   },

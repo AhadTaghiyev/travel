@@ -1,15 +1,13 @@
-// @ts-nocheck
 import { Container } from "@mui/system";
-import Divider from "@mui/material/Divider";
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import "draft-js/dist/Draft.css";
-import { Editor } from "@tinymce/tinymce-react";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import { apiService } from "../../../../../server/apiServer";
 import { ToastContainer, toast } from "react-toastify";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const footer = {
   borderRadius: "2px",
   background: "#F8F9FB",
@@ -32,16 +30,15 @@ async function saveData(obj: any) {
 export default function Index() {
   const navigate = useNavigate();
 
-  const editorRef = useRef(null);
 
   const [name, setName] = useState("");
+  const [text, setText] = useState("");
 
   const handleSave = async () => {
-    if (editorRef.current) {
       try {
         const res = await saveData({
           name: name,
-          text: editorRef.current.getContent(),
+          text: text,
         });
         if (res.status === 200) {
           toast.success("Uğurla yaradıldı!");
@@ -52,7 +49,6 @@ export default function Index() {
       } catch (err) {
         console.error(err);
       }
-    }
   };
 
   return (
@@ -75,7 +71,7 @@ export default function Index() {
           onChange={(e) => setName(e.target.value)}
           size="small"
         />
-        <Editor
+        {/* <Editor
           apiKey="ows56ugyfwkmx9qarju0k2ygovl2zyuq5byax7cs5th0cwed"
           onInit={(evt, editor) => (editorRef.current = editor)}
           init={{
@@ -109,7 +105,17 @@ export default function Index() {
             content_style:
               "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
           }}
-        />
+        /> */}
+
+<div className="w-[50%] mb-6">
+          <CKEditor
+            editor={ClassicEditor}
+            data={""}
+            onChange={(_, editor) => {
+              setText(editor.getData());
+            }}
+          />
+        </div>
       </Container>
       <footer style={footer}>
         <div>

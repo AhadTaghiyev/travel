@@ -179,7 +179,7 @@ export default function CreatePopup() {
                       sx={{ mb: 1 }}
                       style={textStyling}
                     >
-                      {t("explanation")}
+                      {t("Adress")}
                     </InputLabel>
                     <TextField
                       id="outlined-basic"
@@ -191,6 +191,32 @@ export default function CreatePopup() {
                       type="text"
                       onChange={props.handleChange}
                       name={`city`}
+                      value={props.values.city}
+                      error={!!props.errors && !!props.errors.city}
+                      helperText={!!props.errors && props.errors.city}
+                    />
+                  </>
+             
+                </Grid>
+                <Grid item md={3}>
+                <>
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      sx={{ mb: 1 }}
+                      style={textStyling}
+                    >
+                      {t("Note")}
+                    </InputLabel>
+                    <TextField
+                      id="outlined-basic"
+                      placeholder="Yazın"
+                      variant="outlined"
+                      sx={{ width: "100%", mb: 3 }}
+                      size="small"
+                      style={textStyling}
+                      type="note"
+                      onChange={props.handleChange}
+                      name={`adress`}
                       value={props.values.city}
                       error={!!props.errors && !!props.errors.city}
                       helperText={!!props.errors && props.errors.city}

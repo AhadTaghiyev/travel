@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Container, InputLabel, Button, TextField } from "@mui/material";
+import { Container, InputLabel, Button, TextField, Autocomplete } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../server/apiServer";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useTranslation } from "react-i18next";
 
 const textStyling = {
   lineHeight: "16px",
@@ -25,8 +26,22 @@ export default function Index() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [text, setText] = useState("");
-
-
+  const { t } = useTranslation();
+  const [currentAgreementFormat, setCurrentAgreementFormat] = useState(null);
+  const [agreementFormats, setAgreementFormats] = useState([]);
+  const getAgreementFormats = async () => {
+    const res = await apiService.get("AgreementFormats/GetAll/1");
+    if (res.status === 200) {
+      setAgreementFormats(res.data.items);
+    } else {
+      console.error(res);
+    }
+  };
+  const handlechange=(data)=>{
+    setName(data.name)
+    setCurrentAgreementFormat(data)
+  }
+  
   const handleSave = async () => {
     try {
       const res = await apiService.post("Agreements/Create", {
@@ -45,18 +60,19 @@ export default function Index() {
   };
   return (
     <>
+
       <Container maxWidth="xl">
-        {/* <InputLabel
+        <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
           style={textStyling}
         >
-          Müqavilə formatı
+        {t("Müqavilə formatı")}
         </InputLabel>
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          onChange={(_, value) => setCurrentAgreementFormat(value)}
+          onChange={(_, value) => handlechange(value)}
           onOpen={() => getAgreementFormats()}
           options={agreementFormats}
           style={textStyling}
@@ -64,8 +80,8 @@ export default function Index() {
           getOptionLabel={(option) => option.name}
           size="small"
           renderInput={(params) => <TextField {...params} label="" />}
-        /> */}
-        <InputLabel
+        />
+        {/* <InputLabel
           id="demo-simple-select-label"
           sx={{ mb: 1 }}
           style={textStyling}
@@ -80,11 +96,11 @@ export default function Index() {
           style={textStyling}
           onChange={(e) => setName(e.target.value)}
           size="small"
-        />
+        /> */}
         <div className="w-[50%] mb-6">
           <CKEditor
             editor={ClassicEditor}
-            data=""
+            data={currentAgreementFormat?.text}
             onChange={(_, editor) => {
               setText(editor.getData());
             }}

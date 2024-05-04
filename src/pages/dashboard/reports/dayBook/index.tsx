@@ -22,8 +22,8 @@ import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
-  { label: "Id", name: "id" },
-  { label: "Date", name: "date", type: "date" },
+  { label: "Service", name: "id" },
+  { label: "date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "Customer", name: "customer" },
   { label: "Payment", name: "payment" },
@@ -117,6 +117,11 @@ const DayBookReport = () => {
           </Grid>
         </Grid>
       </Grid>
+      <div className="flex justify-center items-center">
+        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+          {t("Day Book Report")}
+        </h1>
+      </div>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
         <Formik
           onSubmit={onSubmit}
@@ -177,29 +182,21 @@ const DayBookReport = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
+              <TableHead key={"No"}>{t("No")}</TableHead>
                 {columns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
+                    
+                      
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.map((row) => (
+              {data?.map((row,index) => (
                 <TableRow key={row.id}>
+                            <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => {
                     const value = String(row[column.name]).toLowerCase();
 
-                    // let url = "";
-                    // if (value.startsWith("pl")) {
-                    //   url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    // } else if (value.startsWith("cp")) {
-                    //   url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    // } else if (value.startsWith("itp")) {
-                    //   url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    // } else if (value.startsWith("tp")) {
-                    //   url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
-                    // } else {
-                    //   url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
-                    // }
 
                     return (
                       <TableCell key={column.name}>
@@ -214,7 +211,7 @@ const DayBookReport = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={columns.length - 2}>
+                <TableCell colSpan={columns.length - 1}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell>{totalDebit}</TableCell>

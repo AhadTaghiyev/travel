@@ -35,7 +35,7 @@ export default function index() {
     return years;
   }, []);
 
-  if (user.expireDate < 0) {
+  if (user.expireDate< 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] ">
         <svg

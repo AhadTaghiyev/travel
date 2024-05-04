@@ -9,6 +9,7 @@ export default function Index() {
         hideEdit
         columns={columns}
         api={"/MassIncomes/GetAllFilter"}
+        exportLink="MassIncomes/Export/Export"
         buttonText="Mədaxil"
         deleteApi="/MassIncomes/Delete"
         root="/panel/income"

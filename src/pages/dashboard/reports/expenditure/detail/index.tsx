@@ -262,6 +262,7 @@ const Detail = () => {
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2"></TableCell>
+                <TableCell className="py-2"></TableCell>
                 <TableCell className="py-2">{totalCredit}</TableCell>
                 <TableCell className="py-2">{totalDebit}</TableCell>
                 <TableCell className="py-2">{totalBalance}</TableCell>

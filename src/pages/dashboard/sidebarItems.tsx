@@ -82,17 +82,17 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaServicestack,
-        text: "Advance Receipt",
+        text: "Deposit",
         link: "/panel/deposit",
       },
       {
         icon: FaServicestack,
-        text: "Customer Payment",
+        text: "Customer Receipt",
         link: "/panel/CustomerPayments",
       },
       {
         icon: FaServicestack,
-        text: "Incentive",
+        text: "Bonus",
         link: "/panel/bonus",
       },
     ],

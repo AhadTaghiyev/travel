@@ -43,7 +43,7 @@ const SalaryToBePaid = ({ initialValues, onSubmit }: ISalaryToBePaidProps) => {
             <div className="w-full">
               <CustomAutocompleteSelect
                 api="Personals/GetAll/1"
-                label={t("Işçi")}
+                label={t("İşçi")}
                 value={values.employeeId ?? null}
                 optionLabel="fullName"
                 change={(value) => setFieldValue("employeeId", value)}
