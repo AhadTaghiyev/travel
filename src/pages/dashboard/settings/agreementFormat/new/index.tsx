@@ -28,28 +28,40 @@ const textStyling = {
 };
 
 async function saveData(obj: any) {
+    console.log(obj)
   const res = await apiService.post("AgreementFormats/Create", obj);
   return res;
 }
+
+
 
 function uploadAdapter(loader: FileLoader): UploadAdapter {
   return {
     upload: () => {
       return new Promise(async (resolve, reject) => {
         try {
+
           const file = await loader.file;
-          const formData = new FormData();
-          formData.append("ImageFile", file);
-          const response = await apiService.postForm(
-            `/Blog/UploadImage`,
-            formData
-          );
-          if (response.status === 200) {
-            return resolve({
-              default: response.data.imagePath,
-            });
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = async function () {
+            const base64Image = reader.result;
+
+            const formData = new FormData();
+            formData.append("ImageFile", file);
+            const response = await apiService.postForm(
+              `/Blog/UploadImage`,
+              formData
+            );
+            if (response.status === 200) {
+              return resolve({
+                default: base64Image,
+              });
+            }
+            reject("Upload failed");
           }
-          reject("Upload failed");
+          
+        
         } catch (error) {
           reject("Upload failed");
         }

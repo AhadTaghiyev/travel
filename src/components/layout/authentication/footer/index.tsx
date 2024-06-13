@@ -9,7 +9,7 @@ export default function index() {
         <Container maxWidth="xl">
         <Toolbar>
             <Typography variant="body2" component="div" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                © 2023 Travvaco. Please review our Privacy policy , Cookie Policy and Terms of Service .
+                ©  {new Date().getFullYear()}{" "} Travacco. Please review our Privacy policy , Cookie Policy and Terms of Service .
             </Typography>
         </Toolbar>
         </Container>

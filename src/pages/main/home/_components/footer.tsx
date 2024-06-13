@@ -64,12 +64,12 @@ const FooterSection = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="/privacypoicy" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="/termsandcondition" className="hover:underline">
                     Terms &amp; Conditions
                   </a>
                 </li>

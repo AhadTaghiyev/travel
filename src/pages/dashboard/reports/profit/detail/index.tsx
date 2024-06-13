@@ -24,6 +24,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 const columns = [
   { label: "Id", name: "id" },
   { label: "Date", name: "date" },
+  { label: "Customer", name: "customer" },
   { label: "Ref.", name: "ref" },
   { label: "DeadLine.", name: "deadLine" },
   { label: "Note.", name: "note" },

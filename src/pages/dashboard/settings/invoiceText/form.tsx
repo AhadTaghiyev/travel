@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { InvoiceTextSchema } from "./schema";
 import { IInvoiceTextModel } from "./types";
 
-import CustomTextAreaField from "@/components/custom/textArea";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 type FormType = "Edit" | "Create" | "View";
 
@@ -30,23 +31,30 @@ const InvoiceText = ({ initialValues, onSubmit }: IInvoiceTextProps) => {
     >
       {({
         values,
-        errors,
-        touched,
-        handleChange,
+    
         handleSubmit,
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
             <div className="w-full sm:col-span-2  md:col-span-3">
-              <CustomTextAreaField
+              {/* <CustomTextAreaField
                 label={t("Text")}
                 value={values.name}
                 change={handleChange}
                 name={`text`}
                 hasErrorMessages={!!errors.name && !!touched.name}
                 errorMessages={[t(errors.name?.toString())]}
-              />
+              /> */}
+                   <CKEditor
+                  editor={ClassicEditor}
+                  data=""
+          
+                  onChange={(_, editor) => {
+                   values.text=editor.getData()
+                    // setFieldValue("body", editor.getData());
+                  }}
+                />
             </div>
           </div>
 

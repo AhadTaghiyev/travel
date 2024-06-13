@@ -21,12 +21,23 @@ import FinancialStatusReport from "./report-tables/financial-status";
 import { UserContext } from "@/store/UserContext";
 import { Link } from "react-router-dom";
 import { ROLES } from "@/constants";
+import { apiService } from "@/server/apiServer";
 
 export default function index() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
+
+
+  const onPay = async () => {
+    const res = await apiService.get("/Company/Pay");
+
+    if (res?.status === 200) {
+        window.location.replace(res.data.data);
+    } else {
+    }
+  };
 
   const isManagerUser =
     user?.role === ROLES.LEADER || user?.role === ROLES.ACCOUNTANT;
@@ -61,6 +72,7 @@ export default function index() {
           {t("Please renew your subscription.")}
         </p>
         <Link
+        onClick={async ()=> await onPay()}
           to="#"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >

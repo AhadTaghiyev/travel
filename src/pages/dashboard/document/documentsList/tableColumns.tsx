@@ -62,25 +62,32 @@ export const columns: GridColDef[] = [
     maxWidth: 100,
     renderCell: (params: any) => {
       const handleDownload = () => {
-        fetch(params.row.filePath)
-          .then((response) => response.blob())
-          .then((blob) => {
-            const url = window.URL.createObjectURL(new Blob([blob]));
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", params.row.filePath.split("/").pop());
-            document.body.appendChild(link);
-            link.click();
-            link.parentNode.removeChild(link);
-          })
-          .catch((error) => console.error("Dosya indirme hatası:", error));
+        // Dosya yollarını içeren bir dizi oluşturun
+        const filepaths = params.row.filePath;
+  
+        // Dosya yolları dizisini döngüye alarak her bir dosyayı sırayla indirin
+        filepaths.forEach((filepath: string) => {
+          fetch(filepath)
+            .then((response) => response.blob())
+            .then((blob) => {
+              const url = window.URL.createObjectURL(new Blob([blob]));
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute("download", filepath.split("/").pop());
+              document.body.appendChild(link);
+              link.click();
+              link.parentNode.removeChild(link);
+            })
+            .catch((error) => console.error("Dosya indirme hatası:", error));
+        });
       };
-
+  
       return (
         <button onClick={handleDownload}>
           <BiSolidFileBlank />
         </button>
       );
     },
-  },
+  }
+  
 ];

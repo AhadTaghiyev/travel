@@ -105,12 +105,12 @@ export const creditColumns: GridColDef[] = [
 ];
 export const expenditureColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
-  {
-    field: "ref",
-    headerName: "Ref",
-    flex: 1,
-    headerClassName: "header-item",
-  },
+  // {
+  //   field: "ref",
+  //   headerName: "Ref",
+  //   flex: 1,
+  //   headerClassName: "header-item",
+  // },
   {
     field: "name",
     headerName: "Ad",
@@ -153,13 +153,13 @@ export const advanceCollectsColumns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
-    field: "service",
-    headerName: "Service Name",
+    field: "name",
+    headerName: "Customer",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "note",
+    field: "description",
     headerName: "Qeyd",
     flex: 1,
     headerClassName: "header-item",

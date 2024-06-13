@@ -35,7 +35,8 @@ const initialValues = {
   phone: "",
   city: "",
   email: "",
-  name:""
+  name:"",
+  note:""
 };
 
 export default function CreatePopup() {
@@ -216,7 +217,7 @@ export default function CreatePopup() {
                       style={textStyling}
                       type="note"
                       onChange={props.handleChange}
-                      name={`adress`}
+                      name={`note`}
                       value={props.values.city}
                       error={!!props.errors && !!props.errors.city}
                       helperText={!!props.errors && props.errors.city}

@@ -3,14 +3,14 @@ import { OutlinedInput, Typography } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import { ToastContainer, toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 
 import { userService } from "@/server/systemUserServer";
@@ -27,6 +27,12 @@ export default function Index() {
   const navigate = useNavigate();
   const { getUser } = useContext(UserContext);
 
+  const params= useParams()
+useEffect(()=>{
+  if(params.Accept!=undefined){
+    alert("Payment Succesfuly!")
+  }
+},[])
   const formik = useFormik({
     initialValues: {
       username: "",

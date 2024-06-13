@@ -13,6 +13,8 @@ import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
+import { useEffect, useState } from "react";
+import { apiService } from "@/server/apiServer";
 
 type FormType = "Create" | "Edit" | "View";
 
@@ -35,6 +37,18 @@ const TourPackageForm = ({
   const isEdit = formType === "Edit";
   const isView = formType === "View";
   const navigate = useNavigate();
+  const [userId,setUserId]=useState("");
+  const [advancePayment,setadvancePayment]=useState(0);
+
+  const fetchData = async () => {
+    const res = await       apiService.get(`AdvancePayments/GetByCustomer/${userId}`);
+    setadvancePayment(res.data.amount);
+  };
+  useEffect(()=>{
+    if(userId!=""){
+      fetchData();
+    }
+  },[userId])
 
   return (
     <Formik
@@ -62,6 +76,7 @@ const TourPackageForm = ({
                 optionLabel="fullName"
                 change={(value) => {
                   setFieldValue("customerId", value ?? null);
+                  setUserId(value)
                 }}
                 refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
@@ -198,6 +213,16 @@ const TourPackageForm = ({
                       change={() => 0}
                       type="number"
                       name={``}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      label={t("Advance Payment")}
+                      value={advancePayment}
+                      change={handleChange}
+                      type="number"
+                      name={``}
+                     disabled
                     />
                   </div>
                 </div>

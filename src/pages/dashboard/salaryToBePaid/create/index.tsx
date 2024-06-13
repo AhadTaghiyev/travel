@@ -48,7 +48,7 @@ const NewSalaryToBePaid = () => {
           salary: 0,
           extraSalary: 0,
           date: new Date(),
-          employeeId: null,
+          personalId: null,
           paymentId: null,
           note: "",
         }}

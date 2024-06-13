@@ -24,6 +24,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
   { label: "date", name: "date", type: "date" },
+  { label: "Customer", name: "customer" },
   { label: "Ref", name: "ref" },
   { label: "salePrice", name: "buyingPrice" },
   { label: "SellingPrice", name: "sellingPrice" },
@@ -58,21 +59,28 @@ const Detail = () => {
   }, [id]);
 
   const getData = async (id: string, startDate?: Date, endDate?: Date) => {
+  
     const searchParams = new URLSearchParams();
     if (id) searchParams.append("ticketType", String(id));
     if (startDate) searchParams.append("startDate", startDate?.toISOString());
     if (endDate) searchParams.append("endDate", endDate?.toISOString());
+  
+  try {
     await apiService
-      .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
-      .then((res) => {
-        setData(res.data.items);
-      })
-      .catch((err) => {
-        toast.error(err.message || t("Something went wrong!"));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
+    .then((res) => {
+      setData(res?.data?.items);
+    })
+    .catch((err) => {
+      alert("hay")
+      toast.error(err.message || t("Something went wrong!"));
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  } catch (error) {
+    alert("hay")
+  }
   };
 
   const onSubmit = (
@@ -93,7 +101,7 @@ const Detail = () => {
     data?.reduce((acc, item) => acc + item.buyingPrice, 0) || 0;
   const totalSellingPrice =
     data?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
-  const title = data[0].type;
+  const title = data[0]?.type;
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
@@ -258,7 +266,7 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={2}>
+                <TableCell className="py-2" colSpan={3}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalBuyingPrice}</TableCell>

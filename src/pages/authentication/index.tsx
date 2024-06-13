@@ -1,8 +1,9 @@
 import Navbar from "../../components/layout/authentication/navbar";
-import Footer from "../../components/layout/authentication/footer";
+// import Footer from "../../components/layout/authentication/footer";
 import { Container } from "@mui/system";
 import { Outlet } from "react-router-dom";
 import authImg from "../../assets/authPic.png";
+import FooterSection from "../main/home/_components/footer";
 
 export default function Index() {
   return (
@@ -32,7 +33,7 @@ export default function Index() {
         />
       </div>
       <div className="w-full h-16" />
-      <Footer />
+      <FooterSection />
     </div>
   );
 }

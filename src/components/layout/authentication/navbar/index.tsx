@@ -51,7 +51,7 @@ export default function Index() {
             <Box sx={{ flexGrow: 1, display: "flex", ml: 5 }}>
               {pages.map((page) => (
                 <Link
-                  to="/panel"
+                  to="/"
                   key={page}
                   style={{
                     color: "black",

@@ -41,12 +41,16 @@ const UpdateBlog = () => {
       formData.append("titleEn", values.titleEn);
       formData.append("titleRu", values.titleRu);
       formData.append("titleAz", values.titleAz);
+      formData.append("linkEn", values.linkEn);
+      formData.append("linkRu", values.linkRu);
+      formData.append("linkAz", values.linkAz);
       formData.append("descEn", values.descEn);
       formData.append("descRu", values.descRu);
       formData.append("descAz", values.descAz);
-      // formData.append("imageFile", values.image);
+      formData.append("miniDescEn", values.miniDescEn);
+      formData.append("miniDescRu", values.miniDescEn);
+      formData.append("miniDescAz", values.miniDescRu);
       if (values.image && values.image instanceof File) {
- 
         formData.append("imageFile", values.image);
       }
       const promise = apiService

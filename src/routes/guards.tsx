@@ -11,13 +11,13 @@ export const ManagementOnly = ({ children }: { children: ReactNode }) => {
     if (loading) return;
     if (
       !user ||
-      (user.role !== ROLES.LEADER && user.role !== ROLES.ACCOUNTANT)
+      (user.role !== ROLES.LEADER && user.role !== ROLES.ACCOUNTANT&&user.role!=ROLES.Admin)
     ) {
       navigate(-1);
     }
   }, [loading, user]);
 
-  if (!user || (user.role !== ROLES.LEADER && user.role !== ROLES.ACCOUNTANT))
+  if (!user || (user.role !== ROLES.LEADER && user.role !== ROLES.ACCOUNTANT&&user.role!=ROLES.Admin))
     return null;
 
   return <>{children}</>;
@@ -29,12 +29,12 @@ export const LeaderOnly = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (loading) return;
-    if (!user || user.role !== ROLES.LEADER) {
+    if (!user || user.role !== ROLES.LEADER&&user.role!=ROLES.Admin) {
       navigate(-1);
     }
   }, [loading, user]);
 
-  if (!user || user.role !== ROLES.LEADER) return null;
+  if (!user || user.role !== ROLES.LEADER&&user.role!=ROLES.Admin) return null;
 
   return <>{children}</>;
 };

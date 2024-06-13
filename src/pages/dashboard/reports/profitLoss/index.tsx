@@ -17,6 +17,19 @@ const formatPrice = (price: number) => {
   return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
 
+function calculateNettLoss(data) {
+  const nettLoss =
+    data?.totalSale -
+    data?.totslPurchase -
+    data?.expenduture -
+    data?.paidSalary +
+    data?.refund +
+    data?.bonuces;
+
+  return nettLoss;
+}
+
+
 const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
@@ -36,14 +49,16 @@ const Detail = () => {
     refund: number;
   }>();
 
+  const nettLoss = calculateNettLoss(data);
+
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async (startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate!=null) searchParams.append("starDate", startDate?.toISOString());
+    if (endDate!=null) searchParams.append("endDate", endDate?.toISOString());
     await apiService
       .get(`/Reports/Profit?${searchParams.toString()}`)
       .then(({ data }) => {
@@ -214,7 +229,7 @@ const Detail = () => {
               </div>
               <div className="pl-6">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-base">Total Expenduture</h4>
+                  <h4 className="text-base">Total Expenditure</h4>
                   <p>{formatPrice(data.expenduture)}</p>
                 </div>
                 <div className="flex justify-between items-center">
@@ -225,14 +240,14 @@ const Detail = () => {
               <div className="flex justify-between items-center mt-4">
                 <h4 className="text-base">Nett Profit</h4>
                 <p>
-                  {formatPrice(
+                  { nettLoss>0 ? formatPrice(
                     data.totalSale -
                       data.totslPurchase -
                       data.expenduture -
                       data.paidSalary +
                       data.refund +
                       data.bonuces
-                  )}
+                  ):0}
                 </p>
               </div>
             </div>
@@ -255,7 +270,7 @@ const Detail = () => {
               <h3 className="text-lg font-bold">Particulars</h3>
               <p className="text-sm">
                 {`${formatDate(date[0].toISOString())} to ${formatDate(
-                  date[1].toISOString()
+                  date[1]?.toISOString()
                 )}`}
               </p>
             </div>
@@ -288,7 +303,17 @@ const Detail = () => {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <h4 className="text-base">Nett Loss</h4>
-                <p>0</p>
+                <p>
+
+                { nettLoss<0 ? formatPrice(
+                    data.totalSale -
+                      data.totslPurchase -
+                      data.expenduture -
+                      data.paidSalary +
+                      data.refund +
+                      data.bonuces
+                  ):0}
+                </p>
               </div>
             </div>
             <div className="flex justify-between items-center border-t-2 border-solid border-black px-4">

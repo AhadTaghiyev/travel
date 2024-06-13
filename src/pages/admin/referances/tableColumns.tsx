@@ -1,8 +1,8 @@
-// @ts-nocheck
+import { cn } from "@/lib/utils";
 import { GridColDef } from "@mui/x-data-grid";
 import { TFunction } from "i18next";
 
-export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
+export const columns: (t: TFunction) => GridColDef[] = () => [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "id",
@@ -35,4 +35,34 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
     flex: 1,
     headerClassName: "header-item",
   },
+  {
+    field: "amount",
+    headerName: "Amount",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "referanceStatus",
+    headerName: "Status",
+    flex: 1,
+    headerClassName: "header-item",
+    renderCell: (params) => {
+      return (
+        <div>
+          <div
+            className={cn(
+              "flex border-none items-center gap-x-4 font-semibold",
+              // params.value ? "text-green-500" : "text-red-500"
+              params.value==0 ?"Pending":params.value==1? "text-red-500" : "text-green-500"
+            )}
+          >
+            {params.value==0 ?"Pending":params.value==1? "Rejected" : "Compleete"}
+          </div>
+        </div>
+      );
+    },
+  },
+
+ 
+
 ];

@@ -7,7 +7,7 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        hideReport
+        detailLink='/panel/agreements/conractdetail/'
         columns={columns(t)}
         api={"/Agreements/GetAll"}
         buttonText="Müqavilə formatı"

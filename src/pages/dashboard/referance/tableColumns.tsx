@@ -28,9 +28,17 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
     flex: 1,
     headerClassName: "header-item",
   },
+
   {
-    field: "status",
-    headerName: t("Status"),
+    field: "amount",
+    headerName: t("Balance"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
+
+  {
+    field: "referanceStatus",
+    headerName: "Status",
     flex: 1,
     headerClassName: "header-item",
     renderCell: (params) => {
@@ -39,19 +47,14 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
           <div
             className={cn(
               "flex border-none items-center gap-x-4 font-semibold",
-              params.value ? "text-green-500" : "text-red-500"
+              // params.value ? "text-green-500" : "text-red-500"
+              params.value==0 ?"Pending":params.value==1? "text-red-500" : "text-green-500"
             )}
           >
-            {params.value ? "Approval" : "Pending"}
+            {params.value==0 ?"Pending":params.value==1? "Rejected" : "Compleete"}
           </div>
         </div>
       );
     },
-  },
-  {
-    field: "balance",
-    headerName: t("Balance"),
-    flex: 1,
-    headerClassName: "header-item",
   },
 ];

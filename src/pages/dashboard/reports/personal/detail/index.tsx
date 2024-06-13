@@ -23,7 +23,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
-  { label: "Id", name: "id" },
+  { label: "Persona", name: "personal"},
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
@@ -39,6 +39,17 @@ const Detail = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] =
     useState<{ id: string; name: string; balance: number }[]>();
+
+
+const [data2, setData2] = useState<
+{
+  id: string;
+  name: string;
+  sellingPrice: number;
+  totalAmount: number;
+  profit: number;
+}[]
+>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -60,6 +71,7 @@ const Detail = () => {
       .get(`/Reports/PersonalsReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
+        setData2(res.data.items)
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -68,6 +80,7 @@ const Detail = () => {
         setLoading(false);
       });
   };
+
 
   const onSubmit = (
     values: { startDate: Date; endDate: Date },
@@ -82,8 +95,13 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
+  // const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
 
+  const totalProfit = data2?.reduce((acc, item) => acc + item.profit, 0) || 0;
+  const totalSellingPrice =
+    data2?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
+  const totalAmount =
+    data2?.reduce((acc, item) => acc + item.totalAmount, 0) || 0;
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
@@ -126,6 +144,11 @@ const Detail = () => {
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+      <div>
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+            {t("Personal")}
+          </h1>
+        </div>
         <Formik
           onSubmit={onSubmit}
           initialValues={{
@@ -236,10 +259,12 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={7}>
+                <TableCell className="py-2" colSpan={5}>
                   {t("Total Amount")}
                 </TableCell>
-                <TableCell className="text-right py-2">{total}</TableCell>
+                <TableCell className="py-2">{totalSellingPrice}</TableCell>
+                <TableCell className="py-2">{totalAmount}</TableCell>
+                <TableCell className="py-2">{totalProfit}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

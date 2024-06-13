@@ -1,5 +1,5 @@
 export interface ISalaryToBePaidModel {
-  employeeId: number;
+  personalId: number;
   paymentId: number;
   date: Date;
   salary: number;

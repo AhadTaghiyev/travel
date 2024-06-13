@@ -85,7 +85,7 @@ export default function Index({
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  if (user?.role !== ROLES.LEADER) {
+  if (user?.role !== ROLES.LEADER&&user?.role !== ROLES.Admin) {
     hideEdit = true;
     hideDelete = true;
   }

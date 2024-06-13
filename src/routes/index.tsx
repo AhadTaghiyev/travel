@@ -10,6 +10,7 @@ import Login from "../pages/authentication/login";
 import Register from "../pages/authentication/register";
 import Auth from "../pages/authentication";
 import ChangePassword from "../pages/authentication/changePassword";
+import ChangePasswordV from "../pages/dashboard/settings/password/create";
 import Unauth from "../Unauth";
 
 // Aviabilet Sales
@@ -112,6 +113,7 @@ import CompanyTransactions from "../pages/admin/company-transactions";
 //company
 import TransactionAdmin from "../pages/admin/transaction";
 import ReferanceAdmin from "../pages/admin/referances";
+import ReferanceAdminUpdate from "../pages/admin/referances/update";
 //Airway
 import Airway from "../pages/dashboard/settings/airway";
 import NewAirway from "../pages/dashboard/settings/airway/create";
@@ -158,6 +160,9 @@ import InvoiceIncome from "../pages/dashboard/income/report";
 // Refunds
 import Refund from "../pages/dashboard/refund";
 import NewRefund from "../pages/dashboard/refund/create";
+import UpdateRefund from "../pages/dashboard/refund/update";
+import ShowRefund from "../pages/dashboard/refund/view";
+
 // import UpdateIncome from "../pages/main/refund/update";
 import RefundReport from "../pages/dashboard/refund/report";
 
@@ -275,6 +280,7 @@ import ExpendituresReportDetail from "../pages/dashboard/reports/expenditure/det
 import ExpendutureInvoice from "../pages/dashboard/payments/expendutureInvoice";
 import RefundPaymentInvoice from "../pages/dashboard/payments/refundPaymentInvoice";
 import SupplierPaymentInvoice from "../pages/dashboard/payments/supplierPaymentInvoice";
+import AgreementDetail from "../pages/dashboard/agreement/detail/index";
 
 import DeadlineReport from "../pages/dashboard/reports/deadline";
 import FlightTicketsReport from "../pages/dashboard/reports/flightTickets";
@@ -300,6 +306,8 @@ import NearestFlights from "../pages/dashboard/reports/nearestFlights";
 import Profit from "../pages/dashboard/reports/profit";
 import ProfitLoss from "../pages/dashboard/reports/profitLoss";
 import CompanySettings from "../pages/dashboard/settings/company";
+import Privacy from "../pages/main/privacy";
+import Terms from "../pages/main/terms";
 import { LeaderOnly, ManagementOnly } from "./guards";
 
 const router = createBrowserRouter([
@@ -324,6 +332,16 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
+    path: "/privacypoicy",
+    element: <Privacy />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/termsandcondition",
+    element: <Terms />,
+    errorElement: <Error />,
+  },
+  {
     path: "/blogs/:id",
     element: <Blog />,
     errorElement: <Error />,
@@ -338,6 +356,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/auth/login",
+        element: <Login />,
+      },
+      {
+        path: "/auth/login/:Accept",
         element: <Login />,
       },
       {
@@ -455,6 +477,11 @@ const router = createBrowserRouter([
         path: "/admin/Referances",
         element: <ReferanceAdmin />,
       },
+      {
+        path: "/admin/Referances/update/:id",
+        element: <ReferanceAdminUpdate />,
+      },
+      
     ],
   },
   {
@@ -480,6 +507,11 @@ const router = createBrowserRouter([
         path: "/panel/aviabiletsale/view/:id",
         element: <ViewAviaticket />,
       },
+      {
+        path: "/panel/refunds/view/:id",
+        element: <ShowRefund />,
+      },
+      
       {
         path: "/panel/aviabiletsale/new/reciept/:id",
         element: <Reciept />,
@@ -665,10 +697,10 @@ const router = createBrowserRouter([
         path: "/panel/refunds/new",
         element: <NewRefund />,
       },
-      // {
-      //   path: "/panel/refunds/update/:id",
-      //   element: <UpdateRefund />,
-      // },
+      {
+        path: "/panel/refunds/update/:id",
+        element: <UpdateRefund />,
+      },
       {
         path: "/panel/refunds/report",
         element: <RefundReport />,
@@ -1562,6 +1594,11 @@ const router = createBrowserRouter([
         path: "/panel/invoices/supplierpayemnts/:id",
         element: <SupplierPaymentInvoice />,
       },
+      {
+        path: "/panel/agreements/conractdetail/:id",
+        element: <AgreementDetail />,
+      },
+      
 
       {
         path: "/panel/reports/deadlines",
@@ -1708,6 +1745,16 @@ const router = createBrowserRouter([
           </ManagementOnly>
         ),
       },
+      {
+        path: "/panel/ChangePasswordV",
+        element: (
+          // <ManagementOnly>
+            <ChangePasswordV />
+          // </ManagementOnly>
+        ),
+      },
+
+      
     ],
   },
 ]);

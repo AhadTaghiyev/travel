@@ -8,8 +8,8 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        hideReport
         columns={columns(t)}
+        // hideReport
         api={"/Blog/getall"}
         buttonText="Blog"
         deleteApi="/Blog/delete"

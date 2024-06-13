@@ -9,6 +9,7 @@ import {
   BsFillPeopleFill,
   BsFileEarmarkPerson,
 } from "react-icons/bs";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { BiSolidPlaneAlt, BiWalletAlt } from "react-icons/bi";
 import { MdOutlineAirplaneTicket, MdOutlinePersonPin } from "react-icons/md";
 import {
@@ -368,6 +369,13 @@ export const sidebarItems: SidebarItemType[] = [
         text: "Email",
         link: "/panel/email",
       },
+      {
+        icon: RiLockPasswordLine,
+        text: "Change Password",
+        link: "/panel/ChangePasswordV",
+      }
     ],
   },
+ 
+  
 ];

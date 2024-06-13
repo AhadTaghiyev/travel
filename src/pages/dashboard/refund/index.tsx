@@ -6,11 +6,12 @@ export default function Index() {
   return (
     <Container maxWidth="xl">
       <Table
-        hideEdit
         columns={columns}
         api={"/Refunds/GetAll"}
         buttonText="Refund"
         deleteApi="/Refunds/Delete"
+        hideEdit
+      hidePrint={false}
         root="/panel/refunds"
       />
     </Container>

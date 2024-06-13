@@ -113,6 +113,16 @@ const Company = () => {
               </div>
               <div className="w-full">
                 <CustomTextField
+                  label={t("Balance")}
+                  value={companyData.bonuces}
+                  change={handleChange}
+                  name={`bonuces`}
+                  disabled
+                />
+              </div>
+              
+              <div className="w-full">
+                <CustomTextField
                   label={t("Ad")}
                   value={values.name}
                   change={handleChange}

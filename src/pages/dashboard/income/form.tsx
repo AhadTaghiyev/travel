@@ -103,6 +103,7 @@ const MassIncomeForm = ({
                     errorMessages={[t(errors.ticketType?.toString())]}
                   />
                 </div>
+                
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     api="Personals/GetAll/1"

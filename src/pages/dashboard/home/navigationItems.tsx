@@ -73,7 +73,7 @@ export const navigationItems: INavigationItemType[] = [
   },
   {
     text: "Reciveables",
-    path: "/panel/reports/willbepaid",
+    path: "/panel/reports/customers",
     // color: "#7A885A",
     color: "#6E7972",
     Icon: FaMoneyBillWave,

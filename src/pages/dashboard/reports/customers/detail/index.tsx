@@ -6,7 +6,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -29,7 +28,9 @@ const columns = [
   { label: "customer", name: "customer" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
   { label: "Note.", name: "note" },
-  { label: "Reciveables.", name: "amount" },
+  { label: "Debit.", name: "debit" },
+  { label: "Credit.", name: "credit" },
+  { label: "Balance.", name: "balance" },
 ];
 
 const Detail = () => {
@@ -38,7 +39,7 @@ const Detail = () => {
   const { company } = useContext(CompanyContext);
 
   const [data, setData] =
-    useState<{ id: string; name: string; amount: number }[]>();
+    useState<{ id: string; name: string; amount: number;balance:number }[]>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -75,10 +76,11 @@ const Detail = () => {
     return <Loading />;
   }
 
-  const total = data?.reduce((acc, item) => acc + item.amount, 0) || 0;
+  // const total = data?.reduce((acc, item) => acc + item.balance, 0) || 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
+      
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
         <Grid
           container
@@ -217,7 +219,7 @@ const Detail = () => {
                             >
                               {value}
                             </a> // URL'yi link olarak kullan
-                          ) : column.type === "date"&& value!='' ? (
+                          ) : column.type === "date"&& value!=''&&value!=null ? (
                             formatDate(value)
                           ) : (
                             value
@@ -229,14 +231,14 @@ const Detail = () => {
                 </TableRow>
               ))}
             </TableBody>
-            <TableFooter>
+            {/* <TableFooter>
               <TableRow>
                 <TableCell colSpan={columns.length - 1}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell>{total}</TableCell>
               </TableRow>
-            </TableFooter>
+            </TableFooter> */}
           </Table>
         </Grid>
       </Container>

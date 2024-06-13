@@ -22,7 +22,7 @@ const UpdateIncome = () => {
   }, []);
 
   async function getIncomeInfo(id: string) {
-    const response = await apiService.get(`/MassIncomes/Get/${id}`);
+    const response = await apiService.get(`/Refunds/GetShowAsync/${id}`);
     if (response.status === 200) {
       setIncome(response.data);
       setLoading(false);
@@ -72,6 +72,7 @@ const UpdateIncome = () => {
         <IncomeForm
           formType="Edit"
           initialValues={income}
+          
           onSubmit={onSubmit}
         />
       )}

@@ -38,6 +38,8 @@ export const columns: (t: TFunction) => GridColDef[] = (t: TFunction) => [
     headerName: t("Total"),
     flex: 1,
     headerClassName: "header-item",
+    valueGetter: (params) => 
+      (params.row.salary || 0) + (params.row.extraSalary || 0) + (params.row.bonus || 0),
   },
   {
     field: "date",

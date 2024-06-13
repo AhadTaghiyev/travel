@@ -23,7 +23,7 @@ import { formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 
 const columns = [
-  { label: "Id", name: "id" },
+  { label: "Customer", name: "customer" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
@@ -98,6 +98,7 @@ const Detail = () => {
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
+       
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
         <Grid
           container
@@ -137,7 +138,15 @@ const Detail = () => {
           </Grid>
         </Grid>
       </Grid>
+      
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+            {t("Customer")}
+          </h1>
+        </div>
+      </div>
         <Formik
           onSubmit={onSubmit}
           initialValues={{

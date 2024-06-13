@@ -10,4 +10,5 @@ export const ROLES = {
   LEADER: "Leader",
   WORKER: "Worker",
   ACCOUNTANT: "Accountant",
+  Admin: "Admin",
 };

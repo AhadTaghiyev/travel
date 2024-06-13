@@ -40,7 +40,7 @@ import { textStyling } from "@/styles";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Təchizatçı", name: "supplier" },
+  { label: "Təchizatçı", name: "name" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "Details.", name: "details" },

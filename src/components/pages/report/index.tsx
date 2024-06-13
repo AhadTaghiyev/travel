@@ -306,7 +306,7 @@ export default function Index({
             </Grid>
           </Container>
         </Grid>
-        <h1>{invoiceText}</h1>
+             <h1  dangerouslySetInnerHTML={{__html: invoiceText}}></h1>
       </Container>
     </div>
   );

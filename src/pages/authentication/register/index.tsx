@@ -6,11 +6,12 @@ import Button from "@mui/material/Button";
 // import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import CustomSelect from "@/components/custom/select";
 
 import { userService } from "@/server/systemUserServer";
+import { useNavigate } from "react-router-dom";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required("Mütləqdir!"),
@@ -38,7 +39,7 @@ export default function Index() {
       onRegister(values);
     },
   });
-
+  const navigate = useNavigate();
   const [isLoading, seIsLoading] = useState(false);
 
   const onRegister = async (values) => {
@@ -48,19 +49,38 @@ export default function Index() {
     if (res?.status === 200) {
       seIsLoading(false);
       toast.success("Registered successfully!");
-      // window.open(res.data, "_blank");
-      window.location.replace(res.data);
+      if(res.data==1){
+          alert("You have registered successfully please check your email")
+          navigate("/auth/login")
+      }else{
+
+        window.location.replace(res.data);
+      }
     } else {
       seIsLoading(false);
       toast.error("Something went wrong!");
     }
   };
 
+  const [country,setCountry]=useState(null)
+  useEffect(()=>{
+    fetch("https://jsonip.com/")
+    .then(res=>res.json())
+    .then(data=>{
+      fetch(`https://api.iplocation.net/?ip=${data.ip}`)
+      .then(resIp=>resIp.json())
+      .then(dataIp=>{ setCountry(dataIp.country_code2)})
+    })
+  },[])
+  
+
   return (
     <Container
+    
       maxWidth="sm"
       sx={{ display: "flex", alignItems: "center", height: "100%" }}
     >
+      
       <form onSubmit={formik.handleSubmit}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           Register
@@ -155,8 +175,7 @@ export default function Index() {
                 !!formik.errors.subscribeType && !!formik.touched.subscribeType
               }
               staticOptions={[
-                { label: "Monthly - 120 USD", value: "0" },
-                { label: "Yearly - 1200 USD", value: "1" },
+                { label: `Monthly - ${country=="AZ"?"90 AZN":"90 USD"} `, value: "0" },
                 { label: "Demo - 14 day", value: "2" },
               ]}
               errorMessages={[formik.errors.subscribeType?.toString()]}

@@ -12,6 +12,12 @@ export const columns: GridColDef[] = [
     },
   },
   {
+    field: "ref",
+    headerName: "Ref",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "customer",
     headerName: "Customer",
     flex: 1,

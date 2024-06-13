@@ -178,7 +178,7 @@ const RefundForm = ({
                 )}
               </div>
             )}
-            {(values.invoiceId || values.advancePaymentId) && (
+            {(values.invoiceId || values.advancePaymentId)||formType=="Edit" && (
               <>
                 <div className="w-full">
                   <CustomTextField
@@ -230,11 +230,24 @@ const RefundForm = ({
                     errorMessages={[t(errors.supplierAmount?.toString())]}
                   />
                 </div>
-
                 <div className="w-full">
                   <CustomTextField
+                      change={handleChange}
+                    label={t("Cərimə")}
+                    value={values.forfeit}
+                    type="number"
+                    name={`forfeit`}
+                  />
+                </div>
+               
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
                     label={t("Qaytarılan məbləğ")}
-                    value={values.paidToCustomer}
+                    // value={values.paidAmount-values.supplierAmount-values.fine}
+                    value={ (
+                      (values.paidAmount-values.amount)+(values.supplierAmount-values.forfeit)
+                    )}
                     change={handleChange}
                     type="number"
                     name={`paidToCustomer`}
@@ -244,20 +257,7 @@ const RefundForm = ({
                     errorMessages={[t(errors.paidToCustomer?.toString())]}
                   />
                 </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled
-                    label={t("Cərimə")}
-                    value={Math.max(
-                      values.paidAmount -
-                        values.supplierAmount -
-                        values.paidToCustomer
-                    )}
-                    change={() => 0}
-                    type="number"
-                    name={``}
-                  />
-                </div>
+              
 
                 <div className="w-full h-full">
                   <CustomDateTimePicker
@@ -275,23 +275,27 @@ const RefundForm = ({
             )}
           </div>
 
-          <div className="w-full flex gap-x-6 justify-end mb-6">
-            <button
-              type="button"
-              disabled={isSubmitting}
-              onClick={() => navigate("/panel/income")}
-              className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("goBack")}
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-            >
-              {t("confirm")}
-            </button>
-          </div>
+     {
+      formType!="Edit"&&(
+        <div className="w-full flex gap-x-6 justify-end mb-6">
+        <button
+          type="button"
+          disabled={isSubmitting}
+          onClick={() => navigate("/panel/income")}
+          className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+        >
+          {t("goBack")}
+        </button>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+        >
+          {t("confirm")}
+        </button>
+      </div>
+      )
+     }
         </form>
       )}
     </Formik>

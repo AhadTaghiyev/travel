@@ -16,9 +16,12 @@ const NewIncome = () => {
   const onSubmit = useCallback(
     (values: IRefundModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const params = {
-        paidToCustomer: values.paidToCustomer,
+        paidToCustomer:  (
+          (values.paidAmount-values.amount)+(values.supplierAmount-values.forfeit)
+        ),
+        supplierAmount:values.supplierAmount,
         amount: values.amount,
-        forfeit: values.supplierAmount- values.paidToCustomer,
+        forfeit:values.forfeit,
         invoiceId: values.invoiceId?.value ?? undefined,
         advancePaymentId: values.advancePaymentId?.value ?? undefined,
         date: values.date,
@@ -64,7 +67,7 @@ const NewIncome = () => {
           customerId: null,
           paidToCustomer: 0,
           advancePaymentId: null,
-          supplierAmount:0
+          supplierAmount:0,
         }}
       />
     </div>

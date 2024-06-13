@@ -7,4 +7,5 @@ export interface ICompany {
   image: string;
   concurency: string;
   id: number;
+  bonuces?: number;
 }
