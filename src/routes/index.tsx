@@ -317,6 +317,11 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
+    path: "/az",
+    element: <App />,
+    errorElement: <Error />,
+  },
+  {
     path: "/en",
     element: <App />,
     errorElement: <Error />,
@@ -327,7 +332,17 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/blogs",
+    path: "/blogs/az",
+    element: <Blogs />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/blogs/en",
+    element: <Blogs />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/blogs/ru",
     element: <Blogs />,
     errorElement: <Error />,
   },
@@ -342,7 +357,17 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/blogs/:id",
+    path: "/blogs/:id/az",
+    element: <Blog />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/blogs/:id/en",
+    element: <Blog />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/blogs/:id/ru",
     element: <Blog />,
     errorElement: <Error />,
   },

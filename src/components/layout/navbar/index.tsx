@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoImg from "@/assets/logo.png";
 import { HashLink } from "react-router-hash-link";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const {
     i18n: { language },
@@ -36,7 +37,7 @@ const Navbar = () => {
     },
     {
       label: t("Blog"),
-      to: "/blogs",
+      to: `/blogs/${language}`,
     },
     {
       label: t("Pricing"),
@@ -59,7 +60,7 @@ const Navbar = () => {
       }}
     >
       <div className="landing-container pt-[14px] pb-2.5 flex justify-between items-center border-b border-solid border-[rgba(28,41,64,0.06)]">
-        <Link to="/" className="text-2xl font-bold">
+        <Link to={`/${language}`} className="text-2xl font-bold">
           <img src={LogoImg} alt="Travacco Logo" />
         </Link>
         <div className="gap-x-5 lg:flex hidden">
@@ -80,8 +81,13 @@ const Navbar = () => {
               language === "en" && "bg-black/30 text-white"
             )}
             onClick={() => {
-              navigate("/en");
               changeLanguage("en");
+              if(location.pathname.split("/").length === 2) {
+                navigate("/en");
+                return;
+              }
+              const path = `/${location.pathname.split("/").slice(1, -1).join("/")}/en`;
+              navigate(path);
             }}
           >
             EN
@@ -92,8 +98,13 @@ const Navbar = () => {
               language === "az" && "bg-black/30 text-white"
             )}
             onClick={() => {
-              navigate("/");
               changeLanguage("az");
+              if(location.pathname.split("/").length === 2) {
+                navigate("/az");
+                return;
+              }
+              const path = `/${location.pathname.split("/").slice(1, -1).join("/")}/az`;
+              navigate(path);
             }}
           >
             AZ
@@ -104,8 +115,13 @@ const Navbar = () => {
               language === "ru" && "bg-black/30 text-white"
             )}
             onClick={() => {
-              navigate("/ru");
               changeLanguage("ru");
+              if(location.pathname.split("/").length === 2) {
+                navigate("/ru");
+                return;
+              }
+              const path = `/${location.pathname.split("/").slice(1, -1).join("/")}/ru`;
+              navigate(path);
             }}
           >
             RU

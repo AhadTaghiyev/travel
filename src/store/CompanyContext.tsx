@@ -6,6 +6,7 @@ export const CompanyContext = createContext<{
   company?: {
     name: string;
     email: string;
+    bonuces: number;
     phoneNumber: string;
     adress: string;
     detail: string;

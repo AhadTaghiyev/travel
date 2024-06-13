@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { cn } from "@/lib/utils";
 import { UserContext } from "@/store/UserContext";
+import { CompanyContext } from "@/store/CompanyContext";
 
 interface NavbarProp {
   isAdmin?: boolean | null;
@@ -24,6 +25,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     t,
   } = useTranslation();
   const { user: currentUser, removeUser } = useContext(UserContext);
+  const { company } = useContext(CompanyContext)
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -90,7 +92,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
               </div>
               <div
                 className={cn(
-                  "p-3 rounded text-xs",
+                  "p-3 rounded text-xs font-bold",
                   currentUser.expireDate < 0
                     ? "text-[#AF2323] bg-[#F4BBBB]"
                     : "text-[#292929] bg-[#88c0e9]"
@@ -100,6 +102,19 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   ? "Expired"
                   : `Expiry date: ${currentUser.expireDate.toFixed("0")} days`}
               </div>
+              <div
+                className={cn(
+                  "p-3 rounded text-xs ml-5 bg-yellow-700 font-bold"
+                )}
+              >
+                Balance: {company.bonuces} USD
+              </div>
+              <button
+                type="button"
+                className="ml-5 font-semibold text-white border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
+              >
+                + {t("Add Balance")}
+              </button>
             </Box>
           )}
           <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
@@ -149,7 +164,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                 <Avatar
                   variant="square"
                   alt={userName}
-                  // src="/static/images/avatar/2.jpg"
+                // src="/static/images/avatar/2.jpg"
                 />
               </IconButton>
             </Box>

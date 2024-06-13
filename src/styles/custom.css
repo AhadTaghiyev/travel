@@ -347,3 +347,7 @@ body,
   size: A4;
   margin: 0;
 }
+
+.fix-image-size-container img {
+  max-width: 30%;
+}

@@ -90,7 +90,9 @@ const Blogs = () => {
                       {blog[`miniDesc${capitalize(language)}`]}
                     </p>
                     <Link
-                      to={`/blogs/${blog.id}`}
+                      to={`/blogs/${
+                        blog[`link${language[0].toUpperCase() + language[1]}`]
+                      }/${language}`}
                       className="cursor-pointer text-xs w-fit mt-3 px-4 py-2 border border-solid border-[#1C2940] rounded-sm hover:bg-black/5 duration-100"
                     >
                       Read more

@@ -20,7 +20,7 @@ const Blog = () => {
   } = useTranslation();
 
   const getData = () => {
-    apiService.get(`/Blog/Get/${id}`).then((res) => {
+    apiService.get(`/Blog/GetView/${id}`).then((res) => {
       if (res.status !== 200) {
         toast.error(t("Something went wrong"));
         navigate("/blogs");
