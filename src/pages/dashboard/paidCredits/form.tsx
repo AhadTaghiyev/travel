@@ -63,13 +63,13 @@ const MassIncomeForm = ({
               <CustomAutocompleteSelect
                 api="GetCredits/GetAll"
                 label={t("Credit")}
-                optionLabel="id"
+                optionLabel="ref"
                 value={values.getCreditId ?? null}
                 change={(value) => setFieldValue(`getCreditId`, value)}
                 disabled={isView}
                 hasErrorMessages={!!errors.getCreditId && !!touched.getCreditId}
                 errorMessages={[t(errors.getCreditId?.toString())]}
-                refName="LN-"
+                // refName="LN-"
               />
             </div>
             <div className="w-full">

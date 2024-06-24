@@ -28,7 +28,7 @@ export const SidebarItem: React.FC<{ item: SidebarItemType }> = ({ item }) => {
             }}
           >
             <item.icon
-              style={{ color: "#c4c5c6" }}
+              style={{ color: "#c4c5c6"}}
               className={styles.sidebarItemIcon}
             />
             <span className={styles.sidebarItemText}>{t(item.text)}</span>

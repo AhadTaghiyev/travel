@@ -11,12 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { apiService } from "../../../../server/apiServer";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import {
-  Image,
-  ImageResizeEditing,
-  ImageResizeHandles,
-} from "@ckeditor/ckeditor5-image";
-import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
+
 import {
   UploadAdapter,
   FileLoader,

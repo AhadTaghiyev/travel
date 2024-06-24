@@ -24,7 +24,7 @@ const getTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("İndividual tur satışı"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
 
-  { label: t("Depozit"), value: "deposit" },
+  { label: t("Deposit"), value: "deposit" },
 ];
 
 type IItem = {
@@ -164,7 +164,7 @@ const RefundForm = ({
                 {(values.invoiceId || values.advancePaymentId) && (
                   <Link
                     to={`/panel/${values.type}/report?tickets=${
-                      values.invoiceId?.value || values.advancePaymentId.value
+                      values.invoiceId?.value || values.advancePaymentId?.value
                     }`}
                     className="h-full py-3 px-2.5 rounded-lg mt-1 hover:opacity-80"
                     style={{

@@ -14,7 +14,7 @@ import i18n from "i18next";
 import { cn } from "@/lib/utils";
 import { UserContext } from "@/store/UserContext";
 import { CompanyContext } from "@/store/CompanyContext";
-
+import { useModal } from "@/hooks/useModal";
 interface NavbarProp {
   isAdmin?: boolean | null;
 }
@@ -26,7 +26,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   } = useTranslation();
   const { user: currentUser, removeUser } = useContext(UserContext);
   const { company } = useContext(CompanyContext)
-
+  const { onOpen} = useModal();
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
     localStorage.setItem("language", language);
@@ -107,15 +107,19 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                   "p-3 rounded text-xs ml-5 bg-yellow-700 font-bold"
                 )}
               >
-                Balance: {company.bonuces} USD
+                Balance: {company?.bonuces} USD
               </div>
               <button
                 type="button"
                 className="ml-5 font-semibold text-white border-none cursor-pointer rounded-sm hover:bg-black/5 p-1 hover:opacity-90 transition disabled:opacity-70"
+                onClick={() => {
+                  onOpen("addBalance");
+                }}
               >
                 + {t("Add Balance")}
               </button>
             </Box>
+            
           )}
           <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>

@@ -62,7 +62,7 @@ const MassIncomeForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 api="banks/GetAll/1"
-                label={t("bank")}
+                label={t("Bank")}
                 optionLabel="name"
                 value={values.bankId ?? null}
                 change={(value) => setFieldValue(`bankId`, value)}

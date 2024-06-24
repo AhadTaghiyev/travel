@@ -20,6 +20,7 @@ interface IPaidCreditProps {
     amount: number;
     percent: number;
     ref: string;
+    paidRef: string;
     to: string;
     description: string | null;
     creditId: string;
@@ -60,7 +61,7 @@ export function PaidCreditTable({
               {income.to}
             </TableCell>
             <TableCell className="font-medium py-1 px-2">
-             LN-{income.creditId}
+             {income.paidRef}
             </TableCell>
             {(income.amount * currency.value).toFixed(2)} {currency.name}
          

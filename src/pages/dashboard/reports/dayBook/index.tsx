@@ -50,7 +50,9 @@ const DayBookReport = () => {
     await apiService
       .get(`/Reports/DayBookReport?${searchParams.toString()}`)
       .then((res) => {
+        setData(null);
         setData(res.data);
+      
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));

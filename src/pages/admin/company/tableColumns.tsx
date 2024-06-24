@@ -34,7 +34,7 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
   },
   {
     field: "status",
-    headerName: "Subscribe Status",
+    headerName: "Company Status",
     flex: 1,
     headerClassName: "header-item",
     renderCell: (params) => {
@@ -179,7 +179,7 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
   },
   {
     field: "subScribestatus",
-    headerName: "Current Status",
+    headerName: "Current Sunscirbe Status",
     flex: 1,
     headerClassName: "header-item",
     renderCell: (params) => {

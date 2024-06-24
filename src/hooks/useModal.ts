@@ -10,6 +10,7 @@ export type ModalType =
   | "createAirway"
   | "createCurrency"
   | "createService"
+  | "addBalance"
   | "sendMail";
 
 type ModalData = {

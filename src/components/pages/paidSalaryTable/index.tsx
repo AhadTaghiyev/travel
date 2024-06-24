@@ -22,6 +22,7 @@ interface IPaidSalaryProps {
     extraSalary: number;
     bonus: number;
     date: string;
+    ref: string;
   }[];
   currency: ICurrency;
   totalPrice: number;
@@ -52,7 +53,7 @@ export function PaidSalaryTable({
         {incomes.map((income) => (
           <TableRow key={income.id}>
             <TableCell className="font-medium py-1 px-2">
-            P-{income.id}
+            {income.ref}
             </TableCell>
             <TableCell className="py-1 px-2">{income.employee}</TableCell>
             <TableCell className="py-1 px-2">{income.payment}</TableCell>
