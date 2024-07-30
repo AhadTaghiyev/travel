@@ -1,6 +1,8 @@
+// @ts-nocheck
 import { Button, Container, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FiDownload } from "react-icons/fi";
+import { SERVER_BASE_URL } from "@/constants";
 
 import {
   Table,
@@ -21,6 +23,7 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
+import axios from "axios";
 
 const columns = [
   { label: "date", name: "date", type: "date" },
@@ -30,6 +33,39 @@ const columns = [
   { label: "SellingPrice", name: "sellingPrice" },
   { label: "Profits", name: "profiy" },
 ];
+
+const handleDownload = async (id) => {
+  try {
+    const token = localStorage.getItem("token"); // Replace "your_token_key" with the actual key you used to store the token
+    if (!token) {
+      console.error("Token is not found");
+      return;
+    }
+
+    const config = {
+      responseType: "blob", 
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.get(`${SERVER_BASE_URL}/reports/ProfitsReportDetailExport?ticketType=${id}`, config);
+
+    toast.promise(promise, {
+      loading: "Loading..."
+    });
+
+    const response = await promise;
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `ProfitsReportDetailExport.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("An error occurred while downloading the data: ", error);
+  }
+};
 
 const Detail = () => {
   const { t } = useTranslation();
@@ -139,6 +175,17 @@ const Detail = () => {
               >
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
+
+              <Button
+                onClick={()=>handleDownload(id)}
+                
+                variant="text"
+                color="inherit"
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
+              >
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+              </Button>
+              
             </Grid>
           </Grid>
         </Grid>

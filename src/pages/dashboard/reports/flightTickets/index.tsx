@@ -24,6 +24,7 @@ export default function Index() {
         totalProps={["purchasePrice","sellingPrice","segment"]}
         api={"/Reports/FlightTicketsReport"}
         root="/panel/reports/flightTickets"
+        exportLink="Reports/FlightTicketsReportExport"
       />
     </Container>
   );

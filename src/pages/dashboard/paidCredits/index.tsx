@@ -14,6 +14,7 @@ export default function Index() {
         buttonText="Ödənilən Kredit"
         deleteApi="/PaidCredits/Delete"
         root="/panel/paidCredits"
+        exportLink="PaidCredits/export/export"
       />
     </Container>
   );

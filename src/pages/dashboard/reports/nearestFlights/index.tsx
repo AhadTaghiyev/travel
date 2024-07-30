@@ -20,6 +20,7 @@ export default function Index() {
         detailLink="/panel/reports/NearestTravelReport/"
         api={"/Reports/NearestTravelReport"}
         root="/panel/reports/customers"
+        exportLink="Reports/NearestTravelReportExport"
       />
     </Container>
   );

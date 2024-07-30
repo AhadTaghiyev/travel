@@ -24,6 +24,7 @@ export default function Index() {
         api={"/Reports/DeadlindeReport"}
         root="/panel/reports/suppliers"
         totalProps={["amount"]}
+        exportLink="Reports/DeadlindeReportExport"
       />
     </Container>
   );

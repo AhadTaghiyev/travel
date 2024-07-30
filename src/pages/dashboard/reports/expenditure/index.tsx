@@ -23,7 +23,9 @@ export default function Index() {
         columns={columns}
         detailLink="/panel/reports/expenditures/"
         api={"/Reports/ExpenditureReport"}
+        exportLink={"Reports/ExpenditureReportExport"}
         root="/panel/reports/expenditures"
+        
       />
     </Container>
   );

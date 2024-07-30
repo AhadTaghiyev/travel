@@ -14,6 +14,7 @@ export default function Index() {
         deleteApi="/GetCredits/Delete"
         root="/panel/getCredits"
         totalProps={["amount", "restOfAmount"]}
+        exportLink="GetCredits/export/export"
       />
     </Container>
   );

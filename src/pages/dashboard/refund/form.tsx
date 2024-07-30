@@ -208,17 +208,7 @@ const RefundForm = ({
                       errorMessages={[t(errors.paidAmount?.toString())]}
                     />
                   </div>
-                  {/* <div className="w-full">
-                  <CustomAutocompleteSelect
-                    api="Payments/GetAll/1"
-                    label={t("Ödəniş növü")}
-                    value={values.paymentId ?? null}
-                    optionLabel="type"
-                    change={(value) => setFieldValue("paymentId", value)}
-                    hasErrorMessages={!!errors.paymentId && !!touched.paymentId}
-                    errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-                  />
-                </div> */}
+                
                   <div className="w-full">
                     <CustomTextField
                       label={t("Refund from Supplier")}
@@ -280,6 +270,9 @@ const RefundForm = ({
 
           {formType != "Edit" && (
             <div className="w-full flex gap-x-6 justify-end mb-6">
+
+
+
               <button
                 type="button"
                 disabled={isSubmitting}

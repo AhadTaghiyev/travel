@@ -11,6 +11,7 @@ export default function Index() {
         buttonText="Vəsait transferi"
         deleteApi="/PaymentTransfers/Delete"
         root="/panel/paymentTransfers"
+        exportLink="PaymentTransfers/export/export"
       />
     </Container>
   );

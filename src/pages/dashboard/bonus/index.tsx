@@ -11,6 +11,7 @@ export default function Index() {
         buttonText="Bonus"
         deleteApi="/Bonuces/Delete"
         root="/panel/bonus"
+        exportLink="Bonuces/export/export"
       />
     </Container>
   );

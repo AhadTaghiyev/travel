@@ -24,6 +24,7 @@ export default function Index() {
         detailLink="/panel/reports/personals/"
         api={"/Reports/PersonalsReport"}
         root="/panel/reports/customers"
+        exportLink="Personals/Export/Export"
       />
     </Container>
   );

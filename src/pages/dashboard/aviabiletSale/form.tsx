@@ -143,6 +143,7 @@ const AviabiletTicketForm = ({
                     color="primary"
                     name="isSupplierPaid"
                     checked={values.isSupplierPaid}
+
                     onChange={handleChange}
                     disabled={isEdit || isView}
                   />
@@ -175,7 +176,7 @@ const AviabiletTicketForm = ({
                     : t("customerPayment")
                 }
               />
-              {values.isCustomerPaid && !isEdit && !isView && (
+              {(values.isCustomerPaid||values.isSupplierPaid) && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
                     <CustomAutocompleteSelect

@@ -18,9 +18,8 @@ interface IPaymentProps {
   ) => void;
 }
 
-const Payment = ({ initialValues, onSubmit, formType }: IPaymentProps) => {
+const Payment = ({ initialValues, onSubmit }: IPaymentProps) => {
   const { t } = useTranslation();
-  const isEdit = formType === "Edit";
   const navigate = useNavigate();
 
   return (
@@ -56,7 +55,6 @@ const Payment = ({ initialValues, onSubmit, formType }: IPaymentProps) => {
                 change={handleChange}
                 name={`amount`}
                 type="number"
-                disabled={isEdit}
                 hasErrorMessages={!!errors.amount && !!touched.amount}
                 errorMessages={[t(errors.amount?.toString())]}
               />

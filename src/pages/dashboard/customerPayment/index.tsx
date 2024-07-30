@@ -11,6 +11,7 @@ export default function Index() {
         buttonText="Customer Receipt"
         deleteApi="/OtherPayments/Delete"
         root="/panel/customerPayments"
+        exportLink="OtherPayments/export/export"
       />
     </Container>
   );

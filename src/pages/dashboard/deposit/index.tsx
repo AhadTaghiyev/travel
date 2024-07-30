@@ -11,6 +11,7 @@ export default function Index() {
         buttonText="Deposit"
         deleteApi="/AdvancePayments/Delete"
         root="/panel/deposit"
+        exportLink="AdvancePayments/Export/Export"
       />
     </Container>
   );

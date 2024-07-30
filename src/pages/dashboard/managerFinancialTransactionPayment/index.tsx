@@ -11,6 +11,7 @@ export default function Index() {
         buttonText="Təsisçidən təsisçiyə Ödəniş"
         deleteApi="/ManagerFinancialTransactionPayments/Delete"
         root="/panel/managerFinancialTransactionPayments"
+        exportLink="ManagerFinancialTransactionPayments/export/export"
       />
     </Container>
   );

@@ -192,6 +192,14 @@ export default function Index({ api, current = null }: any) {
           >
             <FiDownload style={{ marginRight: "8px" }} /> Print
           </Button>
+          <Button
+                onClick={e=>alert("something went wrong")}
+                variant="text"
+                color="inherit"
+                sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
+              >
+                   <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+              </Button>
         </Grid>
         <Grid
           container

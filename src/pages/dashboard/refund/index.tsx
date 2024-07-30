@@ -13,6 +13,7 @@ export default function Index() {
         hideEdit
       hidePrint={false}
         root="/panel/refunds"
+        exportLink="Refunds/export/export"
       />
     </Container>
   );

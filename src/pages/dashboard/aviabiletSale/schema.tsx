@@ -42,9 +42,10 @@ export const getTicketSchema = (isEdit: boolean) =>
         ? sch.required("Ödəniş növü seçilməlidir")
         : sch.notRequired();
     }),
+    
     paidAmount: Yup.number()
-      .when("isCustomerPaid", ([isCustomerPaid], sch) => {
-        return isCustomerPaid && !isEdit
+      .when(['isCustomerPaid', 'isSupplierPaid'], ([isCustomerPaid,isSupplierPaid], sch) => {
+        return (isCustomerPaid||isSupplierPaid) && !isEdit
           ? sch.required("Məbləğ daxil edilməlidir")
           : sch.notRequired();
       })

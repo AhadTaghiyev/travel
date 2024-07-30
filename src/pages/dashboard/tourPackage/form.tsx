@@ -171,7 +171,7 @@ const TourPackageForm = ({
                     : t("customerPayment")
                 }
               />
-              {values.isCustomerPaid && !isEdit && !isView && (
+              {(values.isCustomerPaid||values.isSupplierPaid) && !isEdit && !isView && (
                 <div className="flex flex-col sm:flex-row gap-x-4">
                   <div className="w-full">
                     <CustomAutocompleteSelect

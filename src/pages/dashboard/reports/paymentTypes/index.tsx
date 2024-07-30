@@ -25,6 +25,7 @@ export default function Index() {
         detailLink="/panel/reports/paymentTypes/"
         api={"/Reports/PaymentReport"}
         root="/panel/reports/customers"
+        exportLink="reports/PaymentReportExport"
       />
     </Container>
   );
