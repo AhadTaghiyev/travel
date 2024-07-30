@@ -178,101 +178,96 @@ const RefundForm = ({
                 )}
               </div>
             )}
-            {!!values.invoiceId ||
-              !!values.advancePaymentId ||
-              (formType == "Edit" && (
-                <>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      name="amount"
-                      type="text"
-                      label={t("Məbləğ")}
-                      value={values.amount}
-                      change={handleChange}
-                      hasErrorMessages={!!errors.amount && !!touched.amount}
-                      errorMessages={[t(errors.amount?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      name="paidAmount"
-                      type="text"
-                      label={t("Ödənilən məbləğ")}
-                      value={values.paidAmount}
-                      change={handleChange}
-                      hasErrorMessages={
-                        !!errors.paidAmount && !!touched.paidAmount
-                      }
-                      errorMessages={[t(errors.paidAmount?.toString())]}
-                    />
-                  </div>
-                
-                  <div className="w-full">
-                    <CustomTextField
-                      label={t("Refund from Supplier")}
-                      value={values.supplierAmount}
-                      change={handleChange}
-                      type="number"
-                      name={`supplierAmount`}
-                      hasErrorMessages={
-                        !!errors.supplierAmount && !!touched.supplierAmount
-                      }
-                      errorMessages={[t(errors.supplierAmount?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      change={handleChange}
-                      label={t("Cərimə")}
-                      value={values.forfeit}
-                      type="number"
-                      name={`forfeit`}
-                    />
-                  </div>
+            {(!!values.invoiceId || !!values.advancePaymentId) && (
+              <>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    name="amount"
+                    type="text"
+                    label={t("Məbləğ")}
+                    value={values.amount}
+                    change={handleChange}
+                    hasErrorMessages={!!errors.amount && !!touched.amount}
+                    errorMessages={[t(errors.amount?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    name="paidAmount"
+                    type="text"
+                    label={t("Ödənilən məbləğ")}
+                    value={values.paidAmount}
+                    change={handleChange}
+                    hasErrorMessages={
+                      !!errors.paidAmount && !!touched.paidAmount
+                    }
+                    errorMessages={[t(errors.paidAmount?.toString())]}
+                  />
+                </div>
 
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      label={t("Qaytarılan məbləğ")}
-                      // value={values.paidAmount-values.supplierAmount-values.fine}
-                      value={
-                        values.paidAmount -
-                        values.amount +
-                        (values.supplierAmount - values.forfeit)
-                      }
-                      change={handleChange}
-                      type="number"
-                      name={`paidToCustomer`}
-                      hasErrorMessages={
-                        !!errors.paidToCustomer && !!touched.paidToCustomer
-                      }
-                      errorMessages={[t(errors.paidToCustomer?.toString())]}
-                    />
-                  </div>
+                <div className="w-full">
+                  <CustomTextField
+                    label={t("Refund from Supplier")}
+                    value={values.supplierAmount}
+                    change={handleChange}
+                    type="number"
+                    name={`supplierAmount`}
+                    hasErrorMessages={
+                      !!errors.supplierAmount && !!touched.supplierAmount
+                    }
+                    errorMessages={[t(errors.supplierAmount?.toString())]}
+                  />
+                </div>
+                <div className="w-full">
+                  <CustomTextField
+                    change={handleChange}
+                    label={t("Cərimə")}
+                    value={values.forfeit}
+                    type="number"
+                    name={`forfeit`}
+                  />
+                </div>
 
-                  <div className="w-full h-full">
-                    <CustomDateTimePicker
-                      label={t("date")}
-                      value={values.date}
-                      toDate={new Date()}
-                      change={(data) => {
-                        setFieldValue("date", data ?? new Date());
-                      }}
-                      hasErrorMessages={!!errors.date && !!touched.date}
-                      errorMessages={[t(errors.date?.toString())]}
-                    />
-                  </div>
-                </>
-              ))}
+                <div className="w-full">
+                  <CustomTextField
+                    disabled
+                    label={t("Qaytarılan məbləğ")}
+                    // value={values.paidAmount-values.supplierAmount-values.fine}
+                    value={
+                      values.paidAmount -
+                      values.amount +
+                      (values.supplierAmount - values.forfeit)
+                    }
+                    change={handleChange}
+                    type="number"
+                    name={`paidToCustomer`}
+                    hasErrorMessages={
+                      !!errors.paidToCustomer && !!touched.paidToCustomer
+                    }
+                    errorMessages={[t(errors.paidToCustomer?.toString())]}
+                  />
+                </div>
+
+                <div className="w-full h-full">
+                  <CustomDateTimePicker
+                    label={t("date")}
+                    value={values.date}
+                    toDate={new Date()}
+                    change={(data) => {
+                      setFieldValue("date", data ?? new Date());
+                    }}
+                    hasErrorMessages={!!errors.date && !!touched.date}
+                    errorMessages={[t(errors.date?.toString())]}
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           {formType != "Edit" && (
             <div className="w-full flex gap-x-6 justify-end mb-6">
-
-
-
               <button
                 type="button"
                 disabled={isSubmitting}
