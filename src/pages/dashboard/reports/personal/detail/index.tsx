@@ -29,11 +29,13 @@ const columns = [
   { label: "Persona", name: "personal"},
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "DeadLine.", name: "deadLine", type: "date" },
+  { label: "Departure Dates.", name: "departureDates", type: "date" },
+  { label: "Note.", name: "note" },
   { label: "Note.", name: "note" },
   { label: "Buying.", name: "sellingPrice" },
   { label: "Selling.", name: "totalAmount" },
   { label: "Profit.", name: "profit" },
+  
 ];
 
 const Detail = () => {

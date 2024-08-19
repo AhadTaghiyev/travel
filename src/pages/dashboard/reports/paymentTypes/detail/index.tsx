@@ -69,7 +69,7 @@ const Detail = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`, config);
+      const promise = axios.get(`${SERVER_BASE_URL}/reports/PaymentReportDetailExport/${id}`, config);
   
       toast.promise(promise, {
         loading: "Loading..."
@@ -79,7 +79,7 @@ const Detail = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `Payment.xlsx`);
+      link.setAttribute("download", `PaymentDetail.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

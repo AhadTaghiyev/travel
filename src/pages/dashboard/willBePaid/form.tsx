@@ -46,7 +46,7 @@ const WillBePaid = ({
             <div className="w-full">
               <CustomAutocompleteSelect
                 disabled={isView}
-                api="Fees/GetAll/1"
+                api="Fees/GetAll/1/10000"
                 label={t("Xərc")}
                 value={values.feeId ?? null}
                 optionLabel="name"

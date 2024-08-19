@@ -28,6 +28,7 @@ import axios from "axios";
 const columns = [
   { label: "date", name: "date", type: "date" },
   { label: "Customer", name: "customer" },
+  { label: "Personal", name: "personal" },
   { label: "Ref", name: "ref" },
   { label: "salePrice", name: "buyingPrice" },
   { label: "SellingPrice", name: "sellingPrice" },

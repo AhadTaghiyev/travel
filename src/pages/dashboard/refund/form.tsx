@@ -94,7 +94,7 @@ const RefundForm = ({
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
-                    api="Customers/GetAll/1"
+                    api="Customers/GetAll/1/10000"
                     label={t("customer")}
                     disabled={isEdit}
                     value={values.customerId ?? null}

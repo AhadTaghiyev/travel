@@ -1281,6 +1281,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/panel/reports/expenditures/new",
+        element: (
+            <NewWillBePaid />
+        ),
+      },
+
+      
+      {
         path: "/panel/reports/willbepaid/update/:id",
         element: (
           <LeaderOnly>
@@ -1302,7 +1310,11 @@ const router = createBrowserRouter([
       //=================
       {
         path: "/panel/payments",
-        element: <Payments />,
+        element: 
+        <LeaderOnly>
+        <Payments />
+        </LeaderOnly>
+        ,
       },
       // {
       //   path: "/panel/payments/new",
@@ -1429,17 +1441,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/panel/payments/report/:id",
-        element: <PaymentDetailReport />,
+        element:
+        
+        <PaymentDetailReport />,
       },
 
       // Bonus
       {
+        
         path: "/panel/bonus",
-        element: <Bonus />,
+        element: 
+        <LeaderOnly>
+        <Bonus />,
+        </LeaderOnly>
       },
       {
         path: "/panel/bonus/new",
-        element: <NewBonus />,
+        element:
+        <LeaderOnly>
+        <NewBonus />,
+        </LeaderOnly>
       },
       {
         path: "/panel/bonus/update/:id",
@@ -1594,9 +1615,7 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/expenditures",
         element: (
-          <ManagementOnly>
             <ExpendituresReport />
-          </ManagementOnly>
         ),
       },
       {

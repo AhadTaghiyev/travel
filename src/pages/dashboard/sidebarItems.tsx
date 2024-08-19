@@ -75,6 +75,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: HiDownload,
     text: "Mədaxil",
+    
     children: [
       {
         icon: FaServicestack,
@@ -95,6 +96,7 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaServicestack,
         text: "Bonus",
         link: "/panel/bonus",
+        onlyManagement: true,
       },
     ],
   },
@@ -146,12 +148,18 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaMoneyBillWave,
         text: "Ödənişlər",
         link: "/panel/payments",
+        onlyManagement: true,
       },
 
       {
         icon: HiOutlineArrowsUpDown,
         text: "Geri qaytarmalar",
         link: "/panel/refunds",
+      },
+      {
+        icon: FaServicestack,
+        text: "Fees",
+        link: "/panel/reports/expenditures",
       },
     ],
   },
@@ -368,14 +376,14 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaServicestack,
         text: "Email",
         link: "/panel/email",
-      },
-      {
-        icon: RiLockPasswordLine,
-        text: "Change Password",
-        link: "/panel/ChangePasswordV",
       }
     ],
   },
+  {
+      icon: RiLockPasswordLine,
+      text: "Change Password",
+      link: "/panel/ChangePasswordV",
+  }
  
   
 ];

@@ -71,7 +71,7 @@ const TourPackageForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 disabled={isView}
-                api="Customers/GetAll/1"
+                api="Customers/GetAll/1/10000"
                 label={t("customer")}
                 value={values.customerId ?? null}
                 optionLabel="fullName"
@@ -208,18 +208,18 @@ const TourPackageForm = ({
                     <CustomTextField
                       disabled
                       label={t("Qalıq məbləğ")}
-                      // value={Math.max(
-                      //   values.individualTourPackages.reduce(
-                      //     (acc, cur) => acc + cur.sellingPrice - cur.discount,
-                      //     0
-                      //   ) - values.paidAmount,
-                      //   0
-                      // )}
-                      value={
-                        values.individualTourPackages[0]
-                          .sellingPrice -
-                        values.individualTourPackages[0].discount
-                      }
+                      value={Math.max(
+                        values.individualTourPackages.reduce(
+                          (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                          0
+                        ) - values.paidAmount,
+                        0
+                      )}
+                      // value={
+                      //   values.individualTourPackages[0]
+                      //     .sellingPrice -
+                      //   values.individualTourPackages[0].discount
+                      // }
                       change={() => 0}
                       type="number"
                       name={``}
@@ -328,7 +328,7 @@ const TourPackageForm = ({
                     <div className="w-full relative">
                       <CustomAutocompleteSelect
                         disabled={isView}
-                        api="Suppliers/GetAll/1"
+                        api="Suppliers/GetAll/1/10000"
                         label={t("supplier")}
                         value={individualTourPackage.supplierId ?? null}
                         optionLabel="name"

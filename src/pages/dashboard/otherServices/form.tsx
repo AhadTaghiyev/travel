@@ -71,7 +71,7 @@ const OtherServicesForm = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
             <div className="w-full relative">
               <CustomAutocompleteSelect
-                api="Customers/GetAll/1"
+                api="Customers/GetAll/1/10000"
                 label={t("customer")}
                 disabled={isView}
                 value={values.customerId ?? null}
@@ -291,7 +291,7 @@ const OtherServicesForm = ({
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
-                    api="Suppliers/GetAll/1"
+                    api="Suppliers/GetAll/1/10000"
                     label={t("supplier")}
                     value={otherService.supplierId ?? null}
                     optionLabel="name"

@@ -70,7 +70,7 @@ const TourPackageForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 disabled={isView}
-                api="Customers/GetAll/1"
+                api="Customers/GetAll/1/10000"
                 label={t("customer")}
                 value={values.customerId ?? null}
                 optionLabel="fullName"
@@ -279,7 +279,7 @@ const TourPackageForm = ({
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     disabled={isView}
-                    api="Suppliers/GetAll/1"
+                    api="Suppliers/GetAll/1/10000"
                     label={t("supplier")}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
                     value={tourPackage.supplierId ?? null}

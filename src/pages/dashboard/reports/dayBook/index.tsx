@@ -80,24 +80,23 @@ const DayBookReport = () => {
   };
 
   const getData = async (startDate?: Date, endDate?: Date) => {
+    setLoading(true); // Yükleniyor durumunu ayarla
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
-    await apiService
-      .get(`/Reports/DayBookReport?${searchParams.toString()}`)
-      .then((res) => {
-        setData(null);
-        setData(res.data);
-      
-      })
-      .catch((err) => {
-        toast.error(err.message || t("Something went wrong!"));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    if (startDate) searchParams.append("startDate", startDate.toISOString());
+    if (endDate) searchParams.append("endDate", endDate.toISOString());
+  
+    const timestamp = new Date().getTime(); // Zaman damgası ekle
+  
+    try {
+      const response = await apiService.get(`/Reports/DayBookReport?${searchParams.toString()}&_=${timestamp}`);
+      setData(response.data);
+    } catch (error) {
+      toast.error(error.message || t("Something went wrong!"));
+    } finally {
+      setLoading(false); // Yükleniyor durumunu kapat
+    }
   };
-
+  
   const onSubmit = (
     values: { startDate: Date; endDate: Date },
     { setSubmitting }: FormikHelpers<FormikValues>

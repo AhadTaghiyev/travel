@@ -25,10 +25,12 @@ const columns = [
   { label: "Id", name: "id" },
   { label: "Date", name: "date" },
   { label: "Customer", name: "customer" },
+  { label: "Personal.", name: "personal" },
   { label: "Ref.", name: "ref" },
   { label: "DeadLine.", name: "deadLine" },
   { label: "Note.", name: "note" },
   { label: "Reciveables.", name: "amount" },
+
 ];
 
 const Detail = () => {

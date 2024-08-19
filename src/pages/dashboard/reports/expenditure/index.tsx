@@ -17,8 +17,9 @@ export default function Index() {
       </div>
       <Table
         hideDelete
-        hideCreate
+        hideFilter
         hideEdit
+        buttonText="Expenditure"
         hidePrint
         columns={columns}
         detailLink="/panel/reports/expenditures/"

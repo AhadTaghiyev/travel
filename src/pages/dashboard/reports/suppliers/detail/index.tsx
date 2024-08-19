@@ -4,6 +4,7 @@ import {
   Container,
   FormHelperText,
   Grid,
+  IconButton,
   InputLabel,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -40,6 +41,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 import { textStyling } from "@/styles";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constants";
+import { DeleteIcon, EditIcon, SaveIcon ,X} from "lucide-react";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -50,6 +52,7 @@ const columns = [
   { label: "Debit", name: "debit" },
   { label: "Credit", name: "credit" },
   { label: "Balance", name: "balance" },
+  { label: "Operations" },
 ];
 
 const Detail = () => {
@@ -77,6 +80,9 @@ const Detail = () => {
   const defaultEndDate = searchParams.get("startDate")
     ? new Date(searchParams.get("endDate") as string)
     : null;
+
+    const [editId, setEditId] = useState(null);
+    const [editAmount, setEditAmount] = useState("");
 
   const fetchData = async () => {
     const res = await apiService.get("Payments/GetAll/1");
@@ -130,6 +136,90 @@ const Detail = () => {
     } catch (error) {
       console.error("An error occurred while downloading the data: ", error);
     }
+  };
+
+  const onDelete = async (id, isWp) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is not found");
+        return;
+      }
+  
+      const uri = isWp ? `/WillBePaids/RmovePay/${id}` : `/WillBePaids/Delete/${id}`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      await toast.promise(
+        axios.delete(`${SERVER_BASE_URL}${uri}`, config),
+        {
+          loading: "Loading...",
+          success: "Successfully deleted",
+          error: "Error occurred while deleting"
+        }
+      );
+  
+      setData(prevData => prevData.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("An error occurred while deleting the data: ", error);
+      toast.error("An error occurred while deleting the data");
+    }
+  };
+
+  const onEdit = async (id, isWp,row) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is not found");
+        return;
+      }
+
+      const uri = isWp ? `/WillBePaids/EditPay/${id}?amount=${editAmount}` : `/WillBePaids/Edit/${id}?amount=${editAmount}`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      await toast.promise(
+        axios.put(`${SERVER_BASE_URL}${uri}`, null, config), // 'null' body'yi ifade eder çünkü body verisi yok
+        {
+          loading: "Loading...",
+          success: "Successfully updated",
+          error: "Error occurred while updating"
+        }
+      );
+      
+
+      setData(prevData =>
+        prevData.map(item =>
+          item.id === id
+            ? {
+                ...item,
+                [isWp ? 'debit' : 'credit']: Number(editAmount),
+              }
+            : item
+        )
+      );
+
+      setEditId(null);
+  
+    } catch (error) {
+      console.error("An error occurred while updating the data: ", error);
+      toast.error("An error occurred while updating the data");
+    }
+  };
+
+  const onCancel = () => {
+    setEditId(null);
+    setEditAmount("");
+  };
+
+  const handleAmountChange = (event) => {
+    setEditAmount(event.target.value);
   };
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
@@ -301,18 +391,59 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data &&
-                data.map((row) => (
-                  <TableRow key={row.id}>
-                    {columns.map((column) => (
-                      <TableCell key={column.name} className="py-1.5">
-                        {column.type === "date"
-                          ? formatDate(row?.[column.name])
-                          : row?.[column.name]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
+            {data &&
+          data.map((row) => (
+            <TableRow key={row.id}>
+              {columns.map((column) => (
+                column.name ? (
+                  <TableCell key={column.name} className="py-1.5">
+                    {column.type === "date"
+                      ? formatDate(row?.[column.name])
+                      : row?.[column.name]}
+                  </TableCell>
+                ) : (
+                  <TableCell key="operations" className="py-1.5">
+                  {editId === row.id ? (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="number"
+                        autoFocus={true}
+                        value={editAmount}
+                        onChange={handleAmountChange}
+                        style={{
+                          marginRight: '8px',
+                          padding: '8px',         // Padding ekler
+                          borderRadius: '4px',    // Köşeleri yuvarlar
+                          border: '1px solid #ccc', // Hafif gri bir kenarlık ekler
+                          backgroundColor: '#fff', // Beyaz arka plan rengi
+                          boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' // Hafif bir gölge ekler
+                        }}
+                      />
+                      <IconButton onClick={() => onEdit(row.id,row.debit !== 0,row)}>
+                        <SaveIcon />
+                      </IconButton>
+                      <IconButton onClick={onCancel}>
+                        <X />
+                      </IconButton>
+                    </div>
+                  ) : (
+                    <>
+                      <IconButton onClick={() => {
+                        setEditId(row.id);
+                        setEditAmount(row.amount || 0); // Eski değeri inputa atama
+                      }}>
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton onClick={() => onDelete(row.id, row.debit !== 0)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </>
+                  )}
+                </TableCell>
+                )
+              ))}
+            </TableRow>
+          ))}
             </TableBody>
             {/* <TableFooter className="w-full">
               <TableRow className="w-full">

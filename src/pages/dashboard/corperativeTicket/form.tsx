@@ -75,7 +75,7 @@ const CorperativeTicketForm = ({
             <div className="w-full relative">
               <CustomAutocompleteSelect
                 disabled={isView}
-                api="Customers/GetAll/1"
+                api="Customers/GetAll/1/10000"
                 label={t("customer")}
                 value={values.customerId ?? null}
                 optionLabel="fullName"
@@ -311,7 +311,7 @@ const CorperativeTicketForm = ({
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     disabled={isView}
-                    api="Suppliers/GetAll/1"
+                    api="Suppliers/GetAll/1/10000"
                     label={t("supplier")}
                     value={corporativeTicket.supplierId ?? null}
                     refetech={!!(isModalSuccess && type === "createSupplier")}
@@ -350,7 +350,7 @@ const CorperativeTicketForm = ({
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     disabled={isView}
-                    api="AirWays/GetAll/1"
+                    api="AirWays/GetAll/1/10000"
                     label={t("airlineName")}
                     optionLabel="name"
                     value={corporativeTicket.airWayId ?? null}
