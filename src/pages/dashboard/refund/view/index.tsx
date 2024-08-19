@@ -70,9 +70,8 @@ const UpdateIncome = () => {
       {loading && <Loading />}
       {!loading && income && (
         <IncomeForm
-          formType="Edit"
+          formType="View"
           initialValues={income}
-          
           onSubmit={onSubmit}
         />
       )}

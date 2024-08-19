@@ -34,7 +34,7 @@ type IItem = {
   paidAmount: number;
 };
 
-type FormType = "Edit" | "Create";
+type FormType = "Edit" | "Create" | "View";
 
 interface IRefundFormProps {
   formType: FormType;
@@ -51,6 +51,7 @@ const RefundForm = ({
   formType,
 }: IRefundFormProps) => {
   const isEdit = formType === "Edit";
+  const isView = formType === "View";
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [invoiceItems, setInvoiceItems] = useState<IItem[]>([]);
@@ -75,7 +76,7 @@ const RefundForm = ({
       }) => (
         <form onSubmit={handleSubmit} className="pt-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 items-center">
-            {!isEdit && (
+            {!isEdit && !isView && (
               <>
                 <div className="w-full">
                   <CustomSelect
@@ -112,7 +113,7 @@ const RefundForm = ({
                 </div>
               </>
             )}
-            {isEdit && (
+            {isView && (
               <>
                 <div className="w-full flex flex-col mb-5">
                   <InputLabel sx={{ mb: 1 }} style={textStyling}>
@@ -125,6 +126,56 @@ const RefundForm = ({
                     {t("Invoice")}
                   </InputLabel>
                   <Input value={values.invoiceNo} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Məbləğ")}
+                  </InputLabel>
+                  <Input value={values.amount} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Ödənilən məbləğ")}
+                  </InputLabel>
+                  <Input value={values.paidAmount} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Refund from Supplier")}
+                  </InputLabel>
+                  <Input value={values.supplierAmount} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Cərimə")}
+                  </InputLabel>
+                  <Input value={values.forfeit} disabled />
+                </div>
+                <div className="w-full flex flex-col mb-5">
+                  <InputLabel sx={{ mb: 1 }} style={textStyling}>
+                    {t("Qaytarılan məbləğ")}
+                  </InputLabel>
+                  <Input
+                    value={
+                      values.paidAmount -
+                      values.amount +
+                      (values.supplierAmount - values.forfeit)
+                    }
+                    disabled
+                  />
+                </div>
+                <div className="w-full ">
+                  <CustomDateTimePicker
+                    disabled
+                    label={t("date")}
+                    value={values.date}
+                    toDate={new Date()}
+                    change={(data) => {
+                      setFieldValue("date", data ?? new Date());
+                    }}
+                    hasErrorMessages={!!errors.date && !!touched.date}
+                    errorMessages={[t(errors.date?.toString())]}
+                  />
                 </div>
               </>
             )}
@@ -266,7 +317,7 @@ const RefundForm = ({
             )}
           </div>
 
-          {formType != "Edit" && (
+          {!isEdit && !isView && (
             <div className="w-full flex gap-x-6 justify-end mb-6">
               <button
                 type="button"
