@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Formik, FormikHelpers, FormikValues } from "formik";
-import { Button, Container, FormHelperText, Grid } from "@mui/material";
+import { Button, Container, FormHelperText, Grid, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
@@ -35,6 +35,7 @@ import { isNil } from "lodash";
 import { CompanyContext } from "@/store/CompanyContext";
 import { SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
+import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -43,6 +44,7 @@ const columns = [
   { label: "Amount", name: "credit" },
   { label: "Paid", name: "debit" },
   { label: "Balance", name: "balance" },
+  { label: "Date", name: "date" },
   { label: "Note", name: "note" },
   // { label: "Total", name: "total" },
 ];
@@ -65,6 +67,9 @@ const Detail = () => {
     }[]
   >();
   const { id } = useParams<{ id: string }>();
+  const [editId, setEditId] = useState(null);
+  const [editAmount, setEditAmount] = useState("");
+  const [editPaymentAmount, setEditPaymentAmount] = useState("");
 
   const fetchData = async () => {
     const res = await apiService.get("Payments/GetAll/1");
@@ -101,7 +106,7 @@ const Detail = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`, config);
+      const promise = axios.get(`${SERVER_BASE_URL}/reports/ExpenditureReportDetailExport/${id}`, config);
   
       toast.promise(promise, {
         loading: "Loading..."
@@ -111,7 +116,7 @@ const Detail = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `ReciveAblesReportDetailExport.xlsx`);
+      link.setAttribute("download", `ExpenditureReportDetailItem.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -139,6 +144,91 @@ const Detail = () => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const onCancel = () => {
+    setEditId(null);
+    setEditAmount("");
+    setEditPaymentAmount("");
+  };
+
+  const onDelete = async (id, isWp) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is not found");
+        return;
+      }
+  
+      const uri = isWp ? `/WillBePaids/RmovePay/${id}` : `/WillBePaids/Delete/${id}`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      await toast.promise(
+        axios.delete(`${SERVER_BASE_URL}${uri}`, config),
+        {
+          loading: "Loading...",
+          success: "Successfully deleted",
+          error: "Error occurred while deleting"
+        }
+      );
+  
+      setData(prevData => prevData.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("An error occurred while deleting the data: ", error);
+      toast.error("An error occurred while deleting the data");
+    }
+  };
+
+  const onEdit = async (id, isWp,row) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is not found");
+        return;
+      }
+
+      const uri = isWp ? `/WillBePaids/EditPay/${id}?amount=${editAmount}` : `/WillBePaids/Edit/${id}?amount=${editAmount}`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      await toast.promise(
+        axios.put(`${SERVER_BASE_URL}${uri}`, null, config), // 'null' body'yi ifade eder çünkü body verisi yok
+        {
+          loading: "Loading...",
+          success: "Successfully updated",
+          error: "Error occurred while updating"
+        }
+      );
+      
+
+      setData(prevData =>
+        prevData.map(item =>
+          item.id === id
+            ? {
+                ...item,
+                [isWp ? 'debit' : 'credit']: Number(editAmount),
+              }
+            : item
+        )
+      );
+
+      setEditId(null);
+  
+    } catch (error) {
+      console.error("An error occurred while updating the data: ", error);
+      toast.error("An error occurred while updating the data");
+    }
+  };
+
+  const handleAmountChange = (event) => {
+    setEditAmount(event.target.value);
   };
 
   const onSubmit = (
@@ -292,12 +382,56 @@ const Detail = () => {
                         {row?.[column.name]}
                       </TableCell>
                     ))}
+
                     <TableCell className="w-48 py-0">
                       <PayAction
                         paymentTypeOptions={paymentTypes}
                         id={row.id}
                       />
                     </TableCell>
+
+
+                    <TableCell key="operations" className="py-1.5">
+                  {editId === row.id ? (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="number"
+                        autoFocus={true}
+                        value={editAmount}
+                        onChange={handleAmountChange}
+                        style={{
+                          marginRight: '8px',
+                          padding: '8px',         // Padding ekler
+                          borderRadius: '4px',    // Köşeleri yuvarlar
+                          border: '1px solid #ccc', // Hafif gri bir kenarlık ekler
+                          backgroundColor: '#fff', // Beyaz arka plan rengi
+                          boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' // Hafif bir gölge ekler
+                        }}
+                      />
+                      <IconButton onClick={() => onEdit(row.id,false,row)}>
+                        <SaveIcon />
+                      </IconButton>
+                      <IconButton onClick={onCancel}>
+                        <X />
+                      </IconButton>
+                    </div>
+                  ) : (
+                    <>
+                      <IconButton onClick={() => {
+                        setEditId(row.id);
+                        setEditAmount(row.amount || 0);
+                      }}>
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton onClick={() => onDelete(row.id, false)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </>
+                  )}
+                </TableCell>
+
+
+
                   </TableRow>
                 ))}
             </TableBody>

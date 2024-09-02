@@ -17,7 +17,6 @@ export default function Index() {
       </div>
       <Table
         hideDelete
-        hideFilter
         hideEdit
         buttonText="Expenditure"
         hidePrint
