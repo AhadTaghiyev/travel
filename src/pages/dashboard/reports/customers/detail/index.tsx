@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constants";
@@ -42,7 +42,7 @@ const Detail = () => {
   const { company } = useContext(CompanyContext);
 
   const [data, setData] =
-    useState<{ id: string; name: string; amount: number;balance:number }[]>();
+    useState<{ id: string; name: string; amount: number; balance: number }[]>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -56,19 +56,22 @@ const Detail = () => {
         console.error("Token is not found");
         return;
       }
-  
+
       const config = {
-        responseType: "blob", 
+        responseType: "blob",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`, config);
-  
+      const promise = axios.get(
+        `${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`,
+        config
+      );
+
       toast.promise(promise, {
-        loading: "Loading..."
+        loading: "Loading...",
       });
-  
+
       const response = await promise;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -84,8 +87,9 @@ const Detail = () => {
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
     await apiService
       .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -116,7 +120,6 @@ const Detail = () => {
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
-      
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
         <Grid
           container
@@ -153,12 +156,12 @@ const Detail = () => {
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
               <Button
-                onClick={()=>handleDownload(id)}
+                onClick={() => handleDownload(id)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
-                   <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
               </Button>
             </Grid>
           </Grid>
@@ -263,7 +266,9 @@ const Detail = () => {
                             >
                               {value}
                             </a> // URL'yi link olarak kullan
-                          ) : column.type === "date"&& value!=''&&value!=null ? (
+                          ) : column.type === "date" &&
+                            value != "" &&
+                            value != null ? (
                             formatDate(value)
                           ) : (
                             value

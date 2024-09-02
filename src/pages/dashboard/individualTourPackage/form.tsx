@@ -39,18 +39,18 @@ const TourPackageForm = ({
   const navigate = useNavigate();
   const isEdit = formType === "Edit";
   const isView = formType === "View";
-  const [userId,setUserId]=useState("");
-  const [advancePayment,setadvancePayment]=useState(0);
+  const [userId, setUserId] = useState("");
+  const [advancePayment, setadvancePayment] = useState(0);
 
   const fetchData = async () => {
-    const res = await       apiService.get(`AdvancePayments/GetByCustomer/${userId}`);
+    const res = await apiService.get(`AdvancePayments/GetByCustomer/${userId}`);
     setadvancePayment(res.data.amount);
   };
-  useEffect(()=>{
-    if(userId!=""){
+  useEffect(() => {
+    if (userId != "") {
       fetchData();
     }
-  },[userId])
+  }, [userId]);
   return (
     <Formik
       onSubmit={onSubmit}
@@ -77,7 +77,7 @@ const TourPackageForm = ({
                 optionLabel="fullName"
                 change={(value) => {
                   setFieldValue("customerId", value ?? null);
-                  setUserId(value)
+                  setUserId(value);
                 }}
                 refetech={!!(isModalSuccess && type === "createCustomer")}
                 hasErrorMessages={!!errors.customerId && !!touched.customerId}
@@ -172,72 +172,74 @@ const TourPackageForm = ({
                     : t("customerPayment")
                 }
               />
-              {(values.isCustomerPaid||values.isSupplierPaid) && !isEdit && !isView && (
-                <div className="flex flex-col sm:flex-row gap-x-4">
-                  <div className="w-full">
-                    <CustomAutocompleteSelect
-                      disabled={isView}
-                      api="Payments/GetAll/1"
-                      label={t("Ödəniş növü")}
-                      value={values.paymentId ?? null}
-                      optionLabel="type"
-                      change={(value) =>
-                        setFieldValue("paymentId", value ?? null)
-                      }
-                      hasErrorMessages={
-                        !!errors.paymentId && !!touched.paymentId
-                      }
-                      errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled={isView}
-                      label={t("Ödənilən məbləğ")}
-                      value={values.paidAmount}
-                      change={handleChange}
-                      type="number"
-                      name={`paidAmount`}
-                      hasErrorMessages={
-                        !!errors.paidAmount && !!touched.paidAmount
-                      }
-                      errorMessages={[t(errors.paidAmount?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      label={t("Qalıq məbləğ")}
-                      value={Math.max(
-                        values.individualTourPackages.reduce(
-                          (acc, cur) => acc + cur.sellingPrice - cur.discount,
+              {(values.isCustomerPaid || values.isSupplierPaid) &&
+                !isEdit &&
+                !isView && (
+                  <div className="flex flex-col sm:flex-row gap-x-4">
+                    <div className="w-full">
+                      <CustomAutocompleteSelect
+                        disabled={isView}
+                        api="Payments/GetAll/1"
+                        label={t("Ödəniş növü")}
+                        value={values.paymentId ?? null}
+                        optionLabel="type"
+                        change={(value) =>
+                          setFieldValue("paymentId", value ?? null)
+                        }
+                        hasErrorMessages={
+                          !!errors.paymentId && !!touched.paymentId
+                        }
+                        errorMessages={[t(errors.paymentId?.toString() ?? "")]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled={isView}
+                        label={t("Ödənilən məbləğ")}
+                        value={values.paidAmount}
+                        change={handleChange}
+                        type="number"
+                        name={`paidAmount`}
+                        hasErrorMessages={
+                          !!errors.paidAmount && !!touched.paidAmount
+                        }
+                        errorMessages={[t(errors.paidAmount?.toString())]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled
+                        label={t("Qalıq məbləğ")}
+                        value={Math.max(
+                          values.individualTourPackages.reduce(
+                            (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                            0
+                          ) - values.paidAmount,
                           0
-                        ) - values.paidAmount,
-                        0
-                      )}
-                      // value={
-                      //   values.individualTourPackages[0]
-                      //     .sellingPrice -
-                      //   values.individualTourPackages[0].discount
-                      // }
-                      change={() => 0}
-                      type="number"
-                      name={``}
-                    />
-                  </div>
+                        )}
+                        // value={
+                        //   values.individualTourPackages[0]
+                        //     .sellingPrice -
+                        //   values.individualTourPackages[0].discount
+                        // }
+                        change={() => 0}
+                        type="number"
+                        name={``}
+                      />
+                    </div>
 
-                  <div className="w-full">
-                    <CustomTextField
-                      label={t("Advance Payment")}
-                      value={advancePayment}
-                      change={handleChange}
-                      type="number"
-                      name={``}
-                     disabled
-                    />
+                    <div className="w-full">
+                      <CustomTextField
+                        label={t("Advance Payment")}
+                        value={advancePayment}
+                        change={handleChange}
+                        type="number"
+                        name={``}
+                        disabled
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           </div>
           <div className="mt-4">
@@ -265,6 +267,9 @@ const TourPackageForm = ({
                             );
                             clonedTourPackage.key = shortid.generate();
                             delete clonedTourPackage.id;
+                            clonedTourPackage.sellingPrice = 0;
+                            clonedTourPackage.purchasePrice = 0;
+                            clonedTourPackage.discount = 0;
                             tourPackages.splice(
                               index + 1,
                               0,

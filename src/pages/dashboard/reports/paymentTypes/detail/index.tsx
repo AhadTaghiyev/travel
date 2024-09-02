@@ -20,7 +20,7 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
 import { SERVER_BASE_URL } from "@/constants";
@@ -32,7 +32,7 @@ const columns = [
   { label: "Service.", name: "service" },
   { label: "Debit.", name: "debit" },
   { label: "Credit.", name: "credit" },
-  { label: "Balance.",name:"balance"},
+  { label: "Balance.", name: "balance" },
 ];
 
 const Detail = () => {
@@ -50,7 +50,6 @@ const Detail = () => {
     ? new Date(searchParams.get("endDate") as string)
     : null;
 
-
   useEffect(() => {
     getData(parseInt(id), defaultStartDate, defaultEndDate);
   }, [id]);
@@ -62,19 +61,22 @@ const Detail = () => {
         console.error("Token is not found");
         return;
       }
-  
+
       const config = {
-        responseType: "blob", 
+        responseType: "blob",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/PaymentReportDetailExport/${id}`, config);
-  
+      const promise = axios.get(
+        `${SERVER_BASE_URL}/reports/PaymentReportDetailExport/${id}`,
+        config
+      );
+
       toast.promise(promise, {
-        loading: "Loading..."
+        loading: "Loading...",
       });
-  
+
       const response = await promise;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -88,11 +90,11 @@ const Detail = () => {
     }
   };
 
-
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
     await apiService
       .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -121,7 +123,7 @@ const Detail = () => {
 
   const totalDebit = data?.reduce((acc, item) => acc + item.debit, 0) || 0;
   const totalCredit = data?.reduce((acc, item) => acc + item.credit, 0) || 0;
-  let totalBalance=0;
+  let totalBalance = 0;
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
@@ -161,22 +163,22 @@ const Detail = () => {
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
               </Button>
               <Button
-                onClick={()=>handleDownload(id)}
+                onClick={() => handleDownload(id)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
-                   <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
               </Button>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
-      <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center mb-4">
           <div>
             <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
-              {`${t("Payment Methods Report")}`} 
+              {`${t("Payment Methods Report")}`}
               {/* TODO Translate */}
             </h1>
           </div>
@@ -249,62 +251,53 @@ const Detail = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-           { data.sort((a , b) => new Date(a.date) - new Date(b.date)).map((row) => (
-                
-                
-                <TableRow key={row.id}>
-                   <h1 style={{display:"none"}}>
+              {data
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .map((row) => (
+                  <TableRow key={row.id}>
+                    <h1 style={{ display: "none" }}>
+                      {(totalBalance += row["debit"])}
+                      {(totalBalance -= row["credit"])}
+                    </h1>
+                    {columns.map((column) => {
+                      const value = String(row[column.name]).toLowerCase();
 
-                   {  
-                  totalBalance+=row["debit"]
-           
-                  
-                  }
-                  {
-                           totalBalance-=row["credit"]
-                  }
-                   </h1>
-                  {columns.map((column) => {
-                    
-                    const value = String(row[column.name]).toLowerCase();
-                  
-                    let url = "";
-                    if (value.startsWith("pl")) {
-                      url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
-                      url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
-                      url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
-                      url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else {
-                      url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
-                    }
+                      let url = "";
+                      if (value.startsWith("pl")) {
+                        url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
+                      } else if (value.startsWith("cp")) {
+                        url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
+                      } else if (value.startsWith("itp")) {
+                        url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
+                      } else if (value.startsWith("tp")) {
+                        url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
+                      } else {
+                        url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
+                      }
 
-                    return (
-                      <TableCell key={column.name} className="py-1.5">
-                        {
-                          column.name === "ref" ? (
-                            <a
-                              style={{ color: "blue", cursor: "pointer" }}
-                              href={url}
-                            >
-                              {value}
-                            </a> // URL'yi link olarak kullan
-                          ) : column.type === "date" ? (
-                            formatDate(value)
-                          ) :  column.name === "balance" ? (
-                            totalBalance
-                          ):
-                          (
-                            value
-                          ) // Diğer durumlarda değeri normal metin olarak göster
-                        }
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+                      return (
+                        <TableCell key={column.name} className="py-1.5">
+                          {
+                            column.name === "ref" ? (
+                              <a
+                                style={{ color: "blue", cursor: "pointer" }}
+                                href={url}
+                              >
+                                {value}
+                              </a> // URL'yi link olarak kullan
+                            ) : column.type === "date" ? (
+                              formatDate(value)
+                            ) : column.name === "balance" ? (
+                              totalBalance
+                            ) : (
+                              value
+                            ) // Diğer durumlarda değeri normal metin olarak göster
+                          }
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
             </TableBody>
             <TableFooter>
               <TableRow>
@@ -314,7 +307,9 @@ const Detail = () => {
                 <TableCell className="py-2"></TableCell>
                 <TableCell className="py-2">{totalDebit}</TableCell>
                 <TableCell className="py-2">{totalCredit}</TableCell>
-                <TableCell className="py-2">{totalDebit-totalCredit}</TableCell>
+                <TableCell className="py-2">
+                  {totalDebit - totalCredit}
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>

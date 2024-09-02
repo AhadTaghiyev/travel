@@ -20,13 +20,13 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import { SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
 
 const columns = [
-  { label: "Persona", name: "personal"},
+  { label: "Persona", name: "personal" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "Departure Dates.", name: "departureDates", type: "date" },
@@ -35,7 +35,6 @@ const columns = [
   { label: "Buying.", name: "sellingPrice" },
   { label: "Selling.", name: "totalAmount" },
   { label: "Profit.", name: "profit" },
-  
 ];
 
 const Detail = () => {
@@ -45,16 +44,15 @@ const Detail = () => {
   const [data, setData] =
     useState<{ id: string; name: string; balance: number }[]>();
 
-
-const [data2, setData2] = useState<
-{
-  id: string;
-  name: string;
-  sellingPrice: number;
-  totalAmount: number;
-  profit: number;
-}[]
->();
+  const [data2, setData2] = useState<
+    {
+      id: string;
+      name: string;
+      sellingPrice: number;
+      totalAmount: number;
+      profit: number;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -75,19 +73,22 @@ const [data2, setData2] = useState<
         console.error("Token is not found");
         return;
       }
-  
+
       const config = {
-        responseType: "blob", 
+        responseType: "blob",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/PersonalsReportDetailExport/${id}`, config);
-  
+      const promise = axios.get(
+        `${SERVER_BASE_URL}/reports/PersonalsReportDetailExport/${id}`,
+        config
+      );
+
       toast.promise(promise, {
-        loading: "Loading..."
+        loading: "Loading...",
       });
-  
+
       const response = await promise;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -103,13 +104,14 @@ const [data2, setData2] = useState<
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
     await apiService
       .get(`/Reports/PersonalsReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
         setData(res.data.items);
-        setData2(res.data.items)
+        setData2(res.data.items);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -118,7 +120,6 @@ const [data2, setData2] = useState<
         setLoading(false);
       });
   };
-
 
   const onSubmit = (
     values: { startDate: Date; endDate: Date },
@@ -179,19 +180,19 @@ const [data2, setData2] = useState<
               </Button>
 
               <Button
-                onClick={()=>handleDownload(id)}
+                onClick={() => handleDownload(id)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
-                   <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
               </Button>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
-      <div>
+        <div>
           <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
             {t("Personal")}
           </h1>

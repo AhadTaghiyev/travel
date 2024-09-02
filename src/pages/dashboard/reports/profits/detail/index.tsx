@@ -21,7 +21,7 @@ import { toast } from "sonner";
 import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
 
@@ -44,15 +44,18 @@ const handleDownload = async (id) => {
     }
 
     const config = {
-      responseType: "blob", 
+      responseType: "blob",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    const promise = axios.get(`${SERVER_BASE_URL}/reports/ProfitsReportDetailExport?ticketType=${id}`, config);
+    const promise = axios.get(
+      `${SERVER_BASE_URL}/reports/ProfitsReportDetailExport?ticketType=${id}`,
+      config
+    );
 
     toast.promise(promise, {
-      loading: "Loading..."
+      loading: "Loading...",
     });
 
     const response = await promise;
@@ -96,28 +99,28 @@ const Detail = () => {
   }, [id]);
 
   const getData = async (id: string, startDate?: Date, endDate?: Date) => {
-  
     const searchParams = new URLSearchParams();
     if (id) searchParams.append("ticketType", String(id));
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
-  
-  try {
-    await apiService
-    .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
-    .then((res) => {
-      setData(res?.data?.items);
-    })
-    .catch((err) => {
-      alert("hay")
-      toast.error(err.message || t("Something went wrong!"));
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-  } catch (error) {
-    alert("hay")
-  }
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+
+    try {
+      await apiService
+        .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
+        .then((res) => {
+          setData(res?.data?.items);
+        })
+        .catch((err) => {
+          alert("hay");
+          toast.error(err.message || t("Something went wrong!"));
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      alert("hay");
+    }
   };
 
   const onSubmit = (
@@ -178,15 +181,13 @@ const Detail = () => {
               </Button>
 
               <Button
-                onClick={()=>handleDownload(id)}
-                
+                onClick={() => handleDownload(id)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
                 <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
               </Button>
-              
             </Grid>
           </Grid>
         </Grid>

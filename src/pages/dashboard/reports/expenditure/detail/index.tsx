@@ -1,6 +1,12 @@
 // @ts-nocheck
 import { Formik, FormikHelpers, FormikValues } from "formik";
-import { Button, Container, FormHelperText, Grid, IconButton } from "@mui/material";
+import {
+  Button,
+  Container,
+  FormHelperText,
+  Grid,
+  IconButton,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiDownload } from "react-icons/fi";
@@ -36,6 +42,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 import { SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
 import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
+import { toLocalISOString } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -99,19 +106,22 @@ const Detail = () => {
         console.error("Token is not found");
         return;
       }
-  
+
       const config = {
-        responseType: "blob", 
+        responseType: "blob",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/reports/ExpenditureReportDetailExport/${id}`, config);
-  
+      const promise = axios.get(
+        `${SERVER_BASE_URL}/reports/ExpenditureReportDetailExport/${id}`,
+        config
+      );
+
       toast.promise(promise, {
-        loading: "Loading..."
+        loading: "Loading...",
       });
-  
+
       const response = await promise;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -127,8 +137,9 @@ const Detail = () => {
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
     await apiService
       .get(`/Reports/ExpenditureReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -159,31 +170,30 @@ const Detail = () => {
         console.error("Token is not found");
         return;
       }
-  
-      const uri = isWp ? `/WillBePaids/RmovePay/${id}` : `/WillBePaids/Delete/${id}`;
+
+      const uri = isWp
+        ? `/WillBePaids/RmovePay/${id}`
+        : `/WillBePaids/Delete/${id}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-  
-      await toast.promise(
-        axios.delete(`${SERVER_BASE_URL}${uri}`, config),
-        {
-          loading: "Loading...",
-          success: "Successfully deleted",
-          error: "Error occurred while deleting"
-        }
-      );
-  
-      setData(prevData => prevData.filter(item => item.id !== id));
+
+      await toast.promise(axios.delete(`${SERVER_BASE_URL}${uri}`, config), {
+        loading: "Loading...",
+        success: "Successfully deleted",
+        error: "Error occurred while deleting",
+      });
+
+      setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
       console.error("An error occurred while deleting the data: ", error);
       toast.error("An error occurred while deleting the data");
     }
   };
 
-  const onEdit = async (id, isWp,row) => {
+  const onEdit = async (id, isWp, row) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -191,36 +201,36 @@ const Detail = () => {
         return;
       }
 
-      const uri = isWp ? `/WillBePaids/EditPay/${id}?amount=${editAmount}` : `/WillBePaids/Edit/${id}?amount=${editAmount}`;
+      const uri = isWp
+        ? `/WillBePaids/EditPay/${id}?amount=${editAmount}`
+        : `/WillBePaids/Edit/${id}?amount=${editAmount}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-  
+
       await toast.promise(
         axios.put(`${SERVER_BASE_URL}${uri}`, null, config), // 'null' body'yi ifade eder çünkü body verisi yok
         {
           loading: "Loading...",
           success: "Successfully updated",
-          error: "Error occurred while updating"
+          error: "Error occurred while updating",
         }
       );
-      
 
-      setData(prevData =>
-        prevData.map(item =>
+      setData((prevData) =>
+        prevData.map((item) =>
           item.id === id
             ? {
                 ...item,
-                [isWp ? 'debit' : 'credit']: Number(editAmount),
+                [isWp ? "debit" : "credit"]: Number(editAmount),
               }
             : item
         )
       );
 
       setEditId(null);
-  
     } catch (error) {
       console.error("An error occurred while updating the data: ", error);
       toast.error("An error occurred while updating the data");
@@ -287,12 +297,12 @@ const Detail = () => {
               </Button>
 
               <Button
-                onClick={()=>handleDownload(id)}
+                onClick={() => handleDownload(id)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
               >
-                   <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
+                <FiDownload style={{ marginRight: "8px" }} /> {t("Export")}
               </Button>
             </Grid>
           </Grid>
@@ -363,7 +373,7 @@ const Detail = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
-              <TableHead key={"No"}>{t("No")}</TableHead>
+                <TableHead key={"No"}>{t("No")}</TableHead>
                 {columns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
@@ -372,11 +382,11 @@ const Detail = () => {
             </TableHeader>
             <TableBody>
               {data &&
-                data.map((row,index) => (
+                data.map((row, index) => (
                   <TableRow key={row.id}>
-                      <TableCell key={"No"} className="py-1.5">
-                        {index}
-                      </TableCell>
+                    <TableCell key={"No"} className="py-1.5">
+                      {index}
+                    </TableCell>
                     {columns.map((column) => (
                       <TableCell key={column.name} className="py-1.5">
                         {row?.[column.name]}
@@ -390,48 +400,48 @@ const Detail = () => {
                       />
                     </TableCell>
 
-
                     <TableCell key="operations" className="py-1.5">
-                  {editId === row.id ? (
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <input
-                        type="number"
-                        autoFocus={true}
-                        value={editAmount}
-                        onChange={handleAmountChange}
-                        style={{
-                          marginRight: '8px',
-                          padding: '8px',         // Padding ekler
-                          borderRadius: '4px',    // Köşeleri yuvarlar
-                          border: '1px solid #ccc', // Hafif gri bir kenarlık ekler
-                          backgroundColor: '#fff', // Beyaz arka plan rengi
-                          boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)' // Hafif bir gölge ekler
-                        }}
-                      />
-                      <IconButton onClick={() => onEdit(row.id,false,row)}>
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton onClick={onCancel}>
-                        <X />
-                      </IconButton>
-                    </div>
-                  ) : (
-                    <>
-                      <IconButton onClick={() => {
-                        setEditId(row.id);
-                        setEditAmount(row.amount || 0);
-                      }}>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton onClick={() => onDelete(row.id, false)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </>
-                  )}
-                </TableCell>
-
-
-
+                      {editId === row.id ? (
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <input
+                            type="number"
+                            autoFocus={true}
+                            value={editAmount}
+                            onChange={handleAmountChange}
+                            style={{
+                              marginRight: "8px",
+                              padding: "8px", // Padding ekler
+                              borderRadius: "4px", // Köşeleri yuvarlar
+                              border: "1px solid #ccc", // Hafif gri bir kenarlık ekler
+                              backgroundColor: "#fff", // Beyaz arka plan rengi
+                              boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)", // Hafif bir gölge ekler
+                            }}
+                          />
+                          <IconButton
+                            onClick={() => onEdit(row.id, false, row)}
+                          >
+                            <SaveIcon />
+                          </IconButton>
+                          <IconButton onClick={onCancel}>
+                            <X />
+                          </IconButton>
+                        </div>
+                      ) : (
+                        <>
+                          <IconButton
+                            onClick={() => {
+                              setEditId(row.id);
+                              setEditAmount(row.amount || 0);
+                            }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton onClick={() => onDelete(row.id, false)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </>
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -447,7 +457,6 @@ const Detail = () => {
                 <TableCell className="py-2">{totalBalance}</TableCell>
                 {/* <TableCell className="py-2">{total}</TableCell> */}
                 <TableCell className="py-2"></TableCell>
-              
               </TableRow>
             </TableFooter>
           </Table>

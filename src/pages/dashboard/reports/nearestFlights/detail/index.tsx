@@ -20,6 +20,7 @@ import { Formik, FormikHelpers, FormikValues } from "formik";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { CompanyContext } from "@/store/CompanyContext";
+import { toLocalISOString } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -46,8 +47,9 @@ const Detail = () => {
 
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate) searchParams.append("startDate", startDate?.toISOString());
-    if (endDate) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate)
+      searchParams.append("startDate", toLocalISOString(startDate));
+    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
     await apiService
       .get(`/Reports/PersonalsReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
