@@ -24,15 +24,17 @@ import { ClipLoader } from "react-spinners";
 import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
+import { truncate } from "fs/promises";
 
 const columns = [
   { label: "date", name: "date", type: "date" },
   { label: "Customer", name: "customer" },
   { label: "Personal", name: "personal" },
   { label: "Ref", name: "ref" },
-  { label: "salePrice", name: "buyingPrice" },
-  { label: "SellingPrice", name: "sellingPrice" },
+  { label: "Purchase Price", name: "buyingPrice" },
+  { label: "Selling Price", name: "sellingPrice" },
   { label: "Profits", name: "profiy" },
+  { label: "Refund Status", name: "refundStatus",type:"bool" },
 ];
 
 const handleDownload = async (id) => {
@@ -292,22 +294,25 @@ const Detail = () => {
 
                     return (
                       <TableCell key={column.name} className="py-1.5">
-                        {
-                          column.name === "ref" ? (
-                            <Link
-                              style={{ color: "blue", cursor: "pointer" }}
-                              to={url}
-                              target="_blank"
-                            >
-                              {value}
-                            </Link> // URL'yi link olarak kullan
-                          ) : column.type === "date" ? (
-                            formatDate(value)
-                          ) : (
-                            value
-                          ) // Diğer durumlarda değeri normal metin olarak göster
-                        }
-                      </TableCell>
+                      {
+                        column.name === "ref" ? (
+                          <Link
+                            style={{ color: "blue", cursor: "pointer" }}
+                            to={url}
+                            target="_blank"
+                          >
+                            {value}
+                          </Link> // URL'yi link olarak kullan
+                        ) : column.type === "date" ? (
+                          formatDate(value)
+                        ) : column.type === "bool" ? (
+                          value=="true" ? t("Refunded") : t("Not Refunded" )
+                        ) : (
+                          t(value)
+                        ) // Diğer durumlarda değeri normal metin olarak göster
+                      }
+                    </TableCell>
+                    
                     );
                   })}
                 </TableRow>
@@ -315,7 +320,7 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={3}>
+                <TableCell className="py-2" colSpan={4}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalBuyingPrice}</TableCell>

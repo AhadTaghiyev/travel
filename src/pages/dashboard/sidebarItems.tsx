@@ -112,7 +112,7 @@ export const sidebarItems: SidebarItemType[] = [
       },
       {
         icon: FaFileImport,
-        text: "Payment",
+        text: "Debt Payment",
         link: "/panel/managerFinancialTransactionPayments",
       },
     ],

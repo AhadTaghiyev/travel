@@ -209,11 +209,11 @@ const Detail = () => {
             </div>
             <div className="px-4 py-6">
               <div className="flex justify-between items-center">
-                <h4 className="font-bold text-base">Purchase Accounts</h4>
+                <h4 className="font-bold text-base">{t("Purchase Accounts")}</h4>
                 <p className="font-bold">{formatPrice(data.totslPurchase)}</p>
               </div>
               <div className="flex justify-between items-center mt-3">
-                <h4 className="text-base">Gross Profit c/o</h4>
+                <h4 className="text-base">{t("Gross Profit c/o")}</h4>
                 <p>{formatPrice(data.totalSale - data.totslPurchase)}</p>
               </div>
               <div className="flex justify-end mt-3">
@@ -222,23 +222,23 @@ const Detail = () => {
                 </p>
               </div>
               <div className="flex justify-between items-center mt-2">
-                <h4 className="font-bold text-base">Indirect Expenses</h4>
+                <h4 className="font-bold text-base">{t("Indirect Expenses")}</h4>
                 <p className="font-bold">
                   {formatPrice(data.expenduture + data.paidSalary)}
                 </p>
               </div>
               <div className="pl-6">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-base">Total Expenditure</h4>
+                  <h4 className="text-base">{t("Total Expenditure")}</h4>
                   <p>{formatPrice(data.expenduture)}</p>
                 </div>
                 <div className="flex justify-between items-center">
-                  <h4 className="text-base">Total Paid Salary</h4>
+                  <h4 className="text-base">{t("Total Paid Salary")}</h4>
                   <p>{formatPrice(data.paidSalary)}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center mt-4">
-                <h4 className="text-base">Nett Profit</h4>
+                <h4 className="text-base">{t("Nett Profit")}</h4>
                 <p>
                   { nettLoss>0 ? formatPrice(
                     data.totalSale -
@@ -252,7 +252,7 @@ const Detail = () => {
               </div>
             </div>
             <div className="flex justify-between items-center border-t-2 border-solid border-black px-4">
-              <h3 className="text-lg font-bold">Total</h3>
+              <h3 className="text-lg font-bold">{t("Total")}</h3>
               <p className="text-sm">
                 {formatPrice(
                   data.totalSale -
@@ -267,7 +267,7 @@ const Detail = () => {
           </div>
           <div className="w-1/2 ">
             <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
-              <h3 className="text-lg font-bold">Particulars</h3>
+              <h3 className="text-lg font-bold">{t("Particulars")}</h3>
               <p className="text-sm">
                 {`${formatDate(date[0].toISOString())} to ${formatDate(
                   date[1]?.toISOString()
@@ -276,7 +276,7 @@ const Detail = () => {
             </div>
             <div className="px-4 py-6">
               <div className="flex justify-between items-center">
-                <h4 className="font-bold text-base">Sales Accounts</h4>
+                <h4 className="font-bold text-base">{t("Sales Accounts")}</h4>
                 <p className="font-bold">{formatPrice(data.totalSale)}</p>
               </div>
 
@@ -286,23 +286,23 @@ const Detail = () => {
                 </p>
               </div>
               <div className="flex justify-between items-center mt-2">
-                <h4 className="font-bold text-base">Gross Profit b/f</h4>
+                <h4 className="font-bold text-base">{t("Gross Profit b/f")}</h4>
                 <p className="font-bold">
                   {formatPrice(data.totalSale - data.totslPurchase)}
                 </p>
               </div>
               <div className="pl-6">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-base">Total Refund Margin</h4>
+                  <h4 className="text-base">{t("Total Refund Margin")}</h4>
                   <p>{formatPrice(data.refund)}</p>
                 </div>
                 <div className="flex justify-between items-center">
-                  <h4 className="text-base">Total Incentive Recieved</h4>
+                  <h4 className="text-base">{t("Total Incentive Recieved")}</h4>
                   <p>{formatPrice(data.bonuces)}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center mt-4">
-                <h4 className="text-base">Nett Loss</h4>
+                <h4 className="text-base">{t("Nett Loss")}</h4>
                 <p>
 
                 { nettLoss<0 ? formatPrice(
@@ -317,7 +317,7 @@ const Detail = () => {
               </div>
             </div>
             <div className="flex justify-between items-center border-t-2 border-solid border-black px-4">
-              <h3 className="text-lg font-bold">Total</h3>
+              <h3 className="text-lg font-bold">{t("Total")}</h3>
               <p className="text-sm">
                 {formatPrice(
                   data.totalSale -

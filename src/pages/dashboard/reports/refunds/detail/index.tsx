@@ -36,7 +36,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 const columns = [
   { label: "Id", name: "id" },
   { label: "Müştəri", name: "customer" },
-  { label: "Ref.", name: "ref" },
+  { label: "Invoice Ref.", name: "ref" },
   { label: "Refund Ref.", name: "refundRef" },
   { label: "Məbləğ", name: "refundableAmount" },
   { label: "Date", name: "date" },

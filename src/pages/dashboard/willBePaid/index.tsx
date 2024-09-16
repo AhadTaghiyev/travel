@@ -8,6 +8,7 @@ import {
   expenditureColumns,
   advanceCollectsColumns,
   creditColumns,
+  othersColumns
 } from "./tableColumns";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
@@ -50,7 +51,7 @@ const tabs = [
   },
   {
     id: 5,
-    title: "Advance Receipt",
+    title: "Deposit",
     hideReport: false,
     api: "/Reports/AdvanceCollectsReport",
     detailLink:"/panel/deposit/report?tickets=",
@@ -61,7 +62,7 @@ const tabs = [
     title: "Others",
     hideReport: false,
     api: "/Reports/FounderReport",
-    columns: advanceCollectsColumns,
+    columns: othersColumns,
     detailLink:"/panel/managerFinancialTransactions/report?tickets="
   },
 ];
@@ -156,7 +157,7 @@ export default function Index() {
                 columns={tab.columns}
                 hideReport={tab.hideReport}
                 detailLink={tab.detailLink}
-                buttonText="Expenditure"
+                buttonText="Fee"
               />
             </div>
           )

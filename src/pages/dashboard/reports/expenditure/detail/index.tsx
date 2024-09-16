@@ -45,14 +45,13 @@ import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
 import { toLocalISOString } from "@/lib/utils";
 
 const columns = [
-  { label: "Id", name: "id" },
   { label: "Ref.", name: "ref" },
-  { label: "Name", name: "name" },
-  { label: "Amount", name: "credit" },
-  { label: "Paid", name: "debit" },
-  { label: "Balance", name: "balance" },
-  { label: "Date", name: "date" },
-  { label: "Note", name: "note" },
+  { label: "Ad", name: "name" },
+  { label: "commonPrice", name: "credit" },
+  { label: "Ödənilən məbləğ", name: "debit" },
+  { label: "balance", name: "balance" },
+  { label: "date", name: "date" },
+  { label: "Qeyd", name: "note" },
   // { label: "Total", name: "total" },
 ];
 

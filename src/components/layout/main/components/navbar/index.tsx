@@ -30,6 +30,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
     localStorage.setItem("language", language);
+    window.location.reload()
   };
   const companyName = currentUser.companyName;
   const userName = currentUser.userName;

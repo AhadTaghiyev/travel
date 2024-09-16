@@ -26,7 +26,7 @@ export const refundColumns: GridColDef[] = [
   },
   {
     field: "ref",
-    headerName: "Ref.",
+    headerName: "Invoice Ref.",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -44,7 +44,7 @@ export const refundColumns: GridColDef[] = [
   },
   {
     field: "date",
-    headerName: "Date",
+    headerName: "date",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -71,7 +71,7 @@ export const salaryColumns: GridColDef[] = [
   },
   {
     field: "date",
-    headerName: "Date",
+    headerName: "date",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -80,25 +80,25 @@ export const creditColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "name",
-    headerName: "Ad",
+    headerName: "Bank Name",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "credit",
-    headerName: "Credit",
+    headerName: "Total Credit",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "debit",
-    headerName: "Debit",
+    headerName: "Total Paid",
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "totalDebt",
-    headerName: "Total Debt",
+    headerName: "Rest Credit",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -125,7 +125,7 @@ export const expenditureColumns: GridColDef[] = [
   // },
   {
     field: "debit",
-    headerName: "Balance",
+    headerName: "balance",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -141,7 +141,7 @@ export const advanceCollectsColumns: GridColDef[] = [
   { field: "No", headerName: "No", flex: 1, headerClassName: "header-item" },
   {
     field: "date",
-    headerName: "Date",
+    headerName: "date",
     flex: 1,
     headerClassName: "header-item",
   },

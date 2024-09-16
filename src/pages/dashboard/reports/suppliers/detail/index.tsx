@@ -46,18 +46,19 @@ import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
 const columns = [
   { label: "Id", name: "id" },
   { label: "Təchizatçı", name: "name" },
-  { label: "Date", name: "date", type: "date" },
+  { label: "date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
-  { label: "Details.", name: "details" },
+  { label: "Detail.", name: "details" },
   { label: "Debit", name: "debit" },
   { label: "Credit", name: "credit" },
-  { label: "Balance", name: "balance" },
-  { label: "Operations" },
+  { label: "balance", name: "balance" },
+  { label: "operations" },
 ];
 
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+  const [selectedRef, setSelectedRef] = useState(true);
   const { loading: companyLoading, company } = useContext(CompanyContext);
   const [paymentTypes, setPaymentTypes] = useState<
     { label: string; value: string }[] | null
@@ -94,6 +95,8 @@ const Detail = () => {
       }))
       .filter((item) => item.label && item.value);
 
+      
+
     setPaymentTypes(data);
   };
 
@@ -107,7 +110,7 @@ const Detail = () => {
 
   const handleDownload = async (id) => {
     try {
-      const token = localStorage.getItem("token"); // Replace "your_token_key" with the actual key you used to store the token
+      const token = localStorage.getItem("token"); 
       if (!token) {
         console.error("Token is not found");
         return;
@@ -120,7 +123,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/SupplierReportDetailExport/${id}`,
         config
       );
 
@@ -165,6 +168,11 @@ const Detail = () => {
       });
 
       setData((prevData) => prevData.filter((item) => item.id !== id));
+
+      const selectedRef = data?.find(item => item.debit === 0);
+      setSelectedRef(selectedRef);
+
+
     } catch (error) {
       console.error("An error occurred while deleting the data: ", error);
       toast.error("An error occurred while deleting the data");
@@ -208,6 +216,9 @@ const Detail = () => {
         )
       );
 
+      const selectedRef = data?.find(item => item.debit === 0);
+      setSelectedRef(selectedRef);
+
       setEditId(null);
     } catch (error) {
       console.error("An error occurred while updating the data: ", error);
@@ -237,6 +248,8 @@ const Detail = () => {
           total: item.debit + item.credit + item.balance,
         }));
         setData(items);
+        const selectedRef = items?.find(item => item.debit === 0);
+        setSelectedRef(selectedRef);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -376,7 +389,7 @@ const Detail = () => {
           )}
         </Formik>
         {data && data.length > 0 && (
-          <PayAction id={data[0].id} paymentTypeOptions={paymentTypes} />
+          <PayAction id={selectedRef ? selectedRef.id : null} paymentTypeOptions={paymentTypes} />
         )}
         <Grid
           sx={{
@@ -401,7 +414,7 @@ const Detail = () => {
                         <TableCell key={column.name} className="py-1.5">
                           {column.type === "date"
                             ? formatDate(row?.[column.name])
-                            : row?.[column.name]}
+                            : t(row?.[column.name])}
                         </TableCell>
                       ) : (
                         <TableCell key="operations" className="py-1.5">
@@ -498,6 +511,11 @@ export const PayAction = ({
     values: { amount: number; paymentId: string },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
+
+    if(!id){
+      alert("You cannot make a payment. Please refresh the page or adjust the date so that one of the IV numbers appears in the list.")
+      return;
+    }
     apiService
       .post(
         `/WillBePaids/Create/${id}?amount=${values.amount}&paymentId=${values.paymentId}`,
