@@ -34,7 +34,7 @@ export default function index() {
     const res = await apiService.get("/Company/Pay");
 
     if (res?.status === 200) {
-        window.location.replace(res.data.data);
+      window.location.replace(res.data.data);
     } else {
     }
   };
@@ -72,7 +72,7 @@ export default function index() {
           {t("Please renew your subscription.")}
         </p>
         <Link
-        onClick={async ()=> await onPay()}
+          onClick={async () => await onPay()}
           to="#"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
