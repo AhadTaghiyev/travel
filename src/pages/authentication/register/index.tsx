@@ -12,6 +12,7 @@ import CustomSelect from "@/components/custom/select";
 
 import { userService } from "@/server/systemUserServer";
 import { useNavigate } from "react-router-dom";
+import Loading from "@/components/custom/loading";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required("Mütləqdir!"),
@@ -41,6 +42,7 @@ export default function Index() {
   });
   const navigate = useNavigate();
   const [isLoading, seIsLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
 
   const onRegister = async (values) => {
     seIsLoading(true);
@@ -49,10 +51,10 @@ export default function Index() {
     if (res?.status === 200) {
       seIsLoading(false);
       toast.success("Registered successfully!");
-      if(res.data==1){
-          alert("You have registered successfully please check your email")
-          navigate("/auth/login")
-      }else{
+      if (res.data == 1) {
+        alert("You have registered successfully please check your email")
+        navigate("/auth/login")
+      } else {
 
         window.location.replace(res.data);
       }
@@ -62,26 +64,32 @@ export default function Index() {
     }
   };
 
-  const [country,setCountry]=useState(null)
-  useEffect(()=>{
+  const [country, setCountry] = useState(null)
+  useEffect(() => {
     fetch("https://jsonip.com/")
-    .then(res=>res.json())
-    .then(data=>{
-      fetch(`https://api.iplocation.net/?ip=${data.ip}`)
-      .then(resIp=>resIp.json())
-      .then(dataIp=>{ setCountry(dataIp.country_code2)})
-    })
-  },[])
-  
+      .then(res => res.json())
+      .then(data => {
+        fetch(`https://api.iplocation.net/?ip=${data.ip}`)
+          .then(resIp => resIp.json())
+          .then(dataIp => { setCountry(dataIp.country_code2) })
+      })
+  }, [])
+
+  useEffect(() => {
+    console.log('country: ' + country);
+    if (country) {
+      setFormLoading(true);
+    }
+  }, [country])
+
 
   return (
     <Container
-    
+
       maxWidth="sm"
       sx={{ display: "flex", alignItems: "center", height: "100%" }}
     >
-      
-      <form onSubmit={formik.handleSubmit}>
+      {formLoading ? (<form onSubmit={formik.handleSubmit}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           Register
         </Typography>
@@ -175,7 +183,7 @@ export default function Index() {
                 !!formik.errors.subscribeType && !!formik.touched.subscribeType
               }
               staticOptions={[
-                { label: `Monthly - ${country=="AZ"?"90 AZN":"90 USD"} `, value: "0" },
+                { label: `Monthly - ${country == "AZ" ? "90 AZN" : "90 USD"} `, value: "0" },
                 { label: "Demo - 14 day", value: "2" },
               ]}
               errorMessages={[formik.errors.subscribeType?.toString()]}
@@ -190,7 +198,7 @@ export default function Index() {
         >
           {isLoading ? "Loading..." : "Register"}
         </Button>
-      </form>
+      </form>) : (<Loading />)}
       <ToastContainer position="top-right" autoClose={3000}></ToastContainer>
     </Container>
   );
