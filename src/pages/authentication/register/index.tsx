@@ -43,10 +43,11 @@ export default function Index() {
   const navigate = useNavigate();
   const [isLoading, seIsLoading] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [ipAddress, setIpAddress] = useState("");
 
   const onRegister = async (values) => {
     seIsLoading(true);
-    const res = await userService.register(values);
+    const res = await userService.register(values, ipAddress);
 
     if (res?.status === 200) {
       seIsLoading(false);
@@ -69,6 +70,7 @@ export default function Index() {
     fetch("https://jsonip.com/")
       .then(res => res.json())
       .then(data => {
+        setIpAddress(data.ip);
         fetch(`https://api.iplocation.net/?ip=${data.ip}`)
           .then(resIp => resIp.json())
           .then(dataIp => { setCountry(dataIp.country_code2) })

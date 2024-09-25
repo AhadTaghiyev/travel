@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 
 import NavigationItem from "@/components/pages/home/navigationItem";
@@ -26,18 +26,27 @@ import { apiService } from "@/server/apiServer";
 export default function index() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(String(currentYear));
+  const [ipAddress, setIpAddress] = useState("");
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
 
 
-  const onPay = async () => {
-    const res = await apiService.get("/Company/Pay");
+  const onPay = async (ipAddress: string) => {
+    const res = await apiService.get(`/Company/Pay/${ipAddress}`);
 
     if (res?.status === 200) {
       window.location.replace(res.data.data);
     } else {
     }
   };
+
+  useEffect(() => {
+    fetch("https://jsonip.com/")
+      .then(res => res.json())
+      .then(data => {
+        setIpAddress(data.ip);
+      })
+  }, [])
 
   const isManagerUser =
     user?.role === ROLES.LEADER || user?.role === ROLES.ACCOUNTANT;
@@ -72,7 +81,7 @@ export default function index() {
           {t("Please renew your subscription.")}
         </p>
         <Link
-          onClick={async () => await onPay()}
+          onClick={async () => await onPay(ipAddress)}
           to="#"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >

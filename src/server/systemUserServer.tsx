@@ -37,10 +37,10 @@ export const userService = {
     adress?: string;
     detail?: string;
     subscribeType: string;
-  }): Promise<any> {
+  }, ipAddress: string): Promise<any> {
     try {
       return await (
-        await Axios.post(`/Company`, values, {
+        await Axios.post(`/Company/${ipAddress}`, values, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
