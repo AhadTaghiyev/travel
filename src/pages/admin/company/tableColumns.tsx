@@ -39,9 +39,9 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
     headerClassName: "header-item",
     renderCell: (params) => {
       const id = params.row.id;
-      const onTypeChange = async () => {
+      const onTypeChange = async (status: number) => {
         const promise = apiService
-          .patch(`/Company/ChangeStatus`, id)
+          .patch(`/Company/ChangeStatus`, id, `?companyStatus=${status}`)
           .then(() => {
             window.location.reload();
           });
@@ -52,16 +52,24 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
         });
       };
 
+      const menuItems = [
+        { id: 0, text: "Pending" },
+        { id: 1, text: "Active" },
+        { id: 2, text: "Inactive" }
+      ]
+
+      let filteredMenuItems = menuItems.filter(item => item.id !== params.value);
+
       return (
         <Menu as="div" className="relative inline-block text-left ">
           <div>
             <Menu.Button
               className={cn(
                 "flex border-none items-center gap-x-4 font-semibold",
-                params.value ? "text-green-500" : "text-red-500"
+                params.value === 1 ? "text-green-500" : params.value === 2 ? "text-red-500" : "text-gray-500"
               )}
             >
-              {params.value ? "Active" : "Inactive"}
+              {params.value === 1 ? "Active" : params.value === 2 ? "Inactive" : "Pending"}
             </Menu.Button>
           </div>
           <Transition
@@ -75,16 +83,18 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
           >
             <Menu.Items className="z-[9999] absolute left-0 mt-2 w-[100px] origin-top-right divide-y divide-gray-100 rounded-sm bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 rounded-sm">
-                <Menu.Item>
-                  {() => (
-                    <button
-                      onClick={onTypeChange}
-                      className="border-none group gap-x-2 flex w-full items-center rounded-sm p-1 text-sm font-semibold hover:bg-blue-200 hover:text-black"
-                    >
-                      {!params.value ? "Active" : "Inactive"}
-                    </button>
-                  )}
-                </Menu.Item>
+                {filteredMenuItems.map(menuItem => (
+                  <Menu.Item>
+                    {() => (
+                      <button
+                        onClick={onTypeChange.bind(null, menuItem.id)}
+                        className="border-none group gap-x-2 flex w-full items-center rounded-sm p-1 text-sm font-semibold hover:bg-blue-200 hover:text-black"
+                      >
+                        {menuItem.text}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
               </div>
             </Menu.Items>
           </Transition>

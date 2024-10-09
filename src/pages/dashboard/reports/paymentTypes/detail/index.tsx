@@ -98,6 +98,7 @@ const Detail = () => {
     await apiService
       .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
+        console.log(res.data.items)
         setData(res.data.items);
       })
       .catch((err) => {
@@ -112,7 +113,10 @@ const Detail = () => {
     values: { startDate: Date; endDate: Date },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
-    getData(parseInt(id), values.startDate, values.endDate).finally(() => {
+    const adjustedEndDate = new Date(values.endDate);
+    adjustedEndDate.setHours(23, 59, 59, 999);
+
+    getData(parseInt(id), values.startDate, adjustedEndDate).finally(() => {
       setSubmitting(false);
     });
   };

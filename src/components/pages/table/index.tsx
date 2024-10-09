@@ -85,7 +85,7 @@ export default function Index({
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  if (user?.role !== ROLES.LEADER&&user?.role !== ROLES.Admin) {
+  if (user?.role !== ROLES.LEADER && user?.role !== ROLES.Admin) {
     hideEdit = true;
     hideDelete = true;
   }
@@ -154,7 +154,7 @@ export default function Index({
           Authorization: `Bearer ${token}`,
         },
       };
-      const promise = axios.get(`${SERVER_BASE_URL}/${exportLink}`, config);
+      const promise = axios.get(`${SERVER_BASE_URL}/${exportLink}/0`, config);
 
       toast.promise(promise, {
         loading: t("Loading..."),
@@ -245,8 +245,7 @@ export default function Index({
       setLoading(true);
       try {
         const response = await apiService.get(
-          `${api}/${
-            paginationModel.page + 1
+          `${api}/${paginationModel.page + 1
           }?starDate=${startDate}&endDate=${endDate}&search=${search}&type=${filter}`
         );
         if (!response?.data) return;
@@ -391,7 +390,7 @@ export default function Index({
                     (data ?? new Date()).toISOString()
                   );
                   setSearchParams(newSearchParams);
-                  handleStartDateChange(data ?? new Date());
+                  handleStartDateChange(data ?? startDate);
                 }}
               />
             </Grid>
