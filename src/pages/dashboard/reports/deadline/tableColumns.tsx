@@ -22,6 +22,18 @@ export const columns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
+    field: "service",
+    headerName: "Service",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "personal",
+    headerName: "Personal",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "dueDate",
     headerName: "Due Date", // dueDate
     flex: 1,

@@ -309,27 +309,31 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: IoSettingsOutline,
     text: "Sazlamalar",
-    onlyManagement: true,
+    onlyManagement: false,
     children: [
       {
         icon: BsFillPeopleFill,
         text: "Müştərilər",
         link: "/panel/customers",
+        onlyManagement: true,
       },
       {
         icon: BiSolidPlaneAlt,
         text: "Hava yolları",
         link: "/panel/airways",
+        onlyManagement: true,
       },
       {
         icon: BiSolidPlaneAlt,
         text: "Bank",
         link: "/panel/banks",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Təchizatçı",
         link: "/panel/suppliers",
+        onlyManagement: true,
       },
       // {
       //   icon: FaPeopleGroup,
@@ -340,36 +344,43 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaMoneyBill1Wave,
         text: "Payment Types",
         link: "/panel/payment",
+        onlyManagement: true,
       },
       {
         icon: FaExchangeAlt,
         text: "Transferlər",
         link: "/panel/transfers",
+        onlyManagement: true,
       },
       {
         icon: IoFastFood,
         text: "Qidalanma",
         link: "/panel/meals",
+        onlyManagement: true,
       },
       {
         icon: FaTrailer,
         text: "Tours",
         link: "/panel/tours",
+        onlyManagement: true,
       },
       {
         icon: FaServicestack,
         text: "Services",
         link: "/panel/services",
+        onlyManagement: true,
       },
       {
         icon: FaServicestack,
         text: "Fees",
         link: "/panel/fees",
+        onlyManagement: true,
       },
       {
         icon: FaServicestack,
         text: "Müqavilə formatı",
         link: "/panel/agreementFormats",
+        onlyManagement: true,
       },
       // {
       //   icon: FaServicestack,
@@ -380,16 +391,19 @@ export const sidebarItems: SidebarItemType[] = [
         icon: FaServicestack,
         text: "InvoiceTexts",
         link: "/panel/invoiceTexts",
+        onlyManagement: false,
       },
       {
         icon: FaServicestack,
         text: "Company",
         link: "/panel/company",
+        onlyManagement: true,
       },
       {
         icon: FaServicestack,
         text: "Email",
         link: "/panel/email",
+        onlyManagement: true,
       }
     ],
   },

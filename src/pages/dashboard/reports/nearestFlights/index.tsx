@@ -16,6 +16,7 @@ export default function Index() {
         hideStatus
         hideReport
         hidePrint
+        hideOperations={true}
         columns={columns}
         detailLink="/panel/reports/NearestTravelReport/"
         api={"/Reports/NearestTravelReport"}

@@ -20,6 +20,7 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
+        hideOperations={true}
         columns={columns}
         api={"/Reports/DeadlindeReport"}
         root="/panel/reports/suppliers"

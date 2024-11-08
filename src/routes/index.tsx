@@ -893,9 +893,9 @@ const router = createBrowserRouter([
       {
         path: "/panel/invoiceTexts",
         element: (
-          <ManagementOnly>
-            <InvoiceText />
-          </ManagementOnly>
+          // <ManagementOnly>
+          <InvoiceText />
+          // </ManagementOnly>
         ),
       },
       {

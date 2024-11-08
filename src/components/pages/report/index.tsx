@@ -242,7 +242,12 @@ export default function Index({
                   )}
                 </Grid>
               </div>
-              <Typography variant="h4" gutterBottom align="right">
+              <Typography variant="h4" gutterBottom align="right" className="print:text-base" sx={{
+                fontSize: { xs: "2.1rem", print: "1rem" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                "@media print": {
+                  fontSize: "1rem",
+                },
+              }}>
                 {currentUser?.companyName}
               </Typography>
               <Typography gutterBottom align="right">
@@ -251,7 +256,12 @@ export default function Index({
               </Typography>
             </Grid>
           </Grid>
-          <Container maxWidth="xl" sx={{ mb: 4 }}>
+          <Container maxWidth="xl" sx={{
+            mb: { xs: 4, print: 2 },
+            "@media print": {
+              marginBottom: "5px",
+            },
+          }}>
             {title && (
               <h1
                 className="text-xl font-bold mb-6"

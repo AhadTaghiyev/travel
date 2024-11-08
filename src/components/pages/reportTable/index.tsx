@@ -39,6 +39,12 @@ export default function Index({ headers, items, totals, currency }) {
                 sx={{
                   fontWeight: "bold",
                   borderLeft: "1px solid #e0e0e0",
+                  padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                  fontSize: { xs: "14px", print: "12px" },
+                  "@media print": {
+                    padding: "5px 6px",
+                    fontSize: "12px",
+                  },
                 }}
                 key={index}
                 className="!px-3 !py-2.5 print:!px-1"
@@ -55,7 +61,14 @@ export default function Index({ headers, items, totals, currency }) {
               {headers.map((hElem, hKey) => (
                 <TableCell
                   size="medium"
-                  sx={{ borderLeft: "1px solid #e0e0e0" }}
+                  sx={{
+                    borderLeft: "1px solid #e0e0e0", padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
+                  }}
                   align="left"
                   key={hKey}
                   className="!px-3 !py-2 print:!px-1"
@@ -72,14 +85,14 @@ export default function Index({ headers, items, totals, currency }) {
                     <span>
                       {hElem.propertyName.toLowerCase().includes("date")
                         ? formatDate(
-                            getNestedProperty(elem, hElem.propertyName)
-                          )
+                          getNestedProperty(elem, hElem.propertyName)
+                        )
                         : hElem.propertyName.toLowerCase().includes("price")
-                        ? `${(
+                          ? `${(
                             getNestedProperty(elem, hElem.propertyName) *
                             currency.value
                           ).toFixed(2)} ${currency.name}`
-                        : getNestedProperty(elem, hElem.propertyName)}
+                          : getNestedProperty(elem, hElem.propertyName)}
                     </span>
                   )}
                 </TableCell>
@@ -100,7 +113,13 @@ export default function Index({ headers, items, totals, currency }) {
                   sx={{
                     borderLeft: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >
@@ -112,7 +131,13 @@ export default function Index({ headers, items, totals, currency }) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >
@@ -132,7 +157,13 @@ export default function Index({ headers, items, totals, currency }) {
                   sx={{
                     borderLeft: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >
@@ -144,7 +175,13 @@ export default function Index({ headers, items, totals, currency }) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >
@@ -164,7 +201,13 @@ export default function Index({ headers, items, totals, currency }) {
                   sx={{
                     borderLeft: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >
@@ -176,7 +219,13 @@ export default function Index({ headers, items, totals, currency }) {
                     borderLeft: "1px solid #e0e0e0",
                     borderRight: "1px solid #e0e0e0",
                     fontWeight: "bold",
-                    padding: "10px 12px",
+                    // padding: "10px 12px",
+                    padding: { xs: "10px 12px", print: "5px 6px" }, // Normalde 1.5rem, yazdırma sırasında 1rem
+                    fontSize: { xs: "14px", print: "12px" },
+                    "@media print": {
+                      padding: "5px 6px",
+                      fontSize: "12px",
+                    },
                   }}
                   align="left"
                 >

@@ -72,6 +72,7 @@ export default function Index({
   hideReport,
   hideDelete,
   hideReceipt = true,
+  hideOperations = false,
   buttonText,
   exportLink,
   detailLink,
@@ -115,6 +116,7 @@ export default function Index({
   const [open, setOpen] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [isFiltering, setIsFiltering] = useState(false);
   const idToDelete = useRef("");
 
   const handleStartDateChange = (newValue) => {
@@ -268,7 +270,7 @@ export default function Index({
       try {
         const response = await apiService.get(
           `${api}/${paginationModel.page + 1
-          }?starDate=${startDate}&endDate=${endDate}&search=${search}&type=${filter}`
+          }?starDate=${startDate}&endDate=${endDate}&search=${search}&isPaginated=${!isFiltering}&type=${filter}`
         );
         if (!response?.data) return;
         const { items, totalItems, totalPages, ...rest } = response.data;
@@ -301,7 +303,7 @@ export default function Index({
     };
 
     fetchData();
-  }, [paginationModel.page, startDate, endDate, search, filter, itemStatus]);
+  }, [paginationModel.page, startDate, endDate, search, filter, itemStatus, isFiltering]);
 
   const totalRow = useMemo(() => {
     if (!totalProps || !rows || totalProps?.length === 0 || rows?.length === 0)
@@ -328,6 +330,16 @@ export default function Index({
     }
     return arr;
   });
+
+  const handleFilterModelChange = (filterModel) => {
+    const isFilterActive = filterModel.items.some((item) => item.value && item.value.trim() !== "");
+
+    if (isFilterActive) {
+      setIsFiltering(true);
+    } else {
+      setIsFiltering(false);
+    }
+  };
 
   return (
     <>
@@ -479,12 +491,13 @@ export default function Index({
                   ...col,
                   headerName: t(col.headerName),
                 })),
-                field,
+                ...(!hideOperations ? [field] : []),
               ]}
               paginationMode="server"
               rows={tableRows}
               pageSizeOptions={[10, 50, 100]}
               disableRowSelectionOnClick={true}
+              onFilterModelChange={handleFilterModelChange}
               sx={{
                 "& .MuiDataGrid-row": {
                   width: "100%!important",
