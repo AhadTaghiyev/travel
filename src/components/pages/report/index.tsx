@@ -89,6 +89,8 @@ export default function Index({
       return;
     }
     const { data } = res;
+    console.log(data);
+
 
     setData({
       simpleTable: {
@@ -102,6 +104,7 @@ export default function Index({
       },
       items: data.items,
       incomes: data.massIncomes,
+      receiptImage: data.receiptImage,
     });
 
     const invoiceTextRes = await apiService.get("/InvoiceTexts/get");
@@ -168,21 +171,21 @@ export default function Index({
                 >
                   {(currency.value !== 1 ||
                     currency.name !== (company?.concurency ?? "USD")) && (
-                    <Button
-                      variant="text"
-                      color="inherit"
-                      sx={{ fontSize: "12px", lineHeight: "16px" }}
-                      onClick={() =>
-                        setCurrency({
-                          name: company?.concurency ?? "USD",
-                          value: 1,
-                        })
-                      }
-                    >
-                      <BsCurrencyExchange style={{ marginRight: "8px" }} />
-                      {t("Məzənnə sıfırla")}
-                    </Button>
-                  )}
+                      <Button
+                        variant="text"
+                        color="inherit"
+                        sx={{ fontSize: "12px", lineHeight: "16px" }}
+                        onClick={() =>
+                          setCurrency({
+                            name: company?.concurency ?? "USD",
+                            value: 1,
+                          })
+                        }
+                      >
+                        <BsCurrencyExchange style={{ marginRight: "8px" }} />
+                        {t("Məzənnə sıfırla")}
+                      </Button>
+                    )}
                   <Button
                     variant="text"
                     color="inherit"
@@ -271,9 +274,9 @@ export default function Index({
                     <p>
                       {item.propertyName === "date"
                         ? formatDate(
-                            data?.simpleTable?.[item.propertyName],
-                            "dd-MM-yyyy HH:mm"
-                          )
+                          data?.simpleTable?.[item.propertyName],
+                          "dd-MM-yyyy HH:mm"
+                        )
                         : data?.simpleTable?.[item.propertyName]}
                     </p>
                   </div>
@@ -306,7 +309,7 @@ export default function Index({
             </Grid>
           </Container>
         </Grid>
-             <h1  dangerouslySetInnerHTML={{__html: invoiceText}}></h1>
+        <h1 dangerouslySetInnerHTML={{ __html: invoiceText }}></h1>
       </Container>
     </div>
   );

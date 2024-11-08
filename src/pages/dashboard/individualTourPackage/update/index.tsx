@@ -38,6 +38,7 @@ const UpdateTicket = () => {
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       values.isCustomerPaid = undefined;
       values.isSupplierPaid = undefined;
+      values.receiptImage = undefined;
       const promise = apiService
         .put(`/IndividualTourPackages/Update/${id}`, values)
         .then((response) => {

@@ -7,6 +7,7 @@ export interface IInvoiceModel {
   explanation?: string;
   isCustomerPaid: boolean;
   isSupplierPaid: boolean;
+  receiptImage?: File;
   individualTourPackages: ITourPackageModel[];
 }
 export interface ITourPackageModel {

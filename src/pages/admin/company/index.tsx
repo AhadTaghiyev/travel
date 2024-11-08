@@ -20,7 +20,7 @@ export default function Index() {
         hideCreate
         hideDelete
         hideEdit
-        hideFilter
+        // hideFilter
         hidePrint
         hideStatus
         showOverflow

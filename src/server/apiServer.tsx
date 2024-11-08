@@ -14,13 +14,14 @@ export const apiService = {
     }
   },
 
-  post: async function Post(api: string, object: any): Promise<any> {
+  post: async function Post(api: string, object: any, customHeaders: any = {}): Promise<any> {
     try {
       const res = await Axios.post(api, object, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           accept: "application/json",
+          ...customHeaders,
         },
       });
       if (res.status === 401)

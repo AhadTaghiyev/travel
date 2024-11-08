@@ -28,12 +28,12 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
   },
-  // {
-  //   field: "rezervationNumber",
-  //   headerName: t( "Rezervasiya nömrəsi"),
-  //   flex: 1,
-  //   headerClassName: "header-item",
-  // },
+  {
+    field: "rezervationNumber",
+    headerName: "Res. No.",
+    flex: 1,
+    headerClassName: "header-item",
+  },
   {
     field: "tourName",
     headerName: t("Tur Adı"),
@@ -94,7 +94,7 @@ export const getColumns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     cellClassName: (params) =>
-      params.value ? "refund-true" : "refund-false", 
+      params.value ? "refund-true" : "refund-false",
     valueGetter: (params) => (params.value ? "Refunded" : "Not Refunded"),
   },
 ];

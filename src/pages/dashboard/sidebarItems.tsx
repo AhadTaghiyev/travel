@@ -75,7 +75,7 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: HiDownload,
     text: "Mədaxil",
-    
+
     children: [
       {
         icon: FaServicestack,
@@ -194,79 +194,93 @@ export const sidebarItems: SidebarItemType[] = [
   {
     icon: BsCalculator,
     text: "Hesabatlar",
-    onlyManagement: true,
+    onlyManagement: false,
     children: [
       {
         icon: FaMoneyBillWave,
         text: "Ödəniləcək",
         link: "/panel/reports/willbepaid",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Reciveables",
         link: "/panel/reports/customers",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Profits",
         link: "/panel/reports/profits",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Profit Loss",
         link: "/panel/reports/profitLoss",
+        onlyManagement: true,
       },
       {
         icon: FaMoneyBill1Wave,
         text: "Financal Status",
         link: "/panel/reports/finaceStatus",
+        onlyManagement: true,
       },
       {
         icon: FaMoneyBill1Wave,
         text: "Payment Types",
         link: "/panel/reports/paymentTypes",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Təchizatçı",
         link: "/panel/reports/suppliers",
+        onlyManagement: true,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Deadline",
         link: "/panel/reports/deadLines",
+        onlyManagement: false,
       },
       {
         icon: BsFileEarmarkPerson,
         text: "Flight Tickets",
         link: "/panel/reports/flightTickets",
+        onlyManagement: true,
       },
 
       {
         icon: BsFillPeopleFill,
         text: "Müştəri",
         link: "/panel/reports/customerprofit",
+        onlyManagement: true,
       },
       {
         icon: FaPeopleGroup,
         text: "Personal",
         link: "/panel/reports/personals",
+        onlyManagement: true,
       },
       {
         icon: MdOutlineAirplaneTicket,
         text: "Yaxın uçuşlar",
         link: "/panel/reports/nearestFlights",
+        onlyManagement: false,
       },
 
       {
         icon: FaServicestack,
         text: "Fees",
         link: "/panel/reports/expenditures",
+        onlyManagement: true,
       },
       {
         icon: FaMoneyBill1Wave,
         text: "Day Book Report",
         link: "/panel/reports/dayBook",
+        onlyManagement: true,
       },
     ],
   },
@@ -324,7 +338,7 @@ export const sidebarItems: SidebarItemType[] = [
       // },
       {
         icon: FaMoneyBill1Wave,
-        text: "Ödənişlər",
+        text: "Payment Types",
         link: "/panel/payment",
       },
       {
@@ -380,10 +394,10 @@ export const sidebarItems: SidebarItemType[] = [
     ],
   },
   {
-      icon: RiLockPasswordLine,
-      text: "Change Password",
-      link: "/panel/ChangePasswordV",
+    icon: RiLockPasswordLine,
+    text: "Change Password",
+    link: "/panel/ChangePasswordV",
   }
- 
-  
+
+
 ];

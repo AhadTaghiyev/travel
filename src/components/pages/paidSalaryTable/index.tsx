@@ -23,6 +23,7 @@ interface IPaidSalaryProps {
     bonus: number;
     date: string;
     ref: string;
+    note?: string;
   }[];
   currency: ICurrency;
   totalPrice: number;
@@ -46,6 +47,7 @@ export function PaidSalaryTable({
           <TableHead className="px-2">{t("Salary")}</TableHead>
           <TableHead className="px-2">{t("Extra Salary")}</TableHead>
           <TableHead className="px-2">{t("bonus")}</TableHead>
+          <TableHead className="px-2">{t("Qeyd")}</TableHead>
           <TableHead className="px-2">{t("date")}</TableHead>
         </TableRow>
       </TableHeader>
@@ -53,18 +55,21 @@ export function PaidSalaryTable({
         {incomes.map((income) => (
           <TableRow key={income.id}>
             <TableCell className="font-medium py-1 px-2">
-            {income.ref}
+              {income.ref}
             </TableCell>
             <TableCell className="py-1 px-2">{income.employee}</TableCell>
             <TableCell className="py-1 px-2">{income.payment}</TableCell>
             <TableCell className="py-1 px-2">        {(income.salary * currency.value).toFixed(2)} {currency.name}</TableCell>
-    
-         
+
+
             <TableCell className="py-1 px-2">
               {(income.extraSalary * currency.value).toFixed(2)} {currency.name}
             </TableCell>
             <TableCell className="py-1 px-2">
               {(income.bonus * currency.value).toFixed(2)} {currency.name}
+            </TableCell>
+            <TableCell className="py-1 px-2">
+              {income.note ?? ""}
             </TableCell>
             <TableCell className="py-1 px-2 max-w-[150px] truncate">
               {formatDate(income.date)}
@@ -85,10 +90,10 @@ export function PaidSalaryTable({
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">
-          {((incomes[0].salary + incomes[0].extraSalary+incomes[0].bonus) * currency.value).toFixed(2)}{" "}
+            {((incomes[0].salary + incomes[0].extraSalary + incomes[0].bonus) * currency.value).toFixed(2)}{" "}
           </TableCell>
         </TableRow>
-     
+
       </TableFooter>
     </Table>
   );

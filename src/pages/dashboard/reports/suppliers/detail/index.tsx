@@ -73,6 +73,7 @@ const Detail = () => {
       debit: number;
     }[]
   >();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -95,7 +96,7 @@ const Detail = () => {
       }))
       .filter((item) => item.label && item.value);
 
-      
+
 
     setPaymentTypes(data);
   };
@@ -110,7 +111,7 @@ const Detail = () => {
 
   const handleDownload = async (id) => {
     try {
-      const token = localStorage.getItem("token"); 
+      const token = localStorage.getItem("token");
       if (!token) {
         console.error("Token is not found");
         return;
@@ -122,8 +123,10 @@ const Detail = () => {
           Authorization: `Bearer ${token}`,
         },
       };
+      console.log(date);
+
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/SupplierReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/SupplierReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -209,9 +212,9 @@ const Detail = () => {
         prevData.map((item) =>
           item.id === id
             ? {
-                ...item,
-                [isWp ? "debit" : "credit"]: Number(editAmount),
-              }
+              ...item,
+              [isWp ? "debit" : "credit"]: Number(editAmount),
+            }
             : item
         )
       );
@@ -240,6 +243,11 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+    setData([]);
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/SupplierReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -512,7 +520,7 @@ export const PayAction = ({
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
 
-    if(!id){
+    if (!id) {
       alert("You cannot make a payment. Please refresh the page or adjust the date so that one of the IV numbers appears in the list.")
       return;
     }

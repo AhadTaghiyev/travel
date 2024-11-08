@@ -13,8 +13,9 @@ import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import CustomSelect from "@/components/custom/select";
 import CustomTextField from "@/components/custom/input";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiService } from "@/server/apiServer";
+import { BsFileEarmarkArrowUp } from "react-icons/bs";
 
 type FormType = "Create" | "Edit" | "View";
 
@@ -37,18 +38,21 @@ const TourPackageForm = ({
   const isEdit = formType === "Edit";
   const isView = formType === "View";
   const navigate = useNavigate();
-  const [userId,setUserId]=useState("");
-  const [advancePayment,setadvancePayment]=useState(0);
+  const [userId, setUserId] = useState("");
+  const [advancePayment, setadvancePayment] = useState(0);
+  const [selectedFileName, setSelectedFileName] = useState("");
+
+  const fileInputRef = useRef(null);
 
   const fetchData = async () => {
-    const res = await       apiService.get(`AdvancePayments/GetByCustomer/${userId}`);
+    const res = await apiService.get(`AdvancePayments/GetByCustomer/${userId}`);
     setadvancePayment(res.data.amount);
   };
-  useEffect(()=>{
-    if(userId!=""){
+  useEffect(() => {
+    if (userId != "") {
       fetchData();
     }
-  },[userId])
+  }, [userId])
 
   return (
     <Formik
@@ -150,9 +154,9 @@ const TourPackageForm = ({
               className={cn(
                 "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
                 values.isCustomerPaid &&
-                  !isEdit &&
-                  !isView &&
-                  "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
+                !isEdit &&
+                !isView &&
+                "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
               )}
             >
               <FormControlLabel
@@ -171,59 +175,88 @@ const TourPackageForm = ({
                     : t("customerPayment")
                 }
               />
-              {(values.isCustomerPaid||values.isSupplierPaid) && !isEdit && !isView && (
-                <div className="flex flex-col sm:flex-row gap-x-4">
-                  <div className="w-full">
-                    <CustomAutocompleteSelect
-                      api="Payments/GetAll/1"
-                      label={t("Ödəniş növü")}
-                      value={values.paymentId ?? null}
-                      optionLabel="type"
-                      change={(value) => setFieldValue("paymentId", value)}
-                      hasErrorMessages={
-                        !!errors.paymentId && !!touched.paymentId
-                      }
-                      errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      label={t("Ödənilən məbləğ")}
-                      value={values.paidAmount}
-                      change={handleChange}
-                      type="number"
-                      name={`paidAmount`}
-                      hasErrorMessages={
-                        !!errors.paidAmount && !!touched.paidAmount
-                      }
-                      errorMessages={[t(errors.paidAmount?.toString())]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <CustomTextField
-                      disabled
-                      label={t("Qalıq məbləğ")}
-                      value={Math.max(
-                        values.tourPackages.reduce(
-                          (acc, cur) => acc + cur.sellingPrice - cur.discount,
+              {(values.isCustomerPaid || values.isSupplierPaid) && !isEdit && !isView && (
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex flex-col sm:flex-row gap-x-4">
+                    <div className="w-full">
+                      <CustomAutocompleteSelect
+                        api="Payments/GetAll/1"
+                        label={t("Ödəniş növü")}
+                        value={values.paymentId ?? null}
+                        optionLabel="type"
+                        change={(value) => setFieldValue("paymentId", value)}
+                        hasErrorMessages={
+                          !!errors.paymentId && !!touched.paymentId
+                        }
+                        errorMessages={[t(errors.paymentId?.toString() ?? "")]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        label={t("Ödənilən məbləğ")}
+                        value={values.paidAmount}
+                        change={handleChange}
+                        type="number"
+                        name={`paidAmount`}
+                        hasErrorMessages={
+                          !!errors.paidAmount && !!touched.paidAmount
+                        }
+                        errorMessages={[t(errors.paidAmount?.toString())]}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        disabled
+                        label={t("Qalıq məbləğ")}
+                        value={Math.max(
+                          values.tourPackages.reduce(
+                            (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                            0
+                          ) - values.paidAmount,
                           0
-                        ) - values.paidAmount,
-                        0
-                      )}
-                      change={() => 0}
-                      type="number"
-                      name={``}
-                    />
+                        )}
+                        change={() => 0}
+                        type="number"
+                        name={``}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <CustomTextField
+                        label={t("Advance Payment")}
+                        value={advancePayment}
+                        change={handleChange}
+                        type="number"
+                        name={``}
+                        disabled
+                      />
+                    </div>
                   </div>
-                  <div className="w-full">
+                  <div className="xs:w-full md:w-1/4">
                     <CustomTextField
-                      label={t("Advance Payment")}
-                      value={advancePayment}
-                      change={handleChange}
-                      type="number"
-                      name={``}
-                     disabled
+                      name="receiptImage"
+                      type="file"
+                      label={t("Attachments")}
+                      value={undefined}
+                      change={(e) => {
+                        setFieldValue("receiptImage", e.target.files);
+                        setSelectedFileName(e.target.files[0]?.name || "");
+                      }}
+                      hasErrorMessages={!!errors.receiptImage && !!touched.receiptImage}
+                      errorMessages={[t(errors.receiptImage?.toString())]}
+                      inputRef={fileInputRef}
+                      className="hidden"
+                      accept="image/png, image/jpeg, image/jpg"
                     />
+                    <div style={{ display: "flex", justifyContent: "space-between" }} className="w-full border border-[#e5e5e5] border-solid rounded-md py-2 px-4 bg-white font-medium text-[15px] cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                      <span>{t("Attach File")}</span>
+                      <span className="flex items-center text-[16px]"><BsFileEarmarkArrowUp /></span>
+                    </div>
+                    {selectedFileName && (
+                      <div className="text-[14px] mt-1 text-gray-600">
+                        {selectedFileName} {t("Selected")}
+                      </div>
+                    )}
+                    <span className="text-[14px]">* {t("receiptImageNote")}</span>
                   </div>
                 </div>
               )}

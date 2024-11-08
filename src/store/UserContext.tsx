@@ -13,9 +13,16 @@ export const UserProvider = ({ children }: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) getUser();
-    else setLoading(false);
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await getUser();
+      } else {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, [window]);
 
   const getUser = async () => {

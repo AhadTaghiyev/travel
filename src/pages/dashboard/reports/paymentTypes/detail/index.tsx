@@ -41,6 +41,7 @@ const Detail = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] =
     useState<{ id: string; name: string; debit: number; credit: number }[]>();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -69,7 +70,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/PaymentReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/PaymentReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -93,8 +94,12 @@ const Detail = () => {
   const getData = async (id: number, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
     if (startDate)
-      searchParams.append("startDate", toLocalISOString(startDate));
-    if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+      searchParams.append("startDate", startDate.toISOString());
+    if (endDate) searchParams.append("endDate", endDate.toISOString());
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/PaymentReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -256,7 +261,7 @@ const Detail = () => {
             </TableHeader>
             <TableBody>
               {data
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                // .sort((a, b) => new Date(a.date) - new Date(b.date))
                 .map((row) => (
                   <TableRow key={row.id}>
                     <h1 style={{ display: "none" }}>

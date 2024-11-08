@@ -309,6 +309,7 @@ import CompanySettings from "../pages/dashboard/settings/company";
 import Privacy from "../pages/main/privacy";
 import Terms from "../pages/main/terms";
 import { LeaderOnly, ManagementOnly } from "./guards";
+import PaymentConfirmation from "@/pages/dashboard/confirmations/PaymentConfirmation";
 
 const router = createBrowserRouter([
   {
@@ -506,7 +507,7 @@ const router = createBrowserRouter([
         path: "/admin/Referances/update/:id",
         element: <ReferanceAdminUpdate />,
       },
-      
+
     ],
   },
   {
@@ -536,7 +537,7 @@ const router = createBrowserRouter([
         path: "/panel/refunds/view/:id",
         element: <ShowRefund />,
       },
-      
+
       {
         path: "/panel/aviabiletsale/new/reciept/:id",
         element: <Reciept />,
@@ -1283,11 +1284,11 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/expenditures/new",
         element: (
-            <NewWillBePaid />
+          <NewWillBePaid />
         ),
       },
 
-      
+
       {
         path: "/panel/reports/willbepaid/update/:id",
         element: (
@@ -1310,10 +1311,10 @@ const router = createBrowserRouter([
       //=================
       {
         path: "/panel/payments",
-        element: 
-        <LeaderOnly>
-        <Payments />
-        </LeaderOnly>
+        element:
+          <LeaderOnly>
+            <Payments />
+          </LeaderOnly>
         ,
       },
       // {
@@ -1442,25 +1443,25 @@ const router = createBrowserRouter([
       {
         path: "/panel/payments/report/:id",
         element:
-        
-        <PaymentDetailReport />,
+
+          <PaymentDetailReport />,
       },
 
       // Bonus
       {
-        
+
         path: "/panel/bonus",
-        element: 
-        <LeaderOnly>
-        <Bonus />,
-        </LeaderOnly>
+        element:
+          <LeaderOnly>
+            <Bonus />,
+          </LeaderOnly>
       },
       {
         path: "/panel/bonus/new",
         element:
-        <LeaderOnly>
-        <NewBonus />,
-        </LeaderOnly>
+          <LeaderOnly>
+            <NewBonus />,
+          </LeaderOnly>
       },
       {
         path: "/panel/bonus/update/:id",
@@ -1615,7 +1616,7 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/expenditures",
         element: (
-            <ExpendituresReport />
+          <ExpendituresReport />
         ),
       },
       {
@@ -1642,14 +1643,14 @@ const router = createBrowserRouter([
         path: "/panel/agreements/conractdetail/:id",
         element: <AgreementDetail />,
       },
-      
+
 
       {
         path: "/panel/reports/deadlines",
         element: (
-          <ManagementOnly>
-            <DeadlineReport />
-          </ManagementOnly>
+          // <ManagementOnly>
+          <DeadlineReport />
+          // </ManagementOnly>
         ),
       },
       {
@@ -1752,9 +1753,9 @@ const router = createBrowserRouter([
       {
         path: "/panel/reports/nearestFlights",
         element: (
-          <ManagementOnly>
-            <NearestFlights />
-          </ManagementOnly>
+          // <ManagementOnly>
+          <NearestFlights />
+          // </ManagementOnly>
         ),
       },
       {
@@ -1793,12 +1794,19 @@ const router = createBrowserRouter([
         path: "/panel/ChangePasswordV",
         element: (
           // <ManagementOnly>
-            <ChangePasswordV />
+          <ChangePasswordV />
           // </ManagementOnly>
         ),
       },
+      {
+        path: "/panel/company/paymentConfirmation/:id",
+        element: (
+          <ManagementOnly>
+            <PaymentConfirmation />
+          </ManagementOnly>
+        ),
+      }
 
-      
     ],
   },
 ]);

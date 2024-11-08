@@ -31,7 +31,6 @@ const InvoiceText = ({ initialValues, onSubmit }: IInvoiceTextProps) => {
     >
       {({
         values,
-    
         handleSubmit,
         isSubmitting,
       }) => (
@@ -46,15 +45,15 @@ const InvoiceText = ({ initialValues, onSubmit }: IInvoiceTextProps) => {
                 hasErrorMessages={!!errors.name && !!touched.name}
                 errorMessages={[t(errors.name?.toString())]}
               /> */}
-                   <CKEditor
-                  editor={ClassicEditor}
-                  data=""
-          
-                  onChange={(_, editor) => {
-                   values.text=editor.getData()
-                    // setFieldValue("body", editor.getData());
-                  }}
-                />
+              <CKEditor
+                editor={ClassicEditor}
+                data={initialValues.text}
+
+                onChange={(_, editor) => {
+                  values.text = editor.getData()
+                  // setFieldValue("body", editor.getData());
+                }}
+              />
             </div>
           </div>
 

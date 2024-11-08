@@ -7,6 +7,7 @@ export default function Index() {
     <Container maxWidth="xl">
       <Table
         hideEdit
+        hideReceipt={false}
         columns={columns}
         api={"/MassIncomes/GetAllFilter"}
         exportLink="MassIncomes/Export/Export"

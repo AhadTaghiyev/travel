@@ -191,7 +191,7 @@ export default function index() {
               className="text-xl font-bold mb-2"
               style={{ textAlign: "center" }}
             >
-              {t("Customer Receipt Invoice Receipt")}
+              {t("Customer Receipt")}
             </h1>
             <div className="flex justify-between ">
               <div>
@@ -203,7 +203,7 @@ export default function index() {
                     <p className="w-28 font-bold">{t(item.fieldName)}:</p>
                     <p>
                       {item.propertyName === "date"
-                        ? formatDate(data?.customer?.[item.propertyName])
+                        ? formatDate(data?.[item.propertyName])
                         : data?.customer?.[item.propertyName]}
                     </p>
                   </div>

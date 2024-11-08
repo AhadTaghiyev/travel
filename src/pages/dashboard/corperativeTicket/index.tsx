@@ -13,6 +13,7 @@ export default function Index() {
       {/* <PageTitle title='Aviabilet satışı'  breadcrumbs={[homeBreadCrumb, planeTicketBreadCrumb]}/> */}
       <Table
         hidePrint={false}
+        hideReceipt={true}
         exportLink="CorporateTickets/Export/Export"
         columns={columnsresult}
         api={"/CorporateTickets/GetAllFilter"}

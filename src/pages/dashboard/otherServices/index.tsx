@@ -13,6 +13,7 @@ export default function Index() {
     <Container maxWidth="xl">
       <Table
         hidePrint={false}
+        hideReceipt={true}
         exportLink="OtherServices/Export/Export"
         columns={columnsresult}
         api={"/OtherServices/GetAllFilter"}

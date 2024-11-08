@@ -1,5 +1,8 @@
 import * as Yup from "yup";
 
+const FILE_SIZE = 1024 * 1024; // 1MB
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
 export const OtherServiceSchema = Yup.object().shape({
   serviceName: Yup.string().required("Servis adı daxil edilməlidir"),
   purchasePrice: Yup.number()
@@ -46,4 +49,18 @@ export const getTicketSchema = (isEdit: boolean) =>
       })
       .min(0, "Məbləğ mənfi ola bilməz"),
     otherServices: Yup.array().of(OtherServiceSchema),
+
+    receiptImage: Yup.mixed()
+      .nullable()
+      .test("fileSize", "The file size must not exceed 1MB.", (value) => {
+        return !isEdit && value ? (value[0] instanceof File && value[0].size <= FILE_SIZE) : true;
+      })
+      .test(
+        "fileFormat",
+        "Only JPG, JPEG, and PNG formats are accepted.",
+        (value) => {
+          // Ensure that value is a file before checking properties
+          return !isEdit && value ? (value[0] instanceof File && SUPPORTED_FORMATS.includes(value[0].type)) : true;
+        }
+      ),
   });

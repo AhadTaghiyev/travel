@@ -1,5 +1,8 @@
 import * as Yup from "yup";
 
+const FILE_SIZE = 1024 * 1024; // 1MB
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
 export const PlaneTicketSchema = Yup.object().shape({
   ticketNo: Yup.string().required("Bilet nömrəsi daxil edilməlidir"),
   passengerName: Yup.string().required("Sərnişin adı daxil edilməlidir"),
@@ -42,13 +45,27 @@ export const getTicketSchema = (isEdit: boolean) =>
         ? sch.required("Ödəniş növü seçilməlidir")
         : sch.notRequired();
     }),
-    
+
     paidAmount: Yup.number()
-      .when(['isCustomerPaid', 'isSupplierPaid'], ([isCustomerPaid,isSupplierPaid], sch) => {
-        return (isCustomerPaid||isSupplierPaid) && !isEdit
+      .when(['isCustomerPaid', 'isSupplierPaid'], ([isCustomerPaid, isSupplierPaid], sch) => {
+        return (isCustomerPaid || isSupplierPaid) && !isEdit
           ? sch.required("Məbləğ daxil edilməlidir")
           : sch.notRequired();
       })
       .min(0, "Məbləğ mənfi ola bilməz"),
     planeTickets: Yup.array().of(PlaneTicketSchema),
+
+    receiptImage: Yup.mixed()
+      .nullable()
+      .test("fileSize", "The file size must not exceed 1MB.", (value) => {
+        return !isEdit && value ? (value[0] instanceof File && value[0].size <= FILE_SIZE) : true;
+      })
+      .test(
+        "fileFormat",
+        "Only JPG, JPEG, and PNG formats are accepted.",
+        (value) => {
+          // Ensure that value is a file before checking properties
+          return !isEdit && value ? (value[0] instanceof File && SUPPORTED_FORMATS.includes(value[0].type)) : true;
+        }
+      ),
   });

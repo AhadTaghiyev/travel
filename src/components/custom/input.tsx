@@ -14,6 +14,9 @@ interface ICustomTextFieldModel {
   type?: string;
   placeholder?: string;
   disabled?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement>;
+  className?: string;
+  accept?: string;
 }
 
 export default function CustomTextField({
@@ -27,6 +30,9 @@ export default function CustomTextField({
   type = "text",
   disabled,
   placeholder,
+  inputRef,
+  className,
+  accept
 }: ICustomTextFieldModel) {
   const { t } = useTranslation();
 
@@ -46,10 +52,12 @@ export default function CustomTextField({
         value={value}
         onChange={change}
         disabled={disabled}
-        className={type === "file" && "cursor-pointer"}
+        className={`${type === "file" && "cursor-pointer"} ${className ?? ""}`}
         title="Test"
         placeholder={t(placeholder ?? "Type here...")}
         onWheel={(e) => e.currentTarget.blur()}
+        ref={inputRef}
+        accept={accept}
       />
       {hasErrorMessages ? (
         <>
@@ -60,7 +68,7 @@ export default function CustomTextField({
           ))}
         </>
       ) : (
-        <div className="h-5" />
+        ""
       )}
     </>
   );

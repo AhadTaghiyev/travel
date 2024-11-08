@@ -8,7 +8,7 @@ export default function Index() {
       <Table
         columns={columns}
         api={"/ManagerFinancialTransactions/GetAll"}
-        buttonText="Təsisçidən təsisçiyə"
+        buttonText="Borc yarat"
         deleteApi="/ManagerFinancialTransactions/Delete"
         root="/panel/managerFinancialTransactions"
         exportLink="ManagerFinancialTransactions/export/export"

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { InputLabel } from "@mui/material";
 import { TFunction } from "i18next";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { MassIncomeEditSchema, MassIncomeSchema } from "./schema";
 import { IIncomeModel } from "./types";
@@ -16,6 +16,7 @@ import CustomSelect from "@/components/custom/select";
 import { Input } from "@/components/ui/input";
 import { FaLink } from "react-icons/fa6";
 import CustomDateTimePicker from "@/components/custom/datePicker";
+import { BsFileEarmarkArrowUp } from "react-icons/bs";
 
 const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Aviabilet satışı"), value: "aviabiletSale" },
@@ -51,6 +52,9 @@ const MassIncomeForm = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
+  const [selectedFileName, setSelectedFileName] = useState("");
+
+  const fileInputRef = useRef(null);
 
   const getOptions = (options: InvoiceItem[]) => {
     setInvoiceItems(options);
@@ -103,7 +107,7 @@ const MassIncomeForm = ({
                     errorMessages={[t(errors.ticketType?.toString())]}
                   />
                 </div>
-                
+
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
                     api="Personals/GetAll/1"
@@ -241,17 +245,44 @@ const MassIncomeForm = ({
                   />
                 </div>
                 <div className="w-full h-full">
-              <CustomDateTimePicker
-                label={t("date")}
-                value={values.date}
-                toDate={new Date()}
-                change={(data) => {
-                  setFieldValue("date", data ?? new Date());
-                }}
-                hasErrorMessages={!!errors.date && !!touched.date}
-                errorMessages={[t(errors.date?.toString())]}
-              />
-            </div>
+                  <CustomDateTimePicker
+                    label={t("date")}
+                    value={values.date}
+                    toDate={new Date()}
+                    change={(data) => {
+                      setFieldValue("date", data ?? new Date());
+                    }}
+                    hasErrorMessages={!!errors.date && !!touched.date}
+                    errorMessages={[t(errors.date?.toString())]}
+                  />
+                </div>
+                <div className="w-full h-full">
+                  <CustomTextField
+                    name="receiptImage"
+                    type="file"
+                    label={t("Attachments")}
+                    value={undefined}
+                    change={(e) => {
+                      setFieldValue("receiptImage", e.target.files);
+                      setSelectedFileName(e.target.files[0]?.name || "");
+                    }}
+                    hasErrorMessages={!!errors.receiptImage && !!touched.receiptImage}
+                    errorMessages={[t(errors.receiptImage?.toString())]}
+                    inputRef={fileInputRef}
+                    className="hidden"
+                    accept="image/png, image/jpeg, image/jpg"
+                  />
+                  <div style={{ display: "flex", justifyContent: "space-between" }} className="w-full border border-[#e5e5e5] border-solid rounded-md py-2 px-4 bg-white font-medium text-[15px] cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                    <span>{t("Attach File")}</span>
+                    <span className="flex items-center text-[16px]"><BsFileEarmarkArrowUp /></span>
+                  </div>
+                  {selectedFileName && (
+                    <div className="text-[14px] mt-1 text-gray-600">
+                      {selectedFileName} {t("Selected")}
+                    </div>
+                  )}
+                  <span className="text-[14px]">* {t("receiptImageNote")}</span>
+                </div>
               </>
             )}
           </div>

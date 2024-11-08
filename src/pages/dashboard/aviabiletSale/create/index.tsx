@@ -48,8 +48,42 @@ const NewTicket = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const formData = new FormData();
+      formData.append("customerId", values.customerId.toString());
+      formData.append("date", values.date.toISOString());
+      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("explanation", values.explanation.toString());
+      formData.append("isCustomerPaid", values.isCustomerPaid.toString());
+      formData.append("isSupplierPaid", values.isSupplierPaid.toString());
+      formData.append("paidAmount", values.paidAmount.toString());
+      formData.append("paymentId", values.paymentId ? values.paymentId.toString() : "");
+
+      // Append each plane ticket separately
+      values.planeTickets.forEach((ticket, index) => {
+        formData.append(`planeTickets[${index}].ticketNo`, ticket.ticketNo);
+        formData.append(`planeTickets[${index}].passengerName`, ticket.passengerName);
+        formData.append(`planeTickets[${index}].segmentCount`, ticket.segmentCount.toString());
+        formData.append(`planeTickets[${index}].purchasePrice`, ticket.purchasePrice.toString());
+        formData.append(`planeTickets[${index}].sellingPrice`, ticket.sellingPrice.toString());
+        formData.append(`planeTickets[${index}].discount`, ticket.discount.toString());
+        formData.append(`planeTickets[${index}].commonPrice`, ticket.commonPrice.toString());
+        formData.append(`planeTickets[${index}].supplierId`, ticket.supplierId?.toString() || "");
+        formData.append(`planeTickets[${index}].personalId`, ticket.personalId?.toString() || "");
+        formData.append(`planeTickets[${index}].airWayId`, ticket.airWayId?.toString() || "");
+
+        // Append each direction within the ticket
+        ticket.invoiceDirections.forEach((direction, dirIndex) => {
+          formData.append(`planeTickets[${index}].invoiceDirections[${dirIndex}].flightDate`, direction.flightDate.toISOString());
+          formData.append(`planeTickets[${index}].invoiceDirections[${dirIndex}].direction`, direction.direction);
+        });
+      });
+
+      // Append the receipt image
+      if (values.receiptImage) {
+        formData.append("receiptImage", values.receiptImage[0]);
+      }
       const promise = apiService
-        .post(`/PlaneTickets/Create`, values)
+        .postForm(`/PlaneTickets/Create`, formData)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Ticket created"));

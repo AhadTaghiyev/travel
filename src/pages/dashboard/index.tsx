@@ -18,7 +18,7 @@ export default function index() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.expireDate < 0 && location.pathname !== "/panel") {
+    if (user && user.expireDate < 0 && location.pathname !== "/panel" && !location.pathname.includes("/panel/company/paymentConfirmation/")) {
       navigate("/panel");
     }
   }, [location.pathname, user]);
@@ -30,11 +30,24 @@ export default function index() {
     }
 
     if (user.role !== ROLES.LEADER && user.role !== ROLES.ACCOUNTANT) {
-      return sidebarItems.filter((item) => !item.onlyManagement);
+      return sidebarItems.filter((item) => !item.onlyManagement) // Filter top-level items with onlyManagement set to false
+        .map((item) => {
+          if (item.children) {
+            // If item has children, filter children with onlyManagement set to false
+            const filteredChildren = item.children.filter(
+              (child) => !child.onlyManagement
+            );
+
+            // Return a new object with filtered children if any child remains
+            return { ...item, children: filteredChildren };
+          }
+          return item;
+        })
+        .filter((item) => !item.children || item.children.length > 0);
     }
 
     return sidebarItems;
-  }, [user?.role]);
+  }, [user, user?.role]);
 
   if (loading || !user) return <Loading />;
 

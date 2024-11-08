@@ -22,13 +22,14 @@ import { UserContext } from "@/store/UserContext";
 import { Link } from "react-router-dom";
 import { ROLES } from "@/constants";
 import { apiService } from "@/server/apiServer";
+import Loading from "@/components/custom/loading";
 
 export default function index() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const [ipAddress, setIpAddress] = useState("");
   const { t } = useTranslation();
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
 
   const onPay = async (ipAddress: string) => {
@@ -45,6 +46,7 @@ export default function index() {
       .then(res => res.json())
       .then(data => {
         setIpAddress(data.ip);
+        localStorage.setItem("ipAddress", data.ip);
       })
   }, [])
 
@@ -59,7 +61,10 @@ export default function index() {
     return years;
   }, []);
 
-  if (user.expireDate < 0) {
+  if (loading) {
+    return (<Loading />)
+  }
+  else if (user.expireDate < 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] ">
         <svg

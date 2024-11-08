@@ -20,8 +20,8 @@ import { Input } from "@/components/ui/input";
 const getTypeOptions = (t: TFunction<"translation", undefined>) => [
   { label: t("Aviabilet satışı"), value: "aviabiletSale" },
   { label: t("Korperativ satış"), value: "cooperativeTicket" },
-  { label: t("Individual Tur paket"), value: "individualTourPackage" },
-  { label: t("İndividual tur satışı"), value: "tourPackage" },
+  { label: t("İndividual tur satışı"), value: "individualTourPackage" },
+  { label: t("Tur paket satışı"), value: "tourPackage" },
   { label: t("Digər xidmətlər"), value: "otherService" },
 
   { label: t("Deposit"), value: "deposit" },
@@ -214,9 +214,8 @@ const RefundForm = ({
                 />
                 {(!!values.invoiceId || !!values.advancePaymentId) && (
                   <Link
-                    to={`/panel/${values.type}/report?tickets=${
-                      values.invoiceId?.value || values.advancePaymentId?.value
-                    }`}
+                    to={`/panel/${values.type}/report?tickets=${values.invoiceId?.value || values.advancePaymentId?.value
+                      }`}
                     className="h-full py-3 px-2.5 rounded-lg mt-1 hover:opacity-80"
                     style={{
                       boxShadow:

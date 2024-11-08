@@ -50,8 +50,34 @@ const NewOtherService = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const formData = new FormData();
+      formData.append("customerId", values.customerId.toString());
+      formData.append("date", values.date.toISOString());
+      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("explanation", values.explanation.toString());
+      formData.append("isCustomerPaid", values.isCustomerPaid.toString());
+      formData.append("isSupplierPaid", values.isSupplierPaid.toString());
+      formData.append("paidAmount", values.paidAmount.toString());
+      formData.append("paymentId", values.paymentId ? values.paymentId.toString() : "");
+
+      // Append each plane ticket separately
+      values.otherServices.forEach((otherService, index) => {
+        formData.append(`otherServices[${index}].serviceId`, otherService.serviceId.toString());
+        formData.append(`otherServices[${index}].serviceName`, otherService.serviceName.toString());
+        formData.append(`otherServices[${index}].commonPrice`, otherService.commonPrice.toString());
+        formData.append(`otherServices[${index}].discount`, otherService.discount.toString());
+        formData.append(`otherServices[${index}].supplierId`, otherService.supplierId?.toString() || "");
+        formData.append(`otherServices[${index}].personalId`, otherService.personalId?.toString() || "");
+        formData.append(`otherServices[${index}].purchasePrice`, otherService.purchasePrice.toString() || "");
+        formData.append(`otherServices[${index}].sellingPrice`, otherService.sellingPrice.toString() || "");
+      });
+
+      // Append the receipt image
+      if (values.receiptImage) {
+        formData.append("receiptImage", values.receiptImage[0]);
+      }
       const promise = apiService
-        .post(`/OtherServices/Create`, values)
+        .postForm(`/OtherServices/Create`, formData)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Digər xidmət yaradıldı"));

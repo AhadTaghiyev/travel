@@ -22,14 +22,25 @@ import { ClipLoader } from "react-spinners";
 import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
-import { SERVER_BASE_URL } from "@/constants";
+import { InvoiceType, SERVER_BASE_URL } from "@/constants";
 
 const columns = [
   { label: "Id", name: "id" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
+  { label: "InvoiceType", name: "invoiceType" },
   { label: "customer", name: "customer" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
+  { label: "Note.", name: "note" },
+  { label: "Debit.", name: "debit" },
+  { label: "Credit.", name: "credit" },
+  { label: "Balance.", name: "balance" },
+];
+
+const founderColumns = [
+  { label: "Id", name: "id" },
+  { label: "Date", name: "date", type: "date" },
+  { label: "Ref.", name: "ref" },
   { label: "Note.", name: "note" },
   { label: "Debit.", name: "debit" },
   { label: "Credit.", name: "credit" },
@@ -43,6 +54,7 @@ const Detail = () => {
 
   const [data, setData] =
     useState<{ id: string; name: string; amount: number; balance: number }[]>();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -64,7 +76,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/ReciveAblesReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -90,6 +102,10 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/ReciveAblesReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -232,7 +248,9 @@ const Detail = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
-                {columns.map((column) => (
+                {id != 0 ? columns.map((column) => (
+                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                )) : founderColumns.map((column) => (
                   <TableHead key={column.name}>{t(column.label)}</TableHead>
                 ))}
               </TableRow>
@@ -240,17 +258,19 @@ const Detail = () => {
             <TableBody>
               {data.map((row) => (
                 <TableRow key={row.id}>
-                  {columns.map((column) => {
-                    const value = String(row[column.name]).toLowerCase();
 
+                  {id != 0 ? columns.map((column) => {
+                    const value = String(row[column.name]).toLowerCase();
                     let url = "";
-                    if (value.startsWith("pl")) {
+                    const invoiceType = row["customer"] != "Founder" ? row["invoiceType"].toLowerCase() : null; // invoiceType'i küçük harf yap
+
+                    if (invoiceType === InvoiceType.B2C) {
                       url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
+                    } else if (invoiceType === InvoiceType.B2B) {
                       url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
+                    } else if (invoiceType === InvoiceType.INDIVIDUAL_TOUR) {
                       url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
+                    } else if (invoiceType === InvoiceType.TOUR_PACKAGE) {
                       url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
                     } else {
                       url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
@@ -272,7 +292,30 @@ const Detail = () => {
                             formatDate(value)
                           ) : (
                             value
-                          ) // Diğer durumlarda değeri normal metin olarak göster
+                          )
+                        }
+                      </TableCell>
+                    );
+                  }) : founderColumns.map((column) => {
+                    const value = String(row[column.name]).toLowerCase();
+                    let url = `/panel/managerFinancialTransactions/report?tickets=${row["id"]}`;
+                    return (
+                      <TableCell key={column.name}>
+                        {
+                          column.name === "ref" ? (
+                            <a
+                              style={{ color: "blue", cursor: "pointer" }}
+                              href={url}
+                            >
+                              {value}
+                            </a> // URL'yi link olarak kullan
+                          ) : column.type === "date" &&
+                            value != "" &&
+                            value != null ? (
+                            formatDate(value)
+                          ) : (
+                            value
+                          )
                         }
                       </TableCell>
                     );

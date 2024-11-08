@@ -17,19 +17,19 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
   {
     field: "name",
     headerName: "Name",
-    flex: 1,
+    flex: 2,
     headerClassName: "header-item",
   },
   {
     field: "email",
     headerName: "Email",
-    flex: 1,
+    flex: 2,
     headerClassName: "header-item",
   },
   {
     field: "phoneNumber",
     headerName: "Phone",
-    flex: 1,
+    flex: 1.5,
     headerClassName: "header-item",
   },
   {
@@ -38,6 +38,8 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
     flex: 1,
     headerClassName: "header-item",
     renderCell: (params) => {
+      console.log('params.value', params.value);
+
       const id = params.row.id;
       const onTypeChange = async (status: number) => {
         const promise = apiService
@@ -58,7 +60,7 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
         { id: 2, text: "Inactive" }
       ]
 
-      let filteredMenuItems = menuItems.filter(item => item.id !== params.value);
+      let filteredMenuItems = menuItems.filter(item => item.id != params.value);
 
       return (
         <Menu as="div" className="relative inline-block text-left ">
@@ -66,10 +68,10 @@ export const columns: (t: TFunction) => GridColDef[] = () => [
             <Menu.Button
               className={cn(
                 "flex border-none items-center gap-x-4 font-semibold",
-                params.value === 1 ? "text-green-500" : params.value === 2 ? "text-red-500" : "text-gray-500"
+                params.value == 1 ? "text-green-500" : params.value == 2 ? "text-red-500" : "text-gray-500"
               )}
             >
-              {params.value === 1 ? "Active" : params.value === 2 ? "Inactive" : "Pending"}
+              {params.value == 1 ? "Active" : params.value == 2 ? "Inactive" : "Pending"}
             </Menu.Button>
           </div>
           <Transition

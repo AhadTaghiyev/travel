@@ -22,7 +22,7 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
-import { SERVER_BASE_URL } from "@/constants";
+import { InvoiceType, SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
 
 const columns = [
@@ -30,10 +30,10 @@ const columns = [
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "Departure Dates.", name: "departureDates", type: "date" },
+  { label: "Description", name: "description" },
   { label: "Note.", name: "note" },
-  { label: "Note.", name: "note" },
-  { label: "Buying.", name: "sellingPrice" },
-  { label: "Selling.", name: "totalAmount" },
+  { label: "Buying.", name: "buyingPrice" },
+  { label: "Selling.", name: "sellingPrice" },
   { label: "Profit.", name: "profit" },
 ];
 
@@ -49,10 +49,11 @@ const Detail = () => {
       id: string;
       name: string;
       sellingPrice: number;
-      totalAmount: number;
+      buyingPrice: number;
       profit: number;
     }[]
   >();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -81,7 +82,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/PersonalsReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/PersonalsReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -107,6 +108,10 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/PersonalsReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -138,9 +143,9 @@ const Detail = () => {
 
   const totalProfit = data2?.reduce((acc, item) => acc + item.profit, 0) || 0;
   const totalSellingPrice =
-    data2?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
+    data2?.reduce((acc, item) => acc + item.buyingPrice, 0) || 0;
   const totalAmount =
-    data2?.reduce((acc, item) => acc + item.totalAmount, 0) || 0;
+    data2?.reduce((acc, item) => acc + item.sellingPrice, 0) || 0;
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
       <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
@@ -259,9 +264,9 @@ const Detail = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
-                {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
-                ))}
+                {columns.map((column) => {
+                  return <TableHead key={column.name}>{t(column.label)}</TableHead>
+                })}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -271,13 +276,14 @@ const Detail = () => {
                     const value = String(row[column.name]).toLowerCase();
 
                     let url = "";
-                    if (value.startsWith("pl")) {
+                    const invoiceType = row["description"].toLowerCase();
+                    if (invoiceType === InvoiceType.B2C) {
                       url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
+                    } else if (invoiceType === InvoiceType.B2B) {
                       url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
+                    } else if (invoiceType === InvoiceType.INDIVIDUAL_TOUR) {
                       url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
+                    } else if (invoiceType === InvoiceType.TOUR_PACKAGE) {
                       url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
                     } else {
                       url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
@@ -307,7 +313,7 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={5}>
+                <TableCell className="py-2" colSpan={6}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalSellingPrice}</TableCell>

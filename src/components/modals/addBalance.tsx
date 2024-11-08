@@ -36,7 +36,7 @@ export const AddBalanceModal = () => {
       .post(`/company/AddBalance`, values)
       .then((response) => {
         if (response.status === 200) {
-          window.location.href=response.data.data
+          window.location.href = response.data.data
         } else {
           toast.error(response.message);
         }

@@ -145,7 +145,7 @@ export const advanceCollectsColumns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
-  
+
   {
     field: "ref",
     headerName: "Ref",
@@ -180,22 +180,39 @@ export const othersColumns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
-    field: "name",
-    headerName: "Ad",
-    flex: 1,
-    headerClassName: "header-item",
-  },
-  {
     field: "amount",
     headerName: "Məbləğ",
     flex: 1,
     headerClassName: "header-item",
   },
   {
-    field: "description",
-    headerName: "Description",
+    field: "debtAmount",
+    headerName: "Debt Amount",
     flex: 1,
     headerClassName: "header-item",
   },
- 
+  {
+    field: "payment",
+    headerName: "Payment",
+    flex: 2,
+    headerClassName: "header-item",
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    flex: 2,
+    headerClassName: "header-item",
+  },
+  {
+    field: "note",
+    headerName: "Note",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+    headerClassName: "header-item",
+  },
 ];

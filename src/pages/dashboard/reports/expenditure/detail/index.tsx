@@ -72,6 +72,7 @@ const Detail = () => {
       debit: number;
     }[]
   >();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [editId, setEditId] = useState(null);
   const [editAmount, setEditAmount] = useState("");
@@ -113,7 +114,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/ExpenditureReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/ExpenditureReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -139,6 +140,10 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/ExpenditureReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -222,9 +227,9 @@ const Detail = () => {
         prevData.map((item) =>
           item.id === id
             ? {
-                ...item,
-                [isWp ? "debit" : "credit"]: Number(editAmount),
-              }
+              ...item,
+              [isWp ? "debit" : "credit"]: Number(editAmount),
+            }
             : item
         )
       );

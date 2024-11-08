@@ -10,6 +10,18 @@ export const columns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
+    field: "debit",
+    headerName: "Debit",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "credit",
+    headerName: "Credit",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "balance",
     headerName: "Balans",
     flex: 1,

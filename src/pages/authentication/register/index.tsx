@@ -186,7 +186,7 @@ export default function Index() {
               }
               staticOptions={[
                 { label: `Monthly - ${country == "AZ" ? "90 AZN" : "90 USD"} `, value: "0" },
-                { label: "Demo - 14 day", value: "2" },
+                { label: "Demo - 7 day", value: "2" },
               ]}
               errorMessages={[formik.errors.subscribeType?.toString()]}
             />

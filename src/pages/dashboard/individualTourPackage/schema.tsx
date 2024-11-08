@@ -1,5 +1,8 @@
 import * as Yup from "yup";
 
+const FILE_SIZE = 1024 * 1024; // 1MB
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
 const TourPackageSchema = Yup.object().shape({
   otelName: Yup.string().required("Otel adı daxil edilməlidir"),
   roomName: Yup.string().required("Otaq adı daxil edilməlidir"),
@@ -41,4 +44,18 @@ export const getTicketSchema = (isEdit: boolean) =>
         : sch.notRequired();
     }),
     individualTourPackages: Yup.array().of(TourPackageSchema),
+
+    receiptImage: Yup.mixed()
+      .nullable()
+      .test("fileSize", "The file size must not exceed 1MB.", (value) => {
+        return !isEdit && value ? (value[0] instanceof File && value[0].size <= FILE_SIZE) : true;
+      })
+      .test(
+        "fileFormat",
+        "Only JPG, JPEG, and PNG formats are accepted.",
+        (value) => {
+          // Ensure that value is a file before checking properties
+          return !isEdit && value ? (value[0] instanceof File && SUPPORTED_FORMATS.includes(value[0].type)) : true;
+        }
+      ),
   });

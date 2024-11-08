@@ -34,10 +34,10 @@ const columns = [
   { label: "Purchase Price", name: "buyingPrice" },
   { label: "Selling Price", name: "sellingPrice" },
   { label: "Profits", name: "profiy" },
-  { label: "Refund Status", name: "refundStatus",type:"bool" },
+  { label: "Refund Status", name: "refundStatus", type: "bool" },
 ];
 
-const handleDownload = async (id) => {
+const handleDownload = async (id, startDate, endDate) => {
   try {
     const token = localStorage.getItem("token"); // Replace "your_token_key" with the actual key you used to store the token
     if (!token) {
@@ -52,7 +52,7 @@ const handleDownload = async (id) => {
       },
     };
     const promise = axios.get(
-      `${SERVER_BASE_URL}/reports/ProfitsReportDetailExport?ticketType=${id}`,
+      `${SERVER_BASE_URL}/reports/ProfitsReportDetailExport?ticketType=${id}&startDate=${startDate}&endDate=${endDate}`,
       config
     );
 
@@ -87,6 +87,7 @@ const Detail = () => {
       profiy: number;
     }[]
   >();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -106,7 +107,10 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
-
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     try {
       await apiService
         .get(`/Reports/ProfitsReportDetail?${searchParams.toString()}`)
@@ -183,7 +187,7 @@ const Detail = () => {
               </Button>
 
               <Button
-                onClick={() => handleDownload(id)}
+                onClick={() => handleDownload(id, date.startDate, date.endDate)}
                 variant="text"
                 color="inherit"
                 sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
@@ -280,13 +284,13 @@ const Detail = () => {
                     const value = String(row[column.name]).toLowerCase();
 
                     let url = "";
-                    if (value.startsWith("pl")) {
+                    if (id === "aviabiletSale") {
                       url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
+                    } else if (id === "cooperativeTicket") {
                       url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
+                    } else if (id === "individualTourPackage") {
                       url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
+                    } else if (id === "tourPackage") {
                       url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
                     } else {
                       url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;
@@ -294,25 +298,25 @@ const Detail = () => {
 
                     return (
                       <TableCell key={column.name} className="py-1.5">
-                      {
-                        column.name === "ref" ? (
-                          <Link
-                            style={{ color: "blue", cursor: "pointer" }}
-                            to={url}
-                            target="_blank"
-                          >
-                            {value}
-                          </Link> // URL'yi link olarak kullan
-                        ) : column.type === "date" ? (
-                          formatDate(value)
-                        ) : column.type === "bool" ? (
-                          value=="true" ? t("Refunded") : t("Not Refunded" )
-                        ) : (
-                          t(value)
-                        ) // Diğer durumlarda değeri normal metin olarak göster
-                      }
-                    </TableCell>
-                    
+                        {
+                          column.name === "ref" ? (
+                            <Link
+                              style={{ color: "blue", cursor: "pointer" }}
+                              to={url}
+                              target="_blank"
+                            >
+                              {value}
+                            </Link> // URL'yi link olarak kullan
+                          ) : column.type === "date" ? (
+                            formatDate(value)
+                          ) : column.type === "bool" ? (
+                            value == "true" ? t("Refunded") : t("Not Refunded")
+                          ) : (
+                            t(value)
+                          ) // Diğer durumlarda değeri normal metin olarak göster
+                        }
+                      </TableCell>
+
                     );
                   })}
                 </TableRow>

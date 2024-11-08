@@ -8,6 +8,7 @@ export interface IInvoiceModel {
   isCustomerPaid: boolean;
   isSupplierPaid: boolean;
   planeTickets: IPlaneTicketModel[];
+  receiptImage?: File;
 }
 export interface IPlaneTicketModel {
   key?: string;

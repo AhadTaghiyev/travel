@@ -12,3 +12,11 @@ export const ROLES = {
   ACCOUNTANT: "Accountant",
   Admin: "Admin",
 };
+
+export enum InvoiceType {
+  B2C = "b2c",
+  B2B = "b2b",
+  INDIVIDUAL_TOUR = "individual tour",
+  TOUR_PACKAGE = "tour package",
+  OTHER_SERVICE = "other service",
+}

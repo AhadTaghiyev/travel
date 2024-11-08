@@ -15,17 +15,35 @@ const NewIncome = () => {
 
   const onSubmit = useCallback(
     (values: IIncomeModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
-      const params = {
-        invoiceIds: values.invoiceIds.map((item: any) => item.value),
-        paymentId: values.paymentId,
-        personalId: values.personalId,
-        paidAmount: values.paidAmount,
-        description: values.description,
-        date: values.date,
-      };
+      // const params = {
+      //   invoiceIds: values.invoiceIds.map((item: any) => item.value),
+      //   paymentId: values.paymentId,
+      //   personalId: values.personalId,
+      //   paidAmount: values.paidAmount,
+      //   description: values.description,
+      //   date: values.date,
+      // };
+
+      const formData = new FormData();
+      formData.append("date", values.date.toISOString());
+      formData.append("description", values.description);
+      formData.append("paidAmount", values.paidAmount.toString());
+      formData.append("paymentId", values.paymentId ? values.paymentId.toString() : "");
+      formData.append("personalId", values.personalId.toString());
+
+      // Append each plane ticket separately
+      values.invoiceIds.forEach((invoiceId, index) => {
+        console.log(invoiceId);
+        formData.append(`invoiceIds[${index}]`, invoiceId["value"].toString());
+      });
+
+      // Append the receipt image
+      if (values.receiptImage) {
+        formData.append("receiptImage", values.receiptImage[0]);
+      }
 
       const promise = apiService
-        .post(`/MassIncomes/Create`, params)
+        .postForm(`/MassIncomes/Create`, formData)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("Mədaxil yaradıldı"));

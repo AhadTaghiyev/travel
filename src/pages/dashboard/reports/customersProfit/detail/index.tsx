@@ -23,12 +23,13 @@ import { ClipLoader } from "react-spinners";
 import { formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
-import { SERVER_BASE_URL } from "@/constants";
+import { InvoiceType, SERVER_BASE_URL } from "@/constants";
 
 const columns = [
   { label: "Customer", name: "customer" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
+  { label: "InvoiceType", name: "invoiceType" },
   { label: "DeadLine.", name: "deadLine", type: "date" },
   { label: "Note.", name: "note" },
   { label: "Buying.", name: "sellingPrice" },
@@ -50,6 +51,7 @@ const Detail = () => {
       profit: number;
     }[]
   >();
+  const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
@@ -78,7 +80,7 @@ const Detail = () => {
         },
       };
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/CustomersReportDetailExport/${id}`,
+        `${SERVER_BASE_URL}/reports/CustomersReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
         config
       );
 
@@ -104,6 +106,10 @@ const Detail = () => {
     if (startDate)
       searchParams.append("startDate", toLocalISOString(startDate));
     if (endDate) searchParams.append("endDate", toLocalISOString(endDate));
+    setDate({
+      startDate: startDate ? toLocalISOString(startDate) : null,
+      endDate: endDate ? toLocalISOString(endDate) : null
+    });
     await apiService
       .get(`/Reports/CustomersReportDetail/${id}?${searchParams.toString()}`)
       .then((res) => {
@@ -266,13 +272,15 @@ const Detail = () => {
                     const value = String(row[column.name]).toLowerCase();
 
                     let url = "";
-                    if (value.startsWith("pl")) {
+                    const invoiceType = row["invoiceType"].toLowerCase();
+
+                    if (invoiceType === InvoiceType.B2C) {
                       url = `/panel/aviabiletsale/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("cp")) {
+                    } else if (invoiceType === InvoiceType.B2B) {
                       url = `/panel/cooperativeTicket/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("itp")) {
+                    } else if (invoiceType === InvoiceType.INDIVIDUAL_TOUR) {
                       url = `/panel/individualTourPackage/report?tickets=${row["invoiceId"]}`;
-                    } else if (value.startsWith("tp")) {
+                    } else if (invoiceType === InvoiceType.TOUR_PACKAGE) {
                       url = `/panel/tourPackage/report?tickets=${row["invoiceId"]}`;
                     } else {
                       url = `/panel/otherService/report?tickets=${row["invoiceId"]}`;

@@ -49,8 +49,43 @@ const NewTicket = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      const formData = new FormData();
+      formData.append("customerId", values.customerId.toString());
+      formData.append("date", values.date.toISOString());
+      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("explanation", values.explanation.toString());
+      formData.append("isCustomerPaid", values.isCustomerPaid.toString());
+      formData.append("isSupplierPaid", values.isSupplierPaid.toString());
+      formData.append("paidAmount", values.paidAmount.toString());
+      formData.append("paymentId", values.paymentId ? values.paymentId.toString() : "");
+
+      // Append each plane ticket separately
+      values.tourPackages.forEach((tourPackage, index) => {
+        formData.append(`tourPackages[${index}].adultCount`, tourPackage.adultCount.toString());
+        formData.append(`tourPackages[${index}].childrenCount`, tourPackage.childrenCount.toString());
+        formData.append(`tourPackages[${index}].commonPrice`, tourPackage.commonPrice.toString());
+        formData.append(`tourPackages[${index}].dateOfDeparture`, tourPackage.dateOfDeparture.toISOString());
+        formData.append(`tourPackages[${index}].diningId`, tourPackage.diningId.toString());
+        formData.append(`tourPackages[${index}].discount`, tourPackage.discount.toString());
+        formData.append(`tourPackages[${index}].supplierId`, tourPackage.supplierId?.toString() || "");
+        formData.append(`tourPackages[${index}].personalId`, tourPackage.personalId?.toString() || "");
+        formData.append(`tourPackages[${index}].insurance`, tourPackage.insurance?.toString() || "");
+        formData.append(`tourPackages[${index}].otelName`, tourPackage.otelName || "");
+        formData.append(`tourPackages[${index}].purchasePrice`, tourPackage.purchasePrice.toString() || "");
+        formData.append(`tourPackages[${index}].returnDate`, tourPackage.returnDate.toISOString() || "");
+        formData.append(`tourPackages[${index}].rezervationNumber`, tourPackage.rezervationNumber || "");
+        formData.append(`tourPackages[${index}].roomName`, tourPackage.roomName || "");
+        formData.append(`tourPackages[${index}].sellingPrice`, tourPackage.sellingPrice.toString() || "");
+        formData.append(`tourPackages[${index}].tourId`, tourPackage.tourId.toString() || "");
+        formData.append(`tourPackages[${index}].transferId`, tourPackage.transferId.toString() || "");
+      });
+
+      // Append the receipt image
+      if (values.receiptImage) {
+        formData.append("receiptImage", values.receiptImage[0]);
+      }
       const promise = apiService
-        .post(`/TourPackages/Create`, values)
+        .postForm(`/TourPackages/Create`, formData)
         .then((response) => {
           if (response.status === 200) {
             toast.success(t("TourPackage created"));
