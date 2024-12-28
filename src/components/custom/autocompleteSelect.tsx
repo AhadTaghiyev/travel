@@ -34,7 +34,7 @@ interface ICustomAutocompleteSelectProps {
   staticOptions?: { value: string; label: string }[];
   errorMessages: string[];
   hasErrorMessages: boolean;
-  refName?:string;
+  refName?: string;
 }
 
 export default function CustomAutocompleteSelect({
@@ -48,7 +48,7 @@ export default function CustomAutocompleteSelect({
   staticOptions,
   hasErrorMessages,
   disabled = false,
-  refName=""
+  refName = ""
 }: ICustomAutocompleteSelectProps) {
   const [options, setOptions] = useState(staticOptions ?? null);
   const [open, setOpen] = useState(false);
@@ -60,8 +60,8 @@ export default function CustomAutocompleteSelect({
 
     const data = res.data.items
       .map((x) => ({
-        label: refName+ x[optionLabel],
-        value:  x.id,
+        label: refName + x[optionLabel],
+        value: x.id,
       }))
       .filter((item) => item.label && item.value);
 
@@ -99,7 +99,7 @@ export default function CustomAutocompleteSelect({
             <FaCaretDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full popover-content-width-same-as-its-trigger p-0">
+        <PopoverContent side="bottom" align="start" className="w-full p-0">
           <Command
             filter={(value, search) => {
               return options

@@ -3,6 +3,7 @@ export interface IReportModel {
   api: string;
   title?: string;
   showCreateButton?: boolean;
+  isTime?: boolean;
 }
 
 export interface IReportTableHeader {

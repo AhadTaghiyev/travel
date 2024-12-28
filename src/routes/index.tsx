@@ -9,7 +9,6 @@ import Error from "../Error";
 import Login from "../pages/authentication/login";
 import Register from "../pages/authentication/register";
 import Auth from "../pages/authentication";
-import ChangePassword from "../pages/authentication/changePassword";
 import ChangePasswordV from "../pages/dashboard/settings/password/create";
 import Unauth from "../Unauth";
 
@@ -310,6 +309,9 @@ import Privacy from "../pages/main/privacy";
 import Terms from "../pages/main/terms";
 import { LeaderOnly, ManagementOnly } from "./guards";
 import PaymentConfirmation from "@/pages/dashboard/confirmations/PaymentConfirmation";
+import RegisterPaymentConfirmation from "@/pages/main/paymentConfirmation";
+import ForgotPassword from "@/pages/authentication/forgotPassword";
+import ResetPassword from "@/pages/authentication/forgotPassword/reset-password";
 
 const router = createBrowserRouter([
   {
@@ -377,6 +379,10 @@ const router = createBrowserRouter([
     element: <Unauth />,
   },
   {
+    path: "/paymentConfirmation/:id",
+    element: <RegisterPaymentConfirmation />,
+  },
+  {
     path: "/auth",
     element: <Auth />,
     children: [
@@ -393,8 +399,12 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/auth/changePassword",
-        element: <ChangePassword />,
+        path: "/auth/forgotPassword",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/auth/resetPassword",
+        element: <ResetPassword />,
       },
     ],
   },

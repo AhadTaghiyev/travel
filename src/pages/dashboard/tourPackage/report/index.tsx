@@ -13,13 +13,16 @@ export default function index() {
           { fieldName: t("Meal"), propertyName: "meal" },
           { fieldName: t("Otel adı"), propertyName: "hotelName" },
           { fieldName: t("Otaq adı"), propertyName: "roomName" },
-          { fieldName: t("Uşaqların sayı"), propertyName: "childrenCount" },
-          { fieldName: t("Böyüklərin sayı"), propertyName: "adultsCount" },
+          { fieldName: t("Children / Adult Count"), propertyName: "childrenadultcount" },
+          // { fieldName: t("Uşaqların sayı"), propertyName: "childrenCount" },
+          // { fieldName: t("Böyüklərin sayı"), propertyName: "adultsCount" },
           { fieldName: t("Gediş tarixi"), propertyName: "dateOfDeparture" },
           { fieldName: t("Dönüş tarixi"), propertyName: "returnDate" },
-          { fieldName: t("Satış qiyməti"), propertyName: "sellingPrice" },
+          { fieldName: t("Insurance"), propertyName: "insurance" },
+          { fieldName: t("Transfer"), propertyName: "transfer" },
         ]}
         api="/TourPackages/GetDetailAsync"
+        isTime={true}
       />
     </div>
   );

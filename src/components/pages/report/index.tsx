@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { BsCurrencyExchange } from "react-icons/bs";
 import Typography from "@mui/material/Typography";
@@ -22,7 +22,11 @@ import { useModal } from "@/hooks/useModal";
 import ReportTable from "../reportTable";
 
 import { CompanyContext } from "@/store/CompanyContext";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatDateV2 } from "@/lib/utils";
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import PDFDocument from "./pdf";
 
 const customerProperties = [
   {
@@ -48,6 +52,7 @@ export default function Index({
   api,
   title,
   showCreateButton,
+  isTime = false
 }: IReportModel) {
   const [searchParams] = useSearchParams();
   const { onOpen } = useModal();
@@ -58,6 +63,7 @@ export default function Index({
   });
   const [loading, setLoading] = useState(true);
   const [invoiceText, setInvoiceText] = useState("");
+  const [invoiceImage, setInvoiceImage] = useState(null);
   const [data, setData] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -109,6 +115,9 @@ export default function Index({
 
     const invoiceTextRes = await apiService.get("/InvoiceTexts/get");
     setInvoiceText(invoiceTextRes?.data?.text);
+    // InvoiceText'i görsele dönüştür
+    const image = await generateImageFromHTML(invoiceTextRes?.data?.text);
+    setInvoiceImage(image); // Görseli kaydet
     setLoading(false);
   }
 
@@ -116,21 +125,55 @@ export default function Index({
     setCurrency(values);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
-  const generatePDFBlob = async () => {
-    const element = document.getElementById("reportPage");
-    const opt = {
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    const blob = await html2pdf().set(opt).from(element).toPdf().output("blob");
-    if (!blob) {
-      toast.error(t("Something went wrong"));
-      return "";
+  const printRef = useRef();
+
+  const generateImageFromHTML = async (htmlString) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlString;
+    tempDiv.style.position = "absolute";
+    tempDiv.style.left = "-9999px"; // Görünmez yap
+    document.body.appendChild(tempDiv);
+
+    try {
+      const canvas = await html2canvas(tempDiv);
+      const dataUrl = canvas.toDataURL("image/png");
+      document.body.removeChild(tempDiv); // Geçici elemanı kaldır
+      return dataUrl;
+    } catch (error) {
+      console.error("HTML to Image conversion failed", error);
+      document.body.removeChild(tempDiv);
+      return null;
     }
-    return blob;
+  };
+
+  const generatePDFBlob = async (data, company, invoiceText, headers, title, currency, invoiceNo) => {
+    try {
+      // Generate the PDF document as a blob
+      const pdfBlob = await pdf(
+        <PDFDocument
+          data={data}
+          company={company}
+          invoiceText={invoiceText}
+          headers={headers}
+          title={title}
+          currency={currency}
+          companyName={company.name}
+          companyEmail={company.email}
+          companyImage={company.imageBase64}
+          companyPhone={company.phoneNumber}
+          companyAddress={company.adress}
+          t={t}
+          isTime={isTime}
+        />
+      ).toBlob();
+
+      const pdfFile = new File([pdfBlob], `Travacco_${invoiceNo}.pdf`, { type: "application/pdf" });
+
+      return pdfFile;
+    } catch (error) {
+      console.error("Error generating PDF Blob:", error);
+      return null;
+    }
   };
 
   if (loading || companyLoading) {
@@ -138,8 +181,8 @@ export default function Index({
   }
 
   return (
-    <div id="reportPage">
-      <Container maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
+    <div id="reportPage" ref={printRef}>
+      <Container className="invoice-section" maxWidth="xl" sx={{ backgroundColor: "white", pb: 4 }}>
         <Grid container spacing={3} sx={{ mb: 2, width: "100%", pt: 2 }}>
           <Grid
             container
@@ -200,12 +243,13 @@ export default function Index({
                     variant="text"
                     color="inherit"
                     onClick={async () => {
-                      const blob = await generatePDFBlob();
-                      if (!blob) return;
+                      const pdfFile = await generatePDFBlob(data, company, invoiceText, headers, title, currency, data.items[0].invoiceNo);
+                      if (!pdfFile) return;
 
                       onOpen("sendMail", () => 0, {
-                        blob,
+                        blob: pdfFile,
                         subject: data?.simpleTable?.fullName ?? "",
+                        isBcc: false,
                       });
                     }}
                     sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
@@ -213,13 +257,38 @@ export default function Index({
                     <AiOutlineMail style={{ marginRight: "8px" }} />
                     {t("Send mail")}
                   </Button>
-                  <Button
-                    onClick={handlePrint}
-                    variant="text"
-                    color="inherit"
-                    sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-                  >
-                    <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
+                  <Button >
+                    <PDFDownloadLink
+                      document={
+                        <PDFDocument
+                          data={data}
+                          company={company}
+                          invoiceText={invoiceText}
+                          invoiceImage={invoiceImage}
+                          headers={headers}
+                          title={title}
+                          currency={currency}
+                          companyName={company.name}
+                          companyEmail={company.email}
+                          companyImage={company.imageBase64}
+                          companyPhone={company.phoneNumber}
+                          companyAddress={company.adress}
+                          t={t}
+                          isTime={isTime}
+                        />
+                      }
+                      fileName={`Travacco_${data.items[0].invoiceNo}.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        color: "#000",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "12px"
+                      }}
+                    >
+                      {({ loading }) => (loading ? t("Loading") : <><FiDownload style={{ marginRight: "8px" }} /> {t("Download")}</>)}
+                    </PDFDownloadLink>
                   </Button>
                   <Button
                     onClick={(e) => navigate("/panel/agreements/new")}
@@ -272,20 +341,19 @@ export default function Index({
             )}
             <div className="flex justify-between ">
               <div>
-                <h3 className="text-xl font-bold mb-2">
+                <h3 id="customer-title" className="text-xl font-bold mb-2">
                   {t("Müştəri məlumatları")}
                 </h3>
                 {customerProperties.map((item, index) => (
                   <div
-                    className="text-sm flex w-fit mb-1 print:block"
+                    className="text-sm flex w-fit mb-1 print:block customer-description"
                     key={index}
                   >
                     <p className="w-24 font-bold">{t(item.fieldName)}:</p>
                     <p>
                       {item.propertyName === "date"
-                        ? formatDate(
-                          data?.simpleTable?.[item.propertyName],
-                          "dd-MM-yyyy HH:mm"
+                        ? formatDateV2(
+                          data?.simpleTable?.[item.propertyName]
                         )
                         : data?.simpleTable?.[item.propertyName]}
                     </p>
@@ -293,7 +361,7 @@ export default function Index({
                 ))}
               </div>
               {data.incomes && (
-                <div className="print:w-[calc(100%-200px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
+                <div id="income-table-box" className="print:w-[calc(100%-200px)] w-[calc(100%-270px)] max-w-[650px] -mr-6 ">
                   <MassIncomeTable
                     currency={currency}
                     incomes={data.incomes}
@@ -315,12 +383,27 @@ export default function Index({
                 currency={currency}
                 items={data?.items}
                 totals={data.totals}
+                isTime={isTime}
               />
             </Grid>
           </Container>
         </Grid>
         <h1 dangerouslySetInnerHTML={{ __html: invoiceText }}></h1>
-      </Container>
-    </div>
+        {company.companySealImage && (
+          <div className="flex justify-end mt-32 mr-32 mb-48">
+            <img
+              src={`data:image/png;base64,${company.companySealBase64}`}
+              alt="Company Seal"
+              className="seal-image"
+              style={{
+                width: 600, // Boyut artırıldı
+                maxHeight: 300, // Boyut artırıldı
+                objectFit: "contain",
+              }}
+            />
+          </div>
+        )}
+      </Container >
+    </div >
   );
 }

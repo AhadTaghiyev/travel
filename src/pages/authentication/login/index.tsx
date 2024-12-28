@@ -27,12 +27,12 @@ export default function Index() {
   const navigate = useNavigate();
   const { getUser } = useContext(UserContext);
 
-  const params= useParams()
-useEffect(()=>{
-  if(params.Accept!=undefined){
-    alert("Payment Succesfuly!")
-  }
-},[])
+  const params = useParams()
+  useEffect(() => {
+    if (params.Accept != undefined) {
+      alert("Payment Succesfuly!")
+    }
+  }, [])
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -136,12 +136,14 @@ useEffect(()=>{
                 </InputAdornment>
               }
             />
-            <Link
-              to="/auth/changePassword"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <Typography variant="body2">Change password</Typography>
-            </Link>
+            <div className="flex justify-between">
+              <Link
+                to="/auth/forgotPassword"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <Typography variant="body2">Forgot password?</Typography>
+              </Link>
+            </div>
           </Box>
           <Button
             type="submit"

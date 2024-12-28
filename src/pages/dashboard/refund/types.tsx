@@ -18,4 +18,5 @@ export interface IRefundModel {
   paidToCustomer?: number;
   forfeit?: number;
   date: Date;
+  personalId: number;
 }

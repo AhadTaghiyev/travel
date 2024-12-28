@@ -14,6 +14,7 @@ export interface ITableObject {
   hideStatus?: boolean;
   hideReceipt?: boolean;
   hideOperations?: boolean;
+  isDetailedTotal?: boolean;
   deleteApi?: string;
   statusApi?: string;
   showOverflow?: boolean;

@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo, useEffect } from "react";
 import { Menu, MenuItem, Typography } from "@mui/material";
 import { userService } from "../../../../../server/systemUserServer";
 import { BiLogOut } from "react-icons/bi";
@@ -15,6 +15,15 @@ import { cn } from "@/lib/utils";
 import { UserContext } from "@/store/UserContext";
 import { CompanyContext } from "@/store/CompanyContext";
 import { useModal } from "@/hooks/useModal";
+import {
+  CustomSelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  // SelectValue,
+} from "@/components/ui/select";
+import { YearContext } from "@/store/YearContext";
 interface NavbarProp {
   isAdmin?: boolean | null;
 }
@@ -26,7 +35,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   } = useTranslation();
   const { user: currentUser, removeUser } = useContext(UserContext);
   const { company } = useContext(CompanyContext)
-  const { onOpen} = useModal();
+  const { onOpen } = useModal();
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
     localStorage.setItem("language", language);
@@ -41,6 +50,9 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const currentYear = new Date().getFullYear();
+  // const [selectedYear, setSelectedYear] = useState(String(currentYear));
+  const { selectedYear, setSelectedYear } = useContext(YearContext);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,6 +65,36 @@ export default function Navbar({ isAdmin }: NavbarProp) {
     removeUser();
     navigate("/auth/login");
   };
+
+  const years = useMemo(() => {
+    const years = [];
+    for (let i = currentYear; i >= new Date(2023, 0, 1, 0).getFullYear(); i--) {
+      years.push(i);
+    }
+    return years;
+  }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem("selectedYear")) {
+      localStorage.setItem("selectedYear", String(currentYear));
+    }
+  }, [])
+
+  useEffect(() => {
+    // İlk yüklemede localStorage'daki değeri kontrol et
+    const storedYear = localStorage.getItem("selectedYear");
+    if (storedYear) {
+      setSelectedYear(storedYear === "All" ? storedYear : Number(storedYear));
+    } else {
+      setSelectedYear(years[years.length - 1]); // Varsayılan olarak ilk yılı seç
+    }
+  }, [years]);
+
+  const handleYearChange = (value) => {
+    setSelectedYear(value);
+    localStorage.setItem("selectedYear", value);
+  };
+
   return (
     <AppBar
       color="default"
@@ -119,8 +161,29 @@ export default function Navbar({ isAdmin }: NavbarProp) {
               >
                 + {t("Add Balance")}
               </button>
+              <div className="w-40 ml-5">
+                <Select
+                  value={selectedYear.toString()} // Seçili yılı belirt
+                  onValueChange={handleYearChange}
+                >
+                  <SelectTrigger className="text-black">
+                    <CustomSelectValue>
+                      {t("Period")} - {selectedYear}
+                    </CustomSelectValue>
+                  </SelectTrigger>
+                  <SelectContent style={{ position: "fixed", zIndex: "99999" }}>
+                    {years.map((year) => (
+                      <SelectItem key={year} value={`${year}`}>
+                        {year}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value={`All`}>
+                      All
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </Box>
-            
           )}
           <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>

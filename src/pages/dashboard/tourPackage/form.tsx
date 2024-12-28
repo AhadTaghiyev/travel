@@ -68,501 +68,503 @@ const TourPackageForm = ({
         handleSubmit,
         setFieldValue,
         isSubmitting,
-      }) => (
-        <form onSubmit={handleSubmit} className="pt-4 ">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
-            <div className="w-full relative">
-              <CustomAutocompleteSelect
-                disabled={isView}
-                api="Customers/GetAll/1/10000"
-                label={t("customer")}
-                value={values.customerId ?? null}
-                optionLabel="fullName"
-                change={(value) => {
-                  setFieldValue("customerId", value ?? null);
-                  setUserId(value)
-                }}
-                refetech={!!(isModalSuccess && type === "createCustomer")}
-                hasErrorMessages={!!errors.customerId && !!touched.customerId}
-                errorMessages={[t(errors.customerId?.toString())]}
-              />
-              {!isView && (
-                <button
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    onOpen("createCustomer");
+      }) => {
+        console.log("values", values);
+        return (
+          <form onSubmit={handleSubmit} className="pt-4 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 items-center">
+              <div className="w-full relative">
+                <CustomAutocompleteSelect
+                  disabled={isView}
+                  api="Customers/GetAll/1/10000"
+                  label={t("customer")}
+                  value={values.customerId ?? null}
+                  optionLabel="fullName"
+                  change={(value) => {
+                    setFieldValue("customerId", value ?? null);
+                    setUserId(value)
                   }}
-                  className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                >
-                  <FaPlusSquare />
-                </button>
-              )}
-            </div>
-            <div className="w-full h-full">
-              <CustomDateTimePicker
-                disabled={isView}
-                label={t("date")}
-                value={values.date}
-                toDate={new Date()}
-                change={(data) => {
-                  setFieldValue("date", data ?? new Date());
-                }}
-                hasErrorMessages={!!errors.date && !!touched.date}
-                errorMessages={[t(errors.date?.toString())]}
-              />
-            </div>
-            <div className="w-full h-full">
-              <CustomDateTimePicker
-                disabled={isView}
-                label={t("deadline")}
-                value={values.deadLine}
-                change={(data) => {
-                  setFieldValue("deadLine", data ?? new Date());
-                }}
-                hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
-                errorMessages={[t(errors.deadLine?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <CustomTextField
-                disabled={isView}
-                name="explanation"
-                type="text"
-                label={t("explanation")}
-                value={values.explanation}
-                change={handleChange}
-                hasErrorMessages={!!errors.explanation && !!touched.explanation}
-                errorMessages={[t(errors.explanation?.toString())]}
-              />
-            </div>
-            <div className="w-full">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    name="isSupplierPaid"
-                    checked={values.isSupplierPaid}
-                    onChange={handleChange}
-                    disabled={isEdit || isView}
-                  />
-                }
-                label={t("supplierPayment")}
-              />
-            </div>
-            <div
-              className={cn(
-                "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
-                values.isCustomerPaid &&
-                !isEdit &&
-                !isView &&
-                "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
-              )}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    name="isCustomerPaid"
-                    checked={values.isCustomerPaid}
-                    onChange={handleChange}
-                    disabled={isEdit || isView}
-                  />
-                }
-                label={
-                  values.isCustomerPaid && !isEdit && !isView
-                    ? ""
-                    : t("customerPayment")
-                }
-              />
-              {(values.isCustomerPaid || values.isSupplierPaid) && !isEdit && !isView && (
-                <div className="flex flex-col gap-y-4">
-                  <div className="flex flex-col sm:flex-row gap-x-4">
-                    <div className="w-full">
-                      <CustomAutocompleteSelect
-                        api="Payments/GetAll/1"
-                        label={t("Ödəniş növü")}
-                        value={values.paymentId ?? null}
-                        optionLabel="type"
-                        change={(value) => setFieldValue("paymentId", value)}
-                        hasErrorMessages={
-                          !!errors.paymentId && !!touched.paymentId
-                        }
-                        errorMessages={[t(errors.paymentId?.toString() ?? "")]}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        label={t("Ödənilən məbləğ")}
-                        value={values.paidAmount}
-                        change={handleChange}
-                        type="number"
-                        name={`paidAmount`}
-                        hasErrorMessages={
-                          !!errors.paidAmount && !!touched.paidAmount
-                        }
-                        errorMessages={[t(errors.paidAmount?.toString())]}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        disabled
-                        label={t("Qalıq məbləğ")}
-                        value={Math.max(
-                          values.tourPackages.reduce(
-                            (acc, cur) => acc + cur.sellingPrice - cur.discount,
-                            0
-                          ) - values.paidAmount,
-                          0
-                        )}
-                        change={() => 0}
-                        type="number"
-                        name={``}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <CustomTextField
-                        label={t("Advance Payment")}
-                        value={advancePayment}
-                        change={handleChange}
-                        type="number"
-                        name={``}
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="xs:w-full md:w-1/4">
-                    <CustomTextField
-                      name="receiptImage"
-                      type="file"
-                      label={t("Attachments")}
-                      value={undefined}
-                      change={(e) => {
-                        setFieldValue("receiptImage", e.target.files);
-                        setSelectedFileName(e.target.files[0]?.name || "");
-                      }}
-                      hasErrorMessages={!!errors.receiptImage && !!touched.receiptImage}
-                      errorMessages={[t(errors.receiptImage?.toString())]}
-                      inputRef={fileInputRef}
-                      className="hidden"
-                      accept="image/png, image/jpeg, image/jpg"
-                    />
-                    <div style={{ display: "flex", justifyContent: "space-between" }} className="w-full border border-[#e5e5e5] border-solid rounded-md py-2 px-4 bg-white font-medium text-[15px] cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                      <span>{t("Attach File")}</span>
-                      <span className="flex items-center text-[16px]"><BsFileEarmarkArrowUp /></span>
-                    </div>
-                    {selectedFileName && (
-                      <div className="text-[14px] mt-1 text-gray-600">
-                        {selectedFileName} {t("Selected")}
-                      </div>
-                    )}
-                    <span className="text-[14px]">* {t("receiptImageNote")}</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="mt-4">
-            {values.tourPackages.map((tourPackage, index) => (
-              <div
-                key={`key-${tourPackage.id ?? tourPackage.key}`}
-                className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
-              >
+                  refetech={!!(isModalSuccess && type === "createCustomer")}
+                  hasErrorMessages={!!errors.customerId && !!touched.customerId}
+                  errorMessages={[t(errors.customerId?.toString())]}
+                />
                 {!isView && (
-                  <div className="absolute right-0 top-2 flex gap-x-2">
-                    {index !== 0 && (
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      onOpen("createCustomer");
+                    }}
+                    className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                  >
+                    <FaPlusSquare />
+                  </button>
+                )}
+              </div>
+              <div className="w-full h-full">
+                <CustomDateTimePicker
+                  disabled={isView}
+                  label={t("date")}
+                  value={values.date}
+                  toDate={new Date()}
+                  change={(data) => {
+                    setFieldValue("date", data ?? new Date());
+                  }}
+                  hasErrorMessages={!!errors.date && !!touched.date}
+                  errorMessages={[t(errors.date?.toString())]}
+                />
+              </div>
+              <div className="w-full h-full">
+                <CustomDateTimePicker
+                  disabled={isView}
+                  label={t("deadline")}
+                  value={values.deadLine}
+                  change={(data) => {
+                    setFieldValue("deadLine", data ?? new Date());
+                  }}
+                  hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
+                  errorMessages={[t(errors.deadLine?.toString())]}
+                />
+              </div>
+              <div className="w-full">
+                <CustomTextField
+                  disabled={isView}
+                  name="explanation"
+                  type="text"
+                  label={t("explanation")}
+                  value={values.explanation}
+                  change={handleChange}
+                  hasErrorMessages={!!errors.explanation && !!touched.explanation}
+                  errorMessages={[t(errors.explanation?.toString())]}
+                />
+              </div>
+              <div className="w-full">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      name="isSupplierPaid"
+                      checked={values.isSupplierPaid}
+                      onChange={handleChange}
+                      disabled={isEdit || isView}
+                    />
+                  }
+                  label={t("supplierPayment")}
+                />
+              </div>
+              <div
+                className={cn(
+                  "w-full border border-solid border-transparent rounded-sm flex items-center gap-x-4",
+                  values.isCustomerPaid &&
+                  !isEdit &&
+                  !isView &&
+                  "col-span-1 sm:col-span-2 md:col-span-3  bg-[rgba(0,0,0,0.03)] p-2"
+                )}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      name="isCustomerPaid"
+                      checked={values.isCustomerPaid}
+                      onChange={handleChange}
+                      disabled={isEdit || isView}
+                    />
+                  }
+                  label={
+                    values.isCustomerPaid && !isEdit && !isView
+                      ? ""
+                      : t("customerPayment")
+                  }
+                />
+                {(values.isCustomerPaid || values.isSupplierPaid) && !isEdit && !isView && (
+                  <div className="flex flex-col gap-y-4">
+                    <div className="flex flex-col sm:flex-row gap-x-4">
+                      <div className="w-full">
+                        <CustomAutocompleteSelect
+                          api="Payments/GetAll/1"
+                          label={t("Ödəniş növü")}
+                          value={values.paymentId ?? null}
+                          optionLabel="type"
+                          change={(value) => setFieldValue("paymentId", value)}
+                          hasErrorMessages={
+                            !!errors.paymentId && !!touched.paymentId
+                          }
+                          errorMessages={[t(errors.paymentId?.toString() ?? "")]}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <CustomTextField
+                          label={t("Ödənilən məbləğ")}
+                          value={values.paidAmount}
+                          change={handleChange}
+                          type="number"
+                          name={`paidAmount`}
+                          hasErrorMessages={
+                            !!errors.paidAmount && !!touched.paidAmount
+                          }
+                          errorMessages={[t(errors.paidAmount?.toString())]}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <CustomTextField
+                          disabled
+                          label={t("Qalıq məbləğ")}
+                          value={Math.max(
+                            values.tourPackages.reduce(
+                              (acc, cur) => acc + cur.sellingPrice - cur.discount,
+                              0
+                            ) - values.paidAmount,
+                            0
+                          )}
+                          change={() => 0}
+                          type="number"
+                          name={``}
+                        />
+                      </div>
+                      <div className="w-full">
+                        <CustomTextField
+                          label={t("Advance Payment")}
+                          value={advancePayment}
+                          change={handleChange}
+                          type="number"
+                          name={``}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="xs:w-full md:w-1/4">
+                      <CustomTextField
+                        name="receiptImage"
+                        type="file"
+                        label={t("Attachments")}
+                        value={undefined}
+                        change={(e) => {
+                          setFieldValue("receiptImage", e.target.files);
+                          setSelectedFileName(e.target.files[0]?.name || "");
+                        }}
+                        hasErrorMessages={!!errors.receiptImage && !!touched.receiptImage}
+                        errorMessages={[t(errors.receiptImage?.toString())]}
+                        inputRef={fileInputRef}
+                        className="hidden"
+                        accept="image/png, image/jpeg, image/jpg"
+                      />
+                      <div style={{ display: "flex", justifyContent: "space-between" }} className="w-full border border-[#e5e5e5] border-solid rounded-md py-2 px-4 bg-white font-medium text-[15px] cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                        <span>{t("Attach File")}</span>
+                        <span className="flex items-center text-[16px]"><BsFileEarmarkArrowUp /></span>
+                      </div>
+                      {selectedFileName && (
+                        <div className="text-[14px] mt-1 text-gray-600">
+                          {selectedFileName} {t("Selected")}
+                        </div>
+                      )}
+                      <span className="text-[14px]">* {t("receiptImageNote")}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="mt-4">
+              {values.tourPackages.map((tourPackage, index) => (
+                <div
+                  key={`key-${tourPackage.id ?? tourPackage.key}`}
+                  className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 py-12 border-solid border-t-2 border-black/30"
+                >
+                  {!isView && (
+                    <div className="absolute right-0 top-2 flex gap-x-2">
+                      {index !== 0 && (
+                        <button
+                          type="button"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            const tours = cloneDeep(values.tourPackages);
+                            tours.splice(index, 1);
+                            setFieldValue("tourPackages", tours);
+                          }}
+                          className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                        >
+                          {t("Sil")}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                  <div className="w-full relative">
+                    <CustomAutocompleteSelect
+                      disabled={isView}
+                      api="Personals/GetAll/1"
+                      label={t("personal")}
+                      optionLabel="fullName"
+                      value={tourPackage.personalId ?? null}
+                      change={(value) =>
+                        setFieldValue(
+                          `tourPackages.${index}.personalId`,
+                          value ?? null
+                        )
+                      }
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.personalId &&
+                        !!touched.tourPackages?.[index]?.personalId
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.personalId?.toString()),
+                      ]}
+                    />
+                  </div>
+
+                  <div className="w-full relative">
+                    <CustomAutocompleteSelect
+                      disabled={isView}
+                      api="Suppliers/GetAll/1/10000"
+                      label={t("supplier")}
+                      refetech={!!(isModalSuccess && type === "createSupplier")}
+                      value={tourPackage.supplierId ?? null}
+                      optionLabel="name"
+                      change={(value) => {
+                        setFieldValue(
+                          `tourPackages.${index}.supplierId`,
+                          value ?? null
+                        );
+                      }}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.supplierId &&
+                        !!touched.tourPackages?.[index]?.supplierId
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.supplierId?.toString()),
+                      ]}
+                    />
+                    {!isView && (
                       <button
                         type="button"
                         disabled={isSubmitting}
                         onClick={() => {
-                          const tours = cloneDeep(values.tourPackages);
-                          tours.splice(index, 1);
-                          setFieldValue("tourPackages", tours);
+                          onOpen("createSupplier");
                         }}
-                        className="px-2 py-1 text-sm bg-rose-500 text-white font-bold cursor-pointer z-20 hover:bg-rose-400 transition disabled:opacity-70"
+                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
                       >
-                        {t("Sil")}
+                        <FaPlusSquare />
                       </button>
                     )}
                   </div>
-                )}
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    disabled={isView}
-                    api="Personals/GetAll/1"
-                    label={t("personal")}
-                    optionLabel="fullName"
-                    value={tourPackage.personalId ?? null}
-                    change={(value) =>
-                      setFieldValue(
-                        `tourPackages.${index}.personalId`,
-                        value ?? null
-                      )
-                    }
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.personalId &&
-                      !!touched.tourPackages?.[index]?.personalId
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.personalId?.toString()),
-                    ]}
-                  />
-                </div>
-
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    disabled={isView}
-                    api="Suppliers/GetAll/1/10000"
-                    label={t("supplier")}
-                    refetech={!!(isModalSuccess && type === "createSupplier")}
-                    value={tourPackage.supplierId ?? null}
-                    optionLabel="name"
-                    change={(value) => {
-                      setFieldValue(
-                        `tourPackages.${index}.supplierId`,
-                        value ?? null
-                      );
-                    }}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.supplierId &&
-                      !!touched.tourPackages?.[index]?.supplierId
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.supplierId?.toString()),
-                    ]}
-                  />
-                  {!isView && (
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        onOpen("createSupplier");
-                      }}
-                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      <FaPlusSquare />
-                    </button>
-                  )}
-                </div>
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    disabled={isView}
-                    api="Tours/GetAll/1"
-                    label={t("Tur Adı")}
-                    optionLabel="name"
-                    value={tourPackage.tourId ?? null}
-                    change={(value) =>
-                      setFieldValue(
-                        `tourPackages.${index}.tourId`,
-                        value ?? null
-                      )
-                    }
-                    refetech={!!(isModalSuccess && type === "createTour")}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.tourId &&
-                      !!touched.tourPackages?.[index]?.tourId
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.tourId?.toString()),
-                    ]}
-                  />
-                  {!isView && (
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        onOpen("createTour");
-                      }}
-                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      <FaPlusSquare />
-                    </button>
-                  )}
-                </div>
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    disabled={isView}
-                    api="Transfers/GetAll/1"
-                    label={t("Transfer")}
-                    optionLabel="name"
-                    value={tourPackage.transferId ?? null}
-                    change={(value) =>
-                      setFieldValue(
-                        `tourPackages.${index}.transferId`,
-                        value ?? null
-                      )
-                    }
-                    refetech={!!(isModalSuccess && type === "createTransfer")}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.transferId &&
-                      !!touched.tourPackages?.[index]?.transferId
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.transferId?.toString()),
-                    ]}
-                  />
-                  {!isView && (
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        onOpen("createTransfer");
-                      }}
-                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      <FaPlusSquare />
-                    </button>
-                  )}
-                </div>
-                <div className="w-full relative">
-                  <CustomAutocompleteSelect
-                    disabled={isView}
-                    api="Dinings/GetAll/1"
-                    label={t("Yemək")}
-                    optionLabel="name"
-                    value={tourPackage.diningId ?? null}
-                    change={(value) =>
-                      setFieldValue(
-                        `tourPackages.${index}.diningId`,
-                        value ?? null
-                      )
-                    }
-                    refetech={!!(isModalSuccess && type === "createDining")}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.diningId &&
-                      !!touched.tourPackages?.[index]?.diningId
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.diningId?.toString()),
-                    ]}
-                  />
-                  {!isView && (
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => {
-                        onOpen("createDining");
-                      }}
-                      className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
-                    >
-                      <FaPlusSquare />
-                    </button>
-                  )}
-                </div>
-                <div className="w-full">
-                  <CustomSelect
-                    disabled={isView}
-                    label={t("Sığorta")}
-                    optionLabel="name"
-                    value={tourPackage.insurance ?? null}
-                    change={(value) =>
-                      setFieldValue(
-                        `tourPackages.${index}.insurance`,
-                        value ?? null
-                      )
-                    }
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.insurance &&
-                      !!touched.tourPackages?.[index]?.insurance
-                    }
-                    staticOptions={[
-                      { label: t("Bəli"), value: true },
-                      { label: t("Xeyr"), value: false },
-                    ]}
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.insurance?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("Otel adı")}
-                    value={values.tourPackages[index].otelName}
-                    change={handleChange}
-                    name={`tourPackages.${index}.otelName`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.otelName &&
-                      !!touched.tourPackages?.[index]?.otelName
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.otelName?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("Otaq adı")}
-                    value={values.tourPackages[index].roomName}
-                    change={handleChange}
-                    name={`tourPackages.${index}.roomName`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.roomName &&
-                      !!touched.tourPackages?.[index]?.roomName
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.roomName?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("Rezervasiya nömrəsi")}
-                    value={values.tourPackages[index].rezervationNumber}
-                    change={handleChange}
-                    name={`tourPackages.${index}.rezervationNumber`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.rezervationNumber &&
-                      !!touched.tourPackages?.[index]?.rezervationNumber
-                    }
-                    errorMessages={[
-                      t(
-                        errors.tourPackages?.[
-                          index
-                        ]?.rezervationNumber?.toString()
-                      ),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("Uşaqların sayı")}
-                    value={values.tourPackages[index].childrenCount}
-                    change={handleChange}
-                    type="number"
-                    name={`tourPackages.${index}.childrenCount`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.childrenCount &&
-                      !!touched.tourPackages?.[index]?.childrenCount
-                    }
-                    errorMessages={[
-                      t(
-                        errors.tourPackages?.[index]?.childrenCount?.toString()
-                      ),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("Böyüklərin sayı")}
-                    value={values.tourPackages[index].adultCount}
-                    change={handleChange}
-                    type="number"
-                    name={`tourPackages.${index}.adultCount`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.adultCount &&
-                      !!touched.tourPackages?.[index]?.adultCount
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.adultCount?.toString()),
-                    ]}
-                  />
-                </div>
-                {/* <div className="w-full">
+                  <div className="w-full relative">
+                    <CustomAutocompleteSelect
+                      disabled={isView}
+                      api="Tours/GetAll/1"
+                      label={t("Tur Adı")}
+                      optionLabel="name"
+                      value={tourPackage.tourId ?? null}
+                      change={(value) =>
+                        setFieldValue(
+                          `tourPackages.${index}.tourId`,
+                          value ?? null
+                        )
+                      }
+                      refetech={!!(isModalSuccess && type === "createTour")}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.tourId &&
+                        !!touched.tourPackages?.[index]?.tourId
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.tourId?.toString()),
+                      ]}
+                    />
+                    {!isView && (
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          onOpen("createTour");
+                        }}
+                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                      >
+                        <FaPlusSquare />
+                      </button>
+                    )}
+                  </div>
+                  <div className="w-full relative">
+                    <CustomAutocompleteSelect
+                      disabled={isView}
+                      api="Transfers/GetAll/1"
+                      label={t("Transfer")}
+                      optionLabel="name"
+                      value={tourPackage.transferId ?? null}
+                      change={(value) =>
+                        setFieldValue(
+                          `tourPackages.${index}.transferId`,
+                          value ?? null
+                        )
+                      }
+                      refetech={!!(isModalSuccess && type === "createTransfer")}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.transferId &&
+                        !!touched.tourPackages?.[index]?.transferId
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.transferId?.toString()),
+                      ]}
+                    />
+                    {!isView && (
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          onOpen("createTransfer");
+                        }}
+                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                      >
+                        <FaPlusSquare />
+                      </button>
+                    )}
+                  </div>
+                  <div className="w-full relative">
+                    <CustomAutocompleteSelect
+                      disabled={isView}
+                      api="Dinings/GetAll/1"
+                      label={t("Yemək")}
+                      optionLabel="name"
+                      value={tourPackage.diningId ?? null}
+                      change={(value) =>
+                        setFieldValue(
+                          `tourPackages.${index}.diningId`,
+                          value ?? null
+                        )
+                      }
+                      refetech={!!(isModalSuccess && type === "createDining")}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.diningId &&
+                        !!touched.tourPackages?.[index]?.diningId
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.diningId?.toString()),
+                      ]}
+                    />
+                    {!isView && (
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                          onOpen("createDining");
+                        }}
+                        className="absolute right-0 top-0 text-blue-600 border-none bg-transparent  cursor-pointer z-20 hover:opacity-90 transition disabled:opacity-70"
+                      >
+                        <FaPlusSquare />
+                      </button>
+                    )}
+                  </div>
+                  <div className="w-full">
+                    <CustomSelect
+                      disabled={isView}
+                      label={t("Sığorta")}
+                      optionLabel="name"
+                      value={tourPackage.insurance ?? null}
+                      change={(value) =>
+                        setFieldValue(
+                          `tourPackages.${index}.insurance`,
+                          value ?? null
+                        )
+                      }
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.insurance &&
+                        !!touched.tourPackages?.[index]?.insurance
+                      }
+                      staticOptions={[
+                        { label: t("Bəli"), value: true },
+                        { label: t("Xeyr"), value: false },
+                      ]}
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.insurance?.toString()),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("Otel adı")}
+                      value={values.tourPackages[index].otelName}
+                      change={handleChange}
+                      name={`tourPackages.${index}.otelName`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.otelName &&
+                        !!touched.tourPackages?.[index]?.otelName
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.otelName?.toString()),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("Otaq adı")}
+                      value={values.tourPackages[index].roomName}
+                      change={handleChange}
+                      name={`tourPackages.${index}.roomName`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.roomName &&
+                        !!touched.tourPackages?.[index]?.roomName
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.roomName?.toString()),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("Rezervasiya nömrəsi")}
+                      value={values.tourPackages[index].rezervationNumber}
+                      change={handleChange}
+                      name={`tourPackages.${index}.rezervationNumber`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.rezervationNumber &&
+                        !!touched.tourPackages?.[index]?.rezervationNumber
+                      }
+                      errorMessages={[
+                        t(
+                          errors.tourPackages?.[
+                            index
+                          ]?.rezervationNumber?.toString()
+                        ),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("Uşaqların sayı")}
+                      value={values.tourPackages[index].childrenCount}
+                      change={handleChange}
+                      type="number"
+                      name={`tourPackages.${index}.childrenCount`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.childrenCount &&
+                        !!touched.tourPackages?.[index]?.childrenCount
+                      }
+                      errorMessages={[
+                        t(
+                          errors.tourPackages?.[index]?.childrenCount?.toString()
+                        ),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("Böyüklərin sayı")}
+                      value={values.tourPackages[index].adultCount}
+                      change={handleChange}
+                      type="number"
+                      name={`tourPackages.${index}.adultCount`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.adultCount &&
+                        !!touched.tourPackages?.[index]?.adultCount
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.adultCount?.toString()),
+                      ]}
+                    />
+                  </div>
+                  {/* <div className="w-full">
                   <CustomTextField
                     disabled={isView}
                     label={t("Referans nömrəsi")}
@@ -579,123 +581,161 @@ const TourPackageForm = ({
                     ]}
                   />
                 </div> */}
-                <div className="w-full h-full">
-                  <CustomDateTimePicker
-                    disabled={isView}
-                    label={t("Gediş tarixi")}
-                    value={values.tourPackages[index].dateOfDeparture}
-                    change={(data) => {
-                      setFieldValue(
-                        `tourPackages.${index}.dateOfDeparture`,
-                        data ?? new Date()
-                      );
-                    }}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.dateOfDeparture &&
-                      !!touched.tourPackages?.[index]?.dateOfDeparture
-                    }
-                    errorMessages={[
-                      t(
-                        errors.tourPackages?.[
-                          index
-                        ]?.dateOfDeparture?.toString()
-                      ),
-                    ]}
-                  />
+                  <div className="w-full h-full">
+                    <CustomDateTimePicker
+                      disabled={isView}
+                      label={t("Gediş tarixi")}
+                      value={values.tourPackages[index].dateOfDeparture}
+                      change={(data) => {
+                        const offsetDate = new Date(data).toLocaleString("sv-SE", { timeZone: "Asia/Baku" }).replace(" ", "T");
+                        setFieldValue(`tourPackages.${index}.dateOfDeparture`, offsetDate);
+                      }}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.dateOfDeparture &&
+                        !!touched.tourPackages?.[index]?.dateOfDeparture
+                      }
+                      errorMessages={[
+                        t(
+                          errors.tourPackages?.[
+                            index
+                          ]?.dateOfDeparture?.toString()
+                        ),
+                      ]}
+                      showTime={true}
+                    />
+                  </div>
+                  <div className="w-full h-full">
+                    <CustomDateTimePicker
+                      disabled={isView}
+                      label={t("Dönüş tarixi")}
+                      value={values.tourPackages[index].returnDate}
+                      change={(data) => {
+                        const offsetDate = new Date(data).toLocaleString("sv-SE", { timeZone: "Asia/Baku" }).replace(" ", "T");
+                        setFieldValue(`tourPackages.${index}.returnDate`, offsetDate);
+                      }}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.returnDate &&
+                        !!touched.tourPackages?.[index]?.returnDate
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.returnDate?.toString()),
+                      ]}
+                      showTime={true}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      label={t("systemPrice")}
+                      value={values.tourPackages[index].systemPrice}
+                      change={(e) => {
+                        handleChange(e);
+                        const systemCommision = values.tourPackages[index].systemCommision || 0;
+                        const systemPrice = parseFloat(e.target.value);
+                        const netPrice = systemPrice - (systemPrice * systemCommision) / 100;
+                        // setFieldValue(`tourPackages.${index}.systemPrice`, systemPrice);
+                        setFieldValue(
+                          `tourPackages.${index}.netPrice`,
+                          netPrice
+                        );
+                      }}
+                      type="number"
+                      name={`tourPackages.${index}.systemPrice`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.systemPrice &&
+                        !!touched.tourPackages?.[index]?.systemPrice
+                      }
+                      errorMessages={[t(errors.tourPackages?.[index]?.systemPrice?.toString())]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      label={t("systemCommision" + " %")}
+                      value={values.tourPackages[index].systemCommision}
+                      change={(e) => {
+                        handleChange(e);
+                        const systemCommision = parseFloat(e.target.value) || 0;
+                        const systemPrice = values.tourPackages[index].systemPrice || 0;
+                        const netPrice = systemPrice - (systemPrice * systemCommision) / 100;
+                        // setFieldValue(`tourPackages.${index}.systemCommision`, systemCommision);
+                        setFieldValue(`tourPackages.${index}.netPrice`, netPrice);
+                      }}
+                      type="number"
+                      name={`tourPackages.${index}.systemCommision`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.systemCommision &&
+                        !!touched.tourPackages?.[index]?.systemCommision
+                      }
+                      errorMessages={[t(errors.tourPackages?.[index]?.systemCommision?.toString())]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      label={t("netPrice")}
+                      value={values.tourPackages[index].netPrice}
+                      type="number"
+                      name={`tourPackages.${index}.netPrice`}
+                      disabled
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.netPrice &&
+                        !!touched.tourPackages?.[index]?.netPrice
+                      }
+                      errorMessages={[t(errors.tourPackages?.[index]?.netPrice?.toString())]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("salePrice")}
+                      value={values.tourPackages[index].sellingPrice}
+                      change={handleChange}
+                      type="number"
+                      name={`tourPackages.${index}.sellingPrice`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.sellingPrice &&
+                        !!touched.tourPackages?.[index]?.sellingPrice
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.sellingPrice?.toString()),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled={isView}
+                      label={t("discount")}
+                      value={values.tourPackages[index].discount}
+                      change={handleChange}
+                      type="number"
+                      name={`tourPackages.${index}.discount`}
+                      hasErrorMessages={
+                        !!errors.tourPackages?.[index]?.discount &&
+                        !!touched.tourPackages?.[index]?.discount
+                      }
+                      errorMessages={[
+                        t(errors.tourPackages?.[index]?.discount?.toString()),
+                      ]}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <CustomTextField
+                      disabled
+                      label={t("totalSalePrice")}
+                      value={
+                        values.tourPackages[index].sellingPrice -
+                        values.tourPackages[index].discount
+                      }
+                      change={handleChange}
+                      type="number"
+                      name={``}
+                      placeholder="Avtomatik"
+                    />
+                  </div>
                 </div>
-                <div className="w-full h-full">
-                  <CustomDateTimePicker
-                    disabled={isView}
-                    label={t("Dönüş tarixi")}
-                    value={values.tourPackages[index].returnDate}
-                    change={(data) => {
-                      setFieldValue(
-                        `tourPackages.${index}.returnDate`,
-                        data ?? new Date()
-                      );
-                    }}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.returnDate &&
-                      !!touched.tourPackages?.[index]?.returnDate
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.returnDate?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("purchasePrice")}
-                    value={values.tourPackages[index].purchasePrice}
-                    change={handleChange}
-                    type="number"
-                    name={`tourPackages.${index}.purchasePrice`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.purchasePrice &&
-                      !!touched.tourPackages?.[index]?.purchasePrice
-                    }
-                    errorMessages={[
-                      t(
-                        errors.tourPackages?.[index]?.purchasePrice?.toString()
-                      ),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("salePrice")}
-                    value={values.tourPackages[index].sellingPrice}
-                    change={handleChange}
-                    type="number"
-                    name={`tourPackages.${index}.sellingPrice`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.sellingPrice &&
-                      !!touched.tourPackages?.[index]?.sellingPrice
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.sellingPrice?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled={isView}
-                    label={t("discount")}
-                    value={values.tourPackages[index].discount}
-                    change={handleChange}
-                    type="number"
-                    name={`tourPackages.${index}.discount`}
-                    hasErrorMessages={
-                      !!errors.tourPackages?.[index]?.discount &&
-                      !!touched.tourPackages?.[index]?.discount
-                    }
-                    errorMessages={[
-                      t(errors.tourPackages?.[index]?.discount?.toString()),
-                    ]}
-                  />
-                </div>
-                <div className="w-full">
-                  <CustomTextField
-                    disabled
-                    label={t("totalSalePrice")}
-                    value={
-                      values.tourPackages[index].sellingPrice -
-                      values.tourPackages[index].discount
-                    }
-                    change={handleChange}
-                    type="number"
-                    name={``}
-                    placeholder="Avtomatik"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          {!isView && (
-            <div className="w-full flex gap-x-6 justify-end mb-6">
-              {/* <button
+              ))}
+            </div>
+            {!isView && (
+              <div className="w-full flex gap-x-6 justify-end mb-6">
+                {/* <button
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => {
@@ -709,26 +749,28 @@ const TourPackageForm = ({
               >
                 + {t("newPassenger")}
               </button> */}
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => navigate("/panel/tourPackage")}
-                className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-              >
-                {t("goBack")}
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
-              >
-                {t("confirm")}
-              </button>
-            </div>
-          )}
-        </form>
-      )}
-    </Formik>
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => navigate("/panel/tourPackage")}
+                  className="p-2 bg-gray-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+                >
+                  {t("goBack")}
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 bg-blue-600 text-white rounded-md uppercase hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70"
+                >
+                  {t("confirm")}
+                </button>
+              </div>
+            )}
+          </form>
+        )
+      }
+      }
+    </Formik >
   );
 };
 

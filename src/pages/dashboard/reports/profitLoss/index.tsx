@@ -12,6 +12,8 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
+import { YearContext } from "@/store/YearContext";
+import { DEFAULT_YEAR } from "@/constants";
 
 const formatPrice = (price: number) => {
   return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -33,12 +35,13 @@ function calculateNettLoss(data) {
 const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const [loading, setLoading] = useState(true);
   // date from first day of year
 
   const [date, setDate] = useState<Date[]>([
-    new Date(new Date().getFullYear(), 0, 1),
-    new Date(),
+    new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1),
+    new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31),
   ]);
   const [data, setData] = useState<{
     totslPurchase: number;
@@ -57,8 +60,8 @@ const Detail = () => {
 
   const getData = async (startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
-    if (startDate!=null) searchParams.append("starDate", startDate?.toISOString());
-    if (endDate!=null) searchParams.append("endDate", endDate?.toISOString());
+    if (startDate != null) searchParams.append("starDate", startDate?.toISOString());
+    if (endDate != null) searchParams.append("endDate", endDate?.toISOString());
     await apiService
       .get(`/Reports/Profit?${searchParams.toString()}`)
       .then(({ data }) => {
@@ -145,62 +148,70 @@ const Detail = () => {
         <Formik
           onSubmit={onSubmit}
           initialValues={{
-            startDate: null,
-            endDate: null,
+            startDate: new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1),
+            endDate: new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31),
           }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div
-                className={cn("w-52", !values.startDate && "removeFromPrint")}
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
+                <div
+                  className={cn("w-52", !values.startDate && "removeFromPrint")}
+                >
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
 
-              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
-              >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate || new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
 
         <div className="flex w-full max-w-[1000px]  mx-auto border-2 border-solid border-black">
           <div className="w-1/2 border-r-2 border-solid border-black">
             <div className="flex justify-between items-center border-b-2 border-solid border-black px-4">
-              <h3 className="text-lg font-bold">Particulars</h3>
+              <h3 className="text-lg font-bold">{t("Particulars")}</h3>
               <p className="text-sm">
                 {`${formatDate(date[0].toISOString())} to ${formatDate(
                   date[1].toISOString()
@@ -240,14 +251,14 @@ const Detail = () => {
               <div className="flex justify-between items-center mt-4">
                 <h4 className="text-base">{t("Nett Profit")}</h4>
                 <p>
-                  { nettLoss>0 ? formatPrice(
+                  {nettLoss > 0 ? formatPrice(
                     data.totalSale -
-                      data.totslPurchase -
-                      data.expenduture -
-                      data.paidSalary +
-                      data.refund +
-                      data.bonuces
-                  ):0}
+                    data.totslPurchase -
+                    data.expenduture -
+                    data.paidSalary +
+                    data.refund +
+                    data.bonuces
+                  ) : 0}
                 </p>
               </div>
             </div>
@@ -256,11 +267,11 @@ const Detail = () => {
               <p className="text-sm">
                 {formatPrice(
                   data.totalSale -
-                    data.totslPurchase -
-                    data.expenduture -
-                    data.paidSalary +
-                    data.refund +
-                    data.bonuces
+                  data.totslPurchase -
+                  data.expenduture -
+                  data.paidSalary +
+                  data.refund +
+                  data.bonuces
                 )}
               </p>
             </div>
@@ -305,14 +316,14 @@ const Detail = () => {
                 <h4 className="text-base">{t("Nett Loss")}</h4>
                 <p>
 
-                { nettLoss<0 ? formatPrice(
+                  {nettLoss < 0 ? formatPrice(
                     data.totalSale -
-                      data.totslPurchase -
-                      data.expenduture -
-                      data.paidSalary +
-                      data.refund +
-                      data.bonuces
-                  ):0}
+                    data.totslPurchase -
+                    data.expenduture -
+                    data.paidSalary +
+                    data.refund +
+                    data.bonuces
+                  ) : 0}
                 </p>
               </div>
             </div>
@@ -321,11 +332,11 @@ const Detail = () => {
               <p className="text-sm">
                 {formatPrice(
                   data.totalSale -
-                    data.totslPurchase -
-                    data.expenduture -
-                    data.paidSalary +
-                    data.refund +
-                    data.bonuces
+                  data.totslPurchase -
+                  data.expenduture -
+                  data.paidSalary +
+                  data.refund +
+                  data.bonuces
                 )}
               </p>
             </div>

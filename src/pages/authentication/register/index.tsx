@@ -1,4 +1,4 @@
-import { OutlinedInput, Typography } from "@mui/material";
+import { FormControl, ListItemIcon, ListItemText, MenuItem, OutlinedInput, Select, Typography } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 // import { Link, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -16,7 +16,10 @@ import Loading from "@/components/custom/loading";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required("Mütləqdir!"),
-  email: Yup.string().required("Mütləqdir!"),
+  email: Yup.string().matches(
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    "Enter correct email format"
+  ).required("Mütləqdir!"),
   phoneNumber: Yup.string().required("Mütləqdir!"),
   adress: Yup.string().optional(),
   detail: Yup.string().optional(),
@@ -31,19 +34,26 @@ export default function Index() {
       name: "",
       email: "",
       phoneNumber: "",
+      countryCode: "",
       adress: "",
       detail: "",
       subscribeType: null,
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values) => {
-      onRegister(values);
+      // Kullanıcı telefon numarasına elle ülke kodu girdiyse, tekrar birleştirme yapma
+      const phoneNumber = formik.values.phoneNumber.startsWith(formik.values.countryCode)
+        ? formik.values.phoneNumber
+        : `${formik.values.countryCode}${formik.values.phoneNumber}`;
+
+      onRegister({ ...values, phoneNumber });
     },
   });
   const navigate = useNavigate();
   const [isLoading, seIsLoading] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
+  const [countryCodes, setCountryCodes] = useState([]);
 
   const onRegister = async (values) => {
     seIsLoading(true);
@@ -59,6 +69,9 @@ export default function Index() {
 
         window.location.replace(res.data);
       }
+    } else if (res?.status === 409) {
+      seIsLoading(false);
+      toast.error(res.data.message);
     } else {
       seIsLoading(false);
       toast.error("Something went wrong!");
@@ -83,6 +96,37 @@ export default function Index() {
       setFormLoading(true);
     }
   }, [country])
+
+  useEffect(() => {
+    async function fetchCountryCodes() {
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        const data = await response.json();
+
+        const codes = data.map(country => ({
+          code: `+${country.idd.root?.replace("+", "")}${country.idd.suffixes?.[0] || ""}`,
+          label: country.cca2,
+          flag: country.flags.svg // Bayrak URL'si
+        })).filter(c => c.code); // Boş kodları filtrele
+
+        setCountryCodes(codes);
+      } catch (error) {
+        console.error("Error fetching country codes:", error);
+        toast.error("Unable to load country codes");
+      }
+    }
+
+    fetchCountryCodes();
+  }, []);
+
+  useEffect(() => {
+    const matchingCountry = countryCodes.find(country =>
+      formik.values.phoneNumber.startsWith(country.code)
+    );
+    if (matchingCountry && matchingCountry.code !== formik.values.countryCode) {
+      formik.setFieldValue("countryCode", matchingCountry.code);
+    }
+  }, [formik.values.phoneNumber, countryCodes]);
 
 
   return (
@@ -128,21 +172,50 @@ export default function Index() {
         </Box>
         <Box>
           <Typography variant="body2">Phone Number</Typography>
-          <OutlinedInput
-            id="outlined-basic"
-            fullWidth
-            sx={{ mb: 1 }}
-            name="phoneNumber"
-            size="small"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phoneNumber}
-            error={
-              formik.touched.phoneNumber && formik.errors.phoneNumber
-                ? true
-                : false
-            }
-          />
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+            <FormControl sx={{ mr: 1, minWidth: 100 }}>
+              <Select
+                name="countryCode"
+                value={formik.values.countryCode || ""}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                size="small"
+                displayEmpty
+                renderValue={(selected) => {
+                  if (!selected) {
+                    return <em>Select Code</em>;
+                  }
+                  const selectedCountry = countryCodes.find(c => c.code === selected);
+                  return (
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <img src={selectedCountry?.flag} alt="" width="20" style={{ marginRight: 8 }} />
+                      {selected}
+                    </Box>
+                  );
+                }}
+              >
+                {countryCodes.map((country) => (
+                  <MenuItem key={country.code} value={country.code}>
+                    <ListItemIcon>
+                      <img src={country.flag} alt="" width="20" />
+                    </ListItemIcon>
+                    <ListItemText>{country.code}</ListItemText>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <OutlinedInput
+              id="outlined-basic"
+              fullWidth
+              name="phoneNumber"
+              size="small"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phoneNumber}
+              error={formik.touched.phoneNumber && formik.errors.phoneNumber ? true : false}
+              placeholder="Enter phone number"
+            />
+          </Box>
         </Box>
         <Box>
           <Typography variant="body2">Address</Typography>
@@ -186,7 +259,9 @@ export default function Index() {
               }
               staticOptions={[
                 { label: `Monthly - ${country == "AZ" ? "90 AZN" : "90 USD"} `, value: "0" },
-                { label: "Demo - 7 day", value: "2" },
+                ...(country != "AZ"
+                  ? [{ label: "Demo - 7 days", value: "2" }]
+                  : []),
               ]}
               errorMessages={[formik.errors.subscribeType?.toString()]}
             />

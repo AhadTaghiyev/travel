@@ -48,15 +48,14 @@ export function MassIncomeTable({
   );
 
   return (
-    <Table className="border-solid border border-black/20 text-[11px]">
+    <Table id="income-table" className="border-solid border border-black/20 text-[11px]">
       <TableHeader>
         <TableRow className="border-solid border border-black/20">
-          <TableHead className="px-2">{t("Receipt Number")}</TableHead>
-          <TableHead className="px-2">{t("Invoice Number")}</TableHead>
-          <TableHead className="px-2">{t("Ödəniş növü")}</TableHead>
-          <TableHead className="px-2">{t("paidamount")}</TableHead>
-          <TableHead className="px-2">{t("Balance")}</TableHead>
-          <TableHead className="px-2">{t("Description")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Receipt Number")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Invoice Number")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Ödəniş növü")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("paidamount")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Description")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -81,9 +80,6 @@ export function MassIncomeTable({
             <TableCell className="py-1 px-2">
               {(income.paidAmount * currency.value).toFixed(2)} {currency.name}
             </TableCell>
-            <TableCell className="py-1 px-2">
-              {(income.balance * currency.value).toFixed(2)} {currency.name}
-            </TableCell>
             <TableCell className="py-1 px-2 max-w-[150px] truncate">
               {income.description ?? t("No Description")}
             </TableCell>
@@ -99,7 +95,7 @@ export function MassIncomeTable({
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell className="py-1.5 px-2" colSpan={5}>
+          <TableCell className="py-1.5 px-2" colSpan={4}>
             {t("Total Paid Amount")}
           </TableCell>
           <TableCell className="text-right py-2">
@@ -108,8 +104,8 @@ export function MassIncomeTable({
         </TableRow>
         {totalPrice ? (
           <TableRow>
-            <TableCell className="py-1.5 px-2" colSpan={5}>
-              {t("Total Remaining Amount")}
+            <TableCell className="py-1.5 px-2" colSpan={4}>
+              {t("balance")}
             </TableCell>
             <TableCell className="text-right py-2">
               {((totalPrice - totalPaidAmount) * currency.value).toFixed(2)}{" "}

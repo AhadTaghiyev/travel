@@ -8,6 +8,7 @@ import { apiService } from "@/server/apiServer";
 import { IIncomeModel } from "../types";
 
 import MassIncomeForm from "../form";
+import { toLocalISOString } from "@/lib/utils";
 
 const NewIncome = () => {
   const { t } = useTranslation();
@@ -24,8 +25,13 @@ const NewIncome = () => {
       //   date: values.date,
       // };
 
+      const now = new Date();
+      const updatedDate = new Date(values.date);
+
+      updatedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      values.date = updatedDate;
       const formData = new FormData();
-      formData.append("date", values.date.toISOString());
+      formData.append("date", toLocalISOString(values.date));
       formData.append("description", values.description);
       formData.append("paidAmount", values.paidAmount.toString());
       formData.append("paymentId", values.paymentId ? values.paymentId.toString() : "");

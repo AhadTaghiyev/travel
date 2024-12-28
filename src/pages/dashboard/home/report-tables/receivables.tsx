@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DEFAULT_YEAR } from "@/constants";
 
 interface IReciveablesReportProps {
   selectedYear: string;
@@ -37,11 +38,11 @@ const ReciveablesReport = ({ selectedYear }: IReciveablesReportProps) => {
     const searchParams = new URLSearchParams();
     searchParams.append(
       "starDate",
-      new Date(+selectedYear, 0, 1).toUTCString()
+      new Date(selectedYear === "All" ? Number(DEFAULT_YEAR) : +selectedYear, 0, 1).toUTCString()
     );
     searchParams.append(
       "endDate",
-      new Date(+selectedYear, 11, 31).toUTCString()
+      new Date(selectedYear === "All" ? new Date().getFullYear() : +selectedYear, 11, 31).toUTCString()
     );
     await apiService
       .get(`/Reports/ReciveAblesReport/1?${searchParams.toString()}`)
@@ -70,9 +71,9 @@ const ReciveablesReport = ({ selectedYear }: IReciveablesReportProps) => {
         <Table className="mt-2 text-xs">
           <TableHeader className="rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
-              <TableHead>{t("no")}</TableHead>
+              <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("no")}</TableHead>
               {columns.map((column) => (
-                <TableHead key={column.name}>{t(column.label)}</TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
               ))}
             </TableRow>
           </TableHeader>
@@ -83,7 +84,7 @@ const ReciveablesReport = ({ selectedYear }: IReciveablesReportProps) => {
                   <TableCell className={"py-1.5"}>{index + 1}</TableCell>
                   {columns.map((column) => (
                     <TableCell key={column.name} className={"py-1.5"}>
-                      {row?.[column.name]}
+                      {row?.[column.name] === "Founder/Debt" || row?.[column.name] === "Founder" ? t("Others") : row?.[column.name]}
                     </TableCell>
                   ))}
                 </TableRow>

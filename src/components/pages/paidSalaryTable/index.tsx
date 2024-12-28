@@ -41,14 +41,14 @@ export function PaidSalaryTable({
     <Table className="border-solid border border-black/20 text-[11px]">
       <TableHeader>
         <TableRow className="border-solid border border-black/20">
-          <TableHead className="px-2">{t("Ref")}</TableHead>
-          <TableHead className="px-2">{t("Personal")}</TableHead>
-          <TableHead className="px-2">{t("Ödəniş növü")}</TableHead>
-          <TableHead className="px-2">{t("Salary")}</TableHead>
-          <TableHead className="px-2">{t("Extra Salary")}</TableHead>
-          <TableHead className="px-2">{t("bonus")}</TableHead>
-          <TableHead className="px-2">{t("Qeyd")}</TableHead>
-          <TableHead className="px-2">{t("date")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Ref")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Personal")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Ödəniş növü")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Salary")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Extra Salary")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("bonus")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Qeyd")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("date")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

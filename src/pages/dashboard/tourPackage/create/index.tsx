@@ -9,6 +9,7 @@ import { IInvoiceModel, ITourPackageModel } from "../types";
 import { apiService } from "@/server/apiServer";
 
 import TourPackageForm from "../form";
+import { toLocalISOString, toLocalISOStringV2 } from "@/lib/utils";
 
 export const tourPackageInitialValues: ITourPackageModel = {
   otelName: "",
@@ -24,7 +25,9 @@ export const tourPackageInitialValues: ITourPackageModel = {
   tourId: null,
   transferId: null,
   diningId: null,
-  purchasePrice: 0,
+  netPrice: 0,
+  systemPrice: 0,
+  systemCommision: 0,
   sellingPrice: 0,
   discount: 0,
   commonPrice: 0,
@@ -49,10 +52,20 @@ const NewTicket = () => {
 
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
+      console.log("submit", values);
       const formData = new FormData();
+
+      const now = new Date();
+      const updatedDate = new Date(values.date);
+      const updatedDeadline = new Date(values.deadLine);
+
+      updatedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      updatedDeadline.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      values.date = updatedDate;
+      values.deadLine = updatedDeadline;
       formData.append("customerId", values.customerId.toString());
-      formData.append("date", values.date.toISOString());
-      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("date", toLocalISOString(values.date));
+      formData.append("deadLine", toLocalISOString(values.deadLine));
       formData.append("explanation", values.explanation.toString());
       formData.append("isCustomerPaid", values.isCustomerPaid.toString());
       formData.append("isSupplierPaid", values.isSupplierPaid.toString());
@@ -64,15 +77,17 @@ const NewTicket = () => {
         formData.append(`tourPackages[${index}].adultCount`, tourPackage.adultCount.toString());
         formData.append(`tourPackages[${index}].childrenCount`, tourPackage.childrenCount.toString());
         formData.append(`tourPackages[${index}].commonPrice`, tourPackage.commonPrice.toString());
-        formData.append(`tourPackages[${index}].dateOfDeparture`, tourPackage.dateOfDeparture.toISOString());
+        formData.append(`tourPackages[${index}].dateOfDeparture`, toLocalISOStringV2(tourPackage.dateOfDeparture));
         formData.append(`tourPackages[${index}].diningId`, tourPackage.diningId.toString());
         formData.append(`tourPackages[${index}].discount`, tourPackage.discount.toString());
         formData.append(`tourPackages[${index}].supplierId`, tourPackage.supplierId?.toString() || "");
         formData.append(`tourPackages[${index}].personalId`, tourPackage.personalId?.toString() || "");
         formData.append(`tourPackages[${index}].insurance`, tourPackage.insurance?.toString() || "");
         formData.append(`tourPackages[${index}].otelName`, tourPackage.otelName || "");
-        formData.append(`tourPackages[${index}].purchasePrice`, tourPackage.purchasePrice.toString() || "");
-        formData.append(`tourPackages[${index}].returnDate`, tourPackage.returnDate.toISOString() || "");
+        formData.append(`tourPackages[${index}].netPrice`, tourPackage.netPrice.toString() || "");
+        formData.append(`tourPackages[${index}].systemPrice`, tourPackage.systemPrice.toString() || "");
+        formData.append(`tourPackages[${index}].systemCommision`, tourPackage.systemCommision.toString() || "");
+        formData.append(`tourPackages[${index}].returnDate`, toLocalISOStringV2(tourPackage.returnDate));
         formData.append(`tourPackages[${index}].rezervationNumber`, tourPackage.rezervationNumber || "");
         formData.append(`tourPackages[${index}].roomName`, tourPackage.roomName || "");
         formData.append(`tourPackages[${index}].sellingPrice`, tourPackage.sellingPrice.toString() || "");

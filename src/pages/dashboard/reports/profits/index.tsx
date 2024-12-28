@@ -19,9 +19,10 @@ export default function Index() {
         hideCreate
         hideEdit
         hidePrint
+        isDetailedTotal
         addDateToReport
         columns={columns}
-        totalProps={["purchasePrice","salePrice","profit"]}
+        totalProps={["purchasePrice", "salePrice", "profit"]}
         detailLink="/panel/reports/profits/"
         api={"/Reports/ProfitsReport"}
         root="/panel/reports/profits"

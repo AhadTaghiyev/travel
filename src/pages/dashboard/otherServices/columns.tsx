@@ -46,6 +46,18 @@ export const columns = (t: TFunction): GridColDef[] => [
     headerClassName: "header-item",
   },
   {
+    field: "totalSupplierPaidAmount",
+    headerName: t("Supplier Paid Amount"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
+    field: "totalSupplierDebtAmount",
+    headerName: t("Supplier Debt Amount"),
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "personal",
     headerName: t("personal"),
     flex: 1,
@@ -57,7 +69,7 @@ export const columns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     cellClassName: (params) =>
-      params.value ? "refund-true" : "refund-false", 
+      params.value ? "refund-true" : "refund-false",
     valueGetter: (params) => (params.value ? "Refunded" : "Not Refunded"),
   },
 ];

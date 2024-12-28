@@ -9,6 +9,7 @@ import { IInvoiceDirections, IInvoiceModel, IPlaneTicketModel } from "../types";
 import { apiService } from "@/server/apiServer";
 
 import AviabiletTicketForm from "../form";
+import { toLocalISOString, toLocalISOStringV2 } from "@/lib/utils";
 
 export const invoiceDirectionInitialValues: IInvoiceDirections = {
   flightDate: new Date(),
@@ -49,9 +50,20 @@ const NewTicket = () => {
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const formData = new FormData();
+      const now = new Date();
+      const updatedDate = new Date(values.date);
+      const updatedDeadline = new Date(values.deadLine);
+
+      updatedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      updatedDeadline.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+
+      values.date = updatedDate;
+      values.deadLine = updatedDeadline;
+      console.log("values.date", values.date)
+      console.log("values.deadLine", values.deadLine)
       formData.append("customerId", values.customerId.toString());
-      formData.append("date", values.date.toISOString());
-      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("date", toLocalISOString(values.date));
+      formData.append("deadLine", toLocalISOString(values.deadLine));
       formData.append("explanation", values.explanation.toString());
       formData.append("isCustomerPaid", values.isCustomerPaid.toString());
       formData.append("isSupplierPaid", values.isSupplierPaid.toString());
@@ -73,7 +85,7 @@ const NewTicket = () => {
 
         // Append each direction within the ticket
         ticket.invoiceDirections.forEach((direction, dirIndex) => {
-          formData.append(`planeTickets[${index}].invoiceDirections[${dirIndex}].flightDate`, direction.flightDate.toISOString());
+          formData.append(`planeTickets[${index}].invoiceDirections[${dirIndex}].flightDate`, toLocalISOStringV2(direction.flightDate));
           formData.append(`planeTickets[${index}].invoiceDirections[${dirIndex}].direction`, direction.direction);
         });
       });

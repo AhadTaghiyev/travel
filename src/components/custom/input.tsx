@@ -7,7 +7,7 @@ interface ICustomTextFieldModel {
   label: string;
   multiple?: boolean;
   value: string | number;
-  change: (value: any) => void;
+  change?: (value: any) => void;
   hasErrorMessages?: boolean;
   errorMessages?: string[];
   name: string;

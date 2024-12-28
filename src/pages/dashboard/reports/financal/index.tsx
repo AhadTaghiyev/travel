@@ -107,9 +107,9 @@ export default function Index() {
             <Table className="border border-solid border-gray-300">
               <TableHeader className="border-b border-solid border-black/60">
                 <TableRow className="w-full">
-                  <TableHead key={"payment-type"}>{t("Ödəniş növü")}</TableHead>
-                  <TableHead key={"amount"}></TableHead>
-                  <TableHead></TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={"payment-type"}>{t("Ödəniş növü")}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={"amount"}></TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

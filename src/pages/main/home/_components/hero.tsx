@@ -14,13 +14,13 @@ const HeroSection = () => {
           {t("Best Accounting Software for Travel Agency")}
         </h1>
         <p className="my-6 text-xs leading-5">
-        {t("Introducing simple and easy to use accounting software specially designed for travel agencies")}
+          {t("Introducing simple and easy to use accounting software specially designed for travel agencies")}
         </p>
         <Link
-             to="/auth/register"
+          to="/auth/register"
           className="px-6 py-3 bg-gray-950   rounded text-xs text-[#f8f9fb] hover:bg-gray-500 transition"
         >
-             {t("Try free")}
+          {t("Register")}
         </Link>
       </div>
       <img

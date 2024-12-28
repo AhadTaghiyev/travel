@@ -22,22 +22,24 @@ import CustomDateTimePicker from "@/components/custom/datePicker";
 import { ClipLoader } from "react-spinners";
 import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
+import { YearContext } from "@/store/YearContext";
 import axios from "axios";
-import { SERVER_BASE_URL } from "@/constants";
+import { DEFAULT_YEAR, SERVER_BASE_URL } from "@/constants";
 
 const columns = [
   { label: "Date", name: "date", type: "date" },
-  { label: "Beneficeary.", name: "detail" },
-  { label: "Payment.", name: "payment" },
-  { label: "Service.", name: "service" },
-  { label: "Debit.", name: "debit" },
-  { label: "Credit.", name: "credit" },
-  { label: "Balance.", name: "balance" },
+  { label: "Beneficeary", name: "detail" },
+  { label: "Payment", name: "payment" },
+  { label: "Service", name: "service" },
+  { label: "Debit", name: "debit" },
+  { label: "Credit", name: "credit" },
+  { label: "Balance", name: "balance" },
 ];
 
 const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const [loading, setLoading] = useState(true);
   const [data, setData] =
     useState<{ id: string; name: string; debit: number; credit: number }[]>();
@@ -46,10 +48,10 @@ const Detail = () => {
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
     ? new Date(searchParams.get("startDate") as string)
-    : null;
+    : selectedYear ? new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1, 0, 1) : null;
   const defaultEndDate = searchParams.get("startDate")
     ? new Date(searchParams.get("endDate") as string)
-    : null;
+    : selectedYear ? new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31) : null;
 
   useEffect(() => {
     getData(parseInt(id), defaultStartDate, defaultEndDate);
@@ -199,51 +201,59 @@ const Detail = () => {
             endDate: defaultEndDate,
           }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div
-                className={cn("w-52", !values.startDate && "removeFromPrint")}
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
-              >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div
+                  className={cn("w-52", !values.startDate && "removeFromPrint")}
+                >
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         <Grid
           sx={{
@@ -255,7 +265,7 @@ const Detail = () => {
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
                 {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>

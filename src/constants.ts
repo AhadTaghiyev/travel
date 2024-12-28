@@ -19,4 +19,7 @@ export enum InvoiceType {
   INDIVIDUAL_TOUR = "individual tour",
   TOUR_PACKAGE = "tour package",
   OTHER_SERVICE = "other service",
+  Refund = "refund",
 }
+
+export const DEFAULT_YEAR = 2023;

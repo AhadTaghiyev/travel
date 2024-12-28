@@ -32,6 +32,8 @@ import {
 } from "@/components/ui/select";
 import { isNil } from "lodash";
 import { CompanyContext } from "@/store/CompanyContext";
+import { YearContext } from "@/store/YearContext";
+import { DEFAULT_YEAR } from "@/constants";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -45,6 +47,7 @@ const columns = [
 const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const [loading, setLoading] = useState(true);
   const [paymentTypes, setPaymentTypes] = useState<
     { label: string; value: string }[] | null
@@ -166,51 +169,59 @@ const Detail = () => {
         </div>
         <Formik
           onSubmit={onSubmit}
-          initialValues={{ startDate: null, endDate: null }}
+          initialValues={{ startDate: new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1), endDate: new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31) }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate || new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1)}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate || new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         <Grid
           sx={{
@@ -222,9 +233,9 @@ const Detail = () => {
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
                 {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 ))}
-                <TableHead></TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -38,20 +38,30 @@ import { isNil } from "lodash";
 import CustomTextField from "@/components/custom/input";
 import * as Yup from "yup";
 import { CompanyContext } from "@/store/CompanyContext";
+import { YearContext } from "@/store/YearContext";
 import { textStyling } from "@/styles";
 import axios from "axios";
-import { SERVER_BASE_URL } from "@/constants";
+import { DEFAULT_YEAR, SERVER_BASE_URL } from "@/constants";
 import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
+import CustomAutocompleteSelect from "@/components/custom/autocompleteSelect";
+import CustomMultiSelect from "@/components/custom/multiSelect";
+import CustomSelect from "@/components/custom/select";
+import { Command, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { toLocalISOStringV2 } from "@/lib/utils";
 
 const columns = [
   { label: "Id", name: "id" },
-  { label: "Təchizatçı", name: "name" },
-  { label: "date", name: "date", type: "date" },
-  { label: "Ref.", name: "ref" },
-  { label: "Detail.", name: "details" },
+  { label: "Təchizatçı", name: "supplierName" },
+  { label: "Created Date", name: "date", type: "date" },
+  { label: "Payment Date", name: "paymentDate", type: "date" },
+  { label: "Invoice Number", name: "invoiceNo" },
+  { label: "Ref", name: "ref" },
+  { label: "Detail", name: "details" },
   { label: "Debit", name: "debit" },
   { label: "Credit", name: "credit" },
   { label: "balance", name: "balance" },
+  { label: "Customer Name", name: "customerName" },
+  { label: "Paid Amount", name: "paidAmount" },
   { label: "operations" },
 ];
 
@@ -60,7 +70,11 @@ const Detail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRef, setSelectedRef] = useState(true);
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const [paymentTypes, setPaymentTypes] = useState<
+    { label: string; value: string }[] | null
+  >(null);
+  const [customers, setCustomers] = useState<
     { label: string; value: string }[] | null
   >(null);
   const [data, setData] = useState<
@@ -71,20 +85,35 @@ const Detail = () => {
       total: number;
       credit: number;
       debit: number;
+      paymentDate: string;
     }[]
   >();
   const [date, setDate] = useState<{ startDate: string; endDate: string }>();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
-  const defaultStartDate = searchParams.get("startDate")
-    ? new Date(searchParams.get("startDate") as string)
-    : null;
-  const defaultEndDate = searchParams.get("startDate")
-    ? new Date(searchParams.get("endDate") as string)
-    : null;
+  const today = new Date(); // Bugünün tarihi
+  const firstDayOfYear = new Date(today.getFullYear(), 0, 1); // Yılın ilk günü (January 1)
+  const [defaultStartDate, setDefaultStartDate] = useState(new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+  const [defaultEndDate, setDefaultEndDate] = useState(new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+  // const defaultStartDate = selectedYear
+  //   ? new Date(selectedYear, 0, 1) // Eğer localStorage'da varsa bu değer kullanılır
+  //   : searchParams.get("startDate")
+  //     ? new Date(searchParams.get("startDate") as string) // Eğer `searchParams`'da varsa bu değer kullanılır
+  //     : firstDayOfYear; // Eğer startDate gelmezse yılın ilk günü
+
+  // const defaultEndDate = searchParams.get("endDate")
+  //   ? new Date(searchParams.get("endDate") as string)
+  //   : today; // Eğer endDate gelmezse bugünün tarihi
 
   const [editId, setEditId] = useState(null);
   const [editAmount, setEditAmount] = useState("");
+  const [editPaymentDate, setEditPaymentDate] = useState("");
+
+  useEffect(() => {
+    // setDate({ startDate: new Date(selectedYear, 0, 1), endDate: new Date() })
+    setDefaultStartDate(new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+    setDefaultEndDate(new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+  }, [selectedYear])
 
   const fetchData = async () => {
     const res = await apiService.get("Payments/GetAll/1");
@@ -95,8 +124,6 @@ const Detail = () => {
         value: x.id,
       }))
       .filter((item) => item.label && item.value);
-
-
 
     setPaymentTypes(data);
   };
@@ -126,7 +153,7 @@ const Detail = () => {
       console.log(date);
 
       const promise = axios.get(
-        `${SERVER_BASE_URL}/reports/SupplierReportDetailExport/${id}?startDate=${date.startDate}&endDate=${date.endDate}`,
+        `${SERVER_BASE_URL}/reports/SupplierReportDetailExport/${id}?isExport=true&language=${localStorage.getItem("language") || "en"}`,
         config
       );
 
@@ -191,16 +218,17 @@ const Detail = () => {
       }
 
       const uri = isWp
-        ? `/WillBePaids/EditPay/${id}?amount=${editAmount}`
-        : `/WillBePaids/Edit/${id}?amount=${editAmount}`;
+        ? `/WillBePaids/EditPay/${id}?amount=${editAmount}&paymentDate=${toLocalISOStringV2(editPaymentDate)}`
+        : `/WillBePaids/Edit/${id}?amount=${editAmount}&paymentDate=${toLocalISOStringV2(editPaymentDate)}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
 
-      await toast.promise(
-        axios.put(`${SERVER_BASE_URL}${uri}`, null, config), // 'null' body'yi ifade eder çünkü body verisi yok
+      // API isteğini yap
+      const response = await toast.promise(
+        axios.put(`${SERVER_BASE_URL}${uri}`, null, config),
         {
           loading: "Loading...",
           success: "Successfully updated",
@@ -208,21 +236,24 @@ const Detail = () => {
         }
       );
 
+      console.log("API Response:", response.data);
+
+      // State'i anlık olarak güncelle
       setData((prevData) =>
         prevData.map((item) =>
           item.id === id
             ? {
               ...item,
+              paymentDate: toLocalISOStringV2(editPaymentDate),
               [isWp ? "debit" : "credit"]: Number(editAmount),
             }
             : item
         )
       );
 
-      const selectedRef = data?.find(item => item.debit === 0);
-      setSelectedRef(selectedRef);
-
-      setEditId(null);
+      setEditId(null); // Düzenleme modunu kapat
+      setEditAmount(""); // Alanı sıfırla
+      setEditPaymentDate(""); // Tarihi sıfırla
     } catch (error) {
       console.error("An error occurred while updating the data: ", error);
       toast.error("An error occurred while updating the data");
@@ -232,6 +263,7 @@ const Detail = () => {
   const onCancel = () => {
     setEditId(null);
     setEditAmount("");
+    setEditPaymentDate("");
   };
 
   const handleAmountChange = (event) => {
@@ -258,6 +290,14 @@ const Detail = () => {
         setData(items);
         const selectedRef = items?.find(item => item.debit === 0);
         setSelectedRef(selectedRef);
+        const customersData = res.data.customers
+          .map((x) => ({
+            label: x.customerName,
+            value: x.customerId,
+          }))
+          .filter((item) => item.label && item.value);
+
+        setCustomers(customersData);
       })
       .catch((err) => {
         toast.error(err.message || t("Something went wrong!"));
@@ -350,54 +390,65 @@ const Detail = () => {
             endDate: defaultEndDate,
           }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div
-                className={cn("w-52", !values.startDate && "removeFromPrint")}
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
-              >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div
+                  className={cn("w-52", !values.startDate && "removeFromPrint")}
+                >
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate || defaultStartDate}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    showTime={false}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate || defaultEndDate}
+                    change={(data) => {
+                      console.log("data", data);
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    showTime={false}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         {data && data.length > 0 && (
-          <PayAction id={selectedRef ? selectedRef.id : null} paymentTypeOptions={paymentTypes} />
+          <PayAction id={selectedRef ? selectedRef.id : null} paymentTypeOptions={paymentTypes} customers={customers} supplierId={id} getData={getData} defaultStartDate={defaultStartDate} defaultEndDate={defaultEndDate} />
         )}
         <Grid
           sx={{
@@ -409,76 +460,89 @@ const Detail = () => {
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
                 {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
             <TableBody>
               {data &&
-                data.map((row) => (
-                  <TableRow key={row.id}>
+                data.map((row) => {
+                  return (<TableRow key={row.id}>
                     {columns.map((column) =>
                       column.name ? (
                         <TableCell key={column.name} className="py-1.5">
-                          {column.type === "date"
-                            ? formatDate(row?.[column.name])
-                            : t(row?.[column.name])}
+                          {column.name === "paymentDate" && row[column.name] === "0001-01-01T00:00:00"
+                            ? ""
+                            : column.type === "date"
+                              ? formatDate(row?.[column.name])
+                              : t(row?.[column.name])}
                         </TableCell>
                       ) : (
                         <TableCell key="operations" className="py-1.5">
-                          {editId === row.id ? (
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <input
-                                type="number"
-                                autoFocus={true}
-                                value={editAmount}
-                                onChange={handleAmountChange}
-                                style={{
-                                  marginRight: "8px",
-                                  padding: "8px", // Padding ekler
-                                  borderRadius: "4px", // Köşeleri yuvarlar
-                                  border: "1px solid #ccc", // Hafif gri bir kenarlık ekler
-                                  backgroundColor: "#fff", // Beyaz arka plan rengi
-                                  boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)", // Hafif bir gölge ekler
-                                }}
-                              />
-                              <IconButton
-                                onClick={() =>
-                                  onEdit(row.id, row.debit !== 0, row)
-                                }
+                          {row.details !== "Initial Balance" ? ( // Initial Balance kontrolü
+                            editId === row.id ? (
+                              <div
+                                style={{ display: "flex", alignItems: "center" }}
                               >
-                                <SaveIcon />
-                              </IconButton>
-                              <IconButton onClick={onCancel}>
-                                <X />
-                              </IconButton>
-                            </div>
-                          ) : (
-                            <>
-                              <IconButton
-                                onClick={() => {
-                                  setEditId(row.id);
-                                  setEditAmount(row.amount || 0); // Eski değeri inputa atama
-                                }}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                onClick={() =>
-                                  onDelete(row.id, row.debit !== 0)
-                                }
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </>
-                          )}
+                                <input
+                                  type="number"
+                                  autoFocus={true}
+                                  value={editAmount}
+                                  onChange={handleAmountChange}
+                                  style={{
+                                    marginRight: "8px",
+                                    padding: "8px",
+                                    borderRadius: "4px",
+                                    border: "1px solid #ccc",
+                                    backgroundColor: "#fff",
+                                    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+                                  }}
+                                />
+                                <CustomDateTimePicker
+                                  value={editPaymentDate}
+                                  change={(data) => {
+                                    setEditPaymentDate(data);
+                                  }}
+                                  hasErrorMessages={false}
+                                  errorMessages={[]}
+                                />
+                                <IconButton
+                                  onClick={() =>
+                                    onEdit(row.id, row.debit !== 0, row)
+                                  }
+                                >
+                                  <SaveIcon />
+                                </IconButton>
+                                <IconButton onClick={onCancel}>
+                                  <X />
+                                </IconButton>
+                              </div>
+                            ) : (
+                              <>
+                                <IconButton
+                                  onClick={() => {
+                                    setEditId(row.id);
+                                    setEditAmount(row.amount || 0);
+                                  }}
+                                >
+                                  <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                  onClick={() =>
+                                    onDelete(row.id, row.debit !== 0)
+                                  }
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              </>
+                            )
+                          ) : null}
                         </TableCell>
                       )
                     )}
-                  </TableRow>
-                ))}
+                  </TableRow>)
+
+                })}
             </TableBody>
             {/* <TableFooter className="w-full">
               <TableRow className="w-full">
@@ -494,7 +558,7 @@ const Detail = () => {
           </Table>
         </Grid>
       </Container>
-    </Container>
+    </Container >
   );
 };
 
@@ -508,145 +572,329 @@ const amountValidationSchema = Yup.object().shape({
 export const PayAction = ({
   id,
   paymentTypeOptions,
+  customers,
+  supplierId,
+  getData,
+  defaultStartDate,
+  defaultEndDate
 }: {
   paymentTypeOptions: { value: string; label: string }[];
+  customers: { value: string; label: string }[];
   id: string;
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
+
+  const fetchInvoices = async (customerId: string, ticketType: string | null) => {
+    if (!customerId) return;
+    try {
+      const response = await apiService.get(
+        `Invoices/GetAll?customerId=${customerId}&ticketType=${ticketType}&supplierId=${supplierId}`
+      );
+      setInvoiceItems(response.data.items || []);
+    } catch (error) {
+      console.error("Failed to fetch invoices:", error);
+      toast.error(t("Failed to fetch invoices"));
+    }
+  };
+
+  const getTicketTypeOptions = (t: TFunction<"translation", undefined>) => [
+    { label: t("Aviabilet satışı"), value: "aviabiletSale" },
+    { label: t("Korperativ satış"), value: "cooperativeTicket" },
+    { label: t("İndividual tur satışı"), value: "individualTourPackage" },
+    { label: t("Tur paket satışı"), value: "tourPackage" },
+    { label: t("Digər xidmətlər"), value: "otherService" },
+  ];
 
   const onSubmit = (
-    values: { amount: number; paymentId: string },
+    values: { amount: number; paymentId: string, invoiceIds: { label: string, value: number }[], paymentDate: string, ticketType: { label: string, value: string } },
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
-
     if (!id) {
-      alert("You cannot make a payment. Please refresh the page or adjust the date so that one of the IV numbers appears in the list.")
+      alert(
+        "You cannot make a payment. Please refresh the page or adjust the date so that one of the IV numbers appears in the list."
+      );
       return;
     }
-    apiService
-      .post(
-        `/WillBePaids/Create/${id}?amount=${values.amount}&paymentId=${values.paymentId}`,
-        {}
-      )
-      .then(() => {
-        toast.success(t("Mədaxil yaradıldı"));
-        setSubmitting(false);
-        navigate(-1);
-      })
-      .catch((err) => {
-        toast.error(err.message || t("Something went wrong!"));
-      });
+
+    if (values.ticketType) {
+      const payload = {
+        amount: values.amount,
+        paymentId: values.paymentId,
+        date: toLocalISOStringV2(values.paymentDate || new Date()),
+        invoiceIds: values.invoiceIds.map((item) => item.value), // Sadece ID'leri gönderiyoruz
+      };
+
+      apiService
+        .post(`/WillBePaids/CreateV2`, payload)
+        .then(() => {
+          toast.success(t("Mədaxil yaradıldı"));
+          setSubmitting(false);
+          getData(parseInt(supplierId), defaultStartDate, defaultEndDate);
+          // navigate(-1);
+        })
+        .catch((err) => {
+          toast.error(err.message || t("Something went wrong!"));
+        });
+    } else {
+      apiService
+        .post(
+          `/WillBePaids/CreateV1/${id}?amount=${values.amount}&paymentId=${values.paymentId}&supplierId=${supplierId}&date=${toLocalISOStringV2(values.paymentDate || new Date())}`,
+          {}
+        )
+        .then(() => {
+          toast.success(t("Mədaxil yaradıldı"));
+          setSubmitting(false);
+          getData(parseInt(supplierId), defaultStartDate, defaultEndDate);
+          // navigate(-1);
+        })
+        .catch((err) => {
+          toast.error(err.message || t("Something went wrong!"));
+        });
+    }
   };
+
   return (
     <Formik
       onSubmit={onSubmit}
-      initialValues={{ amount: 0, paymentId: "" }}
+      initialValues={{ amount: 0, paymentId: "", customerId: "", ticketType: "" }}
       validationSchema={amountValidationSchema}
     >
       {({
         values,
         handleSubmit,
         handleChange,
-        isSubmitting,
         setFieldValue,
+        isSubmitting,
         errors,
         touched,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="flex items-start gap-x-2">
-            <div className="w-52 ">
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ mb: 1 }}
-                style={textStyling}
-              >
-                {t("Payment Types")}
-              </InputLabel>
-              <Select
-                onValueChange={(v) => setFieldValue("paymentId", v)}
-                defaultValue={String(values.paymentId)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t("Select option")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem
-                    value={null}
-                    disabled={true}
-                    className="hidden last:block"
-                  >
-                    {isNil(paymentTypeOptions)
-                      ? t("Loading...")
-                      : t("No item found")}
-                  </SelectItem>
-                  {paymentTypeOptions?.map((option) => (
+      }) => {
+        const totalDebt = invoiceItems
+          .filter((item) =>
+            values.invoiceIds.find((selected) => selected.value === item.id)
+          )
+          .reduce((acc, item) => acc + item.debt, 0);
+        return (
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col md:flex-row items-start gap-x-2">
+              <div className="w-52">
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ mb: 1 }}
+                  style={textStyling}
+                >
+                  {t("Payment Types")}
+                </InputLabel>
+                <Select
+                  onValueChange={(v) => setFieldValue("paymentId", v)}
+                  defaultValue={String(values.paymentId)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("Select option")} />
+                  </SelectTrigger>
+                  <SelectContent>
                     <SelectItem
-                      value={String(option.value)}
-                      key={String(option.value)}
+                      value={null}
+                      disabled={true}
+                      className="hidden last:block"
                     >
-                      {option.label}
+                      {isNil(paymentTypeOptions)
+                        ? t("Loading...")
+                        : t("No item found")}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {!!errors.paymentId && !!touched.paymentId ? (
-                <>
-                  {[t(errors.paymentId?.toString())]?.map((item, key) => (
-                    <FormHelperText
-                      key={key}
-                      sx={{ color: "red", margin: 0, height: 20 }}
-                    >
-                      {item}
-                    </FormHelperText>
-                  ))}
-                </>
-              ) : (
-                <div className="w-full h-5 " />
-              )}
-            </div>
-            <div className="pt-4 onlyPrint">
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ mb: 1 }}
-                style={textStyling}
+                    {paymentTypeOptions?.map((option) => (
+                      <SelectItem
+                        value={String(option.value)}
+                        key={String(option.value)}
+                      >
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div
+                className="w-52"
               >
-                {t("Məbləğ")}
-              </InputLabel>
-              {values.amount}
+                <CustomDateTimePicker
+                  label={t("Payment Date")}
+                  value={values.paymentDate}
+                  change={(data) => {
+                    setFieldValue("paymentDate", data);
+                  }}
+                  hasErrorMessages={false}
+                  errorMessages={[]}
+                />
+              </div>
+              <div className="w-52">
+                <CustomSelect
+                  label={t("Bilet növü")}
+                  optionLabel="name"
+                  value={values.ticketType ?? null}
+                  change={(value) => setFieldValue("ticketType", value ?? null)}
+                  staticOptions={getTicketTypeOptions(t)}
+                />
+              </div>
+              {values.ticketType && (
+                <div className="w-52">
+                  <div className="block md:hidden">
+                    <CustomSelect
+                      label={t("Customer")}
+                      optionLabel="Customer"
+                      value={customers ?? null}
+                      change={(value) => setFieldValue("customerId", value)}
+                      staticOptions={customers}
+                    />
+                  </div>
+                  <div className="hidden md:block">
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      sx={{ mb: 1 }}
+                      style={textStyling}
+                    >
+                      {t("Customer")}
+                    </InputLabel>
+                    <Select
+                      onValueChange={(v) => setFieldValue("customerId", v)}
+                      open={open}
+                      onOpenChange={setOpen}
+                    >
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={
+                            values.customerId
+                              ? customers?.find((option) => option.value === values.customerId)?.label
+                              : t("Select option")
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <Command>
+                          <CommandInput
+                            placeholder={t("Search customers...")}
+                            className="h-10"
+                          />
+                          <CommandGroup>
+                            {customers?.map((option) => (
+                              <CommandItem
+                                key={option.value}
+                                value={option.value}
+                                onSelect={() => {
+                                  console.log("value", option.value);
+                                  console.log("customerId", values.customerId);
+
+                                  setFieldValue("customerId", option.value);
+                                  setOpen(false);
+                                }}
+                                className={`${option.value === values.customerId
+                                  ? "bg-blue-500 text-white"
+                                  : "hover:bg-gray-100 text-gray-900"
+                                  }`}
+                              >
+                                {option.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
+              {values.customerId && (
+                <>
+                  <div className="w-52">
+                    <CustomMultiSelect
+                      isMultiSelect={true}
+                      secondaryOptionLabel="debt"
+                      optionLabel="invoiceNo"
+                      options={invoiceItems.map((item) => ({
+                        label: item.invoiceNo,
+                        value: item.id,
+                      }))}
+                      api={
+                        values.customerId
+                          ? `Invoices/GetAll?customerId=${values.customerId}&ticketType=${values.ticketType || ""}&supplierId=${supplierId}`
+                          : ""
+                      }
+                      dependencies={[values.customerId, values.ticketType]}
+                      label={t("Invoice")}
+                      loading={!invoiceItems.length}
+                      value={values.invoiceIds ?? []}
+                      change={(value) => {
+                        console.log("value", value);
+                        setFieldValue("invoiceIds", value);
+                        const debt = invoiceItems
+                          .filter((i) => value.find((v) => +v.value === i.id))
+                          .reduce((acc, curr) => acc + curr.debt, 0);
+                        setFieldValue("debt", debt);
+                        const totalDebt = value.reduce((sum, item) => sum + (item.debt || 0), 0); // Toplam hesaplama
+                        setFieldValue("totalDebt", totalDebt);
+                      }}
+                      hasErrorMessages={!!errors.invoiceIds && !!touched.invoiceIds}
+                      filterFunction={(item) => item["debt"] > 0}
+                    />
+                  </div>
+                  <div className="w-28">
+                    <InputLabel id="total-debt-label" style={textStyling}>
+                      {t("Total")}
+                    </InputLabel>
+                    <CustomTextField
+                      name="totalDebt"
+                      type="number"
+                      value={values.totalDebt || 0}
+                      disabled
+                      hasErrorMessages={false}
+                    />
+                  </div>
+                </>
+
+              )}
+              <div className="pt-4 onlyPrint">
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ mb: 1 }}
+                  style={textStyling}
+                >
+                  {t("Məbləğ")}
+                </InputLabel>
+                {values.amount}
+              </div>
+              <div className="w-28 removeFromPrint">
+                <InputLabel id="demo-simple-select-label" style={textStyling}>
+                  {t("Məbləğ")}
+                </InputLabel>
+                <CustomTextField
+                  name="amount"
+                  type="number"
+                  label={""}
+                  value={values.amount}
+                  placeholder={t("Məbləğ")}
+                  change={handleChange}
+                  hasErrorMessages={!!errors.amount && !!touched.amount}
+                  errorMessages={[t(errors.amount?.toString())]}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="p-2 px-4 mt-6 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+              >
+                <ClipLoader
+                  size={14}
+                  color="white"
+                  loading={isSubmitting}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+                {t("Ödə")} {/* Hola */}
+              </button>
             </div>
-            <div className="w-28 removeFromPrint">
-              <InputLabel id="demo-simple-select-label" style={textStyling}>
-                {t("Məbləğ")}
-              </InputLabel>
-              <CustomTextField
-                name="amount"
-                type="number"
-                label={""}
-                value={values.amount}
-                placeholder={t("Məbləğ")}
-                change={handleChange}
-                hasErrorMessages={!!errors.amount && !!touched.amount}
-                errorMessages={[t(errors.amount?.toString())]}
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="p-2 px-4 mt-6 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
-            >
-              <ClipLoader
-                size={14}
-                color="white"
-                loading={isSubmitting}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-              {t("Ödə")} {/* Hola */}
-            </button>
-          </div>
-        </form>
-      )}
+          </form>
+        );
+      }}
     </Formik>
   );
 };

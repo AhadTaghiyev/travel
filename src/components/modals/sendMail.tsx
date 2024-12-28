@@ -25,6 +25,8 @@ export const SendMailModal = () => {
 
   const isModalOpen = isOpen && type === "sendMail";
 
+  const isBcc = data?.isBcc;
+
   if (!isModalOpen) {
     return null;
   }
@@ -55,8 +57,13 @@ export const SendMailModal = () => {
     );
     formData.append("attachments", blob);
 
+    let url = `Email/SendMailToPersons`;
+    if (isBcc !== undefined && isBcc !== null) {
+      url += `?isBcc=${isBcc}`;
+    }
+
     const promise = apiService
-      .postForm(`Email/SendMailToPersons`, formData)
+      .postForm(url, formData)
       .then((response) => {
         if (response.status === 200) {
           toast.success(t("Email uğurla göndərildi"));

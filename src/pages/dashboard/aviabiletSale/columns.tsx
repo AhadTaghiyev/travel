@@ -2,17 +2,17 @@ import { GridColDef } from "@mui/x-data-grid";
 import { TFunction } from "i18next";
 
 export const columns = (t: TFunction): GridColDef[] => [
-  { field: "No", headerName: t("no"), flex: 1, headerClassName: "header-item" },
+  { field: "No", headerName: t("no"), flex: 0.3, headerClassName: "header-item" },
   {
     field: "date",
     headerName: t("date"),
-    flex: 1,
+    flex: 0.95,
     headerClassName: "header-item",
   },
   {
     field: "invoiceNo",
     headerName: t("Inv. Ref."),
-    flex: 1,
+    flex: 0.8,
     headerClassName: "header-item",
   },
   {
@@ -42,19 +42,31 @@ export const columns = (t: TFunction): GridColDef[] => [
   {
     field: "totalAmount",
     headerName: t("commonPrice"),
-    flex: 1,
+    flex: 0.7,
     headerClassName: "header-item",
   },
   {
     field: "totalPaidAmount",
     headerName: t("paidamount"),
-    flex: 1,
+    flex: 0.8,
     headerClassName: "header-item",
   },
   {
     field: "totalDebtAmount",
     headerName: t("balance"),
-    flex: 1,
+    flex: 0.8,
+    headerClassName: "header-item",
+  },
+  {
+    field: "totalSupplierPaidAmount",
+    headerName: t("Supplier Paid Amount"),
+    flex: 1.2,
+    headerClassName: "header-item",
+  },
+  {
+    field: "totalSupplierDebtAmount",
+    headerName: t("Supplier Debt Amount"),
+    flex: 1.2,
     headerClassName: "header-item",
   },
   {
@@ -69,7 +81,7 @@ export const columns = (t: TFunction): GridColDef[] => [
     flex: 1,
     headerClassName: "header-item",
     cellClassName: (params) =>
-      params.value ? "refund-true" : "refund-false", 
+      params.value ? "refund-true" : "refund-false",
     valueGetter: (params) => (params.value ? "Refunded" : "Not Refunded"),
   },
 ];

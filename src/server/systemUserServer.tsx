@@ -49,7 +49,7 @@ export const userService = {
         })
       ).data;
     } catch (error) {
-      console.log("err: ", error);
+      return error.response;
     }
   },
   get: async function Get(): Promise<any> {

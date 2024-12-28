@@ -15,6 +15,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { DEFAULT_YEAR } from "@/constants";
+
+interface INearestFlightsReportProps {
+  selectedYear: string;
+}
 
 const columns = [
   { label: "Id", name: "id" },
@@ -27,7 +32,7 @@ const columns = [
   { label: "Travel Dates", name: "travelDates", className: "min-w-28" },
 ];
 
-const NearestFlightsReport = () => {
+const NearestFlightsReport = ({ selectedYear }: INearestFlightsReportProps) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const { t } = useTranslation();
@@ -35,9 +40,17 @@ const NearestFlightsReport = () => {
   const getData = async () => {
     setLoading(true);
     setData([]);
-
+    const searchParams = new URLSearchParams();
+    searchParams.append(
+      "startDate",
+      new Date(selectedYear === "All" ? Number(DEFAULT_YEAR) : +selectedYear, 0, 1).toUTCString()
+    );
+    searchParams.append(
+      "endDate",
+      new Date(selectedYear === "All" ? new Date().getFullYear() : +selectedYear, 11, 31).toUTCString()
+    );
     await apiService
-      .get(`/Reports/NearestTravelReport/1`)
+      .get(`/Reports/NearestTravelReport/1?${searchParams.toString()}`)
       .then(({ data }) => {
         setData(data.items ?? []);
       })
@@ -51,7 +64,7 @@ const NearestFlightsReport = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedYear]);
 
   return (
     <div className="bg-white shadow-md w-full py-4 px-2 border border-solid border-gray-300 rounded-md">
@@ -62,9 +75,9 @@ const NearestFlightsReport = () => {
         <Table className="mt-2 text-xs ">
           <TableHeader className="sticky top-0 rounded-t-md bg-gray-100 border-solid border-black/60">
             <TableRow className="w-full">
-              <TableHead>{t("no")}</TableHead>
+              <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("no")}</TableHead>
               {columns.map((column) => (
-                <TableHead key={column.name}>{t(column.label)}</TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
               ))}
             </TableRow>
           </TableHeader>

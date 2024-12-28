@@ -22,7 +22,7 @@ const NewGetCredit = () => {
         .post(`/GetCredits/Create`, values)
         .then((response) => {
           if (response.status === 200) {
-            toast.success(t("Alınan kredit yaradıldı"));
+            toast.success(t("Received Loan"));
             navigate(`/panel/getCredits`);
             // TODO: Navigate to report page
             // navigate(
@@ -42,7 +42,7 @@ const NewGetCredit = () => {
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-3xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
-        {t("Alınan Kredit Yarat")}
+        {t("Received Loan")}
       </h1>
       <GetCreditForm
         formType="Create"

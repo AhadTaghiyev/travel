@@ -23,24 +23,26 @@ import { ClipLoader } from "react-spinners";
 import { formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
-import { InvoiceType, SERVER_BASE_URL } from "@/constants";
+import { DEFAULT_YEAR, InvoiceType, SERVER_BASE_URL } from "@/constants";
+import { YearContext } from "@/store/YearContext";
 
 const columns = [
   { label: "Customer", name: "customer" },
   { label: "Date", name: "date", type: "date" },
   { label: "Ref.", name: "ref" },
   { label: "InvoiceType", name: "invoiceType" },
-  { label: "DeadLine.", name: "deadLine", type: "date" },
-  { label: "Note.", name: "note" },
-  { label: "Buying.", name: "sellingPrice" },
-  { label: "Selling.", name: "totalAmount" },
-  { label: "Profit.", name: "profit" },
+  { label: "DeadLine", name: "deadLine", type: "date" },
+  { label: "Note", name: "note" },
+  { label: "Buying", name: "sellingPrice" },
+  { label: "Selling", name: "totalAmount" },
+  { label: "Profit", name: "profit" },
 ];
 
 const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
 
   const [data, setData] = useState<
     {
@@ -56,10 +58,10 @@ const Detail = () => {
   const [searchParams] = useSearchParams();
   const defaultStartDate = searchParams.get("startDate")
     ? new Date(searchParams.get("startDate") as string)
-    : null;
+    : selectedYear ? new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1) : null;
   const defaultEndDate = searchParams.get("startDate")
     ? new Date(searchParams.get("endDate") as string)
-    : null;
+    : selectedYear ? new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31) : null;
 
   useEffect(() => {
     getData(parseInt(id), defaultStartDate, defaultEndDate);
@@ -207,49 +209,57 @@ const Detail = () => {
             endDate: defaultEndDate,
           }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         <Grid
           sx={{
@@ -310,7 +320,7 @@ const Detail = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell className="py-2" colSpan={5}>
+                <TableCell className="py-2" colSpan={6}>
                   {t("Total Amount")}
                 </TableCell>
                 <TableCell className="py-2">{totalSellingPrice}</TableCell>

@@ -25,6 +25,7 @@ const NewIncome = () => {
         invoiceId: values.invoiceId?.value ?? undefined,
         advancePaymentId: values.advancePaymentId?.value ?? undefined,
         date: values.date,
+        personalId: values.personalId
       };
 
       const promise = apiService
@@ -68,6 +69,7 @@ const NewIncome = () => {
           paidToCustomer: 0,
           advancePaymentId: null,
           supplierAmount:0,
+          personalId: 0
         }}
       />
     </div>

@@ -95,6 +95,22 @@ const RefundForm = ({
                 </div>
                 <div className="w-full relative">
                   <CustomAutocompleteSelect
+                    api="Personals/GetAll/1?pageSize=1000"
+                    label={t("Personal")}
+                    disabled={isEdit}
+                    value={values.personalId ?? null}
+                    optionLabel="fullName"
+                    change={(value) => {
+                      setFieldValue("personalId", value);
+                    }}
+                    hasErrorMessages={
+                      !!errors.personalId && !!touched.personalId
+                    }
+                    errorMessages={[t(errors.personalId?.toString())]}
+                  />
+                </div>
+                <div className="w-full relative">
+                  <CustomAutocompleteSelect
                     api="Customers/GetAll/1/10000"
                     label={t("customer")}
                     disabled={isEdit}

@@ -24,7 +24,18 @@ const UpdateTicket = () => {
   async function getTicketInfo(id: string) {
     const response = await apiService.get(`/TourPackages/Get/${id}`);
     if (response.status === 200) {
-      setTicket(response.data);
+      const data = response.data;
+
+      // API'den gelen tarih verilerini koru
+      data.tourPackages = data.tourPackages.map((tourPackage) => ({
+        ...tourPackage,
+        dateOfDeparture: new Date(tourPackage.dateOfDeparture).toISOString(),
+        returnDate: new Date(tourPackage.returnDate).toISOString(),
+      }));
+
+      console.log(data);
+
+      setTicket(data);
       setLoading(false);
     } else {
       toast.error(t("Something went wrong"));

@@ -11,6 +11,8 @@ export const CompanyContext = createContext<{
     adress: string;
     detail: string;
     image: string;
+    companySealImage: string;
+    companySealBase64: string;
     concurency: string;
   };
   loading?: boolean;

@@ -18,6 +18,8 @@ import { UserContext } from "@/store/UserContext";
 import { MassIncomeTable } from "@/components/pages/incomeTable";
 import { CompanyContext } from "@/store/CompanyContext";
 import { formatDate } from "@/lib/utils";
+import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import PDFDocument from "@/components/pages/report/pdf/index";
 
 const customerProperties = [
   {
@@ -86,18 +88,34 @@ export default function index() {
     setLoading(false);
   }
 
-  const generatePDFBlob = async () => {
-    const element = document.getElementById("reportPage");
-    const opt = {
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    const blob = await html2pdf().set(opt).from(element).toPdf().output("blob");
-    if (!blob) {
-      toast.error(t("Something went wrong"));
-      return "";
+  const generatePDFBlob = async (data, company, currency, invoiceNo) => {
+    try {
+      // Generate the PDF document as a blob
+      const pdfBlob = await pdf(
+        <PDFDocument
+          isReport={false}
+          data={data}
+          company={company}
+          invoiceText={null}
+          headers={null}
+          title={"Invoice Receipt"}
+          currency={currency}
+          companyName={company.name}
+          companyEmail={company.email}
+          companyImage={company.imageBase64}
+          companyPhone={company.phoneNumber}
+          companyAddress={company.adress}
+          t={t}
+        />
+      ).toBlob();
+
+      const pdfFile = new File([pdfBlob], `Travacco_${invoiceNo}.pdf`, { type: "application/pdf" });
+
+      return pdfFile;
+    } catch (error) {
+      console.error("Error generating PDF Blob:", error);
+      return null;
     }
-    return blob;
   };
 
   if (loading || companyLoading) {
@@ -148,12 +166,13 @@ export default function index() {
                     variant="text"
                     color="inherit"
                     onClick={async () => {
-                      const blob = await generatePDFBlob();
-                      if (!blob) return;
+                      const pdfFile = await generatePDFBlob(data, company, currency, data.invoiceNo);
+                      if (!pdfFile) return;
 
                       onOpen("sendMail", () => 0, {
-                        blob,
+                        blob: pdfFile,
                         subject: data?.customer?.fullName ?? "",
+                        isBcc: false,
                       });
                     }}
                     sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
@@ -161,13 +180,37 @@ export default function index() {
                     <AiOutlineMail style={{ marginRight: "8px" }} />
                     {t("Send mail")}
                   </Button>
-                  <Button
-                    onClick={window.print}
-                    variant="text"
-                    color="inherit"
-                    sx={{ ml: 2, fontSize: "12px", lineHeight: "16px" }}
-                  >
-                    <FiDownload style={{ marginRight: "8px" }} /> {t("Print")}
+                  <Button >
+                    <PDFDownloadLink
+                      document={
+                        <PDFDocument
+                          isReport={false}
+                          data={data}
+                          company={company}
+                          invoiceText={null}
+                          headers={null}
+                          title={"Invoice Receipt"}
+                          currency={currency}
+                          companyName={company.name}
+                          companyEmail={company.email}
+                          companyImage={company.imageBase64}
+                          companyPhone={company.phoneNumber}
+                          companyAddress={company.adress}
+                          t={t}
+                        />
+                      }
+                      fileName={`Travacco_${data.invoiceNo}.pdf`}
+                      style={{
+                        textDecoration: "none",
+                        color: "#000",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "12px"
+                      }}
+                    >
+                      {({ loading }) => (loading ? t("Loading") : <><FiDownload style={{ marginRight: "8px" }} /> {t("Download")}</>)}
+                    </PDFDownloadLink>
                   </Button>
                 </Grid>
               </div>
@@ -218,6 +261,20 @@ export default function index() {
                 incomes={data ? [data] : []}
               />
             </Grid>
+            {company.companySealImage && (
+              <div className="flex justify-end mt-32 mr-32 mb-48">
+                <img
+                  src={`data:image/png;base64,${company.companySealBase64}`}
+                  alt="Company Seal"
+                  className="seal-image"
+                  style={{
+                    width: 600, // Boyut artırıldı
+                    maxHeight: 300, // Boyut artırıldı
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+            )}
           </Container>
         </Grid>
       </Container>

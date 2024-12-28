@@ -1,4 +1,5 @@
-import { columns } from "./tableColumns";
+import { getColumns } from "./tableColumns";
+
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { apiService } from "../../../../server/apiServer";
@@ -22,6 +23,8 @@ export default function index() {
     fetchData();
   }, []);
 
+  const columns = getColumns(t);
+
   return (
     <div className="mx-1 p-4 bg-white shadow-md min-h-[500px]">
       <h1 className="text-black text-4xl font-bold pb-4 border-b border-solid border-[#1c29400f]">
@@ -38,6 +41,23 @@ export default function index() {
           pageSizeOptions={[10, 50, 100]}
           disableRowSelectionOnClick={true}
           sx={{
+            '& .super-app-theme--header': {
+              backgroundColor: '#3275BB',
+              color: "#fff"
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: '#3275BB',
+              color: "#fff",
+            },
+            "& .MuiDataGrid-columnHeaderTitleContainer": {
+              borderRight: "1px solid #fff",
+            },
+            "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnHeaderTitleContainer": {
+              borderRight: "none", // Son kolon için border-right kaldırıldı
+            },
+            "& .MuiDataGrid-columnHeader:first-child .MuiDataGrid-columnHeaderTitleContainer": {
+              borderLeft: "none", // Sondan bir önceki kolon için border-right kaldırıldı
+            },
             "& .MuiDataGrid-row": {
               width: "100%!important",
             },

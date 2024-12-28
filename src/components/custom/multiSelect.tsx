@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 type SelectOption = {
   label: string;
   value: string;
+  debt?: number;
 };
 
 interface IProps {
@@ -25,7 +26,7 @@ interface IProps {
   size?: "md" | "lg";
   value: SelectOption[];
   getOptions?: (options: any[]) => void;
-  change: (option: SelectOption[]) => void;
+  change: (option: SelectOption[], debts?: number[]) => void;
   closeMenuOnSelect?: boolean;
   api?: string;
   label: string;
@@ -36,6 +37,8 @@ interface IProps {
   errorMessages: string[];
   hasErrorMessages: boolean;
   isMultiSelect?: boolean;
+  dependencies?: any[];
+  filterFunction?: (item: any) => boolean;
 }
 
 const CustomMultiSelect: React.FC<IProps> = ({
@@ -53,6 +56,8 @@ const CustomMultiSelect: React.FC<IProps> = ({
   secondaryOptionLabel,
   isMultiSelect = true,
   closeMenuOnSelect = false,
+  dependencies = [],
+  filterFunction
 }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>();
   const [popperElement, setPopperElement] = useState<any>();
@@ -64,26 +69,40 @@ const CustomMultiSelect: React.FC<IProps> = ({
   });
 
   const fetchData = async () => {
+    if (!api) return; // Prevent unnecessary fetch if API is missing
     setLoading(true);
-    const res = await apiService.get(api);
+    try {
+      const res = await apiService.get(api);
+      console.log("res", res);
+      let filteredRes = res.data.items;
+      if (filterFunction) {
+        filteredRes = filteredRes.filter(filterFunction);
+        console.log("filteredRes", filteredRes);
+      }
+      getOptions?.(filteredRes);
 
-    getOptions?.(res.data.items);
-    const data = res.data.items
-      .map((x) => ({
-        label: secondaryOptionLabel
-          ? `${x[optionLabel]} ~ ${x[secondaryOptionLabel] ?? 0}`
-          : x[optionLabel],
-        value: x.id,
-      }))
-      .filter((item) => item.label && item.value);
+      const data = filteredRes
+        .map((x) => ({
+          label: secondaryOptionLabel
+            ? `${x[optionLabel]} ~ ${x[secondaryOptionLabel] ?? 0}`
+            : x[optionLabel],
+          value: x.id,
+          debt: x[secondaryOptionLabel] ?? 0,
+        }))
+        .filter((item) => item.label && item.value);
+      console.log("data", data);
 
-    setOptions(data);
-    setLoading(false);
+      setOptions(data);
+    } catch (error) {
+      console.error("Error fetching data in CustomMultiSelect:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, dependencies);
 
   useEffect(() => {
     if (refetech) {
@@ -156,7 +175,14 @@ const CustomMultiSelect: React.FC<IProps> = ({
                 isLoading={loading}
                 options={options.filter((o) => o.value)}
                 onChange={(newValue) => {
-                  change(newValue as SelectOption[]);
+                  if (isMultiSelect) {
+                    const selectedDebts = (newValue as SelectOption[]).map(
+                      (item) => options.find((o) => o.value === item.value)?.debt || 0
+                    );
+                    change(newValue as SelectOption[], selectedDebts);
+                  } else {
+                    change(newValue as SelectOption[]);
+                  }
                   if (closeMenuOnSelect) referenceElement.click();
                 }}
                 isClearable={true}

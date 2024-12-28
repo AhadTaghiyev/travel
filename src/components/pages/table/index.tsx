@@ -32,7 +32,7 @@ import { apiService } from "../../../server/apiServer";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { ROLES, SERVER_BASE_URL } from "@/constants";
+import { DEFAULT_YEAR, ROLES, SERVER_BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
 import CustomDateTimePicker from "@/components/custom/datePicker";
 import {
@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/select";
 import { isNil } from "lodash";
 import { UserContext } from "@/store/UserContext";
+import { YearContext } from "@/store/YearContext";
 
 const headerStyle = {
   borderColor: "#c4c4c4",
@@ -73,6 +74,7 @@ export default function Index({
   hideDelete,
   hideReceipt = true,
   hideOperations = false,
+  isDetailedTotal = false,
   buttonText,
   exportLink,
   detailLink,
@@ -88,6 +90,7 @@ export default function Index({
 }: ITableObject) {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const { selectedYear } = useContext(YearContext);
   if (user?.role !== ROLES.LEADER && user?.role !== ROLES.Admin) {
     hideEdit = true;
     hideDelete = true;
@@ -106,10 +109,12 @@ export default function Index({
   const [itemStatus, setItemStatus] = useState(null);
   const defaultStartDate = dayjs(searchParams.get("startDate")).isValid()
     ? dayjs(new Date(searchParams.get("startDate")))
-    : dayjs().startOf("year");
+    : selectedYear
+      ? dayjs(new Date(String(selectedYear === "All" ? Number(DEFAULT_YEAR) : selectedYear))).startOf("year")
+      : dayjs().startOf("year");
   const defaultEndDate = dayjs(searchParams.get("endDate")).isValid()
     ? dayjs(new Date(searchParams.get("endDate")))
-    : dayjs().endOf("year");
+    : dayjs(new Date(String(selectedYear === "All" ? new Date().getFullYear() : selectedYear))).endOf("year");;
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [filter, setFilter] = useState<string>(defaultFilterValue || "");
@@ -135,8 +140,13 @@ export default function Index({
     setEndDate(adjustedEndDate);
   };
 
+  useEffect(() => {
+    setStartDate(dayjs(new Date(String(selectedYear === "All" ? Number(DEFAULT_YEAR) : selectedYear))).startOf("year"))
+    setEndDate(dayjs(new Date(String(selectedYear === "All" ? new Date().getFullYear() : selectedYear))).endOf("year"))
+  }, [selectedYear])
+
   const handleCameraClick = (image) => {
-    setImageUrl(image ? `https://api.travacco.com/images/${image}` : null);
+    setImageUrl(image);
     setImageModalOpen(true);
   };
 
@@ -199,9 +209,9 @@ export default function Index({
       color: "#fff",
     },
     minWidth: 120,
-    headerClassName: "header-item",
+    headerClassName: "header-item super-app-theme--header",
     renderCell: (params) => {
-      if (params.row.id === "total") return null;
+      if (params.row.id === "total" && !isDetailedTotal) return null;
       let detailUrl = detailLink
         ? detailLink + params.row.id
         : `${root}/report?tickets=${params.row.id}`;
@@ -306,30 +316,52 @@ export default function Index({
   }, [paginationModel.page, startDate, endDate, search, filter, itemStatus, isFiltering]);
 
   const totalRow = useMemo(() => {
-    if (!totalProps || !rows || totalProps?.length === 0 || rows?.length === 0)
-      return null;
-    const row = { id: "total", No: "Total" };
+    if (!rows || rows.length === 0 || !totalProps || totalProps?.length === 0) return null;
 
-    totalProps?.forEach((prop) => {
-      row[prop] =
-        totals[`total${prop.toLowerCase()}`] ||
-        rows.reduce((acc, row) => acc + row[prop], 0);
-    });
-    return row;
-  }, [rows, totalProps]);
+    if (isDetailedTotal) {
+      // Detaylı toplam
+      const row = { id: "total", No: t("Total"), type: t("All Tickets") };
+
+      row["count"] = rows.reduce((acc, curr) => acc + (Number(curr.count) || 0), 0);
+
+      totalProps?.forEach((prop) => {
+        if (prop !== "count") {
+          row[prop] =
+            totals?.[`total${prop.toLowerCase()}`] ||
+            rows.reduce((acc, curr) => acc + (Number(curr[prop]) || 0), 0);
+        }
+      });
+
+      return row;
+    } else {
+      // Basit toplam
+      const row = { id: "total", No: t("Total") };
+
+      totalProps?.forEach((prop) => {
+        row[prop] =
+          totals?.[`total${prop.toLowerCase()}`] ||
+          rows.reduce((acc, curr) => acc + (Number(curr[prop]) || 0), 0);
+      });
+
+      return row;
+    }
+  }, [rows, totalProps, totals, isDetailedTotal]);
 
   const tableRows = useMemo(() => {
     const arr = rows?.map((row, index: number) => ({
       No: index + 1,
       ...row,
-      category: row.id === 0 && row.category === "Founder/Debt" ? t('Others') : row.category,
-      fullName: row.id === 0 && row.category === "Founder/Debt" ? t('Others') : row.fullName,
+      category: row.id === 0 && row.category === "Founder/Debt" ? t("Others") : row.category,
+      fullName: row.id === 0 && row.category === "Founder/Debt" ? t("Others") : row.fullName,
     }));
+
     if (arr.length > 0 && totalRow) {
       arr.push(totalRow);
     }
+
     return arr;
-  });
+  }, [rows, totalRow, isDetailedTotal]);
+
 
   const handleFilterModelChange = (filterModel) => {
     const isFilterActive = filterModel.items.some((item) => item.value && item.value.trim() !== "");
@@ -437,6 +469,7 @@ export default function Index({
                     setSearchParams(newSearchParams);
                     handleStartDateChange(data ?? startDate);
                   }}
+                  isStartDate={true}
                 />
               </Grid>
             )}
@@ -445,14 +478,16 @@ export default function Index({
                 hideError
                 value={endDate}
                 change={(data) => {
+                  console.log("data", data)
                   const newSearchParams = new URLSearchParams(searchParams);
                   newSearchParams.set(
                     "endDate",
-                    (data ?? new Date()).toISOString()
+                    (data ?? new Date(selectedYear === "All" ? new Date().getFullYear() : selectedYear, 11, 31)).toISOString()
                   );
                   setSearchParams(newSearchParams);
                   handleEndDateChange(data ?? new Date());
                 }}
+                isStartDate={false}
               />
             </Grid>
             <Grid item className="removeFromPrint">
@@ -490,15 +525,33 @@ export default function Index({
                 ...columns.map((col) => ({
                   ...col,
                   headerName: t(col.headerName),
+                  headerClassName: "super-app-theme--header"
                 })),
                 ...(!hideOperations ? [field] : []),
               ]}
               paginationMode="server"
               rows={tableRows}
-              pageSizeOptions={[10, 50, 100]}
+              pageSizeOptions={[5, 10, 50]}
               disableRowSelectionOnClick={true}
               onFilterModelChange={handleFilterModelChange}
               sx={{
+                '& .super-app-theme--header': {
+                  backgroundColor: '#3275BB',
+                  color: "#fff"
+                },
+                '& .MuiDataGrid-columnHeaders': {
+                  backgroundColor: '#3275BB',
+                  color: "#fff",
+                },
+                "& .MuiDataGrid-columnHeaderTitleContainer": {
+                  borderRight: "1px solid #fff",
+                },
+                "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnHeaderTitleContainer": {
+                  borderRight: "none", // Son kolon için border-right kaldırıldı
+                },
+                "& .MuiDataGrid-columnHeader:nth-last-of-type(2) .MuiDataGrid-columnHeaderTitleContainer": {
+                  borderRight: "none", // Sondan bir önceki kolon için border-right kaldırıldı
+                },
                 "& .MuiDataGrid-row": {
                   width: "100%!important",
                 },
@@ -562,7 +615,7 @@ export default function Index({
               }}
               paginationModel={paginationModel}
               onPaginationModelChange={setPaginationModel}
-              checkboxSelection
+            // checkboxSelection
             />
           </div>
         </Grid>

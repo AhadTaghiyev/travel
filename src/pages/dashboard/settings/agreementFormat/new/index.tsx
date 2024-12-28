@@ -12,6 +12,7 @@ import {
   UploadAdapter,
   FileLoader,
 } from "@ckeditor/ckeditor5-upload/src/filerepository";
+import { useTranslation } from "react-i18next";
 
 const footer = {
   borderRadius: "2px",
@@ -28,7 +29,7 @@ const textStyling = {
 };
 
 async function saveData(obj: any) {
-    console.log(obj)
+  console.log(obj)
   const res = await apiService.post("AgreementFormats/Create", obj);
   return res;
 }
@@ -60,8 +61,8 @@ function uploadAdapter(loader: FileLoader): UploadAdapter {
             }
             reject("Upload failed");
           }
-          
-        
+
+
         } catch (error) {
           reject("Upload failed");
         }
@@ -80,6 +81,7 @@ function uploadPlugin(editor) {
 }
 
 export default function Index() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -110,7 +112,7 @@ export default function Index() {
           sx={{ mb: 1 }}
           style={textStyling}
         >
-          Müqavilə formatı adı
+          {t("Contract format name")}
         </InputLabel>
         <TextField
           required
@@ -144,10 +146,10 @@ export default function Index() {
             sx={{ mr: 2 }}
             onClick={() => navigate(-1)}
           >
-            Geri qayıt
+            {t("goBack")}
           </Button>
           <Button variant="contained" onClick={handleSave}>
-            Təsdiqlə
+            {t("confirm")}
           </Button>
         </div>
       </footer>

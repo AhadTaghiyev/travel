@@ -223,11 +223,11 @@ export default function index() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("Ref.")}</TableHead>
-                    <TableHead>{t("Ödəniş növü")}</TableHead>
-                    <TableHead>{t("paidamount")}</TableHead>
-                    <TableHead>{t("Description")}</TableHead>
-                    <TableHead>{t("date")}</TableHead>
+                    <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("Ref.")}</TableHead>
+                    <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("Ödəniş növü")}</TableHead>
+                    <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("paidamount")}</TableHead>
+                    <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("Description")}</TableHead>
+                    <TableHead className="bg-[#3275BB] text-[#fff] border-white">{t("date")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

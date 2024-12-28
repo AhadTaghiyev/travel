@@ -5,6 +5,8 @@ export interface ICompany {
   adress: string;
   detail: string;
   image: string;
+  companySealImage?: string;
+  companySealFilename?: string;
   concurency: string;
   id: number;
   bonuces?: number;

@@ -1,18 +1,11 @@
 import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 
 import NavigationItem from "@/components/pages/home/navigationItem";
 import NearestFlightsReport from "./report-tables/nearest-flights";
 import { navigationItems } from "./navigationItems";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import DeadlineReport from "./report-tables/deadline";
 import PaymentTypes from "./report-tables/payment-types";
 import ReciveablesReport from "./report-tables/receivables";
@@ -23,13 +16,15 @@ import { Link } from "react-router-dom";
 import { ROLES } from "@/constants";
 import { apiService } from "@/server/apiServer";
 import Loading from "@/components/custom/loading";
+import { YearContext } from "@/store/YearContext";
 
 export default function index() {
-  const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState(String(currentYear));
+  // const currentYear = new Date().getFullYear();
+  // const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const [ipAddress, setIpAddress] = useState("");
   const { t } = useTranslation();
   const { user, loading } = useContext(UserContext);
+  const { selectedYear } = useContext(YearContext);
 
 
   const onPay = async (ipAddress: string) => {
@@ -53,13 +48,13 @@ export default function index() {
   const isManagerUser =
     user?.role === ROLES.LEADER || user?.role === ROLES.ACCOUNTANT;
 
-  const years = useMemo(() => {
-    const years = [];
-    for (let i = currentYear; i >= new Date(2023, 0, 1, 0).getFullYear(); i--) {
-      years.push(i);
-    }
-    return years;
-  }, []);
+  // const years = useMemo(() => {
+  //   const years = [];
+  //   for (let i = currentYear; i >= new Date(2023, 0, 1, 0).getFullYear(); i--) {
+  //     years.push(i);
+  //   }
+  //   return years;
+  // }, []);
 
   if (loading) {
     return (<Loading />)
@@ -110,7 +105,7 @@ export default function index() {
           </Grid>
         ))}
       </Grid>
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <div className="w-60">
           <Select
             defaultValue={selectedYear}
@@ -128,18 +123,18 @@ export default function index() {
             </SelectContent>
           </Select>
         </div>
-      </div>
+      </div> */}
       <div className="mt-6 mb-10">
         <h1 className="text-2xl font-bold mb-4">{t("Reports")}</h1>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-          {isManagerUser && <ReciveablesReport selectedYear={selectedYear} />}
+          {isManagerUser && <ReciveablesReport selectedYear={String(selectedYear)} />}
           {isManagerUser && (
-            <SupplierPaymentsReport selectedYear={selectedYear} />
+            <SupplierPaymentsReport selectedYear={String(selectedYear)} />
           )}
-          {isManagerUser && <PaymentTypes selectedYear={selectedYear} />}
+          {isManagerUser && <PaymentTypes selectedYear={String(selectedYear)} />}
           {isManagerUser && <FinancialStatusReport />}
-          <DeadlineReport selectedYear={selectedYear} />
-          <NearestFlightsReport />
+          <DeadlineReport selectedYear={String(selectedYear)} />
+          <NearestFlightsReport selectedYear={String(selectedYear)} />
         </div>
       </div>
     </Container>

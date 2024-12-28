@@ -22,7 +22,8 @@ import { ClipLoader } from "react-spinners";
 import { cn, formatDate, toLocalISOString } from "@/lib/utils";
 import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
-import { InvoiceType, SERVER_BASE_URL } from "@/constants";
+import { DEFAULT_YEAR, InvoiceType, SERVER_BASE_URL } from "@/constants";
+import { YearContext } from "@/store/YearContext";
 
 const columns = [
   { label: "Id", name: "id" },
@@ -51,6 +52,7 @@ const Detail = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const { company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
 
   const [data, setData] =
     useState<{ id: string; name: string; amount: number; balance: number }[]>();
@@ -191,53 +193,64 @@ const Detail = () => {
       <Container maxWidth="xl" style={{ paddingRight: 0, marginTop: 30 }}>
         <Formik
           onSubmit={onSubmit}
-          initialValues={{ startDate: null, endDate: null }}
+          initialValues={{
+            startDate: new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1),
+            endDate: new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31)
+          }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div
-                className={cn("w-52", !values.startDate && "removeFromPrint")}
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
-              >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div
+                  className={cn("w-52", !values.startDate && "removeFromPrint")}
+                >
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className={cn("w-52", !values.endDate && "removeFromPrint")}>
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate || new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31)}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center removeFromPrint"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         <Grid
           sx={{
@@ -249,9 +262,9 @@ const Detail = () => {
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
                 {id != 0 ? columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 )) : founderColumns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>

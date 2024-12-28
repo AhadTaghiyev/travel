@@ -12,7 +12,7 @@ export const supplierColumns: GridColDef[] = [
 
   {
     field: "supplier",
-    headerName: "Supplier",
+    headerName: "Təchizatçı",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -24,7 +24,7 @@ export const supplierColumns: GridColDef[] = [
   },
   {
     field: "details",
-    headerName: "Detail.",
+    headerName: "Detail",
     flex: 1,
     headerClassName: "header-item",
   },
@@ -165,7 +165,7 @@ export const advanceCollectsColumns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
-  
+
 
 
   {

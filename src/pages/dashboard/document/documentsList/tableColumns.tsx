@@ -1,11 +1,11 @@
-import { GridColDef } from "@mui/x-data-grid";
+// import { GridColDef } from "@mui/x-data-grid";
 import { BiSolidFileBlank } from "react-icons/bi";
 import Tooltip from "@mui/material/Tooltip";
 
-export const columns: GridColDef[] = [
+export const getColumns = (t) => [
   {
     field: "No",
-    headerName: "No",
+    headerName: t("No"),
     flex: 1,
     headerClassName: "header-item",
     width: 100,
@@ -14,28 +14,28 @@ export const columns: GridColDef[] = [
   },
   {
     field: "companyId",
-    headerName: "CompanyId",
+    headerName: t("Company ID"),
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "company",
-    headerName: "Company",
+    headerName: t("Company"),
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "phoneNumber",
-    headerName: "PhoneNumber",
+    headerName: t("PhoneNumber"),
     flex: 1,
     headerClassName: "header-item",
   },
   {
     field: "text",
-    headerName: "Text",
+    headerName: t("Text"),
     flex: 1,
     headerClassName: "header-item",
-    renderCell: (params: any) => {
+    renderCell: (params) => {
       return (
         <Tooltip title={params.row.text} placement="bottom">
           <span
@@ -54,19 +54,16 @@ export const columns: GridColDef[] = [
   },
   {
     field: "filePath",
-    headerName: "Detail",
+    headerName: t("Detail"),
     flex: 1,
     headerClassName: "header-item",
     width: 100,
     minWidth: 100,
     maxWidth: 100,
-    renderCell: (params: any) => {
+    renderCell: (params) => {
       const handleDownload = () => {
-        // Dosya yollarını içeren bir dizi oluşturun
         const filepaths = params.row.filePath;
-  
-        // Dosya yolları dizisini döngüye alarak her bir dosyayı sırayla indirin
-        filepaths.forEach((filepath: string) => {
+        filepaths.forEach((filepath) => {
           fetch(filepath)
             .then((response) => response.blob())
             .then((blob) => {
@@ -81,13 +78,12 @@ export const columns: GridColDef[] = [
             .catch((error) => console.error("Dosya indirme hatası:", error));
         });
       };
-  
+
       return (
         <button onClick={handleDownload}>
           <BiSolidFileBlank />
         </button>
       );
     },
-  }
-  
+  },
 ];

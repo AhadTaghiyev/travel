@@ -18,6 +18,12 @@ export const columns: GridColDef[] = [
     headerClassName: "header-item",
   },
   {
+    field: "personal",
+    headerName: "Personal",
+    flex: 1,
+    headerClassName: "header-item",
+  },
+  {
     field: "customer",
     headerName: "Customer",
     flex: 1,
@@ -41,7 +47,7 @@ export const columns: GridColDef[] = [
     flex: 1,
     headerClassName: "header-item",
   },
-  
+
   {
     field: "forfeit",
     headerName: "Charge",
@@ -51,7 +57,7 @@ export const columns: GridColDef[] = [
 
   {
     field: "date",
-    headerName: "Tarix",
+    headerName: "Date",
     flex: 1,
     headerClassName: "header-item",
   },

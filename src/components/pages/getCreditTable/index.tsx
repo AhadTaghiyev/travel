@@ -39,11 +39,11 @@ export function GetCreditTable({
     <Table className="border-solid border border-black/20 text-[11px]">
       <TableHeader>
         <TableRow className="border-solid border border-black/20">
-          <TableHead className="px-2">{t("Ref")}</TableHead>
-          <TableHead className="px-2">{t("Loan From")}</TableHead>
-          <TableHead className="px-2">{t("Amount")}</TableHead>
-          <TableHead className="px-2">{t("RestOfAmount")}</TableHead>
-          <TableHead className="px-2">{t("date")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Ref")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Loan From")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("Amount")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("RestOfAmount")}</TableHead>
+          <TableHead className="px-2 bg-[#3275BB] text-[#fff] border-white">{t("date")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -56,9 +56,9 @@ export function GetCreditTable({
               {income.from}
             </TableCell>
             <TableCell className="font-medium py-1 px-2">
-            {(income.amount * currency.value).toFixed(2)} {currency.name}
+              {(income.amount * currency.value).toFixed(2)} {currency.name}
             </TableCell>
-         
+
             <TableCell className="py-1 px-2">
               {(income.restOfAmount * currency.value).toFixed(2)} {currency.name}
             </TableCell>

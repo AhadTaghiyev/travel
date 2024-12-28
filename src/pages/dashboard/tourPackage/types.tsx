@@ -26,7 +26,9 @@ export interface ITourPackageModel {
   tourId: number;
   transferId: number;
   diningId: number;
-  purchasePrice: number;
+  netPrice: number;
+  systemPrice: number;
+  systemCommision: number;
   sellingPrice: number;
   discount: number;
   commonPrice: number;

@@ -39,7 +39,8 @@ import {
 } from "@/components/ui/select";
 import { isNil } from "lodash";
 import { CompanyContext } from "@/store/CompanyContext";
-import { SERVER_BASE_URL } from "@/constants";
+import { YearContext } from "@/store/YearContext";
+import { DEFAULT_YEAR, SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
 import { DeleteIcon, EditIcon, SaveIcon, X } from "lucide-react";
 import { toLocalISOString } from "@/lib/utils";
@@ -57,6 +58,7 @@ const columns = [
 
 const Detail = () => {
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [paymentTypes, setPaymentTypes] = useState<
@@ -322,51 +324,62 @@ const Detail = () => {
         </div>
         <Formik
           onSubmit={onSubmit}
-          initialValues={{ startDate: null, endDate: null }}
+          initialValues={{
+            startDate: new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1),
+            endDate: new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31)
+          }}
         >
-          {({ values, handleSubmit, setFieldValue, isSubmitting }) => (
-            <form
-              onSubmit={handleSubmit}
-              className="pt-4 flex flex-wrap items-center gap-x-6"
-            >
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("Start Date")}
-                  value={values.startDate}
-                  change={(data) => {
-                    setFieldValue("startDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <div className="w-52">
-                <CustomDateTimePicker
-                  label={t("End Date")}
-                  value={values.endDate}
-                  change={(data) => {
-                    setFieldValue("endDate", data);
-                  }}
-                  hasErrorMessages={false}
-                  errorMessages={[]}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+          {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
+            useEffect(() => {
+              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
+              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+            }, [selectedYear, setFieldValue]);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                className="pt-4 flex flex-wrap items-center gap-x-6"
               >
-                <ClipLoader
-                  size={14}
-                  color="white"
-                  loading={isSubmitting}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                {t("Axtar")}
-              </button>
-            </form>
-          )}
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("Start Date")}
+                    value={values.startDate || new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1)}
+                    change={(data) => {
+                      setFieldValue("startDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={true}
+                  />
+                </div>
+                <div className="w-52">
+                  <CustomDateTimePicker
+                    label={t("End Date")}
+                    value={values.endDate || new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31)}
+                    change={(data) => {
+                      setFieldValue("endDate", data);
+                    }}
+                    hasErrorMessages={false}
+                    errorMessages={[]}
+                    isStartDate={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="p-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-500 tracking-widest transition shadow-lg disabled:opacity-70 flex gap-x-2 items-center"
+                >
+                  <ClipLoader
+                    size={14}
+                    color="white"
+                    loading={isSubmitting}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  {t("Axtar")}
+                </button>
+              </form>
+            )
+          }}
         </Formik>
         <Grid
           sx={{
@@ -377,11 +390,12 @@ const Detail = () => {
           <Table className="border border-solid border-gray-300">
             <TableHeader className="border-b border-solid border-black/60">
               <TableRow className="w-full">
-                <TableHead key={"No"}>{t("No")}</TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={"No"}>{t("No")}</TableHead>
                 {columns.map((column) => (
-                  <TableHead key={column.name}>{t(column.label)}</TableHead>
+                  <TableHead className="bg-[#3275BB] text-[#fff] border-white" key={column.name}>{t(column.label)}</TableHead>
                 ))}
-                <TableHead></TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white"></TableHead>
+                <TableHead className="bg-[#3275BB] text-[#fff] border-white"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

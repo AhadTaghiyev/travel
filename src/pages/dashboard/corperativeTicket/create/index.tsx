@@ -14,6 +14,7 @@ import {
 import { apiService } from "@/server/apiServer";
 
 import CorperativeTicketForm from "../form";
+import { toLocalISOString, toLocalISOStringV2 } from "@/lib/utils";
 
 export const invoiceDirectionInitialValues: IInvoiceDirections = {
   flightDate: new Date(),
@@ -56,9 +57,18 @@ const NewTicket = () => {
   const onSubmit = useCallback(
     (values: IInvoiceModel, { setSubmitting }: FormikHelpers<FormikValues>) => {
       const formData = new FormData();
+
+      const now = new Date();
+      const updatedDate = new Date(values.date);
+      const updatedDeadline = new Date(values.deadLine);
+
+      updatedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      updatedDeadline.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+      values.date = updatedDate;
+      values.deadLine = updatedDeadline;
       formData.append("customerId", values.customerId.toString());
-      formData.append("date", values.date.toISOString());
-      formData.append("deadLine", values.deadLine.toISOString());
+      formData.append("date", toLocalISOString(values.date));
+      formData.append("deadLine", toLocalISOString(values.deadLine));
       formData.append("explanation", values.explanation.toString());
       formData.append("isCustomerPaid", values.isCustomerPaid.toString());
       formData.append("isSupplierPaid", values.isSupplierPaid.toString());
@@ -80,7 +90,7 @@ const NewTicket = () => {
         formData.append(`corporativeTickets[${index}].passanger`, ticket.passanger.toString() || "");
         ticket.invoiceDirections.forEach((direction, directionIndex) => {
           formData.append(`corporativeTickets[${index}].invoiceDirections[${directionIndex}].direction`, direction.direction.toString() || "");
-          formData.append(`corporativeTickets[${index}].invoiceDirections[${directionIndex}].flightDate`, direction.flightDate.toISOString() || "");
+          formData.append(`corporativeTickets[${index}].invoiceDirections[${directionIndex}].flightDate`, toLocalISOStringV2(direction.flightDate));
         });
       });
 
