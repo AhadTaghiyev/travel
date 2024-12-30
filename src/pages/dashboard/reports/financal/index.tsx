@@ -16,9 +16,11 @@ import {
 } from "@/components/ui/table";
 import Loading from "@/components/custom/loading";
 import { CompanyContext } from "@/store/CompanyContext";
+import { YearContext } from "@/store/YearContext";
 
 export default function Index() {
   const { loading: companyLoading, company } = useContext(CompanyContext);
+  const { selectedYear } = useContext(YearContext);
   const [data, setData] = useState<any>({});
   const [payments, setPayments] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -27,10 +29,10 @@ export default function Index() {
   useEffect(() => {
     const fetchData = async () => {
       const totalReceiveAblePayableResultPromise = apiService.get(
-        "/Reports/TotalReciveAblePayable"
+        `/Reports/TotalReciveAblePayable?year=${selectedYear}`
       );
       const financalStatusReportResultPromise = apiService.get(
-        "/Reports/FinancalStatusReport"
+        `/Reports/FinancalStatusReport?year=${selectedYear}`
       );
       const [totalReceiveAblePayableResult, financalStatusReportResult] =
         await Promise.all([
@@ -42,7 +44,7 @@ export default function Index() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [selectedYear]);
 
   if (loading || companyLoading) {
     return <Loading />;

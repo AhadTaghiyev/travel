@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Skeleton } from "@mui/material";
 
 import { apiService } from "@/server/apiServer";
+import { YearContext } from "@/store/YearContext";
 
 import {
   Table,
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/table";
 
 const FinancialStatusReport = () => {
+  const { selectedYear } = useContext(YearContext);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>({});
   const [payments, setPayments] = useState<any>([]);
@@ -23,10 +25,10 @@ const FinancialStatusReport = () => {
   useEffect(() => {
     const fetchData = async () => {
       const totalReceiveAblePayableResultPromise = apiService.get(
-        "/Reports/TotalReciveAblePayable"
+        `/Reports/TotalReciveAblePayable?year=${selectedYear}`
       );
       const financalStatusReportResultPromise = apiService.get(
-        "/Reports/FinancalStatusReport"
+        `/Reports/FinancalStatusReport?year=${selectedYear}`
       );
       const [totalReceiveAblePayableResult, financalStatusReportResult] =
         await Promise.all([
@@ -38,7 +40,7 @@ const FinancialStatusReport = () => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [selectedYear]);
 
   let totalAmount =
     payments?.items?.reduce((acc, item) => acc + item.amount, 0) || 0;

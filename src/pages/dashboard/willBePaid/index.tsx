@@ -12,11 +12,12 @@ import {
 } from "./tableColumns";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import { FiPrinter } from "react-icons/fi";
 import { apiService } from "@/server/apiServer";
+import { YearContext } from "@/store/YearContext";
 const tabs = [
   {
     id: 1,
@@ -54,7 +55,7 @@ const tabs = [
     title: "Deposit",
     hideReport: false,
     api: "/Reports/AdvanceCollectsReport",
-    detailLink:"/panel/deposit/report?tickets=",
+    detailLink: "/panel/deposit/report?tickets=",
     columns: advanceCollectsColumns,
   },
   {
@@ -63,7 +64,7 @@ const tabs = [
     hideReport: false,
     api: "/Reports/FounderReport",
     columns: othersColumns,
-    detailLink:"/panel/managerFinancialTransactions/report?tickets="
+    detailLink: "/panel/managerFinancialTransactions/report?tickets="
   },
 ];
 const handlePrint = () => {
@@ -83,6 +84,7 @@ const headerStyle = {
 };
 
 export default function Index() {
+  const { selectedYear } = useContext(YearContext);
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [totals, settotals] = useState();
@@ -94,13 +96,13 @@ export default function Index() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiService.get("/Reports/TotalWillbePaid");
+        const response = await apiService.get(`/Reports/TotalWillbePaid?year=${selectedYear}`);
         settotals(response?.data);
-      } catch (error) {}
+      } catch (error) { }
     };
 
     fetchData();
-  }, []);
+  }, [selectedYear]);
 
   return (
     <Container maxWidth="xl">
@@ -124,7 +126,7 @@ export default function Index() {
                 className={cn(
                   "border-none p-4 rounded-lg text-gray-600 hover:bg-gray-50",
                   activeTab.id === tab.id &&
-                    "bg-white hover:bg-white text-blue-500"
+                  "bg-white hover:bg-white text-blue-500"
                 )}
               >
                 {t(tab.title)}

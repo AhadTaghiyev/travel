@@ -55,8 +55,15 @@ const Detail = () => {
   const nettLoss = calculateNettLoss(data);
 
   useEffect(() => {
-    getData();
-  }, []);
+    setDate(
+      [new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1),
+      new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)]
+    );
+    getData(
+      new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1),
+      new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)
+    );
+  }, [selectedYear]);
 
   const getData = async (startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();

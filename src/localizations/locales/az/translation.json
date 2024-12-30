@@ -531,5 +531,7 @@
   "Create Customer": "Müştəri Yarat",
   "Contract format name": "Müqavilə formatı adı",
   "Create New InvoiceText": "Yeni InvoiceText Yarat",
-  "Upload file": "Fayl Yüklə"
+  "Upload file": "Fayl Yüklə",
+  "Period": "Hesabat İli",
+  "All": "Hamısı"
 }

@@ -527,5 +527,7 @@
   "Due Date": "Due Date",
   "Create Customer": "Create Customer",
   "Contract format name": "Contract format name",
-  "Create New InvoiceText": "Create New InvoiceText"
+  "Create New InvoiceText": "Create New InvoiceText",
+  "Period": "Period",
+  "All": "All"
 }
