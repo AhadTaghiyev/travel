@@ -115,6 +115,7 @@ const CorperativeTicketForm = ({
                 }}
                 hasErrorMessages={!!errors.date && !!touched.date}
                 errorMessages={[t(errors.date?.toString())]}
+                isInvoice={true}
               />
             </div>
             <div className="w-full h-full">
@@ -127,6 +128,7 @@ const CorperativeTicketForm = ({
                 }}
                 hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
                 errorMessages={[t(errors.deadLine?.toString())]}
+                isInvoice={true}
               />
             </div>
             <div className="w-full">
@@ -646,6 +648,7 @@ const CorperativeTicketForm = ({
                               ]?.flightDate?.toString()
                             ),
                           ]}
+                          isInvoice={true}
                         />
                         <CustomTextField
                           disabled={isView}

@@ -296,7 +296,7 @@ export const sidebarItems: SidebarItemType[] = [
     children: [
       {
         icon: FaFileImport,
-        text: "Bütün sənədlər",
+        text: "Bütün Sənədlər",
         link: "/panel/documents",
       },
       {
@@ -389,7 +389,7 @@ export const sidebarItems: SidebarItemType[] = [
       // },
       {
         icon: FaServicestack,
-        text: "InvoiceTexts",
+        text: "Invoice Texts",
         link: "/panel/invoiceTexts",
         onlyManagement: false,
       },

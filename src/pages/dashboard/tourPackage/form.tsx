@@ -112,6 +112,7 @@ const TourPackageForm = ({
                   }}
                   hasErrorMessages={!!errors.date && !!touched.date}
                   errorMessages={[t(errors.date?.toString())]}
+                  isInvoice={true}
                 />
               </div>
               <div className="w-full h-full">
@@ -124,6 +125,7 @@ const TourPackageForm = ({
                   }}
                   hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
                   errorMessages={[t(errors.deadLine?.toString())]}
+                  isInvoice={true}
                 />
               </div>
               <div className="w-full">
@@ -602,6 +604,7 @@ const TourPackageForm = ({
                         ),
                       ]}
                       showTime={true}
+                      isInvoice={true}
                     />
                   </div>
                   <div className="w-full h-full">
@@ -621,6 +624,7 @@ const TourPackageForm = ({
                         t(errors.tourPackages?.[index]?.returnDate?.toString()),
                       ]}
                       showTime={true}
+                      isInvoice={true}
                     />
                   </div>
                   <div className="w-full">

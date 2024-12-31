@@ -26,6 +26,7 @@ import { CompanyContext } from "@/store/CompanyContext";
 import axios from "axios";
 import { truncate } from "fs/promises";
 import { YearContext } from "@/store/YearContext";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { label: "date", name: "date", type: "date" },
@@ -79,6 +80,7 @@ const Detail = () => {
   const { t } = useTranslation();
   const { loading: companyLoading, company } = useContext(CompanyContext);
   const { selectedYear } = useContext(YearContext);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<
     {
@@ -102,7 +104,7 @@ const Detail = () => {
 
   useEffect(() => {
     getData(id, defaultStartDate, defaultEndDate);
-  }, [id]);
+  }, [id, selectedYear]);
 
   const getData = async (id: string, startDate?: Date, endDate?: Date) => {
     const searchParams = new URLSearchParams();
@@ -221,8 +223,34 @@ const Detail = () => {
         >
           {({ values, handleSubmit, setFieldValue, isSubmitting }) => {
             useEffect(() => {
-              setFieldValue("startDate", new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear, 0, 1));
-              setFieldValue("endDate", new Date(String(selectedYear) === "All" ? new Date().getFullYear() : selectedYear, 11, 31));
+              setFieldValue(
+                "startDate",
+                defaultStartDate
+                  ? defaultStartDate
+                  : new Date(
+                    String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : selectedYear,
+                    0,
+                    1
+                  )
+              );
+              setFieldValue(
+                "endDate",
+                defaultEndDate
+                  ? defaultEndDate
+                  : new Date(
+                    String(selectedYear) === "All"
+                      ? new Date().getFullYear()
+                      : selectedYear,
+                    11,
+                    31
+                  )
+              );
+
+              // Remove startDate and endDate from the URL
+              const searchParams = new URLSearchParams(window.location.search);
+              searchParams.delete("startDate");
+              searchParams.delete("endDate");
+              navigate(`${window.location.pathname}?${searchParams.toString()}`);
             }, [selectedYear, setFieldValue]);
             return (
               <form

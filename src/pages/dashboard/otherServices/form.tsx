@@ -112,6 +112,7 @@ const OtherServicesForm = ({
                 disabled={isView}
                 hasErrorMessages={!!errors.date && !!touched.date}
                 errorMessages={[t(errors.date?.toString())]}
+                isInvoice={true}
               />
             </div>
             <div className="w-full h-full">
@@ -124,6 +125,7 @@ const OtherServicesForm = ({
                 disabled={isView}
                 hasErrorMessages={!!errors.deadLine && !!touched.deadLine}
                 errorMessages={[t(errors.deadLine?.toString())]}
+                isInvoice={true}
               />
             </div>
             <div className="w-full">

@@ -1,55 +1,53 @@
 import { apiService } from "@/server/apiServer";
-import { useEffect, useMemo, useState } from "react";
-
-
-
-
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+// import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Pagination, Autoplay } from "swiper/modules";
 
 const PartnersSection = () => {
-const [data, setData] = useState([]);
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await apiService.get(`/Partner/getall/1`);
+  const [data, setData] = useState([]);
 
-      setData(response?.data?.items);
-   
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiService.get(`/Partner/getall/1?isPaginated=false`);
+        setData(response?.data?.items);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  fetchData();
-}, []);
-  const [showAll, setShowAll] = useState(false);
-
-  const visiblePartners = useMemo(
-    () => data?.slice(0, showAll ? data?.length : 6),
-    [showAll]
-  );
-
+    fetchData();
+  }, []);
 
   return (
-    <div className="relative landing-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 border-y border-solid border-[#EBEDF0] py-[40px] gap-y-4 md:gap-y-8 lg:gap-y-16">
-      {visiblePartners.map((partner, index) => (
-
-        <a
-          key={index}
-          href={partner.image}
-          className="flex justify-center items-center p-4"
-        >
-          <img src={partner.image} alt="Partner" />
-        </a>
-      ))}
-      <button
-        onClick={() => setShowAll((prev) => !prev)}
-        className="absolute bottom-0 -translate-x-[50%] translate-y-[50%] left-[50%] p-2 bg-white text-xs text-[#59c1ff] border-none hover:bg-[#59c1ff] hover:text-white transition-all duration-300 ease-in-out"
-        style={{
-          boxShadow: "0px 16px 40px -12px rgba(171, 186, 201, 0.20)",
+    <div className="relative landing-container py-[40px]">
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        spaceBetween={30}
+        slidesPerView={1}
+        breakpoints={{
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 4 },
+          1024: { slidesPerView: 6 },
         }}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
       >
-        {showAll ? "Hide" : "View all"}
-      </button>
+        {data.map((partner, index) => (
+          <SwiperSlide key={index}>
+            <a
+              href={partner.image}
+              className="flex justify-center items-center p-4"
+            >
+              <img src={partner.image} alt="Partner" />
+            </a>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };

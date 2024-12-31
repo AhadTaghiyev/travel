@@ -98,7 +98,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
   return (
     <AppBar
       color="default"
-      sx={{ right: "0px", position: "fixed", width: "80%", bgcolor: "black" }}
+      sx={{ right: "0px", position: "fixed", width: "80%", bgcolor: "black", zIndex: "1" }}
     >
       <Container maxWidth="xl" style={{ color: "white" }}>
         <Toolbar disableGutters>
@@ -178,7 +178,7 @@ export default function Navbar({ isAdmin }: NavbarProp) {
                       </SelectItem>
                     ))}
                     <SelectItem value={`All`}>
-                      All
+                      {t("All")}
                     </SelectItem>
                   </SelectContent>
                 </Select>

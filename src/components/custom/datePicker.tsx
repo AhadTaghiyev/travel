@@ -27,6 +27,7 @@ interface ICustomDateTimePickerModel {
   toDate?: Date;
   showTime?: boolean; // Zaman seçimi için
   isStartDate?: boolean;
+  isInvoice?: boolean;
 }
 
 export default function CustomDateTimePicker({
@@ -40,6 +41,7 @@ export default function CustomDateTimePicker({
   hasErrorMessages,
   showTime = false, // Varsayılan olarak `false`
   isStartDate = false,
+  isInvoice = false
 }: ICustomDateTimePickerModel) {
   // const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +119,9 @@ export default function CustomDateTimePicker({
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <Calendar
-            defaultMonth={isStartDate ? new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1) : new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)}
+            defaultMonth={value ? new Date(value) : isStartDate ? new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1) : new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)}
+            endMonth={isInvoice ? new Date(new Date().getFullYear() + 3, 11) : new Date(new Date().getFullYear(), 11)}
+            startMonth={new Date(2023, 0, 1)}
             mode="single"
             // selected={new Date(selectedYear, 0, 1)}
             selected={value ? new Date(value) : isStartDate ? new Date(String(selectedYear) === "All" ? Number(DEFAULT_YEAR) : Number(selectedYear), 0, 1) : new Date(String(selectedYear) === "All" ? new Date().getFullYear() : Number(selectedYear), 11, 31)}

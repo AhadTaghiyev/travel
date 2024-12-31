@@ -18,6 +18,26 @@ const htmlToFormattedText = (html) => {
             textParts.push({ text: node.textContent, bold: true });
         } else if (node.nodeName === "BR") {
             textParts.push({ text: "\n" });
+        } else if (node.nodeName === "UL" || node.nodeName === "OL") {
+            // Liste yapısı için tüm <li> öğelerini işleyelim
+            Array.from(node.childNodes).forEach((listItem) => {
+                if (listItem.nodeName === "LI") {
+                    textParts.push({ text: `• ${listItem.textContent}`, bold: false });
+                }
+            });
+        } else if (node.nodeName === "BLOCKQUOTE") {
+            // Blockquote içerisindeki <li> işlenmesi
+            Array.from(node.childNodes).forEach((childNode) => {
+                if (childNode.nodeName === "UL" || childNode.nodeName === "OL") {
+                    Array.from(childNode.childNodes).forEach((listItem) => {
+                        if (listItem.nodeName === "LI") {
+                            textParts.push({ text: `• ${listItem.textContent}`, bold: false });
+                        }
+                    });
+                } else {
+                    textParts.push({ text: childNode.textContent });
+                }
+            });
         } else {
             textParts.push({ text: node.textContent });
         }
@@ -25,6 +45,7 @@ const htmlToFormattedText = (html) => {
 
     return textParts;
 };
+
 
 // PDF için Stil
 const styles = StyleSheet.create({
@@ -75,6 +96,7 @@ const styles = StyleSheet.create({
 const PDFDocument = ({ isReport = true, isTime = false, data, company, invoiceText, invoiceImage, headers, title, currency, companyName, companyImage, companyEmail, companyPhone, companyAddress, t }) => {
     console.log(data);
     console.log("invoiceImage", invoiceImage);
+    console.log("invoiceText", invoiceText);
 
 
     return (
@@ -392,7 +414,7 @@ const PDFDocument = ({ isReport = true, isTime = false, data, company, invoiceTe
                     {invoiceText && htmlToFormattedText(invoiceText).map((part, index) => (
                         <Text
                             key={index}
-                            style={part.bold ? styles.boldText : styles.regularText}
+                            style={[part.bold ? styles.boldText : styles.regularText, { marginBottom: 2 }]} // Alt alta yazma için boşluk
                         >
                             {part.text}
                         </Text>

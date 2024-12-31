@@ -82,7 +82,7 @@ const Navbar = () => {
             )}
             onClick={() => {
               changeLanguage("en");
-              if(location.pathname.split("/").length === 2) {
+              if (location.pathname.split("/").length === 2) {
                 navigate("/en");
                 return;
               }
@@ -99,7 +99,7 @@ const Navbar = () => {
             )}
             onClick={() => {
               changeLanguage("az");
-              if(location.pathname.split("/").length === 2) {
+              if (location.pathname.split("/").length === 2) {
                 navigate("/az");
                 return;
               }
@@ -116,7 +116,7 @@ const Navbar = () => {
             )}
             onClick={() => {
               changeLanguage("ru");
-              if(location.pathname.split("/").length === 2) {
+              if (location.pathname.split("/").length === 2) {
                 navigate("/ru");
                 return;
               }
